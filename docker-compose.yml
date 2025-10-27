@@ -1,0 +1,134 @@
+services:
+  tms.apigateway:
+    image: ${DOCKER_REGISTRY-}tmsapigateway
+    build:
+      context: .
+      dockerfile: src/TMS.ApiGateway/Dockerfile
+    container_name: tms-gateway
+    ports:
+      - "8080"
+      - "8081"
+    depends_on:
+      - tms.authservice
+      - tms.taskservice
+      - tms.filestorageservice
+      - tms.notificationservice
+
+
+  tms.authservice:
+    image: ${DOCKER_REGISTRY-}tmsauthservice
+    build:
+      context: .
+      dockerfile: src/TMS.AuthService/Dockerfile
+    container_name: tms-auth-service
+    environment:
+      - POSTGRES_USER=auth_user
+      - POSTGRES_PASSWORD=auth_password
+      - POSTGRES_DB=auth_db
+    depends_on:
+      - tms.auth-db
+      - tms.auth-redis 
+
+
+  tms.auth-db:
+    image: postgres:13
+    container_name: tms-auth-db
+    environment:
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_password
+      POSTGRES_DB: auth_db
+    volumes:
+      - auth-db-data:/var/lib/postgresql/data
+    
+
+  tms.auth-redis:
+    image: redis:6
+    container_name: tms-auth-redis
+    volumes:
+      - auth-redis-data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+
+
+  tms.taskservice:
+    image: ${DOCKER_REGISTRY-}tmstaskservice
+    build:
+      context: .
+      dockerfile: TMS.TaskService/Dockerfile
+    container_name: tms-task-service
+    environment:
+      - POSTGRES_USER=task_user
+      - POSTGRES_PASSWORD=task_password
+      - POSTGRES_DB=task_db
+    depends_on:
+      - tms.task-db
+      - tms.authservice
+
+
+  tms.task-db:
+    image: postgres:13
+    container_name: tms-task-db
+    environment:
+      POSTGRES_USER: task_user
+      POSTGRES_PASSWORD: task_password
+      POSTGRES_DB: task_db
+    volumes:
+      - task-db-data:/var/lib/postgresql/data
+
+
+  tms.filestorageservice:
+    image: ${DOCKER_REGISTRY-}tmsfilestorageservice
+    build:
+      context: .
+      dockerfile: TMS.FileStorageService/Dockerfile
+    container_name: tms-file-storage-service
+    environment:
+      - POSTGRES_USER=files_user
+      - POSTGRES_PASSWORD=files_password
+      - POSTGRES_DB=files_db
+    depends_on:
+      - tms.files-db
+
+
+  tms.files-db:
+    image: postgres:13
+    container_name: tms-files-db
+    environment:
+      POSTGRES_USER: files_user
+      POSTGRES_PASSWORD: files_password
+      POSTGRES_DB: files_db
+    volumes:
+      - files-db-data:/var/lib/postgresql/data
+
+
+  tms.notificationservice:
+    image: ${DOCKER_REGISTRY-}tmsnotificationservice
+    build:
+      context: .
+      dockerfile: TMS.NotificationService/Dockerfile
+    container_name: tms-notification-service
+    environment:
+      - POSTGRES_USER=notify_user
+      - POSTGRES_PASSWORD=notify_password
+      - POSTGRES_DB=notify_db
+    depends_on:
+      - tms.authservice
+      - tms.notify-db
+
+  tms.notify-db:
+    image: postgres:13
+    container_name: tms-notify-db
+    environment:
+      POSTGRES_USER: notify_user
+      POSTGRES_PASSWORD: notify_password
+      POSTGRES_DB: notify_db
+    volumes:
+      - notify-db-data:/var/lib/postgresql/data
+ 
+
+volumes:
+  auth-db-data:
+  auth-redis-data:
+  task-db-data:
+  files-db-data:
+  notify-db-data:
+

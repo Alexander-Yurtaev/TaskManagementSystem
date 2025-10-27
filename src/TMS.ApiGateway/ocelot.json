@@ -1,0 +1,84 @@
+﻿{
+  "Routes": [
+    {
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamPathTemplate": "/api/auth/{everything}",
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-auth-service",
+          "Port": 8081
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamPathTemplate": "/api/tasks/{everything}",
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-task-service",
+          "Port": 8081
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamPathTemplate": "/api/files/{everything}",
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-file-storage-service",
+          "Port": 8081
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamPathTemplate": "/api/noty/{everything}",
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-notification-service",
+          "Port": 8081
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    //{
+    //  "UpstreamHttpMethod": [ "GET" ],
+    //  "UpstreamPathTemplate": "/{everything}",
+    //  "DownstreamPathTemplate": "/{everything}",
+    //  "DownstreamScheme": "https",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "pleasureplan-web",
+    //      "Port": 8081
+    //    }
+    //  ],
+    //  "FileExtensionWhitelist": [
+    //    "html",
+    //    "css",
+    //    "js",
+    //    "jpg",
+    //    "jpeg",
+    //    "png",
+    //    "gif",
+    //    "ico"
+    //  ],
+    //  "DangerousAcceptAnyServerCertificateValidator": true
+    //}
+  ],
+  //"GlobalConfiguration": {
+  //  "RequestIdKey": "ocelot-request-id",
+  //  "AdministrationPath": "/administration",
+  //  "BaseUrl": "https://localhost:8081"
+  //}
+}

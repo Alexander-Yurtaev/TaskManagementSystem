@@ -1,0 +1,6 @@
+@TMS.FileStorageService_HostAddress = http://localhost:5121
+
+GET {{TMS.FileStorageService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
