@@ -61,6 +61,7 @@ services:
       - POSTGRES_USER=${TASK_POSTGRES_USER}
       - POSTGRES_PASSWORD=${TASK_POSTGRES_PASSWORD}
       - POSTGRES_DB=${TASK_POSTGRES_DB}
+      - POSTGRES_HOST=${TASK_POSTGRES_HOST}
     depends_on:
       - tms.task-db
       - tms.authservice
@@ -87,6 +88,7 @@ services:
       - POSTGRES_USER=${FILE_POSTGRES_USER}
       - POSTGRES_PASSWORD=${FILE_POSTGRES_PASSWORD}
       - POSTGRES_DB=${FILE_POSTGRES_DB}
+      - POSTGRES_HOST=${FILE_POSTGRES_HOST}
     depends_on:
       - tms.files-db
 
@@ -109,9 +111,10 @@ services:
       dockerfile: src/TMS.NotificationService/Dockerfile
     container_name: tms-notification-service
     environment:
-      - POSTGRES_USER=${NOTY_POSTGRES_USER}
-      - POSTGRES_PASSWORD=${NOTY_POSTGRES_PASSWORD}
-      - POSTGRES_DB=${NOTY_POSTGRES_DB}
+      - POSTGRES_USER=${NOTIFY_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${NOTIFY_POSTGRES_PASSWORD}
+      - POSTGRES_DB=${NOTIFY_POSTGRES_DB}
+      - POSTGRES_HOST=${NOTIFY_POSTGRES_HOST}
     depends_on:
       - tms.authservice
       - tms.notify-db
@@ -120,9 +123,9 @@ services:
     image: postgres:13
     container_name: tms-notify-db
     environment:
-      - POSTGRES_USER=${NOTY_POSTGRES_USER}
-      - POSTGRES_PASSWORD=${NOTY_POSTGRES_PASSWORD}
-      - POSTGRES_DB=${NOTY_POSTGRES_DB}
+      - POSTGRES_USER=${NOTIFY_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${NOTIFY_POSTGRES_PASSWORD}
+      - POSTGRES_DB=${NOTIFY_POSTGRES_DB}
     volumes:
       - notify-db-data:/var/lib/postgresql/data
  

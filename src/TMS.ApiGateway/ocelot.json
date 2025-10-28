@@ -41,7 +41,7 @@
     },
     {
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "UpstreamPathTemplate": "/api/noty/{everything}",
+      "UpstreamPathTemplate": "/api/notify/{everything}",
       "DownstreamPathTemplate": "/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [

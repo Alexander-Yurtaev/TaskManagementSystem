@@ -9,10 +9,10 @@ namespace TMS.AuthService
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddAuthDataContext();
-
             // Add services to the container.
             builder.Services.AddAuthorization();
+
+            builder.Services.AddAuthDataContext();
 
             var app = builder.Build();
 

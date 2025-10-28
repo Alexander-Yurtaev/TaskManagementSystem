@@ -1,3 +1,6 @@
+using TMS.NotificationService.Data.Extensions;
+using TMS.NotificationService.Endpoints;
+
 namespace TMS.NotificationService
 {
     public class Program
@@ -9,6 +12,7 @@ namespace TMS.NotificationService
             // Add services to the container.
             builder.Services.AddAuthorization();
 
+            builder.Services.AddNotifyDataContext();
 
             var app = builder.Build();
 
@@ -18,7 +22,8 @@ namespace TMS.NotificationService
 
             app.UseAuthorization();
 
-            app.MapGet("/", () => "Hello from NotificationService!");
+            app.AddGreetingEndpoint();
+            app.AddMigrateEndpoint();
 
             app.Run();
         }
