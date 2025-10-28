@@ -5,6 +5,11 @@ namespace TMS.TaskService.Data;
 
 public class TaskDataContext : DbContext
 {
+    public TaskDataContext(DbContextOptions options) : base(options)
+    {
+        
+    }
+
     public DbSet<ProjectEntity> Projects { get; set; }
 
     public DbSet<TaskEntity> Tasks { get; set; }

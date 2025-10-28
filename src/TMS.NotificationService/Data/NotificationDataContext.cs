@@ -5,11 +5,6 @@ namespace TMS.NotificationService.Data;
 
 public class NotificationDataContext : DbContext
 {
-    public NotificationDataContext() : base()
-    {
-        
-    }
-
     public NotificationDataContext(DbContextOptions options) : base(options)
     {
         

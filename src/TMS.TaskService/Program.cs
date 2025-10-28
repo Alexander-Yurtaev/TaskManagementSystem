@@ -1,3 +1,6 @@
+using TMS.TaskService.Data.Extensions;
+using TMS.TaskService.Endpoints;
+
 namespace TMS.TaskService
 {
     public class Program
@@ -9,6 +12,8 @@ namespace TMS.TaskService
             // Add services to the container.
             builder.Services.AddAuthorization();
 
+            builder.Services.AddTaskDataContext();
+
 
             var app = builder.Build();
 
@@ -18,7 +23,8 @@ namespace TMS.TaskService
 
             app.UseAuthorization();
 
-            app.MapGet("/", () => "Hello from TaskService!");
+            app.AddGreetingEndpoint();
+            app.AddMigrateEndpoint();
 
             app.Run();
         }

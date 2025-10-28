@@ -15,7 +15,7 @@
     },
     {
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "UpstreamPathTemplate": "/api/tasks/{everything}",
+      "UpstreamPathTemplate": "/api/task/{everything}",
       "DownstreamPathTemplate": "/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [

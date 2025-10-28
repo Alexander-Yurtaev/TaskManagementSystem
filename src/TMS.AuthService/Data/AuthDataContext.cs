@@ -5,11 +5,6 @@ namespace TMS.AuthService.Data;
 
 public class AuthDataContext : DbContext
 {
-    public AuthDataContext() : base()
-    {
-        
-    }
-
     public AuthDataContext(DbContextOptions options) : base(options)
     {
         
