@@ -8,7 +8,7 @@ using TMS.NotificationService.Data;
 
 #nullable disable
 
-namespace TMS.NotificationService.Migrations
+namespace TMS.NotificationService.Data.Migrations
 {
     [DbContext(typeof(NotificationDataContext))]
     partial class NotificationDataContextModelSnapshot : ModelSnapshot

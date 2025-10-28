@@ -9,11 +9,11 @@ using TMS.NotificationService.Data;
 
 #nullable disable
 
-namespace TMS.NotificationService.Migrations
+namespace TMS.NotificationService.Data.Migrations
 {
     [DbContext(typeof(NotificationDataContext))]
-    [Migration("20251028162928_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20251028171407_InitialMigrations")]
+    partial class InitialMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
