@@ -16,6 +16,12 @@
 	<PackageVersion Include="Swashbuckle.AspNetCore" Version="9.0.6" />
 	<PackageVersion Include="Ocelot" Version="24.0.1" />
   </ItemGroup>
+  <ItemGroup Label="EF Core">
+	<PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
+	<PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.9" />
+	<PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.9" />
+	<PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+  </ItemGroup>
   <ItemGroup Label="Tests">
 	<PackageVersion Include="coverlet.collector" Version="6.0.4" />
 	<PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.0" />

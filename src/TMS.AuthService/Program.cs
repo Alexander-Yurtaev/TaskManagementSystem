@@ -1,3 +1,6 @@
+using TMS.AuthService.Data.Extensions;
+using TMS.AuthService.Endpoints;
+
 namespace TMS.AuthService
 {
     public class Program
@@ -6,9 +9,10 @@ namespace TMS.AuthService
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddAuthDataContext();
+
             // Add services to the container.
             builder.Services.AddAuthorization();
-
 
             var app = builder.Build();
 
@@ -18,7 +22,8 @@ namespace TMS.AuthService
 
             app.UseAuthorization();
 
-            app.MapGet("/", () => "Hello from AuthService!");
+            app.AddGreetingEndpoint();
+            app.AddMigrateEndpoint();
 
             app.Run();
         }

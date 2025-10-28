@@ -36,6 +36,17 @@ namespace TMS.ApiGateway
             app.UseHttpsRedirection();
             app.UseRouting();
 
+            app.Use(async (HttpContext context, Func<Task> next) =>
+            {
+                if (context.Request.Path == "/test")
+                {
+                    await context.Response.WriteAsync("Hello from ApiGateway!");
+                    return;
+                }
+
+                await next();
+            });
+
             await app.UseOcelot();
 
             await app.RunAsync();
