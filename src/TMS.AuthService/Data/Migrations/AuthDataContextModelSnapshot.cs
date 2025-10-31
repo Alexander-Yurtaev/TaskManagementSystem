@@ -2,21 +2,18 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using TMS.TaskService.Data;
+using TMS.AuthService.Data;
 
 #nullable disable
 
-namespace TMS.TaskService.Data.Migrations
+namespace TMS.AuthService.Data.Migrations
 {
-    [DbContext(typeof(TaskDataContext))]
-    [Migration("20251028172309_InitialMigrations")]
-    partial class InitialMigrations
+    [DbContext(typeof(AuthDataContext))]
+    partial class AuthDataContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +31,9 @@ namespace TMS.TaskService.Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("timezone('UTC', NOW())");
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
@@ -51,12 +50,15 @@ namespace TMS.TaskService.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Role")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("timezone('UTC', NOW())");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -261,7 +263,7 @@ namespace TMS.TaskService.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("TMS.Entities.Auth.UserEntity", "User")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -274,7 +276,7 @@ namespace TMS.TaskService.Data.Migrations
             modelBuilder.Entity("TMS.Entities.Task.ProjectEntity", b =>
                 {
                     b.HasOne("TMS.Entities.Auth.UserEntity", "User")
-                        .WithMany()
+                        .WithMany("Projects")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -291,6 +293,13 @@ namespace TMS.TaskService.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("TMS.Entities.Auth.UserEntity", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("TMS.Entities.Task.ProjectEntity", b =>

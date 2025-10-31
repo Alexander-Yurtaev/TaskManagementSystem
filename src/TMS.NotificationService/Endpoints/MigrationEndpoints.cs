@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TMS.Common;
 using TMS.NotificationService.Data;
 
 namespace TMS.NotificationService.Endpoints;
@@ -8,7 +9,7 @@ public static class MigrationEndpoints
     public static void AddMigrateEndpoint(this IApplicationBuilder app)
     {
         var endpoints = (IEndpointRouteBuilder) app;
-        endpoints.MapGet("/migrate", async () =>
+        endpoints.MapGet("/api/migrate", async () =>
         {
             using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
             var logger = serviceScope.ServiceProvider.GetService<ILogger<Program>>();
@@ -35,14 +36,5 @@ public static class MigrationEndpoints
                 throw;
             }
         });
-    }
-
-    public class MigrationResult
-    {
-        public string Message { get; set; }
-
-        public IEnumerable<string> PendingMigrations { get; set; }
-
-        public IEnumerable<string> AppliedMigrations { get; set; } 
     }
 }

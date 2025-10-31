@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using TMS.NotificationService.Data;
+using TMS.TaskService.Data;
 
 #nullable disable
 
-namespace TMS.NotificationService.Data.Migrations
+namespace TMS.TaskService.Data.Migrations
 {
-    [DbContext(typeof(NotificationDataContext))]
-    [Migration("20251028171407_InitialMigrations")]
+    [DbContext(typeof(TaskDataContext))]
+    [Migration("20251030095419_InitialMigrations")]
     partial class InitialMigrations
     {
         /// <inheritdoc />
@@ -51,9 +51,8 @@ namespace TMS.NotificationService.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -261,7 +260,7 @@ namespace TMS.NotificationService.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("TMS.Entities.Auth.UserEntity", "User")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -274,7 +273,7 @@ namespace TMS.NotificationService.Data.Migrations
             modelBuilder.Entity("TMS.Entities.Task.ProjectEntity", b =>
                 {
                     b.HasOne("TMS.Entities.Auth.UserEntity", "User")
-                        .WithMany()
+                        .WithMany("Projects")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -291,6 +290,13 @@ namespace TMS.NotificationService.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("TMS.Entities.Auth.UserEntity", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("TMS.Entities.Task.ProjectEntity", b =>

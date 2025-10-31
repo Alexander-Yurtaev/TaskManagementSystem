@@ -1,5 +1,7 @@
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using TMS.ApiGateway.gRpcClients;
+using TMS.ApiGateway.Middlewares;
 
 namespace TMS.ApiGateway
 {
@@ -9,6 +11,12 @@ namespace TMS.ApiGateway
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddHttpContextAccessor();
+            
+            builder.Services.AddMvc();
+            
+            builder.Services.AddEndpointsApiExplorer();
+
             // Ocelot Basic setup
             builder.Configuration
                 .SetBasePath(builder.Environment.ContentRootPath)
@@ -16,12 +24,14 @@ namespace TMS.ApiGateway
 
             builder.Services
                 .AddOcelot(builder.Configuration);
-
+            
             // Add your features
             if (builder.Environment.IsDevelopment())
             {
                 builder.Logging.AddConsole();
             }
+
+            builder.Services.AddTransient<IAuthClient, AuthClient>();
 
             var app = builder.Build();
 
@@ -36,18 +46,29 @@ namespace TMS.ApiGateway
             app.UseHttpsRedirection();
             app.UseRouting();
 
-            app.Use(async (HttpContext context, Func<Task> next) =>
+            // Сначала обрабатываем локальные маршруты
+            app.MapWhen(context => context.Request.Path.StartsWithSegments("/"), appBuilder =>
             {
-                if (context.Request.Path == "/test")
-                {
-                    await context.Response.WriteAsync("Hello from ApiGateway!");
-                    return;
-                }
-
-                await next();
+                appBuilder
+                    .UseRouting()
+                    .UseEndpoints(endpoints =>
+                    {
+                        endpoints.MapControllerRoute(
+                            name: "default",
+                            pattern: "{controller=Home}/{action=Index}/{id?}");
+                        endpoints.MapRazorPages();
+                    });
             });
 
-            await app.UseOcelot();
+            // Затем настраиваем Ocelot для остальных маршрутов
+            app.UseOcelot().Wait();
+
+            var requireAuthorizationPaths = new[] { "/api/auth/users" };
+
+            app.MapWhen(context => requireAuthorizationPaths.Any(ep => context.Request.Path.ToString().Contains(ep)), appBuilder =>
+            {
+                appBuilder.UseMiddleware<JwtMiddleware>();
+            });
 
             await app.RunAsync();
         }

@@ -1,14 +1,22 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TMS.AuthService.Data;
+using TMS.Common;
 
 namespace TMS.AuthService.Endpoints;
 
+/// <summary>
+/// 
+/// </summary>
 public static class MigrationEndpoints
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="app"></param>
     public static void AddMigrateEndpoint(this IApplicationBuilder app)
     {
         var endpoints = (IEndpointRouteBuilder) app;
-        endpoints.MapGet("/migrate", async () =>
+        endpoints.MapGet("/api/migrate", async () =>
         {
             using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
             var logger = serviceScope.ServiceProvider.GetService<ILogger<Program>>();
@@ -34,15 +42,7 @@ public static class MigrationEndpoints
                 logger?.LogCritical(ex, $"Ошибка при развертывании миграции для БД {databaseName} для AuthService!");
                 throw;
             }
-        });
-    }
-
-    public class MigrationResult
-    {
-        public string Message { get; set; }
-
-        public IEnumerable<string> PendingMigrations { get; set; }
-
-        public IEnumerable<string> AppliedMigrations { get; set; } 
+        })
+        .AllowAnonymous();
     }
 }

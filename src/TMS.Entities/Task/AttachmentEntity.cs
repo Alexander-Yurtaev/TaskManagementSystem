@@ -10,14 +10,14 @@ public class AttachmentEntity
 
     [Required]
     [StringLength(255)]
-    public string FileName { get; set; }
+    public string FileName { get; set; } = string.Empty;
 
     [Required]
     [StringLength(255)]
-    public string FilePath { get; set; }
+    public string FilePath { get; set; } = string.Empty;
 
     [Required]
     public int TaskId { get; set; }
 
-    public TaskEntity Task { get; set; }
+    public TaskEntity? Task { get; set; }
 }

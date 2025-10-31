@@ -14,10 +14,10 @@ namespace TMS.Entities.Task
 
         [Required]
         [StringLength(50)]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         [StringLength(500)]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         [Required]
         public DateTime CreatedAt { get; set; }
@@ -33,8 +33,8 @@ namespace TMS.Entities.Task
         public int UserId { get; set; }
 
         [JsonIgnore]
-        public UserEntity User { get; set; }
+        public UserEntity? User { get; set; }
 
-        public List<TaskEntity> Tasks { get; set; }
+        public List<TaskEntity> Tasks { get; set; } = [];
     }
 }

@@ -19,6 +19,10 @@ COPY . .
 WORKDIR "/src/src/TMS.ApiGateway"
 RUN dotnet build "./TMS.ApiGateway.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
+# Добавляем установку curl в базовый образ
+USER root
+RUN apt-get update && apt-get install -y curl
+
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release

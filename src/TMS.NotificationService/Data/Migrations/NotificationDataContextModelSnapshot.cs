@@ -48,9 +48,8 @@ namespace TMS.NotificationService.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -258,7 +257,7 @@ namespace TMS.NotificationService.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("TMS.Entities.Auth.UserEntity", "User")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -271,7 +270,7 @@ namespace TMS.NotificationService.Data.Migrations
             modelBuilder.Entity("TMS.Entities.Task.ProjectEntity", b =>
                 {
                     b.HasOne("TMS.Entities.Auth.UserEntity", "User")
-                        .WithMany()
+                        .WithMany("Projects")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -288,6 +287,13 @@ namespace TMS.NotificationService.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("TMS.Entities.Auth.UserEntity", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("TMS.Entities.Task.ProjectEntity", b =>

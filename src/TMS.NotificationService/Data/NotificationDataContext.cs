@@ -11,4 +11,13 @@ public class NotificationDataContext : DbContext
     }
 
     public DbSet<NotificationEntity> Notifications { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<NotificationEntity>()
+            .HasOne(n => n.Task)
+            .WithMany(t => t.Notifications)
+            .HasForeignKey(n => n.TaskId)
+            .IsRequired(); // явно указываем обязательность связи
+    }
 }

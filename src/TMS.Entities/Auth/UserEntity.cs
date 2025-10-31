@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TMS.Entities.Auth.Enum;
+using TMS.Entities.Task;
 
 namespace TMS.Entities.Auth;
 
@@ -12,18 +14,19 @@ public class UserEntity
 
     [Required]
     [StringLength(50)]
-    public string UserName { get; set; }
+    public string UserName { get; set; } = string.Empty;
 
     [Required]
     [StringLength(50)]
     [EmailAddress]
-    public string Email { get; set; }
+    public string Email { get; set; } = string.Empty;
 
     [Required]
-    public string PasswordHash { get; set; }
+    public string PasswordHash { get; set; } = string.Empty;
 
     [Required]
-    public string Role { get; set; }
+    [DefaultValue(UserRole.User)]
+    public UserRole Role { get; set; }
 
     [Required]
     public DateTime CreateAt { get; init; }
@@ -35,4 +38,8 @@ public class UserEntity
 
     [DefaultValue(false)]
     public bool IsDeleted { get; set; }
+
+    public List<CommentEntity> Comments { get; set; } = new List<CommentEntity>();
+
+    public List<ProjectEntity> Projects { get; set; } = new List<ProjectEntity>();
 }

@@ -11,7 +11,7 @@ public class CommentEntity
 
     [Required]
     [MaxLength(2000)]
-    public string Text { get; set; }
+    public string Text { get; set; } = string.Empty;
 
     [Required]
     public DateTime CreatedAt { get; set; }
@@ -19,10 +19,10 @@ public class CommentEntity
     [Required]
     public int UserId { get; set; }
 
-    public UserEntity User { get; set; }
+    public UserEntity? User { get; set; }
 
     [Required]
     public int TaskId { get; set; }
 
-    public TaskEntity Task { get; set; }
+    public TaskEntity? Task { get; set; }
 }

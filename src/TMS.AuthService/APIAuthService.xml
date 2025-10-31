@@ -1,0 +1,554 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TMS.AuthService</name>
+    </assembly>
+    <members>
+        <member name="T:TMS.AuthService.Configurations.RedisConfiguration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Configurations.RedisConfiguration.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Configurations.RedisConfiguration.Host">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Configurations.RedisConfiguration.Port">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Configurations.RedisConfiguration.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.AuthService.Data.AuthDataContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Data.AuthDataContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions)">
+            <summary>
+            
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="P:TMS.AuthService.Data.AuthDataContext.Users">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Data.AuthDataContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="modelBuilder"></param>
+        </member>
+        <member name="T:TMS.AuthService.Data.Extensions.DataContextExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Data.Extensions.DataContextExtensions.AddAuthDataContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+            <param name="connectionString"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TMS.AuthService.Data.IUserRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Data.IUserRepository.GetByIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Data.IUserRepository.GetByUsernameAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="userName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Data.IUserRepository.UserExistsAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="userName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Data.IUserRepository.AddUserAsync(TMS.Entities.Auth.UserEntity)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Data.IUserRepository.GetUsersAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:TMS.AuthService.Data.Migrations.InitialMigrations">
+            <inheritdoc />
+        </member>
+        <member name="M:TMS.AuthService.Data.Migrations.InitialMigrations.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TMS.AuthService.Data.Migrations.InitialMigrations.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TMS.AuthService.Data.Migrations.InitialMigrations.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:TMS.AuthService.Data.UserRepository">
+            <summary>
+            
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:TMS.AuthService.Data.UserRepository.#ctor(TMS.AuthService.Data.AuthDataContext)">
+            <summary>
+            
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:TMS.AuthService.Data.UserRepository.GetByIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Data.UserRepository.GetByUsernameAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="userName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Data.UserRepository.UserExistsAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="userName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Data.UserRepository.AddUserAsync(TMS.Entities.Auth.UserEntity)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+        </member>
+        <member name="M:TMS.AuthService.Data.UserRepository.GetUsersAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:TMS.AuthService.Endpoints.AuthEndpoints">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Endpoints.AuthEndpoints.AddAuthEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TMS.AuthService.Endpoints.GreetingEndpoints">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Endpoints.GreetingEndpoints.AddGreetingEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TMS.AuthService.Endpoints.MigrationEndpoints">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Endpoints.MigrationEndpoints.AddMigrateEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="T:TMS.AuthService.Endpoints.UserEndpoints">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Endpoints.UserEndpoints.AddUserEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TMS.AuthService.Models.LoginModel">
+            <summary>
+            
+            </summary>
+            <param name="Username"></param>
+            <param name="Password"></param>
+        </member>
+        <member name="M:TMS.AuthService.Models.LoginModel.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="Username"></param>
+            <param name="Password"></param>
+        </member>
+        <member name="P:TMS.AuthService.Models.LoginModel.Username">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Models.LoginModel.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.AuthService.Models.RegisterModel">
+            <summary>
+            
+            </summary>
+            <param name="UserName"></param>
+            <param name="Email"></param>
+            <param name="Password"></param>
+            <param name="Role"></param>
+        </member>
+        <member name="M:TMS.AuthService.Models.RegisterModel.#ctor(System.String,System.String,System.String,TMS.Entities.Auth.Enum.UserRole)">
+            <summary>
+            
+            </summary>
+            <param name="UserName"></param>
+            <param name="Email"></param>
+            <param name="Password"></param>
+            <param name="Role"></param>
+        </member>
+        <member name="P:TMS.AuthService.Models.RegisterModel.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Models.RegisterModel.Email">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Models.RegisterModel.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Models.RegisterModel.Role">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.AuthService.Models.TokenRefreshModel">
+            <summary>
+            
+            </summary>
+            <param name="refreshToken"></param>
+        </member>
+        <member name="M:TMS.AuthService.Models.TokenRefreshModel.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="refreshToken"></param>
+        </member>
+        <member name="P:TMS.AuthService.Models.TokenRefreshModel.RefreshToken">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.AuthService.Models.TokensModel">
+            <summary>
+            
+            </summary>
+            <param name="accessToken"></param>
+            <param name="refreshToken"></param>
+        </member>
+        <member name="M:TMS.AuthService.Models.TokensModel.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="accessToken"></param>
+            <param name="refreshToken"></param>
+        </member>
+        <member name="P:TMS.AuthService.Models.TokensModel.AccessToken">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Models.TokensModel.RefreshToken">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.AuthService.Models.UserToken">
+            <summary>
+            
+            </summary>
+            <param name="UserId"></param>
+            <param name="Token"></param>
+            <param name="Expiry"></param>
+        </member>
+        <member name="M:TMS.AuthService.Models.UserToken.#ctor(System.Int32,System.String,System.DateTime)">
+            <summary>
+            
+            </summary>
+            <param name="UserId"></param>
+            <param name="Token"></param>
+            <param name="Expiry"></param>
+        </member>
+        <member name="P:TMS.AuthService.Models.UserToken.UserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Models.UserToken.Token">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Models.UserToken.Expiry">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.AuthService.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="T:TMS.AuthService.Services.HashService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Services.HashService.HashPassword(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Services.HashService.VerifyPassword(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="hash"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Services.HashService.HashToken(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TMS.AuthService.Services.IHashService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Services.IHashService.HashPassword(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Services.IHashService.VerifyPassword(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="hash"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Services.IHashService.HashToken(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TMS.AuthService.Services.IRedisService`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:TMS.AuthService.Services.IRedisService`1.SetAsync(System.String,`0,System.TimeSpan)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+            <param name="expiry"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Services.IRedisService`1.GetAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Services.IRedisService`1.RemoveAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Services.IRedisService`1.UpdateExpiryAsync(System.String,System.TimeSpan)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <param name="expiry"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TMS.AuthService.Services.ITokenService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Services.ITokenService.GenerateTokensAsync(TMS.Entities.Auth.UserEntity)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Services.ITokenService.ValidateRefreshToken(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="storedHash"></param>
+            <param name="providedToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Services.ITokenService.RefreshTokensAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="refreshToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TMS.AuthService.Services.RedisService`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:TMS.AuthService.Services.RedisService`1.#ctor(StackExchange.Redis.ConnectionMultiplexer,Microsoft.Extensions.Logging.ILogger{TMS.AuthService.Services.RedisService{`0}})">
+            <summary>
+            
+            </summary>
+            <param name="redis"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:TMS.AuthService.Services.RedisService`1.SetAsync(System.String,`0,System.TimeSpan)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <param name="value"></param>
+            <param name="expiry"></param>
+        </member>
+        <member name="M:TMS.AuthService.Services.RedisService`1.GetAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Services.RedisService`1.RemoveAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+        </member>
+        <member name="M:TMS.AuthService.Services.RedisService`1.UpdateExpiryAsync(System.String,System.TimeSpan)">
+            <summary>
+            
+            </summary>
+            <param name="key"></param>
+            <param name="expiry"></param>
+        </member>
+        <member name="T:TMS.AuthService.Services.TokenService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Services.TokenService.#ctor(Microsoft.Extensions.Configuration.IConfiguration,TMS.AuthService.Services.IRedisService{TMS.AuthService.Models.UserToken},TMS.AuthService.Data.IUserRepository,TMS.AuthService.Services.IHashService,Microsoft.Extensions.Logging.ILogger{TMS.AuthService.Services.TokenService})">
+            <summary>
+            
+            </summary>
+            <param name="configuration"></param>
+            <param name="redisService"></param>
+            <param name="repository"></param>
+            <param name="hashService"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:TMS.AuthService.Services.TokenService.GenerateTokensAsync(TMS.Entities.Auth.UserEntity)">
+            <summary>
+            
+            </summary>
+            <param name="user"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Services.TokenService.ValidateRefreshToken(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="storedHash"></param>
+            <param name="providedToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.AuthService.Services.TokenService.RefreshTokensAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="refreshToken"></param>
+            <returns></returns>
+            <exception cref="T:System.UnauthorizedAccessException"></exception>
+        </member>
+    </members>
+</doc>

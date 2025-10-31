@@ -9,11 +9,10 @@ namespace TMS.Entities.Notification;
 [Table("Notification")]
 public class NotificationEntity
 {
-
     public int Id { get; set; }
 
     [Required]
-    public string Message { get; set; }
+    public string Message { get; set; } = string.Empty;
 
     [Required]
     [DefaultValue(NotificationReadStatus.Unread)]
@@ -22,7 +21,7 @@ public class NotificationEntity
     [Required]
     public int TaskId { get; set; }
 
-    public TaskEntity Task { get; set; }
+    public TaskEntity? Task { get; set; }
 
     [Required]
     public int UserId { get; set; }

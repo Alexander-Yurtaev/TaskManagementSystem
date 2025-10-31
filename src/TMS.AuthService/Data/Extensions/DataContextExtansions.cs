@@ -3,8 +3,17 @@ using Npgsql;
 
 namespace TMS.AuthService.Data.Extensions;
 
+/// <summary>
+/// 
+/// </summary>
 public static class DataContextExtensions
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="connectionString"></param>
+    /// <returns></returns>
     public static IServiceCollection AddAuthDataContext(this IServiceCollection services,
         string? connectionString = null)
     {

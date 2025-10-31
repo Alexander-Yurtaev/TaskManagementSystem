@@ -1,19 +1,38 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TMS.Entities.Auth;
+using TMS.Entities.Auth.Enum;
 
 namespace TMS.AuthService.Data;
 
+/// <summary>
+/// 
+/// </summary>
 public class AuthDataContext : DbContext
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="options"></param>
     public AuthDataContext(DbContextOptions options) : base(options)
     {
         
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public DbSet<UserEntity> Users { get; set; }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="modelBuilder"></param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<UserEntity>()
+            .Property(u => u.Role)
+            .HasDefaultValue(UserRole.User);
+
         modelBuilder.Entity<UserEntity>()
             .Property(e => e.CreateAt)
             .HasColumnType("timestamp with time zone") // Явно задаём тип TIMESTAMPTZ
