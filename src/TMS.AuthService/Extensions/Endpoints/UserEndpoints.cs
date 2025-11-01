@@ -19,7 +19,6 @@ public static class UserEndpoints
                 var users = await userRepository.GetUsersAsync();
                 return Results.Ok(users);
             })
-            .WithName("users")
-            .RequireAuthorization();
+            .WithName("users");
     }
 }
