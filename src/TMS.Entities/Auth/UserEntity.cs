@@ -39,7 +39,7 @@ public class UserEntity
     [DefaultValue(false)]
     public bool IsDeleted { get; set; }
 
-    public List<CommentEntity> Comments { get; set; } = new List<CommentEntity>();
+    public List<CommentEntity> Comments { get; set; } = [];
 
-    public List<ProjectEntity> Projects { get; set; } = new List<ProjectEntity>();
+    public List<ProjectEntity> Projects { get; set; } = [];
 }

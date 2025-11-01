@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Net.Mail;
 using TMS.Entities.Notification;
 using TMS.Entities.Task.Enum;
 using TaskStatus = TMS.Entities.Task.Enum.TaskStatus;

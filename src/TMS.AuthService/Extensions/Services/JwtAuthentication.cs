@@ -16,12 +16,12 @@ public static class JwtAuthentication
     public static void AddJwtAuthentication(this IServiceCollection services, ConfigurationManager configuration)
     {
         var jwtKey = configuration["JWT_KEY"];
-        var jwtConfig = configuration.GetSection("Jwt").Get<JwtOptions>()
-                        ??
-                        throw new Exception("JWT configuration is not properly set up");
+        var jwtIssuer = configuration["JWT_ISSUER"];
+        var jwtAudience = configuration["JWT_AUDIENCE"];
 
-        if (string.IsNullOrEmpty(jwtKey) || string.IsNullOrEmpty(jwtConfig.Issuer) ||
-            string.IsNullOrEmpty(jwtConfig.Audience))
+        if (string.IsNullOrEmpty(jwtKey) || 
+            string.IsNullOrEmpty(jwtIssuer) ||
+            string.IsNullOrEmpty(jwtAudience))
         {
             throw new Exception("JWT configuration is not properly set up");
         }
@@ -35,8 +35,8 @@ public static class JwtAuthentication
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-                    ValidIssuer = jwtConfig.Issuer,
-                    ValidAudience = jwtConfig.Audience,
+                    ValidIssuer = jwtIssuer,
+                    ValidAudience = jwtAudience,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)
                     )
                 };

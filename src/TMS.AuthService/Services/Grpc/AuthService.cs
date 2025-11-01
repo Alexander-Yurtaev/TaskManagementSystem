@@ -68,7 +68,7 @@ namespace TMS.AuthService.Services.Grpc
             }
             catch (SecurityTokenException ex)
             {
-                _logger.LogError(ex, "Ошибка валидации токена");
+                _logger.LogError(ex, "Ошибка валидации токена.");
                 result.IsValidate = false;
                 return Task.FromResult(result);
             }

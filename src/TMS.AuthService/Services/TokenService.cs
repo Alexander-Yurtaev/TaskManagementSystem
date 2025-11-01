@@ -107,10 +107,12 @@ public class TokenService : ITokenService
     private string GenerateAccessToken(UserEntity user)
     {
         var jwtKey = _configuration["JWT_KEY"];
-        var jwtIssue = _configuration["Jwt:Issuer"];
-        var jwtAudience = _configuration["Jwt:Audience"];
+        var jwtIssue = _configuration["JWT_ISSUER"];
+        var jwtAudience = _configuration["JWT_AUDIENCE"];
 
-        if (string.IsNullOrEmpty(jwtKey) || string.IsNullOrEmpty(jwtIssue) || string.IsNullOrEmpty(jwtAudience))
+        if (string.IsNullOrEmpty(jwtKey) || 
+            string.IsNullOrEmpty(jwtIssue) || 
+            string.IsNullOrEmpty(jwtAudience))
         {
             throw new Exception("JWT configuration is not properly set up");
         }

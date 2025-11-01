@@ -24,7 +24,7 @@ namespace TMS.TaskService
                 builder.Logging.AddConsole();
             }
 
-            using var factory = LoggerFactory.Create(builder => builder.AddConsole());
+            using var factory = LoggerFactory.Create(b => b.AddConsole());
             ILogger logger = factory.CreateLogger<Program>();
 
             // gRPC
@@ -51,7 +51,7 @@ namespace TMS.TaskService
             }
             catch (Exception ex)
             {
-                logger.LogCritical(ex, "TaskDataContext configuration error");
+                logger.LogCritical(ex, "Ошибка при конфигурации TaskDataContext.");
                 throw;
             }
 

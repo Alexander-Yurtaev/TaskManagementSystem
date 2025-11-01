@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using StackExchange.Redis;
-using TMS.AuthService.Configurations;
+﻿using StackExchange.Redis;
 using TMS.AuthService.Models;
 using TMS.AuthService.Services;
 
@@ -16,11 +14,22 @@ public static class RedisConfiguration
     /// </summary>
     public static void AddRedisConfiguration(this IServiceCollection services, ConfigurationManager configuration)
     {
-        services.Configure<RedisOptions>(configuration.GetSection("Redis"));
         services.AddSingleton<ConnectionMultiplexer>(provider =>
         {
-            var config = provider.GetRequiredService<IOptions<RedisOptions>>().Value;
-            return ConnectionMultiplexer.Connect($"{config.Host}:{config.Port}");
+            var host = configuration["REDIS_HOST"];
+            var port = configuration["REDIS_PORT"];
+            var password = configuration["REDIS_PASSWORD"];
+
+            // Создаем конфигурацию с паролем
+            var redisConfig = new ConfigurationOptions
+            {
+                EndPoints = { $"{host}:{port}" },
+                Password = password,
+                ConnectTimeout = 5000,
+                SyncTimeout = 5000
+            };
+
+            return ConnectionMultiplexer.Connect(redisConfig);
         });
         services.AddTransient<IRedisService<UserToken>, RedisService<UserToken>>();
     }

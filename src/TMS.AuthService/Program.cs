@@ -1,6 +1,5 @@
 using Microsoft.OpenApi.Models;
 using TMS.AuthService.Data.Extensions;
-using TMS.AuthService.Extensions;
 using TMS.AuthService.Extensions.Endpoints;
 using TMS.AuthService.Extensions.Services;
 
@@ -20,7 +19,7 @@ namespace TMS.AuthService
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            using var factory = LoggerFactory.Create(builder => builder.AddConsole());
+            using var factory = LoggerFactory.Create(b => b.AddConsole());
             ILogger logger = factory.CreateLogger<Program>();
 
             // Add services to the container.
@@ -30,7 +29,7 @@ namespace TMS.AuthService
             }
             catch (Exception ex)
             {
-                logger.LogCritical(ex, "gRPC configuration error");
+                logger.LogCritical(ex, "Ошибка при конфигурации gRPC.");
                 throw;
             }
 
@@ -50,7 +49,7 @@ namespace TMS.AuthService
             }
             catch (Exception ex)
             {
-                logger.LogCritical(ex, "JWT configuration error");
+                logger.LogCritical(ex, "Ошибка при конфигурации JWT.");
                 throw;
             }
 
@@ -64,7 +63,7 @@ namespace TMS.AuthService
             }
             catch (Exception ex)
             {
-                logger.LogCritical(ex, "AuthDataContext configuration error");
+                logger.LogCritical(ex, "Ошибка при конфигурации AuthDataContext.");
                 throw;
             }
 
@@ -75,18 +74,18 @@ namespace TMS.AuthService
             }
             catch (Exception ex)
             {
-                logger.LogCritical(ex, "AuthServices configuration error");
+                logger.LogCritical(ex, "Ошибка при конфигурации AuthServices.");
                 throw;
             }
 
-            // Radis configurations
+            // Redis configurations
             try
             {
                 builder.Services.AddRedisConfiguration(builder.Configuration);
             }
             catch (Exception ex)
             {
-                logger.LogCritical(ex, "Redis configuration error");
+                logger.LogCritical(ex, "Ошибка при конфигурации Redis.");
                 throw;
             }
             

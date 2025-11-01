@@ -19,31 +19,6 @@
             
             </summary>
         </member>
-        <member name="T:TMS.AuthService.Configurations.RedisOptions">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.AuthService.Configurations.RedisOptions.#ctor">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:TMS.AuthService.Configurations.RedisOptions.Host">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:TMS.AuthService.Configurations.RedisOptions.Port">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:TMS.AuthService.Configurations.RedisOptions.Password">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:TMS.AuthService.Data.AuthDataContext">
             <summary>
             
@@ -180,11 +155,11 @@
             
             </summary>
         </member>
-        <member name="M:TMS.AuthService.Extensions.Endpoints.AuthEndpoints.AddAuthEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.AuthService.Extensions.Endpoints.AuthEndpoints.AddAuthEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
             <summary>
             
             </summary>
-            <param name="endpoints"></param>
+            <param name="app"></param>
             <returns></returns>
         </member>
         <member name="T:TMS.AuthService.Extensions.Endpoints.GreetingEndpoints">

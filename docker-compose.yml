@@ -28,8 +28,13 @@ services:
       - POSTGRES_USER=${AUTH_POSTGRES_USER}
       - POSTGRES_PASSWORD=${AUTH_POSTGRES_PASSWORD}
       - POSTGRES_DB=${AUTH_POSTGRES_DB}
-      - POSTGRES_HOST=${AUTH_POSTGRES_HOST}
+      - POSTGRES_HOST=tms-auth-db
       - JWT_KEY=${JWT_KEY}
+      - JWT_ISSUER=${JWT_ISSUER}
+      - JWT_AUDIENCE=${JWT_AUDIENCE}
+      - REDIS_HOST=tms-auth-redis
+      - REDIS_PORT=${AUTH_REDIS_PORT}
+      - REDIS_PASSWORD=${AUTH_REDIS_PASSWORD}
     depends_on:
       - tms.auth-db
       - tms.auth-redis 
@@ -50,8 +55,9 @@ services:
     image: redis:6
     container_name: tms-auth-redis
     volumes:
-      - auth-redis-data:/data
-    command: ["redis-server", "--appendonly", "yes"]
+        - auth-redis-data:/data
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", "${AUTH_REDIS_PASSWORD}"]
+
 
   # TaskService
   tms.taskservice:
@@ -64,7 +70,7 @@ services:
       - POSTGRES_USER=${TASK_POSTGRES_USER}
       - POSTGRES_PASSWORD=${TASK_POSTGRES_PASSWORD}
       - POSTGRES_DB=${TASK_POSTGRES_DB}
-      - POSTGRES_HOST=${TASK_POSTGRES_HOST}
+      - POSTGRES_HOST=tms-task-db
       - JWT_KEY=${JWT_KEY}
     depends_on:
       - tms.task-db
@@ -92,7 +98,7 @@ services:
       - POSTGRES_USER=${FILE_POSTGRES_USER}
       - POSTGRES_PASSWORD=${FILE_POSTGRES_PASSWORD}
       - POSTGRES_DB=${FILE_POSTGRES_DB}
-      - POSTGRES_HOST=${FILE_POSTGRES_HOST}
+      - POSTGRES_HOST=tms-files-db
     depends_on:
       - tms.files-db
 
@@ -118,7 +124,7 @@ services:
       - POSTGRES_USER=${NOTIFY_POSTGRES_USER}
       - POSTGRES_PASSWORD=${NOTIFY_POSTGRES_PASSWORD}
       - POSTGRES_DB=${NOTIFY_POSTGRES_DB}
-      - POSTGRES_HOST=${NOTIFY_POSTGRES_HOST}
+      - POSTGRES_HOST=tms-notify-db
     depends_on:
       - tms.authservice
       - tms.notify-db

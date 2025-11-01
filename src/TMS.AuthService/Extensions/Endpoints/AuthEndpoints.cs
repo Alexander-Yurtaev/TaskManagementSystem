@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Google.Protobuf.WellKnownTypes;
+using Microsoft.AspNetCore.Mvc;
 using TMS.AuthService.Data;
 using TMS.AuthService.Models;
 using TMS.AuthService.Services;
@@ -14,16 +15,21 @@ public static class AuthEndpoints
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="endpoints"></param>
+    /// <param name="app"></param>
     /// <returns></returns>
-    public static RouteHandlerBuilder AddAuthEndpoint(this IEndpointRouteBuilder endpoints)
+    public static RouteHandlerBuilder AddAuthEndpoint(this IApplicationBuilder app)
     {
+        var endpoints = (IEndpointRouteBuilder)app;
+
         endpoints.MapPost("api/login", async (
                 [FromBody] LoginModel model,
                 [FromServices] IUserRepository userRepository,
                 [FromServices] ITokenService tokenService,
                 [FromServices] IHashService hashService) =>
             {
+                using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+                var logger = serviceScope.ServiceProvider.GetService<ILogger<Program>>();
+
                 try
                 {
                     // 1. Поиск пользователя
@@ -43,6 +49,7 @@ public static class AuthEndpoints
                 }
                 catch (Exception ex)
                 {
+                    logger?.LogError(ex, "api/login");
                     return Results.Problem(
                         detail: ex.Message,
                         statusCode: StatusCodes.Status500InternalServerError
@@ -57,6 +64,9 @@ public static class AuthEndpoints
                 [FromServices] IUserRepository userRepository,
                 [FromServices] IHashService hashService) =>
             {
+                using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+                var logger = serviceScope.ServiceProvider.GetService<ILogger<Program>>();
+
                 try
                 {
                     // Проверка существования пользователя
@@ -80,6 +90,7 @@ public static class AuthEndpoints
                 }
                 catch (Exception ex)
                 {
+                    logger?.LogError(ex, "api/register");
                     return Results.Problem(
                         detail: ex.Message,
                         statusCode: StatusCodes.Status500InternalServerError
@@ -93,17 +104,22 @@ public static class AuthEndpoints
             [FromBody] TokenRefreshModel model,
             [FromServices] ITokenService tokenService) =>
         {
+            using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var logger = serviceScope.ServiceProvider.GetService<ILogger<Program>>();
+
             try
             {
                 var (accessToken, refreshToken) = await tokenService.RefreshTokensAsync(model.RefreshToken);
                 return Results.Ok(new TokensModel(accessToken, refreshToken));
             }
-            catch (UnauthorizedAccessException)
+            catch (UnauthorizedAccessException ex)
             {
+                logger?.LogError(ex, "api/refresh");
                 return Results.Unauthorized();
             }
             catch (Exception ex)
             {
+                logger?.LogError(ex, "api/refresh");
                 return Results.Problem(detail: ex.Message, statusCode: 500);
             }
         })

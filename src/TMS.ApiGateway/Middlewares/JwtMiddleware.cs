@@ -10,26 +10,18 @@ namespace TMS.ApiGateway.Middlewares;
 public class JwtMiddleware
 {
     private readonly RequestDelegate _next;
+    private readonly ILogger<JwtMiddleware> _logger;
     private readonly Auth.AuthClient _authClient;
 
-    public JwtMiddleware(RequestDelegate next, GrpcClientFactory factory)
+    public JwtMiddleware(RequestDelegate next, GrpcClientFactory factory, ILogger<JwtMiddleware> logger)
     {
         _next = next;
+        _logger = logger;
         _authClient = factory.CreateClient<Auth.AuthClient>("AuthClient");
     }
 
     public async Task Invoke(HttpContext context)
     {
-        // Получаем эндпоинт и его метаданные
-        var endpoint = context.GetEndpoint();
-
-        // Проверяем наличие атрибута AllowAnonymous
-        if (endpoint?.Metadata.GetMetadata<IAllowAnonymous>() is not null)
-        {
-            await _next(context);
-            return;
-        }
-
         try
         {
             var token = context.Request.Headers[HeaderNames.Authorization].FirstOrDefault()?.Split(' ').Last();
@@ -55,6 +47,7 @@ public class JwtMiddleware
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Метод JwtMiddleware.Invoke().");
             await HandleError(context, ex);
         }
     }
