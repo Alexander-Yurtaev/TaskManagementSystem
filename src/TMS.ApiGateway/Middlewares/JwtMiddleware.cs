@@ -1,13 +1,22 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Grpc.Net.ClientFactory;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Net.Http.Headers;
-using TMS.ApiGateway.gRpcClients;
+using System.Security.Claims;
+using TMS.ApiGateway.Grpc.Clients;
+using Claim = System.Security.Claims.Claim;
 
 namespace TMS.ApiGateway.Middlewares;
 
-public class JwtMiddleware(RequestDelegate next, IAuthClient authClient)
+public class JwtMiddleware
 {
-    private readonly RequestDelegate _next = next;
-    private readonly IAuthClient _authClient = authClient;
+    private readonly RequestDelegate _next;
+    private readonly Auth.AuthClient _authClient;
+
+    public JwtMiddleware(RequestDelegate next, GrpcClientFactory factory)
+    {
+        _next = next;
+        _authClient = factory.CreateClient<Auth.AuthClient>("AuthClient");
+    }
 
     public async Task Invoke(HttpContext context)
     {
@@ -15,7 +24,7 @@ public class JwtMiddleware(RequestDelegate next, IAuthClient authClient)
         var endpoint = context.GetEndpoint();
 
         // Проверяем наличие атрибута AllowAnonymous
-        if (endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() is not null)
+        if (endpoint?.Metadata.GetMetadata<IAllowAnonymous>() is not null)
         {
             await _next(context);
             return;
@@ -31,12 +40,16 @@ public class JwtMiddleware(RequestDelegate next, IAuthClient authClient)
                 return;
             }
 
-            var isValid = await _authClient.ValidateTokenAsync(token);
-            if (!isValid)
+            var response = await _authClient.ValidateTokenAsync(new ValidateTokenRequest{ Token = token });
+            if (response is null || !response.IsValidate)
             {
                 await HandleUnauthorizedRequest(context);
                 return;
             }
+
+            var claims = response.Claims.Select(c => new Claim(c.Type, c.Value));
+            var identity = new ClaimsIdentity(claims, response.AuthenticationType);
+            context.User = new ClaimsPrincipal(identity);
 
             await _next(context);
         }

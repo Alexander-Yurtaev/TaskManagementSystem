@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: src/TMS.ApiGateway/Dockerfile
     container_name: tms-gateway
+    environment:
+      - JWT_KEY=${JWT_KEY}
     ports:
       - "8080"
       - "8081"
@@ -27,6 +29,7 @@ services:
       - POSTGRES_PASSWORD=${AUTH_POSTGRES_PASSWORD}
       - POSTGRES_DB=${AUTH_POSTGRES_DB}
       - POSTGRES_HOST=${AUTH_POSTGRES_HOST}
+      - JWT_KEY=${JWT_KEY}
     depends_on:
       - tms.auth-db
       - tms.auth-redis 

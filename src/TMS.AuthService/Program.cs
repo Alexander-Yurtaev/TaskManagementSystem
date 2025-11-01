@@ -1,15 +1,7 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using StackExchange.Redis;
-using System.Text;
-using TMS.AuthService.Configurations;
-using TMS.AuthService.Data;
 using TMS.AuthService.Data.Extensions;
-using TMS.AuthService.Endpoints;
-using TMS.AuthService.Models;
-using TMS.AuthService.Services;
+using TMS.AuthService.Extensions;
+using TMS.AuthService.Extensions.Endpoints;
 
 namespace TMS.AuthService
 {
@@ -25,10 +17,22 @@ namespace TMS.AuthService
         /// <exception cref="Exception"></exception>
         public static void Main(string[] args)
         {
-            // Или более простой вариант:
             var builder = WebApplication.CreateBuilder(args);
 
+            using var factory = LoggerFactory.Create(builder => builder.AddConsole());
+            ILogger logger = factory.CreateLogger<Program>();
+
             // Add services to the container.
+            try
+            {
+                builder.Services.AddGrpc();
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical(ex, "gRPC configuration error");
+                throw;
+            }
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
@@ -38,48 +42,54 @@ namespace TMS.AuthService
                 c.IncludeXmlComments(filePath);
             });
 
-            // Добавление сервисов аутентификации
-            var jwtKey = builder.Configuration["Jwt:Key"];
-            var jwtIssue = builder.Configuration["Jwt:Issuer"];
-            var jwtAudience = builder.Configuration["Jwt:Audience"];
-
-            if (string.IsNullOrEmpty(jwtKey) || string.IsNullOrEmpty(jwtIssue) || string.IsNullOrEmpty(jwtAudience))
+            // Jwt configurations
+            try
             {
-                throw new Exception("JWT configuration is not properly set up");
+                builder.Services.AddJwtAuthentication(builder.Configuration);
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical(ex, "JWT configuration error");
+                throw;
             }
 
-            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        ValidIssuer = jwtIssue,
-                        ValidAudience = jwtAudience,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)
-                        )
-                    };
-                });
-
+            //
             builder.Services.AddAuthorization();
 
-            builder.Services.AddAuthDataContext();
-
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<ITokenService, TokenService>();
-            builder.Services.AddScoped<IHashService, HashService>();
-
-            builder.Services.Configure<RedisConfiguration>(builder.Configuration.GetSection("Redis"));
-            builder.Services.AddSingleton<ConnectionMultiplexer>(provider =>
+            // Data Context configurations
+            try
             {
-                var config = provider.GetRequiredService<IOptions<RedisConfiguration>>().Value;
-                return ConnectionMultiplexer.Connect($"{config.Host}:{config.Port}");
-            });
-            builder.Services.AddTransient<IRedisService<UserToken>, RedisService<UserToken>>();
+                builder.Services.AddAuthDataContext();
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical(ex, "AuthDataContext configuration error");
+                throw;
+            }
 
+            // Перенести в метод AddAuthServices()
+            try
+            {
+                builder.Services.AddAuthServices();
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical(ex, "AuthServices configuration error");
+                throw;
+            }
+
+            // Radis configurations
+            try
+            {
+                builder.Services.AddRedisConfiguration(builder.Configuration);
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical(ex, "Redis configuration error");
+                throw;
+            }
+            
+            //
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -88,6 +98,8 @@ namespace TMS.AuthService
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            app.MapGrpcService<Services.Grpc.AuthService>();
 
             app.UseHttpsRedirection();
 

@@ -2,7 +2,7 @@
 using TMS.AuthService.Data;
 using TMS.Common;
 
-namespace TMS.AuthService.Endpoints;
+namespace TMS.AuthService.Extensions.Endpoints;
 
 /// <summary>
 /// 

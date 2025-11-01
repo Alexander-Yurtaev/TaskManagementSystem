@@ -11,8 +11,25 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
-  <ItemGroup Label="API Gateway">
-	  <PackageReference Include="Ocelot" />
+  <ItemGroup Label="Common">
+	<PackageReference Include="Ocelot" />
+  </ItemGroup>
+
+  <ItemGroup Label="gRPC">
+	  <PackageReference Include="Google.Protobuf" />
+	  <PackageReference Include="Grpc.Net.ClientFactory" />
+	  <PackageReference Include="Grpc.Tools">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TMS.AuthService\TMS.AuthService.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\token.proto" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>

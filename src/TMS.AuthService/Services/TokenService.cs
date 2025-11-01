@@ -106,7 +106,7 @@ public class TokenService : ITokenService
 
     private string GenerateAccessToken(UserEntity user)
     {
-        var jwtKey = _configuration["Jwt:Key"];
+        var jwtKey = _configuration["JWT_KEY"];
         var jwtIssue = _configuration["Jwt:Issuer"];
         var jwtAudience = _configuration["Jwt:Audience"];
 

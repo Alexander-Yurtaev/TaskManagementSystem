@@ -1,4 +1,4 @@
-﻿namespace TMS.AuthService.Endpoints;
+﻿namespace TMS.AuthService.Extensions.Endpoints;
 
 /// <summary>
 /// 

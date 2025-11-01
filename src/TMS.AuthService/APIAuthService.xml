@@ -4,27 +4,42 @@
         <name>TMS.AuthService</name>
     </assembly>
     <members>
-        <member name="T:TMS.AuthService.Configurations.RedisConfiguration">
+        <member name="T:TMS.AuthService.Configurations.JwtOptions">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.AuthService.Configurations.RedisConfiguration.#ctor">
+        <member name="P:TMS.AuthService.Configurations.JwtOptions.Issuer">
             <summary>
             
             </summary>
         </member>
-        <member name="P:TMS.AuthService.Configurations.RedisConfiguration.Host">
+        <member name="P:TMS.AuthService.Configurations.JwtOptions.Audience">
             <summary>
             
             </summary>
         </member>
-        <member name="P:TMS.AuthService.Configurations.RedisConfiguration.Port">
+        <member name="T:TMS.AuthService.Configurations.RedisOptions">
             <summary>
             
             </summary>
         </member>
-        <member name="P:TMS.AuthService.Configurations.RedisConfiguration.Password">
+        <member name="M:TMS.AuthService.Configurations.RedisOptions.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Configurations.RedisOptions.Host">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Configurations.RedisOptions.Port">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Configurations.RedisOptions.Password">
             <summary>
             
             </summary>
@@ -160,52 +175,82 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:TMS.AuthService.Endpoints.AuthEndpoints">
+        <member name="T:TMS.AuthService.Extensions.AuthServices">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.AuthService.Endpoints.AuthEndpoints.AddAuthEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.AuthService.Extensions.AuthServices.AddAuthServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.AuthService.Extensions.Endpoints.AuthEndpoints">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Extensions.Endpoints.AuthEndpoints.AddAuthEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
             <returns></returns>
         </member>
-        <member name="T:TMS.AuthService.Endpoints.GreetingEndpoints">
+        <member name="T:TMS.AuthService.Extensions.Endpoints.GreetingEndpoints">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.AuthService.Endpoints.GreetingEndpoints.AddGreetingEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.AuthService.Extensions.Endpoints.GreetingEndpoints.AddGreetingEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
             <returns></returns>
         </member>
-        <member name="T:TMS.AuthService.Endpoints.MigrationEndpoints">
+        <member name="T:TMS.AuthService.Extensions.Endpoints.MigrationEndpoints">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.AuthService.Endpoints.MigrationEndpoints.AddMigrateEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+        <member name="M:TMS.AuthService.Extensions.Endpoints.MigrationEndpoints.AddMigrateEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
             <summary>
             
             </summary>
             <param name="app"></param>
         </member>
-        <member name="T:TMS.AuthService.Endpoints.UserEndpoints">
+        <member name="T:TMS.AuthService.Extensions.Endpoints.UserEndpoints">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.AuthService.Endpoints.UserEndpoints.AddUserEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.AuthService.Extensions.Endpoints.UserEndpoints.AddUserEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
             <returns></returns>
+        </member>
+        <member name="T:TMS.AuthService.Extensions.JwtAuthentication">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Extensions.JwtAuthentication.AddJwtAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.ConfigurationManager)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.AuthService.Extensions.RedisConfiguration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Extensions.RedisConfiguration.AddRedisConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.ConfigurationManager)">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:TMS.AuthService.Models.LoginModel">
             <summary>
@@ -352,6 +397,94 @@
             </summary>
             <param name="args"></param>
             <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="T:TMS.AuthService.Services.Grpc.AuthService">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Services.Grpc.AuthService.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Logging.ILogger{TMS.AuthService.Services.Grpc.AuthService})">
+            <summary>
+            
+            </summary>
+            <param name="configuration"></param>
+            <param name="logger"></param>
+        </member>
+        <member name="M:TMS.AuthService.Services.Grpc.AuthService.ValidateToken(TMS.AuthService.Services.Grpc.ValidateTokenRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            
+            </summary>
+            <param name="request"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TMS.AuthService.Services.Grpc.TokenReflection">
+            <summary>Holder for reflection information generated from Protos/token.proto</summary>
+        </member>
+        <member name="P:TMS.AuthService.Services.Grpc.TokenReflection.Descriptor">
+            <summary>File descriptor for Protos/token.proto</summary>
+        </member>
+        <member name="T:TMS.AuthService.Services.Grpc.Claim">
+            <summary>
+            Сообщение, представляющее одну claim в токене
+            </summary>
+        </member>
+        <member name="F:TMS.AuthService.Services.Grpc.Claim.TypeFieldNumber">
+            <summary>Field number for the "type" field.</summary>
+        </member>
+        <member name="F:TMS.AuthService.Services.Grpc.Claim.ValueFieldNumber">
+            <summary>Field number for the "value" field.</summary>
+        </member>
+        <member name="T:TMS.AuthService.Services.Grpc.ValidateTokenRequest">
+            <summary>
+            Запрос на валидацию токена
+            </summary>
+        </member>
+        <member name="F:TMS.AuthService.Services.Grpc.ValidateTokenRequest.TokenFieldNumber">
+            <summary>Field number for the "token" field.</summary>
+        </member>
+        <member name="T:TMS.AuthService.Services.Grpc.ValidateTokenReply">
+            <summary>
+            Ответ с результатом валидации токена
+            </summary>
+        </member>
+        <member name="F:TMS.AuthService.Services.Grpc.ValidateTokenReply.IsValidateFieldNumber">
+            <summary>Field number for the "isValidate" field.</summary>
+        </member>
+        <member name="F:TMS.AuthService.Services.Grpc.ValidateTokenReply.AuthenticationTypeFieldNumber">
+            <summary>Field number for the "authenticationType" field.</summary>
+        </member>
+        <member name="F:TMS.AuthService.Services.Grpc.ValidateTokenReply.ClaimsFieldNumber">
+            <summary>Field number for the "claims" field.</summary>
+        </member>
+        <member name="T:TMS.AuthService.Services.Grpc.Auth">
+            <summary>
+            Сервис для валидации токенов аутентификации
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Services.Grpc.Auth.Descriptor">
+            <summary>Service descriptor</summary>
+        </member>
+        <member name="T:TMS.AuthService.Services.Grpc.Auth.AuthBase">
+            <summary>Base class for server-side implementations of Auth</summary>
+        </member>
+        <member name="M:TMS.AuthService.Services.Grpc.Auth.AuthBase.ValidateToken(TMS.AuthService.Services.Grpc.ValidateTokenRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            Метод для валидации токена
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
+        <member name="M:TMS.AuthService.Services.Grpc.Auth.BindService(TMS.AuthService.Services.Grpc.Auth.AuthBase)">
+            <summary>Creates service definition that can be registered with a server</summary>
+            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+        </member>
+        <member name="M:TMS.AuthService.Services.Grpc.Auth.BindService(Grpc.Core.ServiceBinderBase,TMS.AuthService.Services.Grpc.Auth.AuthBase)">
+            <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
+            Note: this method is part of an experimental API that can change or be removed without any prior notice.</summary>
+            <param name="serviceBinder">Service methods will be bound by calling <c>AddMethod</c> on this object.</param>
+            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
         </member>
         <member name="T:TMS.AuthService.Services.HashService">
             <summary>

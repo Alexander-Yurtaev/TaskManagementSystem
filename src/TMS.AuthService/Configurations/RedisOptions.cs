@@ -3,12 +3,12 @@
 /// <summary>
 /// 
 /// </summary>
-public class RedisConfiguration
+public class RedisOptions
 {
     /// <summary>
     /// 
     /// </summary>
-    public RedisConfiguration()
+    public RedisOptions()
     {
 
     }

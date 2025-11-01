@@ -3,20 +3,20 @@
     "http": {
       "commandName": "Project",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development3"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
-      "applicationUrl": "http://localhost:5181"
+      "applicationUrl": "http://localhost:8080"
     },
     "https": {
       "commandName": "Project",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development4"
+        "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "https://localhost:7233/swagger",
-      "applicationUrl": "https://localhost:7233;http://localhost:5181"
+      "launchUrl": "https://localhost:8081/swagger",
+      "applicationUrl": "https://localhost:8081;http://localhost:8080"
     },
     "Container (Dockerfile)": {
       "commandName": "Docker",
