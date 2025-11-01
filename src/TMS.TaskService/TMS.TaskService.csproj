@@ -12,13 +12,6 @@
 	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="NewFolder\**" />
-    <Content Remove="NewFolder\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
-    <None Remove="NewFolder\**" />
-  </ItemGroup>
-
   <ItemGroup Label="Common">
 	<PackageReference Include="AutoMapper" />
 	<PackageReference Include="Swashbuckle.AspNetCore" />
@@ -50,10 +43,6 @@
   <ItemGroup>
     <ProjectReference Include="..\TMS.Common\TMS.Common.csproj" />
     <ProjectReference Include="..\TMS.Entities\TMS.Entities.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Endpoints\" />
   </ItemGroup>
 
   <ItemGroup>
