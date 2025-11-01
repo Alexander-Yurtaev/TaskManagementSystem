@@ -1,5 +1,5 @@
 using Ocelot.Middleware;
-using TMS.ApiGateway.Extensions;
+using TMS.ApiGateway.Extensions.Services;
 using TMS.ApiGateway.Middlewares;
 
 namespace TMS.ApiGateway

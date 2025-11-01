@@ -1,6 +1,6 @@
 ﻿using Ocelot.DependencyInjection;
 
-namespace TMS.ApiGateway.Extensions;
+namespace TMS.ApiGateway.Extensions.Services;
 
 public static class OcelotConfiguration
 {

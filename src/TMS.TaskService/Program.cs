@@ -1,7 +1,7 @@
 using Microsoft.OpenApi.Models;
 using TMS.TaskService.Data.Extensions;
-using TMS.TaskService.Extensions;
 using TMS.TaskService.Extensions.Endpoints;
+using TMS.TaskService.Extensions.Services;
 
 namespace TMS.TaskService
 {
@@ -70,6 +70,7 @@ namespace TMS.TaskService
 
             app.AddGreetingEndpoint();
             app.AddMigrateEndpoint();
+            app.AddTaskServiceOperations();
 
             app.Run();
         }

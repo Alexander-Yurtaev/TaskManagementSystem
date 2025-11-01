@@ -1,7 +1,7 @@
 ﻿using TMS.AuthService.Data;
 using TMS.AuthService.Services;
 
-namespace TMS.AuthService.Extensions;
+namespace TMS.AuthService.Extensions.Services;
 
 /// <summary>
 /// 

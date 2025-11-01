@@ -175,16 +175,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:TMS.AuthService.Extensions.AuthServices">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.AuthService.Extensions.AuthServices.AddAuthServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:TMS.AuthService.Extensions.Endpoints.AuthEndpoints">
             <summary>
             
@@ -232,22 +222,32 @@
             <param name="endpoints"></param>
             <returns></returns>
         </member>
-        <member name="T:TMS.AuthService.Extensions.JwtAuthentication">
+        <member name="T:TMS.AuthService.Extensions.Services.AuthServices">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.AuthService.Extensions.JwtAuthentication.AddJwtAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.ConfigurationManager)">
+        <member name="M:TMS.AuthService.Extensions.Services.AuthServices.AddAuthServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
             
             </summary>
         </member>
-        <member name="T:TMS.AuthService.Extensions.RedisConfiguration">
+        <member name="T:TMS.AuthService.Extensions.Services.JwtAuthentication">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.AuthService.Extensions.RedisConfiguration.AddRedisConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.ConfigurationManager)">
+        <member name="M:TMS.AuthService.Extensions.Services.JwtAuthentication.AddJwtAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.ConfigurationManager)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.AuthService.Extensions.Services.RedisConfiguration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.AuthService.Extensions.Services.RedisConfiguration.AddRedisConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.ConfigurationManager)">
             <summary>
             
             </summary>

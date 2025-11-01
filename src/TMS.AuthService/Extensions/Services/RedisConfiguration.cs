@@ -4,7 +4,7 @@ using TMS.AuthService.Configurations;
 using TMS.AuthService.Models;
 using TMS.AuthService.Services;
 
-namespace TMS.AuthService.Extensions;
+namespace TMS.AuthService.Extensions.Services;
 
 /// <summary>
 /// 

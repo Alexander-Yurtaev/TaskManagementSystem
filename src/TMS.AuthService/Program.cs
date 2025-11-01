@@ -2,6 +2,7 @@ using Microsoft.OpenApi.Models;
 using TMS.AuthService.Data.Extensions;
 using TMS.AuthService.Extensions;
 using TMS.AuthService.Extensions.Endpoints;
+using TMS.AuthService.Extensions.Services;
 
 namespace TMS.AuthService
 {

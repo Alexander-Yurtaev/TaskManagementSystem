@@ -1,9 +1,18 @@
-﻿using TMS.ApiGateway.Grpc.Clients;
+﻿using TMS.TaskManager.Grpc.Clients;
 
-namespace TMS.ApiGateway.Extensions;
+namespace TMS.TaskService.Extensions.Services;
 
+/// <summary>
+/// 
+/// </summary>
 public static class RpcConfiguration
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
+    /// <exception cref="Exception"></exception>
     public static void AddRpcConfiguration(this IServiceCollection services, ConfigurationManager configuration)
     {
         var grpcServerSchema = configuration["GRPC_SERVER_SCHEMA"] ?? throw new Exception("GRPC_SERVER_SCHEMA does not defined");

@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using TMS.AuthService.Configurations;
 
-namespace TMS.AuthService.Extensions;
+namespace TMS.AuthService.Extensions.Services;
 
 /// <summary>
 /// 

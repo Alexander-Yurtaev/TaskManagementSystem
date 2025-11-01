@@ -66,6 +66,40 @@
             </summary>
             <param name="modelBuilder"></param>
         </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.CreateTaskOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.CreateTaskOperations.AddCreateTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.CreateTaskOperations.AddCreateTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.DeleteTaskOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.DeleteTaskOperations.AddDeleteTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.DeleteTaskOperations.AddDeleteTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
         <member name="T:TMS.TaskService.Extensions.Endpoints.GreetingEndpoints">
             <summary>
             
@@ -89,12 +123,63 @@
             </summary>
             <param name="app"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.RpcConfiguration">
+        <member name="T:TMS.TaskService.Extensions.Endpoints.ReadTaskOperations">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.TaskService.Extensions.RpcConfiguration.AddRpcConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.ConfigurationManager)">
+        <member name="M:TMS.TaskService.Extensions.Endpoints.ReadTaskOperations.AddReadTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.ReadTaskOperations.AddGetTasksOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.ReadTaskOperations.AddGetTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.TaskServiceOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.TaskServiceOperations.AddTaskServiceOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.UpdateTaskOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.UpdateTaskOperations.AddUpdateTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.UpdateTaskOperations.AddUpdateTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Services.RpcConfiguration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Services.RpcConfiguration.AddRpcConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.ConfigurationManager)">
             <summary>
             
             </summary>
