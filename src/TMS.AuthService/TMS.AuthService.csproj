@@ -20,6 +20,7 @@
 
   <ItemGroup Label="gRPC">
 	<PackageReference Include="Grpc.AspNetCore" />
+	<PackageReference Include="StackExchange.Redis" />
   </ItemGroup>
 
   <ItemGroup Label="EF Core">
@@ -40,7 +41,6 @@
     <PackageReference Include="BCrypt.Net-Core" />
 	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
 	<PackageReference Include="Microsoft.IdentityModel.Tokens" />
-	<PackageReference Include="StackExchange.Redis" />
 	<PackageReference Include="System.IdentityModel.Tokens.Jwt" />
   </ItemGroup>
 
@@ -51,10 +51,6 @@
 
   <ItemGroup>
 	<Protobuf Include="Protos\token.proto" GrpcServices="Server" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Endpoints\" />
   </ItemGroup>
 
 

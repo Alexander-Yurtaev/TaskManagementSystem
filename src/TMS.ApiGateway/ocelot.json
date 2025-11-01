@@ -13,20 +13,19 @@
       ],
       "DangerousAcceptAnyServerCertificateValidator": true
     },
-    {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "UpstreamPathTemplate": "/auth/{everything}",
-      "DownstreamPathTemplate": "/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-auth-service",
-          "Port": 8081
-        }
-      ],
-      "DangerousAcceptAnyServerCertificateValidator": true
-    },
-
+    //{
+    //  "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+    //  "UpstreamPathTemplate": "/auth/{everything}",
+    //  "DownstreamPathTemplate": "/{everything}",
+    //  "DownstreamScheme": "https",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "tms-auth-service",
+    //      "Port": 8081
+    //    }
+    //  ],
+    //  "DangerousAcceptAnyServerCertificateValidator": true
+    //},
     {
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "UpstreamPathTemplate": "/api/task/{everything}",

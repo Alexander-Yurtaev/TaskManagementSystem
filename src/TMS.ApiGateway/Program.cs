@@ -10,6 +10,12 @@ namespace TMS.ApiGateway
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Add your features
+            if (builder.Environment.IsDevelopment())
+            {
+                builder.Logging.AddConsole();
+            }
+
             // Чтобы в контроллере узнать текущие схему и хост
             builder.Services.AddHttpContextAccessor();
             
@@ -19,12 +25,6 @@ namespace TMS.ApiGateway
 
             // Ocelot Basic setup
             builder.Services.AddOcelotConfiguration(builder.Environment.ContentRootPath, builder.Configuration);
-            
-            // Add your features
-            if (builder.Environment.IsDevelopment())
-            {
-                builder.Logging.AddConsole();
-            }
 
             // gRPC
             builder.Services.AddRpcConfiguration(builder.Configuration);

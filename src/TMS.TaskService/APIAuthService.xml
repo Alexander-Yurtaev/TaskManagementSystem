@@ -1,0 +1,221 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TMS.TaskService</name>
+    </assembly>
+    <members>
+        <member name="T:TMS.TaskService.Data.Extensions.DataContextExtensions">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Data.Extensions.DataContextExtensions.AddTaskDataContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+            <param name="connectionString"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TMS.TaskService.Data.Migrations.InitialMigrations">
+            <inheritdoc />
+        </member>
+        <member name="M:TMS.TaskService.Data.Migrations.InitialMigrations.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TMS.TaskService.Data.Migrations.InitialMigrations.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:TMS.TaskService.Data.Migrations.InitialMigrations.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:TMS.TaskService.Data.TaskDataContext">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Data.TaskDataContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions)">
+            <summary>
+            
+            </summary>
+            <param name="options"></param>
+        </member>
+        <member name="P:TMS.TaskService.Data.TaskDataContext.Projects">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Data.TaskDataContext.Tasks">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Data.TaskDataContext.Comments">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Data.TaskDataContext.Attachments">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Data.TaskDataContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="modelBuilder"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.GreetingEndpoints">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.GreetingEndpoints.AddGreetingEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.MigrationEndpoints">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.MigrationEndpoints.AddMigrateEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.RpcConfiguration">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.RpcConfiguration.AddRpcConfiguration(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.ConfigurationManager)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="T:TMS.TaskService.Program">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Program.Main(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="T:TMS.TaskManager.Grpc.Clients.TokenReflection">
+            <summary>Holder for reflection information generated from Protos/token.proto</summary>
+        </member>
+        <member name="P:TMS.TaskManager.Grpc.Clients.TokenReflection.Descriptor">
+            <summary>File descriptor for Protos/token.proto</summary>
+        </member>
+        <member name="T:TMS.TaskManager.Grpc.Clients.Claim">
+            <summary>
+            Сообщение, представляющее одну claim в токене
+            </summary>
+        </member>
+        <member name="F:TMS.TaskManager.Grpc.Clients.Claim.TypeFieldNumber">
+            <summary>Field number for the "type" field.</summary>
+        </member>
+        <member name="F:TMS.TaskManager.Grpc.Clients.Claim.ValueFieldNumber">
+            <summary>Field number for the "value" field.</summary>
+        </member>
+        <member name="T:TMS.TaskManager.Grpc.Clients.ValidateTokenRequest">
+            <summary>
+            Запрос на валидацию токена
+            </summary>
+        </member>
+        <member name="F:TMS.TaskManager.Grpc.Clients.ValidateTokenRequest.TokenFieldNumber">
+            <summary>Field number for the "token" field.</summary>
+        </member>
+        <member name="T:TMS.TaskManager.Grpc.Clients.ValidateTokenReply">
+            <summary>
+            Ответ с результатом валидации токена
+            </summary>
+        </member>
+        <member name="F:TMS.TaskManager.Grpc.Clients.ValidateTokenReply.IsValidateFieldNumber">
+            <summary>Field number for the "isValidate" field.</summary>
+        </member>
+        <member name="F:TMS.TaskManager.Grpc.Clients.ValidateTokenReply.AuthenticationTypeFieldNumber">
+            <summary>Field number for the "authenticationType" field.</summary>
+        </member>
+        <member name="F:TMS.TaskManager.Grpc.Clients.ValidateTokenReply.ClaimsFieldNumber">
+            <summary>Field number for the "claims" field.</summary>
+        </member>
+        <member name="T:TMS.TaskManager.Grpc.Clients.Auth">
+            <summary>
+            Сервис для валидации токенов аутентификации
+            </summary>
+        </member>
+        <member name="P:TMS.TaskManager.Grpc.Clients.Auth.Descriptor">
+            <summary>Service descriptor</summary>
+        </member>
+        <member name="T:TMS.TaskManager.Grpc.Clients.Auth.AuthClient">
+            <summary>Client for Auth</summary>
+        </member>
+        <member name="M:TMS.TaskManager.Grpc.Clients.Auth.AuthClient.#ctor(Grpc.Core.ChannelBase)">
+            <summary>Creates a new client for Auth</summary>
+            <param name="channel">The channel to use to make remote calls.</param>
+        </member>
+        <member name="M:TMS.TaskManager.Grpc.Clients.Auth.AuthClient.#ctor(Grpc.Core.CallInvoker)">
+            <summary>Creates a new client for Auth that uses a custom <c>CallInvoker</c>.</summary>
+            <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+        </member>
+        <member name="M:TMS.TaskManager.Grpc.Clients.Auth.AuthClient.#ctor">
+            <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+        </member>
+        <member name="M:TMS.TaskManager.Grpc.Clients.Auth.AuthClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Protected constructor to allow creation of configured clients.</summary>
+            <param name="configuration">The client configuration.</param>
+        </member>
+        <member name="M:TMS.TaskManager.Grpc.Clients.Auth.AuthClient.ValidateToken(TMS.TaskManager.Grpc.Clients.ValidateTokenRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Метод для валидации токена
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:TMS.TaskManager.Grpc.Clients.Auth.AuthClient.ValidateToken(TMS.TaskManager.Grpc.Clients.ValidateTokenRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Метод для валидации токена
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:TMS.TaskManager.Grpc.Clients.Auth.AuthClient.ValidateTokenAsync(TMS.TaskManager.Grpc.Clients.ValidateTokenRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Метод для валидации токена
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:TMS.TaskManager.Grpc.Clients.Auth.AuthClient.ValidateTokenAsync(TMS.TaskManager.Grpc.Clients.ValidateTokenRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Метод для валидации токена
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:TMS.TaskManager.Grpc.Clients.Auth.AuthClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+        </member>
+    </members>
+</doc>
