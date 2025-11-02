@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace TMS.Entities.Notification.Enums;
+namespace TMS.NotificationService.Entities.Enums;
 
 public enum NotificationReadStatus
 {

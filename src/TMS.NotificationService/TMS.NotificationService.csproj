@@ -25,7 +25,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TMS.Common\TMS.Common.csproj" />
-    <ProjectReference Include="..\TMS.Entities\TMS.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
 </Project>

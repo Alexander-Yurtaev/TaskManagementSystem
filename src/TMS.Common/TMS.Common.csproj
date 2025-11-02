@@ -6,4 +6,18 @@
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
+
+  <ItemGroup Label="Common">
+	<PackageReference Include="DotNetEnv" />
+  </ItemGroup>
+
+  <ItemGroup Label="EF Core">
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+		<PrivateAssets>all</PrivateAssets>
+		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
+	<PackageReference Include="Microsoft.Extensions.Configuration" />
+	<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
+	<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+  </ItemGroup>
 </Project>

@@ -12,7 +12,7 @@ using TMS.TaskService.Data;
 namespace TMS.TaskService.Data.Migrations
 {
     [DbContext(typeof(TaskDataContext))]
-    [Migration("20251030095419_InitialMigrations")]
+    [Migration("20251102011234_InitialMigrations")]
     partial class InitialMigrations
     {
         /// <inheritdoc />
@@ -25,77 +25,7 @@ namespace TMS.TaskService.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("TMS.Entities.Auth.UserEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("Role")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("User");
-                });
-
-            modelBuilder.Entity("TMS.Entities.Notification.NotificationEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Message")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("ReadStatus")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TaskId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TaskId");
-
-                    b.ToTable("Notification");
-                });
-
-            modelBuilder.Entity("TMS.Entities.Task.AttachmentEntity", b =>
+            modelBuilder.Entity("TMS.TaskService.Entities.AttachmentEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -123,7 +53,7 @@ namespace TMS.TaskService.Data.Migrations
                     b.ToTable("Attachment");
                 });
 
-            modelBuilder.Entity("TMS.Entities.Task.CommentEntity", b =>
+            modelBuilder.Entity("TMS.TaskService.Entities.CommentEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -149,12 +79,10 @@ namespace TMS.TaskService.Data.Migrations
 
                     b.HasIndex("TaskId");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Comment");
                 });
 
-            modelBuilder.Entity("TMS.Entities.Task.ProjectEntity", b =>
+            modelBuilder.Entity("TMS.TaskService.Entities.ProjectEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -186,12 +114,10 @@ namespace TMS.TaskService.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Project");
                 });
 
-            modelBuilder.Entity("TMS.Entities.Task.TaskEntity", b =>
+            modelBuilder.Entity("TMS.TaskService.Entities.TaskEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -220,7 +146,8 @@ namespace TMS.TaskService.Data.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
 
@@ -229,20 +156,9 @@ namespace TMS.TaskService.Data.Migrations
                     b.ToTable("Task");
                 });
 
-            modelBuilder.Entity("TMS.Entities.Notification.NotificationEntity", b =>
+            modelBuilder.Entity("TMS.TaskService.Entities.AttachmentEntity", b =>
                 {
-                    b.HasOne("TMS.Entities.Task.TaskEntity", "Task")
-                        .WithMany("Notifications")
-                        .HasForeignKey("TaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Task");
-                });
-
-            modelBuilder.Entity("TMS.Entities.Task.AttachmentEntity", b =>
-                {
-                    b.HasOne("TMS.Entities.Task.TaskEntity", "Task")
+                    b.HasOne("TMS.TaskService.Entities.TaskEntity", "Task")
                         .WithMany("Attachments")
                         .HasForeignKey("TaskId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -251,39 +167,20 @@ namespace TMS.TaskService.Data.Migrations
                     b.Navigation("Task");
                 });
 
-            modelBuilder.Entity("TMS.Entities.Task.CommentEntity", b =>
+            modelBuilder.Entity("TMS.TaskService.Entities.CommentEntity", b =>
                 {
-                    b.HasOne("TMS.Entities.Task.TaskEntity", "Task")
+                    b.HasOne("TMS.TaskService.Entities.TaskEntity", "Task")
                         .WithMany("Comments")
                         .HasForeignKey("TaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TMS.Entities.Auth.UserEntity", "User")
-                        .WithMany("Comments")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Task");
-
-                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("TMS.Entities.Task.ProjectEntity", b =>
+            modelBuilder.Entity("TMS.TaskService.Entities.TaskEntity", b =>
                 {
-                    b.HasOne("TMS.Entities.Auth.UserEntity", "User")
-                        .WithMany("Projects")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("TMS.Entities.Task.TaskEntity", b =>
-                {
-                    b.HasOne("TMS.Entities.Task.ProjectEntity", "Project")
+                    b.HasOne("TMS.TaskService.Entities.ProjectEntity", "Project")
                         .WithMany("Tasks")
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -292,25 +189,16 @@ namespace TMS.TaskService.Data.Migrations
                     b.Navigation("Project");
                 });
 
-            modelBuilder.Entity("TMS.Entities.Auth.UserEntity", b =>
-                {
-                    b.Navigation("Comments");
-
-                    b.Navigation("Projects");
-                });
-
-            modelBuilder.Entity("TMS.Entities.Task.ProjectEntity", b =>
+            modelBuilder.Entity("TMS.TaskService.Entities.ProjectEntity", b =>
                 {
                     b.Navigation("Tasks");
                 });
 
-            modelBuilder.Entity("TMS.Entities.Task.TaskEntity", b =>
+            modelBuilder.Entity("TMS.TaskService.Entities.TaskEntity", b =>
                 {
                     b.Navigation("Attachments");
 
                     b.Navigation("Comments");
-
-                    b.Navigation("Notifications");
                 });
 #pragma warning restore 612, 618
         }

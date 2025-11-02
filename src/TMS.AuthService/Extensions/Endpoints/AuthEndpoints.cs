@@ -1,9 +1,9 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using Microsoft.AspNetCore.Mvc;
 using TMS.AuthService.Data;
+using TMS.AuthService.Entities;
 using TMS.AuthService.Models;
 using TMS.AuthService.Services;
-using TMS.Entities.Auth;
 
 namespace TMS.AuthService.Extensions.Endpoints;
 

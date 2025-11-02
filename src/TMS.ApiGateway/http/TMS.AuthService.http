@@ -1,5 +1,4 @@
-@TMS.AuthService_HostAddress = https://localhost:6829/api/auth
-5011
+@TMS.AuthService_HostAddress = https://localhost:7451/api/auth
 
 ### Migrate
 GET {{TMS.AuthService_HostAddress}}/migrate
@@ -35,7 +34,7 @@ Accept: application/json
 GET {{TMS.AuthService_HostAddress}}/users
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVXNlck5hbWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJFbWFpbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE3NjIwMzU1NjJ9.Y1IM17AReW6v3rbrrwLiFVjRlSW9hhr8Zi57ogjLF7Y
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVXNlck5hbWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJFbWFpbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE3NjIwMzczOTJ9.mOj_txaMEKlgxCHPECPtkTICbMYzsTR5PS9GexJmF_U
 
 
 ### GET REFRESH TOKEN
@@ -44,7 +43,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "refresh-token": "rLgg45OrRgXGmjMiLOcxImn55Nqs8uU0+aXB8v12qMUXqQiCQuwp8JiZ6kf/Ok/uIANWWQmzS+4v6dVcZLrrlA=="
+  "refresh-token": "jkL8XneOLBXW/CyBOgPwQ7etYJmHWN4095V30xaUxRPL7sqmRYaEzNUxDqQqSHFdUre3gXxfpZd891HETScCoQ=="
 }
 
 

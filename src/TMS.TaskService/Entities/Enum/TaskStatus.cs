@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel;
 
-namespace TMS.Entities.Task.Enum;
+namespace TMS.TaskService.Entities.Enum;
 
+/// <summary>
+/// 
+/// </summary>
 public enum TaskStatus
 {
     /// <summary>

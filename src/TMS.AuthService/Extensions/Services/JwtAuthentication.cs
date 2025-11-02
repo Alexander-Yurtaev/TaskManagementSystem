@@ -1,7 +1,6 @@
 ﻿using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using TMS.AuthService.Configurations;
 
 namespace TMS.AuthService.Extensions.Services;
 
@@ -13,7 +12,9 @@ public static class JwtAuthentication
     /// <summary>
     /// 
     /// </summary>
-    public static void AddJwtAuthentication(this IServiceCollection services, ConfigurationManager configuration)
+    public static void AddJwtAuthentication(this IServiceCollection services, 
+        ConfigurationManager configuration,
+        ILogger logger)
     {
         var jwtKey = configuration["JWT_KEY"];
         var jwtIssuer = configuration["JWT_ISSUER"];
@@ -23,6 +24,7 @@ public static class JwtAuthentication
             string.IsNullOrEmpty(jwtIssuer) ||
             string.IsNullOrEmpty(jwtAudience))
         {
+            logger.LogError("JWT configuration is not properly set up");
             throw new Exception("JWT configuration is not properly set up");
         }
 

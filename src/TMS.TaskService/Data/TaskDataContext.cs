@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TMS.Entities.Task;
+using TMS.TaskService.Entities;
 
 namespace TMS.TaskService.Data;
 
@@ -12,7 +12,7 @@ public class TaskDataContext : DbContext
     /// 
     /// </summary>
     /// <param name="options"></param>
-    public TaskDataContext(DbContextOptions options) : base(options)
+    public TaskDataContext(DbContextOptions<TaskDataContext> options) : base(options)
     {
         
     }
@@ -68,18 +68,6 @@ public class TaskDataContext : DbContext
             .HasOne(n => n.Task)
             .WithMany(t => t.Comments)
             .HasForeignKey(n => n.TaskId)
-            .IsRequired(); // явно указываем обязательность связи
-
-        modelBuilder.Entity<CommentEntity>()
-            .HasOne(n => n.User)
-            .WithMany(t => t.Comments)
-            .HasForeignKey(n => n.UserId)
-            .IsRequired(); // явно указываем обязательность связи
-
-        modelBuilder.Entity<ProjectEntity>()
-            .HasOne(n => n.User)
-            .WithMany(t => t.Projects)
-            .HasForeignKey(n => n.UserId)
             .IsRequired(); // явно указываем обязательность связи
 
         modelBuilder.Entity<TaskEntity>()

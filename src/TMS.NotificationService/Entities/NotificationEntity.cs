@@ -1,10 +1,9 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using TMS.Entities.Notification.Enums;
-using TMS.Entities.Task;
+using TMS.NotificationService.Entities.Enums;
 
-namespace TMS.Entities.Notification;
+namespace TMS.NotificationService.Entities;
 
 [Table("Notification")]
 public class NotificationEntity
@@ -20,8 +19,6 @@ public class NotificationEntity
 
     [Required]
     public int TaskId { get; set; }
-
-    public TaskEntity? Task { get; set; }
 
     [Required]
     public int UserId { get; set; }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TMS.Entities.Auth;
-using TMS.Entities.Auth.Enum;
+using TMS.AuthService.Entities;
+using TMS.AuthService.Entities.Enum;
 
 namespace TMS.AuthService.Data;
 
@@ -13,7 +13,7 @@ public class AuthDataContext : DbContext
     /// 
     /// </summary>
     /// <param name="options"></param>
-    public AuthDataContext(DbContextOptions options) : base(options)
+    public AuthDataContext(DbContextOptions<AuthDataContext> options) : base(options)
     {
         
     }

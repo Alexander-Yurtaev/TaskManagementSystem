@@ -24,7 +24,7 @@
             
             </summary>
         </member>
-        <member name="M:TMS.AuthService.Data.AuthDataContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions)">
+        <member name="M:TMS.AuthService.Data.AuthDataContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{TMS.AuthService.Data.AuthDataContext})">
             <summary>
             
             </summary>
@@ -40,6 +40,11 @@
             
             </summary>
             <param name="modelBuilder"></param>
+        </member>
+        <member name="T:TMS.AuthService.Data.AuthDataContextFactory">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:TMS.AuthService.Data.Extensions.DataContextExtensions">
             <summary>
@@ -80,7 +85,7 @@
             <param name="userName"></param>
             <returns></returns>
         </member>
-        <member name="M:TMS.AuthService.Data.IUserRepository.AddUserAsync(TMS.Entities.Auth.UserEntity)">
+        <member name="M:TMS.AuthService.Data.IUserRepository.AddUserAsync(TMS.AuthService.Entities.UserEntity)">
             <summary>
             
             </summary>
@@ -138,7 +143,7 @@
             <param name="userName"></param>
             <returns></returns>
         </member>
-        <member name="M:TMS.AuthService.Data.UserRepository.AddUserAsync(TMS.Entities.Auth.UserEntity)">
+        <member name="M:TMS.AuthService.Data.UserRepository.AddUserAsync(TMS.AuthService.Entities.UserEntity)">
             <summary>
             
             </summary>
@@ -149,6 +154,86 @@
             
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:TMS.AuthService.Entities.Enum.UserRole">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:TMS.AuthService.Entities.Enum.UserRole.User">
+            <summary>
+            Базовая роль для всех пользователей
+            </summary>
+        </member>
+        <member name="F:TMS.AuthService.Entities.Enum.UserRole.Admin">
+            <summary>
+            Роль для администраторов системы
+            </summary>
+        </member>
+        <member name="F:TMS.AuthService.Entities.Enum.UserRole.Moderator">
+            <summary>
+            Роль для модераторов контента
+            </summary>
+        </member>
+        <member name="F:TMS.AuthService.Entities.Enum.UserRole.SuperAdmin">
+            <summary>
+            Роль для супер-администраторов
+            </summary>
+        </member>
+        <member name="F:TMS.AuthService.Entities.Enum.UserRole.Guest">
+            <summary>
+            Роль для гостей (без регистрации)
+            </summary>
+        </member>
+        <member name="T:TMS.AuthService.Entities.UserEntity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Entities.UserEntity.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Entities.UserEntity.UserName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Entities.UserEntity.Email">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Entities.UserEntity.PasswordHash">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Entities.UserEntity.Role">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Entities.UserEntity.CreateAt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Entities.UserEntity.UpdatedAt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Entities.UserEntity.DeletedAt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.AuthService.Entities.UserEntity.IsDeleted">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:TMS.AuthService.Extensions.Endpoints.AuthEndpoints">
             <summary>
@@ -212,7 +297,7 @@
             
             </summary>
         </member>
-        <member name="M:TMS.AuthService.Extensions.Services.JwtAuthentication.AddJwtAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.ConfigurationManager)">
+        <member name="M:TMS.AuthService.Extensions.Services.JwtAuthentication.AddJwtAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.ConfigurationManager,Microsoft.Extensions.Logging.ILogger)">
             <summary>
             
             </summary>
@@ -260,7 +345,7 @@
             <param name="Password"></param>
             <param name="Role"></param>
         </member>
-        <member name="M:TMS.AuthService.Models.RegisterModel.#ctor(System.String,System.String,System.String,TMS.Entities.Auth.Enum.UserRole)">
+        <member name="M:TMS.AuthService.Models.RegisterModel.#ctor(System.String,System.String,System.String,TMS.AuthService.Entities.Enum.UserRole)">
             <summary>
             
             </summary>
@@ -557,7 +642,7 @@
             
             </summary>
         </member>
-        <member name="M:TMS.AuthService.Services.ITokenService.GenerateTokensAsync(TMS.Entities.Auth.UserEntity)">
+        <member name="M:TMS.AuthService.Services.ITokenService.GenerateTokensAsync(TMS.AuthService.Entities.UserEntity)">
             <summary>
             
             </summary>
@@ -635,7 +720,7 @@
             <param name="hashService"></param>
             <param name="logger"></param>
         </member>
-        <member name="M:TMS.AuthService.Services.TokenService.GenerateTokensAsync(TMS.Entities.Auth.UserEntity)">
+        <member name="M:TMS.AuthService.Services.TokenService.GenerateTokensAsync(TMS.AuthService.Entities.UserEntity)">
             <summary>
             
             </summary>

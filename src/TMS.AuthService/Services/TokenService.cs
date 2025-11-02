@@ -4,8 +4,8 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using TMS.AuthService.Data;
+using TMS.AuthService.Entities;
 using TMS.AuthService.Models;
-using TMS.Entities.Auth;
 
 namespace TMS.AuthService.Services;
 

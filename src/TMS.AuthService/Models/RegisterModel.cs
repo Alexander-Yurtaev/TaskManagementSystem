@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using TMS.Entities.Auth.Enum;
+using TMS.AuthService.Entities.Enum;
 
 namespace TMS.AuthService.Models;
 

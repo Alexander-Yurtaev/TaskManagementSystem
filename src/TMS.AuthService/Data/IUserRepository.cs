@@ -1,4 +1,4 @@
-﻿using TMS.Entities.Auth;
+﻿using TMS.AuthService.Entities;
 
 namespace TMS.AuthService.Data;
 

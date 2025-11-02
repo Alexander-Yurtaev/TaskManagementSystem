@@ -19,6 +19,23 @@ namespace TMS.AuthService
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Загружаем .env-файл
+            var envPath = Path.Combine(Directory.GetCurrentDirectory(), ".env");
+            if (File.Exists(envPath))
+            {
+                foreach (var line in File.ReadAllLines(envPath))
+                {
+                    if (line.StartsWith("#") || string.IsNullOrWhiteSpace(line)) continue;
+                    var parts = line.Split('=', 2, StringSplitOptions.None);
+                    if (parts.Length == 2)
+                    {
+                        Environment.SetEnvironmentVariable(parts[0], parts[1]);
+                    }
+                }
+            }
+
+            builder.Configuration.AddEnvironmentVariables();
+
             using var factory = LoggerFactory.Create(b => b.AddConsole());
             ILogger logger = factory.CreateLogger<Program>();
 
@@ -45,7 +62,7 @@ namespace TMS.AuthService
             // Jwt configurations
             try
             {
-                builder.Services.AddJwtAuthentication(builder.Configuration);
+                builder.Services.AddJwtAuthentication(builder.Configuration, logger);
             }
             catch (Exception ex)
             {

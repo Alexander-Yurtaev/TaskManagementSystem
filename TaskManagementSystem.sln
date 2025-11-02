@@ -27,8 +27,6 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMS.Common", "src\TMS.Common\TMS.Common.csproj", "{AF6EECFE-C34D-4E65-B990-737AD7450B44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMS.Entities", "src\TMS.Entities\TMS.Entities.csproj", "{BECC18C0-0FEB-4184-8241-D569D58BFA7F}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,10 +61,6 @@ Global
 		{AF6EECFE-C34D-4E65-B990-737AD7450B44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF6EECFE-C34D-4E65-B990-737AD7450B44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF6EECFE-C34D-4E65-B990-737AD7450B44}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BECC18C0-0FEB-4184-8241-D569D58BFA7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BECC18C0-0FEB-4184-8241-D569D58BFA7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BECC18C0-0FEB-4184-8241-D569D58BFA7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BECC18C0-0FEB-4184-8241-D569D58BFA7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,7 +72,6 @@ Global
 		{F75326AA-2E17-4384-BE64-C9C891FDFB0C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{79C881B1-9641-4A9D-951B-6EDCE1F4C2DA} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{AF6EECFE-C34D-4E65-B990-737AD7450B44} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-		{BECC18C0-0FEB-4184-8241-D569D58BFA7F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4DA832A0-8076-4498-A734-E6A406EDFCEE}

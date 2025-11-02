@@ -34,7 +34,7 @@
             
             </summary>
         </member>
-        <member name="M:TMS.TaskService.Data.TaskDataContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions)">
+        <member name="M:TMS.TaskService.Data.TaskDataContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{TMS.TaskService.Data.TaskDataContext})">
             <summary>
             
             </summary>
@@ -65,6 +65,395 @@
             
             </summary>
             <param name="modelBuilder"></param>
+        </member>
+        <member name="T:TMS.TaskService.Data.TaskDataContextFactory">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.TaskService.Entities.AttachmentEntity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.AttachmentEntity.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.AttachmentEntity.FileName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.AttachmentEntity.FilePath">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.AttachmentEntity.TaskId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.AttachmentEntity.Task">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.TaskService.Entities.CommentEntity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.CommentEntity.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.CommentEntity.Text">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.CommentEntity.CreatedAt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.CommentEntity.UserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.CommentEntity.TaskId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.CommentEntity.Task">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.TaskService.Entities.Enum.ProjectStatus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.ProjectStatus.Draft">
+            <summary>
+            Проект создан, но не опубликован.
+            Доступен только владельцу.
+            Можно вносить изменения без ограничений.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.ProjectStatus.Pending">
+            <summary>
+            Проект отправлен на одобрение.
+            Ожидает проверки модератором/руководством.
+            Доступ ограничен.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.ProjectStatus.Active">
+            <summary>
+            Проект запущен.
+            Доступны все функции.
+            Задачи можно создавать и выполнять.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.ProjectStatus.OnHold">
+            <summary>
+            Временная приостановка работы.
+            Задачи не создаются.
+            Существующие задачи остаются в текущем состоянии.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.ProjectStatus.Completed">
+            <summary>
+            Все задачи выполнены.
+            Проект закрыт.
+            Доступ только для просмотра.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.ProjectStatus.Cancelled">
+            <summary>
+            Проект прекращен.
+            Задачи аннулированы.
+            Доступ ограничен.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.ProjectStatus.Archived">
+            <summary>
+            Проект перемещен в архив.
+            Доступен только для истории.
+            Нет активной работы.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.ProjectStatus.Review">
+            <summary>
+            Проект требует ревизии.
+            Возможна корректировка.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.ProjectStatus.Planning">
+            <summary>
+            Этап формирования плана.
+            Определение целей и задач.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.ProjectStatus.Testing">
+            <summary>
+            Этап проверки результатов.
+            Верификация выполненных задач.
+            </summary>
+        </member>
+        <member name="T:TMS.TaskService.Entities.Enum.TaskPriority">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskPriority.Low">
+            <summary>
+            Минимально срочная задача.
+            Выполняется после всех остальных.
+            Не влияет на критические сроки.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskPriority.Medium">
+            <summary>
+            Стандартный приоритет.
+            Выполняется в плановом порядке.
+            Не требует срочного вмешательства.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskPriority.High">
+            <summary>
+            Требует оперативного решения.
+            Приоритет выше стандартных задач.
+            Может влиять на сроки проекта.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskPriority.Critical">
+            <summary>
+            Требует немедленного внимания.
+            Блокирует работу других задач.
+            Может привести к серьезным последствиям.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskPriority.Blocker">
+            <summary>
+            Блокирует работу всей системы.
+            Требует экстренного решения.
+            Критически влияет на бизнес-процессы.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskPriority.Urgent">
+            <summary>
+            Требует быстрого решения.
+            Не блокирует работу полностью.
+            Имеет жесткие дедлайны.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskPriority.Immediate">
+            <summary>
+            Требуется немедленное выполнение.
+            Чрезвычайная ситуация.
+            Приоритет выше критического.
+            </summary>
+        </member>
+        <member name="T:TMS.TaskService.Entities.Enum.TaskStatus">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskStatus.New">
+            <summary>
+            Задача только создана.
+            Ожидает назначения исполнителя.
+            Нет активных действий.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskStatus.Assigned">
+            <summary>
+            Исполнитель определен.
+            Задача передана в работу.
+            Начата оценка сложности.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskStatus.InProgress">
+            <summary>
+            Исполнитель приступил к выполнению.
+            Активная фаза разработки/выполнения.
+            Регулярные обновления статуса.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskStatus.Paused">
+            <summary>
+            Временная приостановка работы.
+            Требуется дополнительная информация.
+            Ожидание внешних факторов.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskStatus.Review">
+            <summary>
+            Задача выполнена.
+            Находится на проверке у заказчика/руководителя.
+            Возможна отправка на доработку.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskStatus.Done">
+            <summary>
+            Все требования выполнены.
+            Пройдена проверка.
+            Готова к закрытию.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskStatus.Closed">
+            <summary>
+            Задача завершена.
+            Все документы подписаны.
+            Архивирована.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskStatus.Rejected">
+            <summary>
+            Задача не принята.
+            Требуется существенная переработка.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskStatus.Cancelled">
+            <summary>
+            Задача прекращена.
+            Больше не актуальна.
+            Закрыта без выполнения.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskStatus.OnHold">
+            <summary>
+            Временное прекращение работы.
+            Ожидание ресурсов.
+            Приоритет снижен.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskStatus.Waiting">
+            <summary>
+            Ожидание ответа от клиента.
+            Ожидание внешних зависимостей.
+            Ожидание ресурсов.
+            </summary>
+        </member>
+        <member name="F:TMS.TaskService.Entities.Enum.TaskStatus.Blocked">
+            <summary>
+            Возникли непреодолимые препятствия.
+            Требуется эскалация.
+            Невозможно продолжить работу.
+            </summary>
+        </member>
+        <member name="T:TMS.TaskService.Entities.ProjectEntity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.ProjectEntity.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.ProjectEntity.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.ProjectEntity.Description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.ProjectEntity.CreatedAt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.ProjectEntity.UpdatedAt">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.ProjectEntity.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.ProjectEntity.UserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.ProjectEntity.Tasks">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.TaskService.Entities.TaskEntity">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.TaskEntity.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.TaskEntity.Title">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.TaskEntity.Description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.TaskEntity.Deadline">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.TaskEntity.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.TaskEntity.Priority">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.TaskEntity.ProjectId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.TaskEntity.Project">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.TaskEntity.AssigneeId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.TaskEntity.Comments">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Entities.TaskEntity.Attachments">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:TMS.TaskService.Extensions.Endpoints.CreateTaskOperations">
             <summary>
