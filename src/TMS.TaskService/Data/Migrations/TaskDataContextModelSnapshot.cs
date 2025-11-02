@@ -125,7 +125,7 @@ namespace TMS.TaskService.Data.Migrations
                     b.Property<int>("AssigneeId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime?>("Deadline")
+                    b.Property<DateTimeOffset?>("Deadline")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Description")

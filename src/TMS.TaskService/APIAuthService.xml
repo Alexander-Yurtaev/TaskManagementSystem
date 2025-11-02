@@ -17,6 +17,98 @@
             <param name="connectionString"></param>
             <returns></returns>
         </member>
+        <member name="T:TMS.TaskService.Data.IProjectRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Data.IProjectRepository.AddAsync(TMS.TaskService.Entities.ProjectEntity)">
+            <summary>
+            
+            </summary>
+            <param name="task"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.IProjectRepository.GetAllAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.IProjectRepository.GetByIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.IProjectRepository.IsExistsAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="title"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.IProjectRepository.UpdateAsync(TMS.TaskService.Entities.ProjectEntity)">
+            <summary>
+            
+            </summary>
+            <param name="task"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.IProjectRepository.DeleteAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TMS.TaskService.Data.ITaskRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Data.ITaskRepository.AddAsync(TMS.TaskService.Entities.TaskEntity)">
+            <summary>
+            
+            </summary>
+            <param name="task"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.ITaskRepository.GetAllAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.ITaskRepository.GetByIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.ITaskRepository.IsExistsAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="title"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.ITaskRepository.UpdateAsync(TMS.TaskService.Entities.TaskEntity)">
+            <summary>
+            
+            </summary>
+            <param name="task"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.ITaskRepository.DeleteAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:TMS.TaskService.Data.Migrations.InitialMigrations">
             <inheritdoc />
         </member>
@@ -28,6 +120,58 @@
         </member>
         <member name="M:TMS.TaskService.Data.Migrations.InitialMigrations.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
+        </member>
+        <member name="T:TMS.TaskService.Data.ProjectRepository">
+            <summary>
+            
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.ProjectRepository.#ctor(TMS.TaskService.Data.TaskDataContext)">
+            <summary>
+            
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.ProjectRepository.AddAsync(TMS.TaskService.Entities.ProjectEntity)">
+            <summary>
+            
+            </summary>
+            <param name="project"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.ProjectRepository.GetAllAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.ProjectRepository.GetByIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.ProjectRepository.IsExistsAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.ProjectRepository.UpdateAsync(TMS.TaskService.Entities.ProjectEntity)">
+            <summary>
+            
+            </summary>
+            <param name="project"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
+        <member name="M:TMS.TaskService.Data.ProjectRepository.DeleteAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
         </member>
         <member name="T:TMS.TaskService.Data.TaskDataContext">
             <summary>
@@ -70,6 +214,56 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="T:TMS.TaskService.Data.TaskRepository">
+            <summary>
+            
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.TaskRepository.#ctor(TMS.TaskService.Data.TaskDataContext)">
+            <summary>
+            
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.TaskRepository.AddAsync(TMS.TaskService.Entities.TaskEntity)">
+            <summary>
+            
+            </summary>
+            <param name="task"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.TaskRepository.GetAllAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.TaskRepository.GetByIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.TaskRepository.IsExistsAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="title"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.TaskRepository.UpdateAsync(TMS.TaskService.Entities.TaskEntity)">
+            <summary>
+            
+            </summary>
+            <param name="task"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.TaskRepository.DeleteAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
         </member>
         <member name="T:TMS.TaskService.Entities.AttachmentEntity">
             <summary>
@@ -455,40 +649,6 @@
             
             </summary>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.CreateTaskOperations">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.CreateTaskOperations.AddCreateTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.CreateTaskOperations.AddCreateTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.DeleteTaskOperations">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.DeleteTaskOperations.AddDeleteTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.DeleteTaskOperations.AddDeleteTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
         <member name="T:TMS.TaskService.Extensions.Endpoints.GreetingEndpoints">
             <summary>
             
@@ -512,52 +672,171 @@
             </summary>
             <param name="app"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.ReadTaskOperations">
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Projects.CreateProjectOperations">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.ReadTaskOperations.AddReadTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.ReadTaskOperations.AddGetTasksOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.CreateProjectOperations.AddCreateProjectOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.ReadTaskOperations.AddGetTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.CreateProjectOperations.AddCreateProjectOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.TaskServiceOperations">
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Projects.DeleteProjectOperations">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.TaskServiceOperations.AddTaskServiceOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.UpdateTaskOperations">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.UpdateTaskOperations.AddUpdateTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.DeleteProjectOperations.AddDeleteProjectOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.UpdateTaskOperations.AddUpdateTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.DeleteProjectOperations.AddDeleteProjectOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Projects.ProjectServiceOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.ProjectServiceOperations.AddProjectServiceOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Projects.ReadProjectOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.ReadProjectOperations.AddReadProjectOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.ReadProjectOperations.AddGetProjectsOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.ReadProjectOperations.AddGetProjectOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Projects.UpdateProjectOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.UpdateProjectOperations.AddUpdateProjectOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.UpdateProjectOperations.AddUpdateProjectOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Tasks.CreateTaskOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.CreateTaskOperations.AddCreateTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.CreateTaskOperations.AddCreateTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Tasks.DeleteTaskOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.DeleteTaskOperations.AddDeleteTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.DeleteTaskOperations.AddDeleteTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Tasks.ReadTaskOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.ReadTaskOperations.AddReadTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.ReadTaskOperations.AddGetTasksOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.ReadTaskOperations.AddGetTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Tasks.TaskServiceOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.TaskServiceOperations.AddTaskServiceOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Tasks.UpdateTaskOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.UpdateTaskOperations.AddUpdateTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.UpdateTaskOperations.AddUpdateTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
@@ -575,6 +854,121 @@
             <param name="services"></param>
             <param name="configuration"></param>
             <exception cref="T:System.Exception"></exception>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Services.TaskServices">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Services.TaskServices.AddRepositories(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.TaskService.MappingProfiles.ProjectMappingProfiles">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.MappingProfiles.ProjectMappingProfiles.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.TaskService.MappingProfiles.TaskMappingProfiles">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.MappingProfiles.TaskMappingProfiles.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.TaskService.Models.Projects.ProjectCreate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Projects.ProjectCreate.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Projects.ProjectCreate.Description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Projects.ProjectCreate.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Projects.ProjectCreate.UserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.TaskService.Models.Projects.ProjectUpdate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Projects.ProjectUpdate.Name">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.TaskService.Models.Tasks.TaskCreate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Tasks.TaskCreate.Title">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Tasks.TaskCreate.Description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Tasks.TaskCreate.Deadline">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Tasks.TaskCreate.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Tasks.TaskCreate.Priority">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Tasks.TaskCreate.ProjectId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Tasks.TaskCreate.AssigneeId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.TaskService.Models.Tasks.TaskUpdate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Tasks.TaskUpdate.Title">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:TMS.TaskService.Program">
             <summary>

@@ -12,7 +12,6 @@ public static class GreetingEndpoints
     /// <returns></returns>
     public static RouteHandlerBuilder AddGreetingEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet("/", () => "Hello from AuthService!");
-        return endpoints.MapGet("/api/", () => "Hello from API AuthService!");
+        return endpoints.MapGet("/", () => "Hello from API AuthService!");
     }
 }

@@ -14,9 +14,9 @@ public static class UserEndpoints
     /// <returns></returns>
     public static RouteHandlerBuilder AddUserEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapGet("/api/users", async (IUserRepository userRepository) =>
+        return endpoints.MapGet("/users", async (IUserRepository repository) =>
             {
-                var users = await userRepository.GetUsersAsync();
+                var users = await repository.GetUsersAsync();
                 return Results.Ok(users);
             })
             .WithName("users");

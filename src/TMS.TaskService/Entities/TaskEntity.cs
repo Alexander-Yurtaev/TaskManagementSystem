@@ -32,7 +32,7 @@ public class TaskEntity
     /// <summary>
     /// 
     /// </summary>
-    public DateTime? Deadline { get; set; }
+    public DateTimeOffset? Deadline { get; set; }
 
     /// <summary>
     /// 

@@ -16,7 +16,7 @@ public static class MigrationEndpoints
     public static void AddMigrateEndpoint(this IApplicationBuilder app)
     {
         var endpoints = (IEndpointRouteBuilder) app;
-        endpoints.MapGet("/api/migrate", async () =>
+        endpoints.MapGet("/migrate", async () =>
         {
             using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
             var logger = serviceScope.ServiceProvider.GetService<ILogger<Program>>();

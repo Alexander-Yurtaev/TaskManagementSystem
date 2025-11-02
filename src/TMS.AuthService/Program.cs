@@ -26,7 +26,7 @@ namespace TMS.AuthService
                 foreach (var line in File.ReadAllLines(envPath))
                 {
                     if (line.StartsWith("#") || string.IsNullOrWhiteSpace(line)) continue;
-                    var parts = line.Split('=', 2, StringSplitOptions.None);
+                    var parts = line.Split('=', 2);
                     if (parts.Length == 2)
                     {
                         Environment.SetEnvironmentVariable(parts[0], parts[1]);
@@ -84,7 +84,6 @@ namespace TMS.AuthService
                 throw;
             }
 
-            // Перенести в метод AddAuthServices()
             try
             {
                 builder.Services.AddAuthServices();

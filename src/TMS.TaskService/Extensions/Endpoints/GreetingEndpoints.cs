@@ -12,6 +12,6 @@ public static class GreetingEndpoints
     /// <returns></returns>
     public static RouteHandlerBuilder AddGreetingEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapGet("/api/", () => "Hello from TaskService!");
+        return endpoints.MapGet("/greeting", () => "Hello from TaskService!");
     }
 }

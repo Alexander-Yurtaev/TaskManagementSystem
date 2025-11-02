@@ -1,6 +1,8 @@
 using Microsoft.OpenApi.Models;
 using TMS.TaskService.Data.Extensions;
 using TMS.TaskService.Extensions.Endpoints;
+using TMS.TaskService.Extensions.Endpoints.Projects;
+using TMS.TaskService.Extensions.Endpoints.Tasks;
 using TMS.TaskService.Extensions.Services;
 
 namespace TMS.TaskService
@@ -27,13 +29,14 @@ namespace TMS.TaskService
             using var factory = LoggerFactory.Create(b => b.AddConsole());
             ILogger logger = factory.CreateLogger<Program>();
 
+            // Регистрация AutoMapper
+            builder.Services.AddAutoMapper(_ => { }, AppDomain.CurrentDomain.GetAssemblies());
+
             // gRPC
             builder.Services.AddRpcConfiguration(builder.Configuration);
 
             // Add services to the container.
             builder.Services.AddAuthorization();
-
-            builder.Services.AddTaskDataContext();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
@@ -55,6 +58,16 @@ namespace TMS.TaskService
                 throw;
             }
 
+            try
+            {
+                builder.Services.AddRepositories();
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical(ex, "Ошибка при конфигурации TaskServices.");
+                throw;
+            }
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -71,6 +84,7 @@ namespace TMS.TaskService
             app.AddGreetingEndpoint();
             app.AddMigrateEndpoint();
             app.AddTaskServiceOperations();
+            app.AddProjectServiceOperations();
 
             app.Run();
         }

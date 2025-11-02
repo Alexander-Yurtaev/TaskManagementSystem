@@ -1,4 +1,4 @@
-﻿namespace TMS.TaskService.Extensions.Endpoints;
+﻿namespace TMS.TaskService.Extensions.Endpoints.Tasks;
 
 /// <summary>
 /// 

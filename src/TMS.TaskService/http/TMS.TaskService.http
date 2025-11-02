@@ -1,0 +1,50 @@
+@TMS.TaskService_HostAddress = https://localhost:6421/api/tasks
+@new_task_id = 4
+@new_project_id = 2
+
+### Greeting
+GET {{TMS.TaskService_HostAddress}}/greeting
+Content-Type: application/json
+Accept: application/json
+
+
+### CreateTask
+POST {{TMS.TaskService_HostAddress}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "Title" : "Task #1",
+  "Description" : "",
+  "Deadline" : "2025-11-02T20:09:53+03:00",
+  "Status" : 0,
+  "Priority" : 0,
+  "ProjectId" : {{new_project_id}},
+  "AssigneeId" : 1
+}
+
+### GetTasks
+GET {{TMS.TaskService_HostAddress}}/
+Content-Type: application/json
+Accept: application/json
+
+### GetTask
+GET {{TMS.TaskService_HostAddress}}/{{new_task_id}}
+Content-Type: application/json
+Accept: application/json
+
+### UpdateTask
+PUT {{TMS.TaskService_HostAddress}}/{{new_task_id}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "Title": "New Task #1"
+}
+
+### DeleteTask
+DELETE {{TMS.TaskService_HostAddress}}/{{new_task_id}}
+Content-Type: application/json
+Accept: application/json
+
+###

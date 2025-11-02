@@ -1,5 +1,4 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TMS.AuthService.Data;
 using TMS.AuthService.Entities;
 using TMS.AuthService.Models;
@@ -21,21 +20,21 @@ public static class AuthEndpoints
     {
         var endpoints = (IEndpointRouteBuilder)app;
 
-        endpoints.MapPost("api/login", async (
+        endpoints.MapPost("/login", async (
                 [FromBody] LoginModel model,
+                [FromServices] ILogger<IApplicationBuilder> logger,
                 [FromServices] IUserRepository userRepository,
                 [FromServices] ITokenService tokenService,
                 [FromServices] IHashService hashService) =>
             {
-                using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
-                var logger = serviceScope.ServiceProvider.GetService<ILogger<Program>>();
-
                 try
                 {
                     // 1. Поиск пользователя
-                    var user = await userRepository.GetByUsernameAsync(model.Username);
-                    if (user is null)
+                    var userExists = await userRepository.UserExistsAsync(model.Username);
+                    if (!userExists)
                         return Results.Unauthorized();
+                    
+                    var user = (await userRepository.GetByUsernameAsync(model.Username))!;
 
                     // 2. Проверка пароля
                     if (!hashService.VerifyPassword(user.PasswordHash, model.Password))
@@ -49,7 +48,7 @@ public static class AuthEndpoints
                 }
                 catch (Exception ex)
                 {
-                    logger?.LogError(ex, "api/login");
+                    logger?.LogError(ex, "/login");
                     return Results.Problem(
                         detail: ex.Message,
                         statusCode: StatusCodes.Status500InternalServerError
@@ -59,14 +58,12 @@ public static class AuthEndpoints
             .WithName("login")
             .AllowAnonymous();
 
-        endpoints.MapPost("api/register", async (
+        endpoints.MapPost("/register", async (
                 [FromBody] RegisterModel model,
+                [FromServices] ILogger<IApplicationBuilder> logger,
                 [FromServices] IUserRepository userRepository,
                 [FromServices] IHashService hashService) =>
             {
-                using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
-                var logger = serviceScope.ServiceProvider.GetService<ILogger<Program>>();
-
                 try
                 {
                     // Проверка существования пользователя
@@ -86,11 +83,11 @@ public static class AuthEndpoints
                     };
 
                     await userRepository.AddUserAsync(newUser);
-                    return Results.Created("/api/users", new { message = "Пользователь создан" });
+                    return Results.Created($"/users/{newUser.Id}", new { message = "Пользователь создан" });
                 }
                 catch (Exception ex)
                 {
-                    logger?.LogError(ex, "api/register");
+                    logger?.LogError(ex, "/register");
                     return Results.Problem(
                         detail: ex.Message,
                         statusCode: StatusCodes.Status500InternalServerError
@@ -100,13 +97,11 @@ public static class AuthEndpoints
             .WithName("register")
             .AllowAnonymous();
 
-        return endpoints.MapPost("/api/refresh", async (
+        return endpoints.MapPost("/refresh", async (
             [FromBody] TokenRefreshModel model,
+            [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] ITokenService tokenService) =>
         {
-            using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
-            var logger = serviceScope.ServiceProvider.GetService<ILogger<Program>>();
-
             try
             {
                 var (accessToken, refreshToken) = await tokenService.RefreshTokensAsync(model.RefreshToken);
@@ -114,12 +109,12 @@ public static class AuthEndpoints
             }
             catch (UnauthorizedAccessException ex)
             {
-                logger?.LogError(ex, "api/refresh");
+                logger?.LogError(ex, "/refresh");
                 return Results.Unauthorized();
             }
             catch (Exception ex)
             {
-                logger?.LogError(ex, "api/refresh");
+                logger?.LogError(ex, "/refresh");
                 return Results.Problem(detail: ex.Message, statusCode: 500);
             }
         })
