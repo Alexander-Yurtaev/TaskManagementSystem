@@ -1,6 +1,7 @@
-@TMS.TaskService_HostAddress = https://localhost:6421/api/tasks
-@new_task_id = 4
-@new_project_id = 2
+@TMS.TaskService_HostAddress = https://localhost:8227/api/tasks
+@user_id = 1
+@new_project_id = 1
+@new_task_id = 2
 
 ### Greeting
 GET {{TMS.TaskService_HostAddress}}/greeting
@@ -16,15 +17,15 @@ Accept: application/json
 {
   "Title" : "Task #1",
   "Description" : "",
-  "Deadline" : "2025-11-02T20:09:53+03:00",
+  "Deadline" : "2025-11-06T20:09:53+03:00",
   "Status" : 0,
   "Priority" : 0,
   "ProjectId" : {{new_project_id}},
-  "AssigneeId" : 1
+  "AssigneeId" : {{user_id}}
 }
 
 ### GetTasks
-GET {{TMS.TaskService_HostAddress}}/
+GET {{TMS.TaskService_HostAddress}}
 Content-Type: application/json
 Accept: application/json
 
@@ -39,7 +40,12 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "Title": "New Task #1"
+  "Title": "New Task #1",
+  "Description": "New Description",
+  "Deadline" : "2025-11-08T20:09:53+03:00",
+  "Status": 1,
+  "Priority": 1,
+  "AssigneeId": {{user_id}}
 }
 
 ### DeleteTask

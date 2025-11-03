@@ -28,4 +28,8 @@
     <Protobuf Include="Protos\token.proto" GrpcServices="Client" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="http\" />
+  </ItemGroup>
+
 </Project>

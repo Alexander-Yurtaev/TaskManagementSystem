@@ -1,5 +1,6 @@
-@TMS.TaskService_HostAddress = https://localhost:6421/api/projects
-@new_project_id = 2
+@TMS.TaskService_HostAddress = https://localhost:8227/api/projects
+@user_id = 1
+@new_project_id = 1
 
 ### CreateProject
 POST {{TMS.TaskService_HostAddress}}
@@ -7,14 +8,14 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "Name" : "Task #1",
+  "Name" : "Project #1",
   "Description" : "",
   "Status" : 0,
-  "UserId" : 1
+  "UserId" : {{user_id}}
 }
 
 ### GetProjects
-GET {{TMS.TaskService_HostAddress}}/
+GET {{TMS.TaskService_HostAddress}}
 Content-Type: application/json
 Accept: application/json
 
@@ -29,7 +30,9 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "Name": "New Project #1"
+  "Name": "New Project #1",
+  "Description": "New Description",
+  "Status": 2
 }
 
 ### DeleteProject
