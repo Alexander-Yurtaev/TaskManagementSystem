@@ -47,18 +47,20 @@
             </summary>
             <param name="attachment"></param>
         </member>
-        <member name="M:TMS.TaskService.Data.Repositories.AttachmentRepository.GetAllAsync">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:TMS.TaskService.Data.Repositories.AttachmentRepository.GetByIdAsync(System.Int32)">
             <summary>
             
             </summary>
             <param name="id"></param>
             <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.AttachmentRepository.GetByTaskIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="taskId"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
         </member>
         <member name="M:TMS.TaskService.Data.Repositories.AttachmentRepository.IsExistsAsync(System.String,System.String,System.Int32)">
             <summary>
@@ -99,17 +101,18 @@
             </summary>
             <param name="comment"></param>
         </member>
-        <member name="M:TMS.TaskService.Data.Repositories.CommentRepository.GetAllAsync">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:TMS.TaskService.Data.Repositories.CommentRepository.GetByIdAsync(System.Int32)">
             <summary>
             
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.CommentRepository.GetByTaskIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            /// <param name="taskId"></param>
             <returns></returns>
         </member>
         <member name="M:TMS.TaskService.Data.Repositories.CommentRepository.IsExistsAsync(System.String)">
@@ -143,17 +146,18 @@
             <param name="attachment"></param>
             <returns></returns>
         </member>
-        <member name="M:TMS.TaskService.Data.Repositories.IAttachmentRepository.GetAllAsync">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:TMS.TaskService.Data.Repositories.IAttachmentRepository.GetByIdAsync(System.Int32)">
             <summary>
             
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.IAttachmentRepository.GetByTaskIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="taskId"></param>
             <returns></returns>
         </member>
         <member name="M:TMS.TaskService.Data.Repositories.IAttachmentRepository.IsExistsAsync(System.String,System.String,System.Int32)">
@@ -191,17 +195,18 @@
             <param name="comment"></param>
             <returns></returns>
         </member>
-        <member name="M:TMS.TaskService.Data.Repositories.ICommentRepository.GetAllAsync">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:TMS.TaskService.Data.Repositories.ICommentRepository.GetByIdAsync(System.Int32)">
             <summary>
             
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.ICommentRepository.GetByTaskIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="taskId"></param>
             <returns></returns>
         </member>
         <member name="M:TMS.TaskService.Data.Repositories.ICommentRepository.IsExistsAsync(System.String)">
@@ -901,13 +906,13 @@
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.ReadAttachmentOperations.AddGetAttachmentsOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.ReadAttachmentOperations.AddGetAttachmentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.ReadAttachmentOperations.AddGetAttachmentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.ReadAttachmentOperations.AddGetAttachmentsByTaskIdOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
@@ -980,13 +985,13 @@
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.ReadCommentOperations.AddGetCommentsOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.ReadCommentOperations.AddGetCommentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.ReadCommentOperations.AddGetCommentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.ReadCommentOperations.AddGetCommentsByTaskIdOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>

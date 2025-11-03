@@ -26,22 +26,27 @@ public class AttachmentRepository(TaskDataContext db) : IAttachmentRepository
     /// <summary>
     /// 
     /// </summary>
-    /// <returns></returns>
-    public async Task<IEnumerable<AttachmentEntity>> GetAllAsync()
-    {
-        var attachments = await _db.Attachments.ToArrayAsync();
-        return attachments;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
     public async Task<AttachmentEntity?> GetByIdAsync(int id)
     {
         var attachment = await _db.Attachments.FindAsync(id);
         return attachment;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="taskId"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<IEnumerable<AttachmentEntity>> GetByTaskIdAsync(int taskId)
+    {
+        var attachments = await _db.Attachments
+            .Where(a => a.TaskId == taskId)
+            .ToArrayAsync();
+
+        return attachments;
     }
 
     /// <summary>

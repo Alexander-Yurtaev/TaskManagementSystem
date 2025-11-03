@@ -17,15 +17,16 @@ public interface ICommentRepository
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="id"></param>
     /// <returns></returns>
-    Task<IEnumerable<CommentEntity>> GetAllAsync();
+    Task<CommentEntity?> GetByIdAsync(int id);
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="taskId"></param>
     /// <returns></returns>
-    Task<CommentEntity?> GetByIdAsync(int id);
+    Task<IEnumerable<CommentEntity>> GetByTaskIdAsync(int taskId);
 
     /// <summary>
     /// 

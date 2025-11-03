@@ -26,22 +26,26 @@ public class CommentRepository(TaskDataContext db) : ICommentRepository
     /// <summary>
     /// 
     /// </summary>
-    /// <returns></returns>
-    public async Task<IEnumerable<CommentEntity>> GetAllAsync()
-    {
-        var comments = await _db.Comments.ToArrayAsync();
-        return comments;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
     public async Task<CommentEntity?> GetByIdAsync(int id)
     {
         var comment = await _db.Comments.FindAsync(id);
         return comment;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// /// <param name="taskId"></param>
+    /// <returns></returns>
+    public async Task<IEnumerable<CommentEntity>> GetByTaskIdAsync(int taskId)
+    {
+        var comments = await _db.Comments
+            .Where(c => c.TaskId == taskId)
+            .ToArrayAsync();
+
+        return comments;
     }
 
     /// <summary>

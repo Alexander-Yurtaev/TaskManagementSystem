@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using TMS.TaskService.Entities.Enum;
-using TaskStatus = System.Threading.Tasks.TaskStatus;
+using TaskStatus = TMS.TaskService.Entities.Enum.TaskStatus;
 
 namespace TMS.TaskService.Entities;
 

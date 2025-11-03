@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TMS.TaskService.Entities;
+using TMS.TaskService.Entities.Enum;
 
 namespace TMS.TaskService.Data.Repositories;
 
@@ -29,7 +30,10 @@ public class ProjectRepository(TaskDataContext db): IProjectRepository
     /// <returns></returns>
     public async Task<IEnumerable<ProjectEntity>> GetAllAsync()
     {
-        var projects = await _db.Projects.ToArrayAsync();
+        var projects = await _db.Projects
+            .Where(p => p.Status != ProjectStatus.Cancelled)
+            .ToArrayAsync();
+
         return projects;
     }
 
@@ -40,7 +44,9 @@ public class ProjectRepository(TaskDataContext db): IProjectRepository
     /// <returns></returns>
     public async Task<ProjectEntity?> GetByIdAsync(int id)
     {
-        var project = await _db.Projects.FindAsync(id);
+        var project = await _db.Projects
+            .FirstOrDefaultAsync(p => p.Id == id && p.Status != ProjectStatus.Cancelled);
+        
         return project;
     }
 
@@ -85,7 +91,8 @@ public class ProjectRepository(TaskDataContext db): IProjectRepository
             throw new KeyNotFoundException($"Project with id={id} not found.");
         }
 
-        _db.Projects.Remove(project);
+        project.Status = ProjectStatus.Cancelled;
+
         await _db.SaveChangesAsync();
     }
 }

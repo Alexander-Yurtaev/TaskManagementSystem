@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Net.Mail;
 using TMS.TaskService.Data.Repositories;
 
 namespace TMS.TaskService.Extensions.Endpoints.Attachments;
@@ -15,44 +14,8 @@ public static class ReadAttachmentOperations
     /// <param name="endpoints"></param>
     public static void AddReadAttachmentOperations(this IEndpointRouteBuilder endpoints)
     {
-        AddGetAttachmentsOperation(endpoints);
         AddGetAttachmentOperation(endpoints);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="endpoints"></param>
-    private static void AddGetAttachmentsOperation(IEndpointRouteBuilder endpoints)
-    {
-        endpoints.MapGet("/attachments", async (
-            [FromServices] ILogger<IApplicationBuilder> logger, 
-            [FromServices] IAttachmentRepository repository) =>
-        {
-            logger.LogInformation("Start get all attachments.");
-
-            try
-            {
-                var attachments = (await repository.GetAllAsync()).ToArray();
-
-                logger.LogInformation("Found {AttachmentCount} attachments.", attachments.Length);
-
-                return Results.Ok(attachments);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(
-                    ex,
-                    "Error while getting all attachments. Operation: {Operation}",
-                    "GET /attachments"
-                );
-
-                return Results.Problem(
-                    detail: ex.Message,
-                    statusCode: StatusCodes.Status500InternalServerError
-                );
-            }
-        });
+        AddGetAttachmentsByTaskIdOperation(endpoints);
     }
 
     /// <summary>
@@ -89,7 +52,45 @@ public static class ReadAttachmentOperations
                     ex,
                     "Error while getting attachment with Id: {AttachmentId}. Operation: {Operation}",
                     id,
-                    $"POST /attachments/{id}"
+                    $"GET /attachments/{id}"
+                );
+
+                return Results.Problem(
+                    detail: ex.Message,
+                    statusCode: StatusCodes.Status500InternalServerError
+                );
+            }
+        });
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="endpoints"></param>
+    private static void AddGetAttachmentsByTaskIdOperation(IEndpointRouteBuilder endpoints)
+    {
+        endpoints.MapGet("/tasks/{id}/attachments", async (
+            [FromRoute] int id,
+            [FromServices] ILogger<IApplicationBuilder> logger,
+            [FromServices] IAttachmentRepository repository) =>
+        {
+            logger.LogInformation("Start getting Attachment for task with id: {TaskId}.", id);
+
+            try
+            {
+                var attachments = (await repository.GetByTaskIdAsync(id)).ToArray();
+
+                logger.LogInformation("Found {AttachmentsCount} attachments.", attachments.Count());
+
+                return Results.Ok(attachments);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(
+                    ex,
+                    "Error while getting attachments for task with Id: {TaskId}. Operation: {Operation}",
+                    id,
+                    $"GET /tasks/{id}/attachments"
                 );
 
                 return Results.Problem(

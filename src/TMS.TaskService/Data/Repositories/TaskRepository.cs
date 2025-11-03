@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TMS.TaskService.Entities;
+using TaskStatus = TMS.TaskService.Entities.Enum.TaskStatus;
 
 namespace TMS.TaskService.Data.Repositories;
 
@@ -29,7 +30,10 @@ public class TaskRepository(TaskDataContext db) : ITaskRepository
     /// <returns></returns>
     public async Task<IEnumerable<TaskEntity>> GetAllAsync()
     {
-        var tasks = await _db.Tasks.ToArrayAsync();
+        var tasks = await _db.Tasks
+            .Where(t => t.Status != TaskStatus.Cancelled)
+            .ToArrayAsync();
+        
         return tasks;
     }
 
@@ -40,7 +44,10 @@ public class TaskRepository(TaskDataContext db) : ITaskRepository
     /// <returns></returns>
     public async Task<TaskEntity?> GetByIdAsync(int id)
     {
-        var task = await _db.Tasks.FindAsync(id);
+        var task = await _db.Tasks
+            .Where(t => t.Id == id && t.Status != TaskStatus.Cancelled)
+            .FirstOrDefaultAsync();
+
         return task;
     }
 
@@ -83,7 +90,8 @@ public class TaskRepository(TaskDataContext db) : ITaskRepository
             throw new Exception($"Task with id={id} not found.");
         }
 
-        _db.Tasks.Remove(task);
+        task.Status = TaskStatus.Cancelled;
+
         await _db.SaveChangesAsync();
     }
 }

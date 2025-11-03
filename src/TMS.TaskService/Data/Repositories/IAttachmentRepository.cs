@@ -17,15 +17,16 @@ public interface IAttachmentRepository
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="id"></param>
     /// <returns></returns>
-    Task<IEnumerable<AttachmentEntity>> GetAllAsync();
+    Task<AttachmentEntity?> GetByIdAsync(int id);
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="id"></param>
+    /// <param name="taskId"></param>
     /// <returns></returns>
-    Task<AttachmentEntity?> GetByIdAsync(int id);
+    Task<IEnumerable<AttachmentEntity>> GetByTaskIdAsync(int taskId);
 
     /// <summary>
     /// 
