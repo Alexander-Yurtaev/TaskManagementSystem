@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TMS.TaskService.Data;
+using TMS.TaskService.Data.Repositories;
 
 namespace TMS.TaskService.Extensions.Endpoints.Tasks;
 

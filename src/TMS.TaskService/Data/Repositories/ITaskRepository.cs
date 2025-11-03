@@ -1,6 +1,6 @@
 ﻿using TMS.TaskService.Entities;
 
-namespace TMS.TaskService.Data;
+namespace TMS.TaskService.Data.Repositories;
 
 /// <summary>
 /// 

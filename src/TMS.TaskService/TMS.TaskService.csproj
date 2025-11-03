@@ -53,6 +53,8 @@
     <Folder Include="Data\Migrations\" />
     <Folder Include="Extensions\Endpoints\Attachmentes\" />
     <Folder Include="Extensions\Endpoints\Comments\" />
+    <Folder Include="Models\Attachments\" />
+    <Folder Include="Models\Comments\" />
   </ItemGroup>
 
 </Project>

@@ -17,98 +17,6 @@
             <param name="connectionString"></param>
             <returns></returns>
         </member>
-        <member name="T:TMS.TaskService.Data.IProjectRepository">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.TaskService.Data.IProjectRepository.AddAsync(TMS.TaskService.Entities.ProjectEntity)">
-            <summary>
-            
-            </summary>
-            <param name="task"></param>
-            <returns></returns>
-        </member>
-        <member name="M:TMS.TaskService.Data.IProjectRepository.GetAllAsync">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:TMS.TaskService.Data.IProjectRepository.GetByIdAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:TMS.TaskService.Data.IProjectRepository.IsExistsAsync(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="title"></param>
-            <returns></returns>
-        </member>
-        <member name="M:TMS.TaskService.Data.IProjectRepository.UpdateAsync(TMS.TaskService.Entities.ProjectEntity)">
-            <summary>
-            
-            </summary>
-            <param name="task"></param>
-            <returns></returns>
-        </member>
-        <member name="M:TMS.TaskService.Data.IProjectRepository.DeleteAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="T:TMS.TaskService.Data.ITaskRepository">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.TaskService.Data.ITaskRepository.AddAsync(TMS.TaskService.Entities.TaskEntity)">
-            <summary>
-            
-            </summary>
-            <param name="task"></param>
-            <returns></returns>
-        </member>
-        <member name="M:TMS.TaskService.Data.ITaskRepository.GetAllAsync">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:TMS.TaskService.Data.ITaskRepository.GetByIdAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:TMS.TaskService.Data.ITaskRepository.IsExistsAsync(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="title"></param>
-            <returns></returns>
-        </member>
-        <member name="M:TMS.TaskService.Data.ITaskRepository.UpdateAsync(TMS.TaskService.Entities.TaskEntity)">
-            <summary>
-            
-            </summary>
-            <param name="task"></param>
-            <returns></returns>
-        </member>
-        <member name="M:TMS.TaskService.Data.ITaskRepository.DeleteAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
         <member name="T:TMS.TaskService.Data.Migrations.InitialMigrations">
             <inheritdoc />
         </member>
@@ -121,45 +29,137 @@
         <member name="M:TMS.TaskService.Data.Migrations.InitialMigrations.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
-        <member name="T:TMS.TaskService.Data.ProjectRepository">
+        <member name="T:TMS.TaskService.Data.Repositories.IProjectRepository">
             <summary>
             
             </summary>
-            <param name="db"></param>
         </member>
-        <member name="M:TMS.TaskService.Data.ProjectRepository.#ctor(TMS.TaskService.Data.TaskDataContext)">
+        <member name="M:TMS.TaskService.Data.Repositories.IProjectRepository.AddAsync(TMS.TaskService.Entities.ProjectEntity)">
             <summary>
             
             </summary>
-            <param name="db"></param>
+            <param name="task"></param>
+            <returns></returns>
         </member>
-        <member name="M:TMS.TaskService.Data.ProjectRepository.AddAsync(TMS.TaskService.Entities.ProjectEntity)">
-            <summary>
-            
-            </summary>
-            <param name="project"></param>
-        </member>
-        <member name="M:TMS.TaskService.Data.ProjectRepository.GetAllAsync">
+        <member name="M:TMS.TaskService.Data.Repositories.IProjectRepository.GetAllAsync">
             <summary>
             
             </summary>
             <returns></returns>
         </member>
-        <member name="M:TMS.TaskService.Data.ProjectRepository.GetByIdAsync(System.Int32)">
+        <member name="M:TMS.TaskService.Data.Repositories.IProjectRepository.GetByIdAsync(System.Int32)">
             <summary>
             
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:TMS.TaskService.Data.ProjectRepository.IsExistsAsync(System.String)">
+        <member name="M:TMS.TaskService.Data.Repositories.IProjectRepository.IsExistsAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="title"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.IProjectRepository.UpdateAsync(TMS.TaskService.Entities.ProjectEntity)">
+            <summary>
+            
+            </summary>
+            <param name="task"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.IProjectRepository.DeleteAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TMS.TaskService.Data.Repositories.ITaskRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.ITaskRepository.AddAsync(TMS.TaskService.Entities.TaskEntity)">
+            <summary>
+            
+            </summary>
+            <param name="task"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.ITaskRepository.GetAllAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.ITaskRepository.GetByIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.ITaskRepository.IsExistsAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="title"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.ITaskRepository.UpdateAsync(TMS.TaskService.Entities.TaskEntity)">
+            <summary>
+            
+            </summary>
+            <param name="task"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.ITaskRepository.DeleteAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TMS.TaskService.Data.Repositories.ProjectRepository">
+            <summary>
+            
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.ProjectRepository.#ctor(TMS.TaskService.Data.TaskDataContext)">
+            <summary>
+            
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.ProjectRepository.AddAsync(TMS.TaskService.Entities.ProjectEntity)">
+            <summary>
+            
+            </summary>
+            <param name="project"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.ProjectRepository.GetAllAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.ProjectRepository.GetByIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.ProjectRepository.IsExistsAsync(System.String)">
             <summary>
             
             </summary>
             <param name="name"></param>
             <returns></returns>
         </member>
-        <member name="M:TMS.TaskService.Data.ProjectRepository.UpdateAsync(TMS.TaskService.Entities.ProjectEntity)">
+        <member name="M:TMS.TaskService.Data.Repositories.ProjectRepository.UpdateAsync(TMS.TaskService.Entities.ProjectEntity)">
             <summary>
             
             </summary>
@@ -167,7 +167,57 @@
             <returns></returns>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
-        <member name="M:TMS.TaskService.Data.ProjectRepository.DeleteAsync(System.Int32)">
+        <member name="M:TMS.TaskService.Data.Repositories.ProjectRepository.DeleteAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="T:TMS.TaskService.Data.Repositories.TaskRepository">
+            <summary>
+            
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.TaskRepository.#ctor(TMS.TaskService.Data.TaskDataContext)">
+            <summary>
+            
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.TaskRepository.AddAsync(TMS.TaskService.Entities.TaskEntity)">
+            <summary>
+            
+            </summary>
+            <param name="task"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.TaskRepository.GetAllAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.TaskRepository.GetByIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.TaskRepository.IsExistsAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="title"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.TaskRepository.UpdateAsync(TMS.TaskService.Entities.TaskEntity)">
+            <summary>
+            
+            </summary>
+            <param name="task"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.TaskRepository.DeleteAsync(System.Int32)">
             <summary>
             
             </summary>
@@ -214,56 +264,6 @@
             <summary>
             
             </summary>
-        </member>
-        <member name="T:TMS.TaskService.Data.TaskRepository">
-            <summary>
-            
-            </summary>
-            <param name="db"></param>
-        </member>
-        <member name="M:TMS.TaskService.Data.TaskRepository.#ctor(TMS.TaskService.Data.TaskDataContext)">
-            <summary>
-            
-            </summary>
-            <param name="db"></param>
-        </member>
-        <member name="M:TMS.TaskService.Data.TaskRepository.AddAsync(TMS.TaskService.Entities.TaskEntity)">
-            <summary>
-            
-            </summary>
-            <param name="task"></param>
-        </member>
-        <member name="M:TMS.TaskService.Data.TaskRepository.GetAllAsync">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:TMS.TaskService.Data.TaskRepository.GetByIdAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
-        </member>
-        <member name="M:TMS.TaskService.Data.TaskRepository.IsExistsAsync(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="title"></param>
-            <returns></returns>
-        </member>
-        <member name="M:TMS.TaskService.Data.TaskRepository.UpdateAsync(TMS.TaskService.Entities.TaskEntity)">
-            <summary>
-            
-            </summary>
-            <param name="task"></param>
-        </member>
-        <member name="M:TMS.TaskService.Data.TaskRepository.DeleteAsync(System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="id"></param>
         </member>
         <member name="T:TMS.TaskService.Entities.AttachmentEntity">
             <summary>
@@ -920,6 +920,16 @@
             
             </summary>
         </member>
+        <member name="P:TMS.TaskService.Models.Projects.ProjectUpdate.Description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Projects.ProjectUpdate.Status">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:TMS.TaskService.Models.Tasks.TaskCreate">
             <summary>
             
@@ -966,6 +976,31 @@
             </summary>
         </member>
         <member name="P:TMS.TaskService.Models.Tasks.TaskUpdate.Title">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Tasks.TaskUpdate.Description">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Tasks.TaskUpdate.Deadline">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Tasks.TaskUpdate.Status">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Tasks.TaskUpdate.Priority">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Tasks.TaskUpdate.AssigneeId">
             <summary>
             
             </summary>

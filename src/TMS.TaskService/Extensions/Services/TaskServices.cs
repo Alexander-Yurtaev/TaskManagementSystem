@@ -1,4 +1,4 @@
-﻿using TMS.TaskService.Data;
+﻿using TMS.TaskService.Data.Repositories;
 
 namespace TMS.TaskService.Extensions.Services;
 

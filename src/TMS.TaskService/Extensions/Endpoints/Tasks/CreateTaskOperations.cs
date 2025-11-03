@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using TMS.TaskService.Data;
+using TMS.TaskService.Data.Repositories;
 using TMS.TaskService.Entities;
 using TMS.TaskService.Models.Tasks;
 
