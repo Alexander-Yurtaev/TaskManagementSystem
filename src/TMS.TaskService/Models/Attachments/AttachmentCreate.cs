@@ -14,9 +14,4 @@ public record AttachmentCreate
     /// 
     /// </summary>
     public string FilePath { get; set; } = string.Empty;
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public int TaskId { get; set; }
 }

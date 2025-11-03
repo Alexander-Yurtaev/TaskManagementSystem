@@ -26,32 +26,35 @@ public static class CreateAttachmentOperations
     /// <param name="endpoints"></param>
     private static void AddCreateAttachmentOperation(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapPost("/attachments", async (
+        endpoints.MapPost("/tasks/{id}/attachments", async (
+            [FromRoute] int id,
             [FromBody] AttachmentCreate attachment,
             [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] IMapper mapper,
             [FromServices] IAttachmentRepository repository) =>
         {
-            logger.LogInformation("Start creating attachment with FileName: {FileName}.", attachment.FileName);
+            logger.LogInformation("For task with id={TaskId} start creating attachment with FileName: {FileName}.", id, attachment.FileName);
 
             try
             {
-                var attachmentExists = await repository.IsExistsAsync(attachment.FilePath, attachment.FileName, attachment.TaskId);
+                var attachmentExists = await repository.IsExistsAsync(attachment.FilePath, attachment.FileName, id);
                 if (attachmentExists)
                 {
                     logger.LogError(
                         "Attachment with FilePath='{FilePath}', FileName='{FileName}' for TaskId={TaskId}  already exists. Operation: {Operation}",
                         attachment.FilePath,
                         attachment.FileName,
-                        attachment.TaskId,
-                        "POST /attachments"
+                        id,
+                        $"POST /tasks/{id}/attachments"
                     );
 
                     return Results.BadRequest(
-                        $"Attachment with FilePath='{attachment.FilePath}', FileName='{attachment.FileName}' for TaskId={attachment.TaskId}  already exists.");
+                        $"Attachment with FilePath='{attachment.FilePath}', FileName='{attachment.FileName}' for TaskId={id}  already exists.");
                 }
 
                 var entity = mapper.Map<AttachmentEntity>(attachment);
+
+                entity.TaskId = id;
 
                 await repository.AddAsync(entity);
 
@@ -64,8 +67,8 @@ public static class CreateAttachmentOperations
                     "Error while creating attachment with FilePath='{FilePath}', FileName='{FileName}' for TaskId={TaskId}  already exists. Operation: {Operation}",
                     attachment.FilePath,
                     attachment.FileName,
-                    attachment.TaskId,
-                    "POST /attachments"
+                    id,
+                    $"POST /tasks/{id}/attachments"
                 );
 
                 return Results.Problem(

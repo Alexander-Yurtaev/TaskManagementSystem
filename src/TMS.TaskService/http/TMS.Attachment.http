@@ -1,0 +1,29 @@
+@TMS.TaskService_HostAddress = https://localhost:9616/api
+@user_id = 1
+@task_id = 2
+@comment_id = 4
+@attachment_id=1
+
+#### Create
+POST {{TMS.TaskService_HostAddress}}/tasks/{{task_id}}/attachments
+Content-Type: application/json
+Accept: application/json
+
+{
+  "FileName": "FileName",
+  "FilePath": "/path"
+}
+
+### Get
+GET {{TMS.TaskService_HostAddress}}/attachments/{{attachment_id}}
+Content-Type: application/json
+Accept: application/json
+
+
+### GetByTaskId
+GET {{TMS.TaskService_HostAddress}}/tasks/{{task_id}}/attachments
+Content-Type: application/json
+Accept: application/json
+
+
+###

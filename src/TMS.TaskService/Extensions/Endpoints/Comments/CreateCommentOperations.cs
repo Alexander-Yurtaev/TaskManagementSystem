@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using TMS.Common;
 using TMS.TaskService.Data.Repositories;
 using TMS.TaskService.Entities;
 using TMS.TaskService.Models.Comments;
@@ -26,13 +27,15 @@ public static class CreateCommentOperations
     /// <param name="endpoints"></param>
     private static void AddCreateCommentOperation(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapPost("/comments", async (
+        endpoints.MapPost("/tasks/{id}/comments", async (
+            [FromRoute] int id,
             [FromBody] CommentCreate comment,
             [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] IMapper mapper,
             [FromServices] ICommentRepository repository) =>
         {
-            logger.LogInformation("Start creating comment with Text: {Text}.", comment.Text.Substring(0, 25));
+            logger.LogInformation("For task with Id={TaskId} start creating comment with Text: {Text}.", id,
+                StringHelper.GetStringForLogger(comment.Text));
 
             try
             {
@@ -40,27 +43,32 @@ public static class CreateCommentOperations
                 if (commentExists)
                 {
                     logger.LogError(
-                        "Comment with Text='{CommentText}' already exists. Operation: {Operation}",
-                        comment.Text.Substring(0, 25),
-                        "POST /comments"
+                        "For task with id={TaskId} comment with Text='{CommentText}' already exists. Operation: {Operation}",
+                        id,
+                        StringHelper.GetStringForLogger(comment.Text),
+                        $"POST /tasks/{id}/comments"
                     );
 
-                    return Results.BadRequest($"Comment with Text='{comment.Text.Substring(0, 25)}' already exists.");
+                    return Results.BadRequest(
+                        $"For task with id={id} comment with Text='{comment.Text.Substring(0, 25)}' already exists.");
                 }
 
                 var entity = mapper.Map<CommentEntity>(comment);
 
+                entity.TaskId = id;
+
                 await repository.AddAsync(entity);
 
-                return Results.Created($"api/comments/{entity.Id}", entity);
+                return Results.Created($"api/tasks/{id}/comments/{entity.Id}", entity);
             }
             catch (Exception ex)
             {
                 logger.LogError(
                     ex,
-                    "Error while creating comment with Text: {CommentText}. Operation: {Operation}",
-                    comment.Text.Substring(0, 25),
-                    "POST /comments"
+                    "Error while creating for task with id={TaskId} comment with Text: {CommentText}. Operation: {Operation}",
+                    id,
+                    StringHelper.GetStringForLogger(comment.Text),
+                    $"POST /tasks/{id}/comments"
                 );
 
                 return Results.Problem(

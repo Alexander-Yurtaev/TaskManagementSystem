@@ -22,13 +22,5 @@ public class CommentMappingProfiles : Profile
         CreateMap<CommentEntity, CommentCreate>();
 
         #endregion CommentCreate
-
-        #region CommentUpdate
-
-        CreateMap<CommentUpdate, CommentEntity>();
-
-        CreateMap<CommentEntity, CommentUpdate>();
-
-        #endregion CommentUpdate
     }
 }

@@ -1,0 +1,28 @@
+@TMS.TaskService_HostAddress = https://localhost:9616/api
+@user_id = 1
+@task_id = 2
+@comment_id = 4
+
+#### Create
+POST {{TMS.TaskService_HostAddress}}/tasks/{{task_id}}/comments
+Content-Type: application/json
+Accept: application/json
+
+{
+  "Text": "Comment #1",
+  "UserId": {{user_id}}
+}
+
+### Get
+GET {{TMS.TaskService_HostAddress}}/comments/{{comment_id}}
+Content-Type: application/json
+Accept: application/json
+
+
+### GetByTaskId
+GET {{TMS.TaskService_HostAddress}}/tasks/{{task_id}}/comments
+Content-Type: application/json
+Accept: application/json
+
+
+###

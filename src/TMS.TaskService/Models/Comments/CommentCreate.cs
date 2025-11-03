@@ -14,9 +14,4 @@ public record CommentCreate
     /// 
     /// </summary>
     public int UserId { get; set; }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    public int TaskId { get; set; }
 }

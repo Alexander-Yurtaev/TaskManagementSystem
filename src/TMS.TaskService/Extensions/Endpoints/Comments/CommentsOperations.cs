@@ -13,7 +13,5 @@ public static class CommentsOperations
     {
         endpoints.AddCreateCommentOperations();
         endpoints.AddReadCommentOperations();
-        endpoints.AddUpdateCommentOperations();
-        endpoints.AddDeleteCommentOperations();
     }
 }

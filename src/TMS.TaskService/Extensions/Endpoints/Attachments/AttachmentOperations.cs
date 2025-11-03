@@ -13,7 +13,5 @@ public static class AttachmentOperations
     {
         endpoints.AddCreateAttachmentOperations();
         endpoints.AddReadAttachmentOperations();
-        endpoints.AddUpdateAttachmentOperations();
-        endpoints.AddDeleteAttachmentOperations();
     }
 }

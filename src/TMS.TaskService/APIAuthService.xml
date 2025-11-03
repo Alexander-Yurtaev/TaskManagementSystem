@@ -878,23 +878,6 @@
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Attachments.DeleteAttachmentOperations">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.DeleteAttachmentOperations.AddDeleteAttachmentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.DeleteAttachmentOperations.AddDeleteAttachmentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
         <member name="T:TMS.TaskService.Extensions.Endpoints.Attachments.ReadAttachmentOperations">
             <summary>
             
@@ -913,17 +896,6 @@
             <param name="endpoints"></param>
         </member>
         <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.ReadAttachmentOperations.AddGetAttachmentsByTaskIdOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Attachments.UpdateAttachmentOperations">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.UpdateAttachmentOperations.AddUpdateAttachmentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
@@ -957,23 +929,6 @@
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Comments.DeleteCommentOperations">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.DeleteCommentOperations.AddDeleteCommentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.DeleteCommentOperations.AddDeleteCommentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
         <member name="T:TMS.TaskService.Extensions.Endpoints.Comments.ReadCommentOperations">
             <summary>
             
@@ -992,23 +947,6 @@
             <param name="endpoints"></param>
         </member>
         <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.ReadCommentOperations.AddGetCommentsByTaskIdOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Comments.UpdateCommentOperations">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.UpdateCommentOperations.AddUpdateCommentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.UpdateCommentOperations.AddUpdateCommentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
@@ -1285,11 +1223,6 @@
             
             </summary>
         </member>
-        <member name="P:TMS.TaskService.Models.Attachments.AttachmentCreate.TaskId">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:TMS.TaskService.Models.Comments.CommentCreate">
             <summary>
             
@@ -1301,21 +1234,6 @@
             </summary>
         </member>
         <member name="P:TMS.TaskService.Models.Comments.CommentCreate.UserId">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:TMS.TaskService.Models.Comments.CommentCreate.TaskId">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:TMS.TaskService.Models.Comments.CommentUpdate">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:TMS.TaskService.Models.Comments.CommentUpdate.Text">
             <summary>
             
             </summary>
