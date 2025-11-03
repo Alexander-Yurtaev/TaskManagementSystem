@@ -25,11 +25,32 @@ public static class ReadProjectOperations
     private static void AddGetProjectsOperation(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapGet("/projects", async (
-            [FromServices] ILogger<IApplicationBuilder> logger, 
+            [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] IProjectRepository repository) =>
         {
-            var projects = await repository.GetAllAsync();
-            return Results.Ok(projects);
+            logger.LogInformation("Start get all projects.");
+
+            try
+            {
+                var projects = (await repository.GetAllAsync()).ToArray();
+
+                logger.LogInformation("Found {ProjectsCount} projects.", projects.Length);
+
+                return Results.Ok(projects);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(
+                    ex,
+                    "Error while getting all projects. Operation: {Operation}",
+                    "GET /projects"
+                );
+
+                return Results.Problem(
+                    detail: ex.Message,
+                    statusCode: StatusCodes.Status500InternalServerError
+                );
+            }
         });
     }
 
@@ -44,8 +65,37 @@ public static class ReadProjectOperations
             [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] IProjectRepository repository) =>
         {
-            var project = await repository.GetByIdAsync(id);
-            return Results.Ok(project);
+            logger.LogInformation("Start getting project with id: {Id}.", id);
+            
+            try
+            {
+                var project = await repository.GetByIdAsync(id);
+
+                if (project is null)
+                {
+                    logger.LogInformation("Project not found with Id: {Id}.", id);
+
+                    return Results.NotFound();
+                }
+
+                logger.LogInformation("Project found with id={Id}.", id);
+
+                return Results.Ok(project);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(
+                    ex,
+                    "Error while getting project with Id: {ProjectId}. Operation: {Operation}",
+                    id,
+                    $"POST /projects/{id}"
+                );
+
+                return Results.Problem(
+                    detail: ex.Message,
+                    statusCode: StatusCodes.Status500InternalServerError
+                );
+            }
         });
     }
 }

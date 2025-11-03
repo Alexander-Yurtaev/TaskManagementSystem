@@ -32,18 +32,39 @@ public static class UpdateTaskOperations
             [FromServices] IMapper mapper,
             [FromServices] ITaskRepository repository) =>
         {
-            var task = await repository.GetByIdAsync(id);
+            logger.LogInformation("Start updating task with id: {Id}.", id);
 
-            if (task is null)
+            try
             {
-                return Results.BadRequest($"Task with id={id} does not exists.");
+                var task = await repository.GetByIdAsync(id);
+
+                if (task is null)
+                {
+                    logger.LogWarning("Task not found with id: {Id}.", id);
+
+                    return Results.BadRequest($"Task with id={id} does not exists.");
+                }
+
+                mapper.Map(taskUpdate, task);
+
+                task = await repository.UpdateAsync(task);
+
+                return Results.Ok(task);
             }
+            catch (Exception ex)
+            {
+                logger.LogError(
+                    ex,
+                    "Error while updating task with Name: {ProjectId}. Operation: {Operation}",
+                    id,
+                    $"PUT /tasks/{id}"
+                );
 
-            mapper.Map(taskUpdate, task);
-
-            task = await repository.UpdateAsync(task);
-
-            return Results.Ok(task);
+                return Results.Problem(
+                    detail: ex.Message,
+                    statusCode: StatusCodes.Status500InternalServerError
+                );
+            }
         });
     }
 }

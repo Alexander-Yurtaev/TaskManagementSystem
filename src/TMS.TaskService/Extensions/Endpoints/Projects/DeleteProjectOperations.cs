@@ -28,25 +28,41 @@ public static class DeleteProjectOperations
             [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] IProjectRepository repository) =>
         {
+            logger.LogInformation("Start deleting project with id: {Id}.", id);
+
             try
             {
                 await repository.DeleteAsync(id);
+
+                logger.LogInformation("Finish delete project with id={Id}.", id);
+
+                return Results.NoContent();
             }
             catch (KeyNotFoundException knf)
             {
-                logger.LogError(knf, "AddDeleteProjectOperation");
+                logger.LogError(
+                    knf,
+                    "Project not found with Id: {ProjectId}. Operation: {Operation}",
+                    id,
+                    "DELETE /projects"
+                );
+
                 return Results.NotFound(knf.Message);
             }
             catch (Exception ex)
             {
-                logger.LogCritical(ex, "AddDeleteProjectOperation");
-                Results.Problem(
+                logger.LogError(
+                    ex,
+                    "Error while creating project with Id: {ProjectId}. Operation: {Operation}",
+                    id,
+                    "DELETE /projects"
+                );
+
+                return Results.Problem(
                     detail: ex.Message,
                     statusCode: StatusCodes.Status500InternalServerError
                 );
             }
-
-            return Results.NoContent();
         });
     }
 }

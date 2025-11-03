@@ -32,18 +32,39 @@ public static class UpdateProjectOperations
             [FromServices] IMapper mapper,
             [FromServices] IProjectRepository repository) =>
         {
-            var project = await repository.GetByIdAsync(id);
+            logger.LogInformation("Start updating project with id: {Id}.", id);
 
-            if (project is null)
+            try
             {
-                return Results.BadRequest($"Project with id={id} does not exists.");
+                var project = await repository.GetByIdAsync(id);
+
+                if (project is null)
+                {
+                    logger.LogWarning("Project not found with id: {Id}.", id);
+
+                    return Results.BadRequest($"Project with id={id} does not exists.");
+                }
+
+                mapper.Map(projectUpdate, project);
+
+                project = await repository.UpdateAsync(project);
+
+                return Results.Ok(project);
             }
+            catch (Exception ex)
+            {
+                logger.LogError(
+                    ex,
+                    "Error while updating project with Name: {ProjectId}. Operation: {Operation}",
+                    id,
+                    $"PUT /projects/{id}"
+                );
 
-            mapper.Map(projectUpdate, project);
-
-            project = await repository.UpdateAsync(project);
-
-            return Results.Ok(project);
+                return Results.Problem(
+                    detail: ex.Message,
+                    statusCode: StatusCodes.Status500InternalServerError
+                );
+            }
         });
     }
 }

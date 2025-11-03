@@ -28,25 +28,41 @@ public static class DeleteTaskOperations
             [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] ITaskRepository repository) =>
         {
+            logger.LogInformation("Start deleting task with id: {Id}.", id);
+
             try
             {
                 await repository.DeleteAsync(id);
+
+                logger.LogInformation("Finish delete task with id={Id}.", id);
+
+                return Results.NoContent();
             }
             catch (KeyNotFoundException knf)
             {
-                logger.LogError(knf, "AddDeleteTaskOperation");
+                logger.LogError(
+                    knf,
+                    "Task not found with Id: {TaskId}. Operation: {Operation}",
+                    id,
+                    "DELETE /tasks"
+                );
+
                 return Results.NotFound(knf.Message);
             }
             catch (Exception ex)
             {
-                logger.LogCritical(ex, "AddDeleteTaskOperations");
-                Results.Problem(
+                logger.LogError(
+                    ex,
+                    "Error while deleting task with Id: {TaskId}. Operation: {Operation}",
+                    id,
+                    "DELETE /tasks"
+                );
+
+                return Results.Problem(
                     detail: ex.Message,
                     statusCode: StatusCodes.Status500InternalServerError
                 );
             }
-
-            return Results.NoContent();
         });
     }
 }

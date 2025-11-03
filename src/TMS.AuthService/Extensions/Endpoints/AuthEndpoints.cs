@@ -27,6 +27,8 @@ public static class AuthEndpoints
                 [FromServices] ITokenService tokenService,
                 [FromServices] IHashService hashService) =>
             {
+                logger.LogInformation("Start logging with Username: {Username}.", model.Username);
+
                 try
                 {
                     // 1. Поиск пользователя
@@ -48,7 +50,13 @@ public static class AuthEndpoints
                 }
                 catch (Exception ex)
                 {
-                    logger?.LogError(ex, "/login");
+                    logger.LogError(
+                        ex,
+                        "Error while logging with Username: {Username}. Operation: {Operation}",
+                        model.Username,
+                        "POST /login"
+                    );
+
                     return Results.Problem(
                         detail: ex.Message,
                         statusCode: StatusCodes.Status500InternalServerError

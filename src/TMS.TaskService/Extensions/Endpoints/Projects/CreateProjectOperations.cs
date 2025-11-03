@@ -32,17 +32,44 @@ public static class CreateProjectOperations
             [FromServices] IMapper mapper,
             [FromServices] IProjectRepository repository) =>
         {
-            var projectExists = await repository.IsExistsAsync(project.Name);
-            if (projectExists)
+            logger.LogInformation("Start creating project with name: {Name}.", project.Name);
+
+            try
             {
-                return Results.BadRequest($"Project with name='{project.Name}' already exists.");
+                var projectExists = await repository.IsExistsAsync(project.Name);
+                if (projectExists)
+                {
+                    logger.LogError(
+                        "Project with name='{ProjectName}' already exists. Operation: {Operation}", 
+                        project.Name,
+                        "POST /projects"
+                    );
+
+                    return Results.BadRequest($"Project with name='{project.Name}' already exists.");
+                }
+
+                var entity = mapper.Map<ProjectEntity>(project);
+
+                await repository.AddAsync(entity);
+
+                logger.LogInformation($"Finish create project with name={project.Name}.");
+
+                return Results.Created($"api/projects/{entity.Id}", entity);
             }
+            catch (Exception ex)
+            {
+                logger.LogError(
+                    ex,
+                    "Error while creating project with Name: {ProjectName}. Operation: {Operation}",
+                    project.Name,
+                    "POST /projects"
+                );
 
-            var entity = mapper.Map<ProjectEntity>(project);
-
-            await repository.AddAsync(entity);
-
-            return Results.Created($"api/projects/{entity.Id}", entity);
+                return Results.Problem(
+                    detail: ex.Message,
+                    statusCode: StatusCodes.Status500InternalServerError
+                );
+            }
         });
     }
 }

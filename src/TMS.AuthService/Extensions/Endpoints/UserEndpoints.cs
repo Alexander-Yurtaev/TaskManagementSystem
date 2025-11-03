@@ -1,4 +1,5 @@
-﻿using TMS.AuthService.Data;
+﻿using Microsoft.AspNetCore.Mvc;
+using TMS.AuthService.Data;
 
 namespace TMS.AuthService.Extensions.Endpoints;
 
@@ -14,10 +15,33 @@ public static class UserEndpoints
     /// <returns></returns>
     public static RouteHandlerBuilder AddUserEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapGet("/users", async (IUserRepository repository) =>
+        return endpoints.MapGet("/users", async (
+                [FromServices] IUserRepository repository,
+                [FromServices] ILogger<IApplicationBuilder> logger) =>
             {
-                var users = await repository.GetUsersAsync();
-                return Results.Ok(users);
+                logger.LogInformation("Start creating all users.");
+
+                try
+                {
+                    var users = (await repository.GetUsersAsync()).ToArray();
+
+                    logger.LogInformation("Found {ProjectsCount} projects.", users.Length);
+
+                    return Results.Ok(users);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(
+                        ex,
+                        "Error while getting users. Operation: {Operation}",
+                        "POST /login"
+                    );
+
+                    return Results.Problem(
+                        detail: ex.Message,
+                        statusCode: StatusCodes.Status500InternalServerError
+                    );
+                }
             })
             .WithName("users");
     }

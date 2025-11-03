@@ -32,17 +32,42 @@ public static class CreateTaskOperations
             [FromServices] IMapper mapper,
             [FromServices] ITaskRepository repository) =>
         {
-            var taskExists = await repository.IsExistsAsync(task.Title);
-            if (taskExists)
+            logger.LogInformation("Start creating task with Title: {Title}.", task.Title);
+
+            try
             {
-                Results.BadRequest($"Task with title='{task.Title}' already exists.");
+                var taskExists = await repository.IsExistsAsync(task.Title);
+                if (taskExists)
+                {
+                    logger.LogError(
+                        "Task with title='{TaskTitle}' already exists. Operation: {Operation}",
+                        task.Title,
+                        "POST /tasks"
+                    );
+
+                    return Results.BadRequest($"Task with title='{task.Title}' already exists.");
+                }
+
+                var entity = mapper.Map<TaskEntity>(task);
+
+                await repository.AddAsync(entity);
+
+                return Results.Created($"api/tasks/{entity.Id}", entity);
             }
+            catch (Exception ex)
+            {
+                logger.LogError(
+                    ex,
+                    "Error while creating task with Title: {TaskTitle}. Operation: {Operation}",
+                    task.Title,
+                    "POST /tasks"
+                );
 
-            var entity = mapper.Map<TaskEntity>(task);
-
-            await repository.AddAsync(entity);
-
-            return Results.Created($"api/tasks/{entity.Id}", entity);
+                return Results.Problem(
+                    detail: ex.Message,
+                    statusCode: StatusCodes.Status500InternalServerError
+                );
+            }
         });
     }
 }
