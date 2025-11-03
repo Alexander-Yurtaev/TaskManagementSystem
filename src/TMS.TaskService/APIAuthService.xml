@@ -29,6 +29,202 @@
         <member name="M:TMS.TaskService.Data.Migrations.InitialMigrations.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:TMS.TaskService.Data.Repositories.AttachmentRepository">
+            <summary>
+            
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.AttachmentRepository.#ctor(TMS.TaskService.Data.TaskDataContext)">
+            <summary>
+            
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.AttachmentRepository.AddAsync(TMS.TaskService.Entities.AttachmentEntity)">
+            <summary>
+            
+            </summary>
+            <param name="attachment"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.AttachmentRepository.GetAllAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.AttachmentRepository.GetByIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.AttachmentRepository.IsExistsAsync(System.String,System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="filePath"></param>
+            <param name="fileName"></param>
+            <param name="taskId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.AttachmentRepository.UpdateAsync(TMS.TaskService.Entities.AttachmentEntity)">
+            <summary>
+            
+            </summary>
+            <param name="attachment"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.AttachmentRepository.DeleteAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="T:TMS.TaskService.Data.Repositories.CommentRepository">
+            <summary>
+            
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.CommentRepository.#ctor(TMS.TaskService.Data.TaskDataContext)">
+            <summary>
+            
+            </summary>
+            <param name="db"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.CommentRepository.AddAsync(TMS.TaskService.Entities.CommentEntity)">
+            <summary>
+            
+            </summary>
+            <param name="comment"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.CommentRepository.GetAllAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.CommentRepository.GetByIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.CommentRepository.IsExistsAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.CommentRepository.UpdateAsync(TMS.TaskService.Entities.CommentEntity)">
+            <summary>
+            
+            </summary>
+            <param name="comment"></param>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.CommentRepository.DeleteAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="T:TMS.TaskService.Data.Repositories.IAttachmentRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.IAttachmentRepository.AddAsync(TMS.TaskService.Entities.AttachmentEntity)">
+            <summary>
+            
+            </summary>
+            <param name="attachment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.IAttachmentRepository.GetAllAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.IAttachmentRepository.GetByIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.IAttachmentRepository.IsExistsAsync(System.String,System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="filePath"></param>
+            <param name="fileName"></param>
+            <param name="taskId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.IAttachmentRepository.UpdateAsync(TMS.TaskService.Entities.AttachmentEntity)">
+            <summary>
+            
+            </summary>
+            <param name="attachment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.IAttachmentRepository.DeleteAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TMS.TaskService.Data.Repositories.ICommentRepository">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.ICommentRepository.AddAsync(TMS.TaskService.Entities.CommentEntity)">
+            <summary>
+            
+            </summary>
+            <param name="comment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.ICommentRepository.GetAllAsync">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.ICommentRepository.GetByIdAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.ICommentRepository.IsExistsAsync(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="text"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.ICommentRepository.UpdateAsync(TMS.TaskService.Entities.CommentEntity)">
+            <summary>
+            
+            </summary>
+            <param name="comment"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TMS.TaskService.Data.Repositories.ICommentRepository.DeleteAsync(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:TMS.TaskService.Data.Repositories.IProjectRepository">
             <summary>
             
@@ -649,6 +845,170 @@
             
             </summary>
         </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Attachments.AttachmentOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.AttachmentOperations.AddAttachmentsOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Attachments.CreateAttachmentOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.CreateAttachmentOperations.AddCreateAttachmentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.CreateAttachmentOperations.AddCreateAttachmentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Attachments.DeleteAttachmentOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.DeleteAttachmentOperations.AddDeleteAttachmentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.DeleteAttachmentOperations.AddDeleteAttachmentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Attachments.ReadAttachmentOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.ReadAttachmentOperations.AddReadAttachmentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.ReadAttachmentOperations.AddGetAttachmentsOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.ReadAttachmentOperations.AddGetAttachmentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Attachments.UpdateAttachmentOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.UpdateAttachmentOperations.AddUpdateAttachmentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Comments.CommentsOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.CommentsOperations.AddCommentsOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Comments.CreateCommentOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.CreateCommentOperations.AddCreateCommentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.CreateCommentOperations.AddCreateCommentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Comments.DeleteCommentOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.DeleteCommentOperations.AddDeleteCommentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.DeleteCommentOperations.AddDeleteCommentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Comments.ReadCommentOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.ReadCommentOperations.AddReadCommentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.ReadCommentOperations.AddGetCommentsOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.ReadCommentOperations.AddGetCommentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Comments.UpdateCommentOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.UpdateCommentOperations.AddUpdateCommentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.UpdateCommentOperations.AddUpdateCommentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
         <member name="T:TMS.TaskService.Extensions.Endpoints.GreetingEndpoints">
             <summary>
             
@@ -706,12 +1066,12 @@
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Projects.ProjectServiceOperations">
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Projects.ProjectsOperations">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.ProjectServiceOperations.AddProjectServiceOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.ProjectsOperations.AddProjectsOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
@@ -814,12 +1174,12 @@
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Tasks.TaskServiceOperations">
+        <member name="T:TMS.TaskService.Extensions.Endpoints.Tasks.TasksOperations">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.TaskServiceOperations.AddTaskServiceOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.TasksOperations.AddTasksOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
@@ -881,6 +1241,56 @@
             </summary>
         </member>
         <member name="M:TMS.TaskService.MappingProfiles.TaskMappingProfiles.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.TaskService.Models.Attachments.AttachmentCreate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Attachments.AttachmentCreate.FileName">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Attachments.AttachmentCreate.FilePath">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Attachments.AttachmentCreate.TaskId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.TaskService.Models.Comments.CommentCreate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Comments.CommentCreate.Text">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Comments.CommentCreate.UserId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Comments.CommentCreate.TaskId">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.TaskService.Models.Comments.CommentUpdate">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TMS.TaskService.Models.Comments.CommentUpdate.Text">
             <summary>
             
             </summary>

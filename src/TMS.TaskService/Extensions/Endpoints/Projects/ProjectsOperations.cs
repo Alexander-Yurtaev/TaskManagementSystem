@@ -3,13 +3,13 @@
 /// <summary>
 /// 
 /// </summary>
-public static class ProjectServiceOperations
+public static class ProjectsOperations
 {
     /// <summary>
     /// 
     /// </summary>
     /// <param name="endpoints"></param>
-    public static void AddProjectServiceOperations(this IEndpointRouteBuilder endpoints)
+    public static void AddProjectsOperations(this IEndpointRouteBuilder endpoints)
     {
         endpoints.AddCreateProjectOperations();
         endpoints.AddReadProjectOperations();

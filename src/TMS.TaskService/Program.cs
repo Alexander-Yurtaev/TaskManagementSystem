@@ -1,6 +1,8 @@
 using Microsoft.OpenApi.Models;
 using TMS.TaskService.Data.Extensions;
 using TMS.TaskService.Extensions.Endpoints;
+using TMS.TaskService.Extensions.Endpoints.Attachments;
+using TMS.TaskService.Extensions.Endpoints.Comments;
 using TMS.TaskService.Extensions.Endpoints.Projects;
 using TMS.TaskService.Extensions.Endpoints.Tasks;
 using TMS.TaskService.Extensions.Services;
@@ -83,8 +85,11 @@ namespace TMS.TaskService
 
             app.AddGreetingEndpoint();
             app.AddMigrateEndpoint();
-            app.AddTaskServiceOperations();
-            app.AddProjectServiceOperations();
+
+            app.AddTasksOperations();
+            app.AddProjectsOperations();
+            app.AddCommentsOperations();
+            app.AddAttachmentsOperations();
 
             app.Run();
         }

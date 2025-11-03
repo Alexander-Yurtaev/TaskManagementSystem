@@ -55,7 +55,7 @@ public static class UpdateTaskOperations
             {
                 logger.LogError(
                     ex,
-                    "Error while updating task with Name: {ProjectId}. Operation: {Operation}",
+                    "Error while updating task with Name: {TaskId}. Operation: {Operation}",
                     id,
                     $"PUT /tasks/{id}"
                 );

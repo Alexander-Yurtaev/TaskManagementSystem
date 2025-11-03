@@ -3,13 +3,13 @@
 /// <summary>
 /// 
 /// </summary>
-public static class TaskServiceOperations
+public static class TasksOperations
 {
     /// <summary>
     /// 
     /// </summary>
     /// <param name="endpoints"></param>
-    public static void AddTaskServiceOperations(this IEndpointRouteBuilder endpoints)
+    public static void AddTasksOperations(this IEndpointRouteBuilder endpoints)
     {
         endpoints.AddCreateTaskOperations();
         endpoints.AddReadTaskOperations();
