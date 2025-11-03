@@ -1230,6 +1230,26 @@
             
             </summary>
         </member>
+        <member name="T:TMS.TaskService.MappingProfiles.AttachmentMappingProfiles">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.MappingProfiles.AttachmentMappingProfiles.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:TMS.TaskService.MappingProfiles.CommentMappingProfiles">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.MappingProfiles.CommentMappingProfiles.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:TMS.TaskService.MappingProfiles.ProjectMappingProfiles">
             <summary>
             
