@@ -75,6 +75,7 @@ services:
     depends_on:
       - tms.task-db
       - tms.authservice
+      - tms.rabbitmq
 
 
   tms.task-db:
@@ -128,6 +129,7 @@ services:
     depends_on:
       - tms.authservice
       - tms.notify-db
+      - tms.rabbitmq
 
   tms.notify-db:
     image: postgres:13
@@ -139,6 +141,18 @@ services:
     volumes:
       - notify-db-data:/var/lib/postgresql/data
  
+  tms.rabbitmq:
+    image: rabbitmq:3-management
+    container_name: tms-rabbitmq
+    ports:
+      - "5672:5672"   # Порт для приложений
+      - "15672:15672" # Порт веб‑интерфейса (UI)
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+ 
 
 volumes:
   auth-db-data:
@@ -146,4 +160,5 @@ volumes:
   task-db-data:
   files-db-data:
   notify-db-data:
+  rabbitmq_data:
 
