@@ -26,7 +26,6 @@ namespace TMS.NotificationService
             app.UseAuthorization();
 
             app.AddGreetingEndpoint();
-            app.AddMigrateEndpoint();
 
             app.Run();
         }
