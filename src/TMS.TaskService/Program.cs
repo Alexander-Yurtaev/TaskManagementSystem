@@ -37,6 +37,9 @@ namespace TMS.TaskService
             // gRPC
             builder.Services.AddRpcConfiguration(builder.Configuration);
 
+            // RabbitMQ
+            builder.Services.AddRabbitMqServiceConfiguration();
+
             // Add services to the container.
             builder.Services.AddAuthorization();
 

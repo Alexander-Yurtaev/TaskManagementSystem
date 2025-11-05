@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using TMS.Common.RabbitMq;
 using TMS.TaskService.Data.Repositories;
 using TMS.TaskService.Models.Tasks;
 
@@ -28,6 +29,7 @@ public static class UpdateTaskOperations
         endpoints.MapPut("/tasks/{id}", async (
             [FromRoute] int id,
             [FromBody] TaskUpdate taskUpdate,
+            [FromServices] IRabbitMqService rabbitMqService,
             [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] IMapper mapper,
             [FromServices] ITaskRepository repository) =>
@@ -48,6 +50,9 @@ public static class UpdateTaskOperations
                 mapper.Map(taskUpdate, task);
 
                 task = await repository.UpdateAsync(task);
+
+                var message = new TaskMessage(TaskMessageType.Update, $"Task updated: ID = {id}.");
+                await rabbitMqService.SendMessageAsync(message);
 
                 return Results.Ok(task);
             }

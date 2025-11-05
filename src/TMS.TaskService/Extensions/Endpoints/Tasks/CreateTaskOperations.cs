@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using TMS.Common.RabbitMq;
 using TMS.TaskService.Data.Repositories;
 using TMS.TaskService.Entities;
 using TMS.TaskService.Models.Tasks;
@@ -28,6 +29,7 @@ public static class CreateTaskOperations
     {
         endpoints.MapPost("/tasks", async (
             [FromBody] TaskCreate task,
+            [FromServices] IRabbitMqService rabbitMqService,
             [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] IMapper mapper,
             [FromServices] ITaskRepository repository) =>
@@ -51,6 +53,9 @@ public static class CreateTaskOperations
                 var entity = mapper.Map<TaskEntity>(task);
 
                 await repository.AddAsync(entity);
+
+                var message = new TaskMessage(TaskMessageType.Create, $"Task created: ID = {entity.Id}.");
+                await rabbitMqService.SendMessageAsync(message);
 
                 return Results.Created($"api/tasks/{entity.Id}", entity);
             }

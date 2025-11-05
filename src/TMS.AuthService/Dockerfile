@@ -14,6 +14,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Directory.Packages.props", "."]
 COPY ["src/TMS.AuthService/TMS.AuthService.csproj", "src/TMS.AuthService/"]
+COPY ["src/TMS.Common/TMS.Common.csproj", "src/TMS.Common/"]
 RUN dotnet restore "./src/TMS.AuthService/TMS.AuthService.csproj"
 COPY . .
 WORKDIR "/src/src/TMS.AuthService"

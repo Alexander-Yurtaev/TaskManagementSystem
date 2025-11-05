@@ -13,10 +13,11 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Directory.Packages.props", "."]
-COPY ["TMS.TaskService/TMS.TaskService.csproj", "TMS.TaskService/"]
-RUN dotnet restore "./TMS.TaskService/TMS.TaskService.csproj"
+COPY ["src/TMS.TaskService/TMS.TaskService.csproj", "src/TMS.TaskService/"]
+COPY ["src/TMS.Common/TMS.Common.csproj", "src/TMS.Common/"]
+RUN dotnet restore "./src/TMS.TaskService/TMS.TaskService.csproj"
 COPY . .
-WORKDIR "/src/TMS.TaskService"
+WORKDIR "/src/src/TMS.TaskService"
 RUN dotnet build "./TMS.TaskService.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage

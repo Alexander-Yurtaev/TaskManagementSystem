@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TMS.Common.RabbitMq;
 using TMS.TaskService.Data.Repositories;
+using static Grpc.Core.Metadata;
 
 namespace TMS.TaskService.Extensions.Endpoints.Tasks;
 
@@ -25,6 +27,7 @@ public static class DeleteTaskOperations
     {
         endpoints.MapDelete("/tasks/{id}", async (
             [FromRoute] int id,
+            [FromServices] IRabbitMqService rabbitMqService,
             [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] ITaskRepository repository) =>
         {
@@ -33,6 +36,9 @@ public static class DeleteTaskOperations
             try
             {
                 await repository.DeleteAsync(id);
+
+                var message = new TaskMessage(TaskMessageType.Delete, $"Task deleted: ID = {id}.");
+                await rabbitMqService.SendMessageAsync(message);
 
                 logger.LogInformation("Finish delete task with id={Id}.", id);
 

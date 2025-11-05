@@ -6,7 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>b6e17edd-4404-494c-9463-88fe8a3f8387</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+	<DockerfileContext>..\..</DockerfileContext>
+	<DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
 	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
@@ -29,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
+    <Folder Include="Endpoints\" />
   </ItemGroup>
 
 </Project>

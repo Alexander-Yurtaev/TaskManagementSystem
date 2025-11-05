@@ -1,4 +1,4 @@
-﻿namespace TMS.NotificationService.Endpoints;
+﻿namespace TMS.NotificationService.Extensions.Endpoints;
 
 public static class GreetingEndpoints
 {

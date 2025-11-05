@@ -1,5 +1,6 @@
 using TMS.NotificationService.Data.Extensions;
-using TMS.NotificationService.Endpoints;
+using TMS.NotificationService.Extensions.Endpoints;
+using TMS.NotificationService.Extensions.Services;
 
 namespace TMS.NotificationService
 {
@@ -13,6 +14,8 @@ namespace TMS.NotificationService
             builder.Services.AddAuthorization();
 
             builder.Services.AddNotifyDataContext();
+
+            builder.Services.AddRabbitMqConsumerConfiguration();
 
             var app = builder.Build();
 

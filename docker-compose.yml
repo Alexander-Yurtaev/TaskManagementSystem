@@ -72,10 +72,11 @@ services:
       - POSTGRES_DB=${TASK_POSTGRES_DB}
       - POSTGRES_HOST=tms-task-db
       - JWT_KEY=${JWT_KEY}
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
     depends_on:
       - tms.task-db
       - tms.authservice
-      - tms.rabbitmq
+      - tms.notificationservice
 
 
   tms.task-db:
@@ -126,6 +127,8 @@ services:
       - POSTGRES_PASSWORD=${NOTIFY_POSTGRES_PASSWORD}
       - POSTGRES_DB=${NOTIFY_POSTGRES_DB}
       - POSTGRES_HOST=tms-notify-db
+      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - EVENTS_PATH=${EVENTS_PATH}
     depends_on:
       - tms.authservice
       - tms.notify-db

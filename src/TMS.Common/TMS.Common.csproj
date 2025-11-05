@@ -12,12 +12,11 @@
   </ItemGroup>
 
   <ItemGroup Label="EF Core">
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Design">
-		<PrivateAssets>all</PrivateAssets>
-		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	</PackageReference>
 	<PackageReference Include="Microsoft.Extensions.Configuration" />
 	<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
+	<PackageReference Include="Microsoft.Extensions.Hosting" />
+	<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
 	<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+	<PackageReference Include="RabbitMQ.Client" />
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 using TMS.Common;
 using TMS.NotificationService.Data;
 
-namespace TMS.NotificationService.Endpoints;
+namespace TMS.NotificationService.Extensions.Endpoints;
 
 public static class MigrationEndpoints
 {

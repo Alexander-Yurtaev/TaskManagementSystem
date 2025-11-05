@@ -13,10 +13,10 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Directory.Packages.props", "."]
-COPY ["TMS.FileStorageService/TMS.FileStorageService.csproj", "TMS.FileStorageService/"]
-RUN dotnet restore "./TMS.FileStorageService/TMS.FileStorageService.csproj"
+COPY ["src/TMS.FileStorageService/TMS.FileStorageService.csproj", "src/TMS.FileStorageService/"]
+RUN dotnet restore "./src/TMS.FileStorageService/TMS.FileStorageService.csproj"
 COPY . .
-WORKDIR "/src/TMS.FileStorageService"
+WORKDIR "/src/src/TMS.FileStorageService"
 RUN dotnet build "./TMS.FileStorageService.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage

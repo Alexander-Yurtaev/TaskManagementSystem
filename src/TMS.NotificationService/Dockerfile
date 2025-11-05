@@ -13,10 +13,11 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Directory.Packages.props", "."]
-COPY ["TMS.NotificationService/TMS.NotificationService.csproj", "TMS.NotificationService/"]
-RUN dotnet restore "./TMS.NotificationService/TMS.NotificationService.csproj"
+COPY ["src/TMS.NotificationService/TMS.NotificationService.csproj", "src/TMS.NotificationService/"]
+COPY ["src/TMS.Common/TMS.Common.csproj", "src/TMS.Common/"]
+RUN dotnet restore "./src/TMS.NotificationService/TMS.NotificationService.csproj"
 COPY . .
-WORKDIR "/src/TMS.NotificationService"
+WORKDIR "/src/src/TMS.NotificationService"
 RUN dotnet build "./TMS.NotificationService.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
@@ -29,3 +30,6 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "TMS.NotificationService.dll"]
+
+# 1. Создаём папку ОТ ROOT (гарантированно выполнится)
+RUN mkdir -p tmp/emails/events
