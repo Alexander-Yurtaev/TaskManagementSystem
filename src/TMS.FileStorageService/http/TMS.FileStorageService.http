@@ -1,0 +1,28 @@
+@TMS.FileStorageService_HostAddress = https://localhost:6936/api/files
+
+### Greeting
+GET {{TMS.FileStorageService_HostAddress}}/greeting
+Content-Type: application/json
+Accept: application/json
+
+
+### CreateAttachment
+POST {{TMS.FileStorageService_HostAddress}}
+Content-Type: multipart/form-data; boundary="--------------------------abc123def456"
+
+----------------------------abc123def456
+Content-Disposition: form-data; name="FileName"
+
+example.txt
+----------------------------abc123def456
+Content-Disposition: form-data; name="FilePath"
+
+tests/05-11-2025
+----------------------------abc123def456
+Content-Disposition: form-data; name="file"; filename="example.txt"
+Content-Type: text/plain
+
+<содержимое файла example.txt>
+----------------------------abc123def456--
+
+###

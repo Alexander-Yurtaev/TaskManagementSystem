@@ -26,6 +26,7 @@ namespace TMS.FileStorageService
             app.UseAuthorization();
 
             app.AddGreetingEndpoint();
+            app.AddFileStoragesEndpoint();
 
             app.Run();
         }

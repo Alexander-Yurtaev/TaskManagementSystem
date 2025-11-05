@@ -416,4 +416,5 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
-/src/TMS.NotificationService/tmp/emails/events/tasks
+/src/TMS.NotificationService/tmp/emails
+/src/TMS.FileStorageService/tmp/files

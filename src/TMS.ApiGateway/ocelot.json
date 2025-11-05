@@ -120,7 +120,7 @@
     {
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "UpstreamPathTemplate": "/api/files/{everything}",
-      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamPathTemplate": "/files/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
