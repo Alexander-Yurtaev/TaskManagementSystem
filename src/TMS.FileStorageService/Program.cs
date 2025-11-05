@@ -1,4 +1,5 @@
 using TMS.FileStorageService.Extensions;
+using TMS.FileStorageService.Extensions.Endpoints;
 
 namespace TMS.FileStorageService
 {
@@ -24,7 +25,7 @@ namespace TMS.FileStorageService
 
             app.UseAuthorization();
 
-            app.MapGet("/", () => "Hello from FileStorageService!");
+            app.AddGreetingEndpoint();
 
             app.Run();
         }
