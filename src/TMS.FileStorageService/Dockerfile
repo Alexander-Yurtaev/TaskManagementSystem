@@ -29,3 +29,6 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "TMS.FileStorageService.dll"]
+
+# Создаём папку для хранения файлов-приложений (AttachmentEntity)
+RUN mkdir -p tmp/files

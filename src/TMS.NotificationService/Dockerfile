@@ -31,5 +31,5 @@ WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "TMS.NotificationService.dll"]
 
-# 1. Создаём папку ОТ ROOT (гарантированно выполнится)
+# Создаём папку для хранения "почтовых" сообщений
 RUN mkdir -p tmp/emails/events

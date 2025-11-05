@@ -1,5 +1,4 @@
-﻿using TMS.Common.RabbitMq;
-using TMS.Common.RabbitMq.Consumers;
+﻿using TMS.Common.RabbitMq.Consumers;
 using TMS.Common.RabbitMq.Consumers.Initializers;
 
 namespace TMS.NotificationService.Extensions.Services;

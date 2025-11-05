@@ -101,6 +101,7 @@ services:
       - POSTGRES_PASSWORD=${FILE_POSTGRES_PASSWORD}
       - POSTGRES_DB=${FILE_POSTGRES_DB}
       - POSTGRES_HOST=tms-files-db
+      - FILES_PATH=${FILES_PATH}
     depends_on:
       - tms.files-db
 
