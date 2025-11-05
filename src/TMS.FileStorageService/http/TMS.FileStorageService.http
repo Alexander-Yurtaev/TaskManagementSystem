@@ -26,3 +26,9 @@ Content-Type: text/plain
 ----------------------------abc123def456--
 
 ###
+
+### GetAttachment
+GET {{TMS.FileStorageService_HostAddress}}?fileName=example.txt&filePath=tests/05-11-2025
+Content-Type: text/plain
+
+###
