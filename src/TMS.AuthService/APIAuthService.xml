@@ -5,46 +5,46 @@
     </assembly>
     <members>
         <member name="T:TMS.AuthService.Configurations.JwtOptions">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="P:TMS.AuthService.Configurations.JwtOptions.Issuer">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="P:TMS.AuthService.Configurations.JwtOptions.Audience">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="T:TMS.AuthService.Data.AuthDataContext">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:TMS.AuthService.Data.AuthDataContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{TMS.AuthService.Data.AuthDataContext})">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="options"></param>
+             </summary>
+             <param name="options"></param>
         </member>
         <member name="P:TMS.AuthService.Data.AuthDataContext.Users">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:TMS.AuthService.Data.AuthDataContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="modelBuilder"></param>
+             </summary>
+             <param name="modelBuilder"></param>
         </member>
         <member name="T:TMS.AuthService.Data.AuthDataContextFactory">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="T:TMS.AuthService.Data.Extensions.DataContextExtensions">
             <summary>
@@ -111,49 +111,49 @@
             <inheritdoc />
         </member>
         <member name="T:TMS.AuthService.Data.UserRepository">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="db"></param>
+             </summary>
+             <param name="db"></param>
         </member>
         <member name="M:TMS.AuthService.Data.UserRepository.#ctor(TMS.AuthService.Data.AuthDataContext)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="db"></param>
+             </summary>
+             <param name="db"></param>
         </member>
         <member name="M:TMS.AuthService.Data.UserRepository.GetByIdAsync(System.Int32)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="id"></param>
-            <returns></returns>
+             </summary>
+             <param name="id"></param>
+             <returns></returns>
         </member>
         <member name="M:TMS.AuthService.Data.UserRepository.GetByUsernameAsync(System.String)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="userName"></param>
-            <returns></returns>
+             </summary>
+             <param name="userName"></param>
+             <returns></returns>
         </member>
         <member name="M:TMS.AuthService.Data.UserRepository.UserExistsAsync(System.String)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="userName"></param>
-            <returns></returns>
+             </summary>
+             <param name="userName"></param>
+             <returns></returns>
         </member>
         <member name="M:TMS.AuthService.Data.UserRepository.AddUserAsync(TMS.AuthService.Entities.UserEntity)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="user"></param>
+             </summary>
+             <param name="user"></param>
         </member>
         <member name="M:TMS.AuthService.Data.UserRepository.GetUsersAsync">
-            <summary>
+             <summary>
             
-            </summary>
-            <returns></returns>
+             </summary>
+             <returns></returns>
         </member>
         <member name="T:TMS.AuthService.Entities.Enum.UserRole">
             <summary>
@@ -236,16 +236,16 @@
             </summary>
         </member>
         <member name="T:TMS.AuthService.Extensions.Endpoints.AuthEndpoints">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:TMS.AuthService.Extensions.Endpoints.AuthEndpoints.AddAuthEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="app"></param>
-            <returns></returns>
+             </summary>
+             <param name="app"></param>
+             <returns></returns>
         </member>
         <member name="T:TMS.AuthService.Extensions.Endpoints.GreetingEndpoints">
             <summary>
@@ -260,15 +260,15 @@
             <returns></returns>
         </member>
         <member name="T:TMS.AuthService.Extensions.Endpoints.MigrationEndpoints">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:TMS.AuthService.Extensions.Endpoints.MigrationEndpoints.AddMigrateEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="app"></param>
+             </summary>
+             <param name="app"></param>
         </member>
         <member name="T:TMS.AuthService.Extensions.Endpoints.UserEndpoints">
             <summary>
@@ -293,14 +293,14 @@
             </summary>
         </member>
         <member name="T:TMS.AuthService.Extensions.Services.JwtAuthentication">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:TMS.AuthService.Extensions.Services.JwtAuthentication.AddJwtAuthentication(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.ConfigurationManager,Microsoft.Extensions.Logging.ILogger)">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="T:TMS.AuthService.Extensions.Services.RedisConfiguration">
             <summary>
@@ -416,67 +416,67 @@
             </summary>
         </member>
         <member name="T:TMS.AuthService.Models.UserToken">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="UserId"></param>
-            <param name="Token"></param>
-            <param name="Expiry"></param>
+             </summary>
+             <param name="UserId"></param>
+             <param name="Token"></param>
+             <param name="Expiry"></param>
         </member>
         <member name="M:TMS.AuthService.Models.UserToken.#ctor(System.Int32,System.String,System.DateTime)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="UserId"></param>
-            <param name="Token"></param>
-            <param name="Expiry"></param>
+             </summary>
+             <param name="UserId"></param>
+             <param name="Token"></param>
+             <param name="Expiry"></param>
         </member>
         <member name="P:TMS.AuthService.Models.UserToken.UserId">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="P:TMS.AuthService.Models.UserToken.Token">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="P:TMS.AuthService.Models.UserToken.Expiry">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="T:TMS.AuthService.Program">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:TMS.AuthService.Program.Main(System.String[])">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="args"></param>
-            <exception cref="T:System.Exception"></exception>
+             </summary>
+             <param name="args"></param>
+             <exception cref="T:System.Exception"></exception>
         </member>
         <member name="T:TMS.AuthService.Services.Grpc.AuthService">
-            <summary>
+             <summary>
             
-            </summary>
+             </summary>
         </member>
         <member name="M:TMS.AuthService.Services.Grpc.AuthService.#ctor(Microsoft.Extensions.Configuration.IConfiguration,Microsoft.Extensions.Logging.ILogger{TMS.AuthService.Services.Grpc.AuthService})">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="configuration"></param>
-            <param name="logger"></param>
+             </summary>
+             <param name="configuration"></param>
+             <param name="logger"></param>
         </member>
         <member name="M:TMS.AuthService.Services.Grpc.AuthService.ValidateToken(TMS.AuthService.Services.Grpc.ValidateTokenRequest,Grpc.Core.ServerCallContext)">
-            <summary>
+             <summary>
             
-            </summary>
-            <param name="request"></param>
-            <param name="context"></param>
-            <returns></returns>
+             </summary>
+             <param name="request"></param>
+             <param name="context"></param>
+             <returns></returns>
         </member>
         <member name="T:TMS.AuthService.Services.Grpc.TokenReflection">
             <summary>Holder for reflection information generated from Protos/token.proto</summary>
