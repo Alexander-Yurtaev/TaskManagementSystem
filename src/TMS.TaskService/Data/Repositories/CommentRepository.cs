@@ -4,7 +4,7 @@ using TMS.TaskService.Entities;
 namespace TMS.TaskService.Data.Repositories;
 
 /// <summary>
-/// 
+///
 /// </summary>
 /// <param name="db"></param>
 public class CommentRepository(TaskDataContext db) : ICommentRepository
@@ -12,7 +12,7 @@ public class CommentRepository(TaskDataContext db) : ICommentRepository
     private readonly TaskDataContext _db = db;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="comment"></param>
     public async Task AddAsync(CommentEntity comment)
@@ -24,7 +24,7 @@ public class CommentRepository(TaskDataContext db) : ICommentRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -35,7 +35,7 @@ public class CommentRepository(TaskDataContext db) : ICommentRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// /// <param name="taskId"></param>
     /// <returns></returns>
@@ -49,7 +49,7 @@ public class CommentRepository(TaskDataContext db) : ICommentRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
@@ -61,7 +61,7 @@ public class CommentRepository(TaskDataContext db) : ICommentRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="comment"></param>
     public async Task<CommentEntity> UpdateAsync(CommentEntity comment)
@@ -75,7 +75,7 @@ public class CommentRepository(TaskDataContext db) : ICommentRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="id"></param>
     public async Task DeleteAsync(int id)

@@ -4,41 +4,40 @@ using TMS.TaskService.Entities;
 namespace TMS.TaskService.Data;
 
 /// <summary>
-/// 
+///
 /// </summary>
 public class TaskDataContext : DbContext
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="options"></param>
     public TaskDataContext(DbContextOptions<TaskDataContext> options) : base(options)
     {
-
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public DbSet<ProjectEntity> Projects { get; set; }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public DbSet<TaskEntity> Tasks { get; set; }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public DbSet<CommentEntity> Comments { get; set; }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public DbSet<AttachmentEntity> Attachments { get; set; }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="modelBuilder"></param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)

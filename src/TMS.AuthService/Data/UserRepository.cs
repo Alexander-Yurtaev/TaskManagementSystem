@@ -4,7 +4,7 @@ using TMS.AuthService.Entities;
 namespace TMS.AuthService.Data;
 
 /// <summary>
-/// 
+///
 /// </summary>
 /// <param name="db"></param>
 public class UserRepository(AuthDataContext db) : IUserRepository
@@ -12,7 +12,7 @@ public class UserRepository(AuthDataContext db) : IUserRepository
     private readonly AuthDataContext _db = db;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -23,7 +23,7 @@ public class UserRepository(AuthDataContext db) : IUserRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
@@ -34,7 +34,7 @@ public class UserRepository(AuthDataContext db) : IUserRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
@@ -47,7 +47,7 @@ public class UserRepository(AuthDataContext db) : IUserRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="user"></param>
     public async Task AddUserAsync(UserEntity user)
@@ -59,7 +59,7 @@ public class UserRepository(AuthDataContext db) : IUserRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <returns></returns>
     public async Task<IEnumerable<UserEntity>> GetUsersAsync()

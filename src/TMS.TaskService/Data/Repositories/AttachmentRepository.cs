@@ -4,7 +4,7 @@ using TMS.TaskService.Entities;
 namespace TMS.TaskService.Data.Repositories;
 
 /// <summary>
-/// 
+///
 /// </summary>
 /// <param name="db"></param>
 public class AttachmentRepository(TaskDataContext db) : IAttachmentRepository
@@ -12,7 +12,7 @@ public class AttachmentRepository(TaskDataContext db) : IAttachmentRepository
     private readonly TaskDataContext _db = db;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="attachment"></param>
     public async Task AddAsync(AttachmentEntity attachment)
@@ -24,7 +24,7 @@ public class AttachmentRepository(TaskDataContext db) : IAttachmentRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -35,7 +35,7 @@ public class AttachmentRepository(TaskDataContext db) : IAttachmentRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="taskId"></param>
     /// <returns></returns>
@@ -50,7 +50,7 @@ public class AttachmentRepository(TaskDataContext db) : IAttachmentRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="filePath"></param>
     /// <param name="fileName"></param>
@@ -67,7 +67,7 @@ public class AttachmentRepository(TaskDataContext db) : IAttachmentRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="attachment"></param>
     public async Task<AttachmentEntity> UpdateAsync(AttachmentEntity attachment)
@@ -81,7 +81,7 @@ public class AttachmentRepository(TaskDataContext db) : IAttachmentRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="id"></param>
     public async Task DeleteAsync(int id)

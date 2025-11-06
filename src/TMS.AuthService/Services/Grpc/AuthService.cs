@@ -7,7 +7,7 @@ using System.Text;
 namespace TMS.AuthService.Services.Grpc
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class AuthService : Auth.AuthBase
     {
@@ -15,7 +15,7 @@ namespace TMS.AuthService.Services.Grpc
         private readonly ILogger<AuthService> _logger;
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="configuration"></param>
         /// <param name="logger"></param>
@@ -26,7 +26,7 @@ namespace TMS.AuthService.Services.Grpc
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="request"></param>
         /// <param name="context"></param>

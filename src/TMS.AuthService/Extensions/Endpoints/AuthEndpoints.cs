@@ -7,12 +7,12 @@ using TMS.AuthService.Services;
 namespace TMS.AuthService.Extensions.Endpoints;
 
 /// <summary>
-/// 
+///
 /// </summary>
 public static class AuthEndpoints
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="app"></param>
     /// <returns></returns>
@@ -130,4 +130,3 @@ public static class AuthEndpoints
         .AllowAnonymous();
     }
 }
-

@@ -6,12 +6,12 @@ using TMS.Common;
 namespace TMS.AuthService.Extensions.Endpoints;
 
 /// <summary>
-/// 
+///
 /// </summary>
 public static class MigrationEndpoints
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="app"></param>
     public static void AddMigrateEndpoint(this IApplicationBuilder app)

@@ -6,12 +6,12 @@ using TMS.TaskService.Data;
 namespace TMS.TaskService.Extensions.Endpoints;
 
 /// <summary>
-/// 
+///
 /// </summary>
 public static class MigrationEndpoints
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="app"></param>
     public static void AddMigrateEndpoint(this IApplicationBuilder app)

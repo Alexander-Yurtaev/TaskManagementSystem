@@ -5,12 +5,12 @@ using System.Text;
 namespace TMS.AuthService.Extensions.Services;
 
 /// <summary>
-/// 
+///
 /// </summary>
 public static class JwtAuthentication
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public static void AddJwtAuthentication(this IServiceCollection services,
         ConfigurationManager configuration,

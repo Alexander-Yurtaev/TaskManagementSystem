@@ -1,12 +1,12 @@
 ﻿namespace TMS.TaskService.Extensions.Services;
 
 /// <summary>
-/// 
+///
 /// </summary>
 public static class HttpClients
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="services"></param>
     public static void AddFileStorageClient(this IServiceCollection services)

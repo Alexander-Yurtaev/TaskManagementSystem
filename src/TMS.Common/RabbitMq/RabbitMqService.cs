@@ -17,12 +17,15 @@ public class RabbitMqService(ILogger<RabbitMqService> logger) : BaseRabbitMqServ
             case TaskMessageType.Create:
                 routingKey = RoutingCreateKey;
                 break;
+
             case TaskMessageType.Update:
                 routingKey = RoutingUpdateKey;
                 break;
+
             case TaskMessageType.Delete:
                 routingKey = RoutingDeleteKey;
                 break;
+
             default:
                 throw new ArgumentOutOfRangeException();
         }

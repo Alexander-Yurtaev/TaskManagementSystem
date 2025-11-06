@@ -6,12 +6,12 @@ using TMS.AuthService.Extensions.Services;
 namespace TMS.AuthService
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class Program
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="args"></param>
         /// <exception cref="Exception"></exception>

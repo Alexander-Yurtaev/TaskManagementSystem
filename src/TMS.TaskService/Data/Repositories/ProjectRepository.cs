@@ -5,7 +5,7 @@ using TMS.TaskService.Entities.Enum;
 namespace TMS.TaskService.Data.Repositories;
 
 /// <summary>
-/// 
+///
 /// </summary>
 /// <param name="db"></param>
 public class ProjectRepository(TaskDataContext db) : IProjectRepository
@@ -13,7 +13,7 @@ public class ProjectRepository(TaskDataContext db) : IProjectRepository
     private readonly TaskDataContext _db = db;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="project"></param>
     public async Task AddAsync(ProjectEntity project)
@@ -25,7 +25,7 @@ public class ProjectRepository(TaskDataContext db) : IProjectRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <returns></returns>
     public async Task<IEnumerable<ProjectEntity>> GetAllAsync()
@@ -38,7 +38,7 @@ public class ProjectRepository(TaskDataContext db) : IProjectRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -51,7 +51,7 @@ public class ProjectRepository(TaskDataContext db) : IProjectRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
@@ -64,7 +64,7 @@ public class ProjectRepository(TaskDataContext db) : IProjectRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="project"></param>
     /// <returns></returns>
@@ -80,7 +80,7 @@ public class ProjectRepository(TaskDataContext db) : IProjectRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="id"></param>
     public async Task DeleteAsync(int id)

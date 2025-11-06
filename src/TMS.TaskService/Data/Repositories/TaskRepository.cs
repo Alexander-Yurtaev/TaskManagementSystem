@@ -5,7 +5,7 @@ using TaskStatus = TMS.TaskService.Entities.Enum.TaskStatus;
 namespace TMS.TaskService.Data.Repositories;
 
 /// <summary>
-/// 
+///
 /// </summary>
 /// <param name="db"></param>
 public class TaskRepository(TaskDataContext db) : ITaskRepository
@@ -13,7 +13,7 @@ public class TaskRepository(TaskDataContext db) : ITaskRepository
     private readonly TaskDataContext _db = db;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="task"></param>
     public async Task AddAsync(TaskEntity task)
@@ -25,7 +25,7 @@ public class TaskRepository(TaskDataContext db) : ITaskRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <returns></returns>
     public async Task<IEnumerable<TaskEntity>> GetAllAsync()
@@ -38,7 +38,7 @@ public class TaskRepository(TaskDataContext db) : ITaskRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
@@ -52,7 +52,7 @@ public class TaskRepository(TaskDataContext db) : ITaskRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="title"></param>
     /// <returns></returns>
@@ -65,7 +65,7 @@ public class TaskRepository(TaskDataContext db) : ITaskRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="task"></param>
     public async Task<TaskEntity> UpdateAsync(TaskEntity task)
@@ -79,7 +79,7 @@ public class TaskRepository(TaskDataContext db) : ITaskRepository
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="id"></param>
     public async Task DeleteAsync(int id)

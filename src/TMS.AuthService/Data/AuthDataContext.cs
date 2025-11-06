@@ -5,26 +5,25 @@ using TMS.AuthService.Entities.Enum;
 namespace TMS.AuthService.Data;
 
 /// <summary>
-/// 
+///
 /// </summary>
 public class AuthDataContext : DbContext
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="options"></param>
     public AuthDataContext(DbContextOptions<AuthDataContext> options) : base(options)
     {
-
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public DbSet<UserEntity> Users { get; set; }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="modelBuilder"></param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
