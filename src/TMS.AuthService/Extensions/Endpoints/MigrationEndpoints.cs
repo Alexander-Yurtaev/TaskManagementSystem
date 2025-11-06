@@ -16,13 +16,13 @@ public static class MigrationEndpoints
     /// <param name="app"></param>
     public static void AddMigrateEndpoint(this IApplicationBuilder app)
     {
-        var endpoints = (IEndpointRouteBuilder) app;
+        var endpoints = (IEndpointRouteBuilder)app;
         endpoints.MapGet("/migrate", async (
                 [FromServices] AuthDataContext db,
                 [FromServices] ILogger<IApplicationBuilder> logger) =>
         {
             string databaseName;
-            
+
             try
             {
                 databaseName = db.Database.GetDbConnection().Database;
@@ -50,7 +50,7 @@ public static class MigrationEndpoints
                 };
 
                 await db.Database.MigrateAsync();
-                
+
                 result.AppliedMigrations = await db.Database.GetAppliedMigrationsAsync();
 
                 result.Message = $"База данных {databaseName} успешно обновлена!";

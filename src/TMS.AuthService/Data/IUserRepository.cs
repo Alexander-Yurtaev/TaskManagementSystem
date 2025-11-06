@@ -13,28 +13,28 @@ public interface IUserRepository
     /// <param name="id"></param>
     /// <returns></returns>
     Task<UserEntity?> GetByIdAsync(int id);
-    
+
     /// <summary>
     /// 
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
     Task<UserEntity?> GetByUsernameAsync(string userName);
-    
+
     /// <summary>
     /// 
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
     Task<bool> UserExistsAsync(string userName);
-    
+
     /// <summary>
     /// 
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
     Task AddUserAsync(UserEntity user);
-    
+
     /// <summary>
     /// 
     /// </summary>

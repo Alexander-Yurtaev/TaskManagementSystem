@@ -57,8 +57,8 @@ public class RedisService<T> : IRedisService<T> where T : class
         }
 
         var value = await _database.StringGetAsync(key);
-        return value.HasValue 
-            ? JsonSerializer.Deserialize<T>(value!) 
+        return value.HasValue
+            ? JsonSerializer.Deserialize<T>(value!)
             : null;
     }
 

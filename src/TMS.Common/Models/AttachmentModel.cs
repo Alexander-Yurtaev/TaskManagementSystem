@@ -1,4 +1,4 @@
-﻿namespace TMS.FileStorageService.Models;
+﻿namespace TMS.Common.Models;
 
 public record AttachmentModel
 {

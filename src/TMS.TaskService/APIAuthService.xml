@@ -1145,6 +1145,17 @@
             </summary>
             <param name="endpoints"></param>
         </member>
+        <member name="T:TMS.TaskService.Extensions.Services.HttpClients">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.Services.HttpClients.AddFileStorageClient(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+        </member>
         <member name="T:TMS.TaskService.Extensions.Services.RabbitMqServiceConfiguration">
             <summary>
             

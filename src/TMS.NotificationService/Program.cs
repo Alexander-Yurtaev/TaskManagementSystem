@@ -1,3 +1,4 @@
+using TMS.Common.Extensions;
 using TMS.NotificationService.Data.Extensions;
 using TMS.NotificationService.Extensions.Endpoints;
 using TMS.NotificationService.Extensions.Services;
@@ -14,6 +15,13 @@ namespace TMS.NotificationService
             builder.Services.AddAuthorization();
 
             builder.Services.AddNotifyDataContext();
+
+            builder.Services.AddFileService("EmailEvents", service =>
+            {
+                service.BasePath = Environment.GetEnvironmentVariable("BASE_EVENTS_PATH")
+                                      ??
+                                      throw new InvalidOperationException("BASE_EVENTS_PATH does not defined.");
+            });
 
             builder.Services.AddRabbitMqConsumerConfiguration();
 

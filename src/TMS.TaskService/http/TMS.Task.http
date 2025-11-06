@@ -1,7 +1,7 @@
-@TMS.TaskService_HostAddress = https://localhost:9616/api/tasks
+@TMS.TaskService_HostAddress = https://localhost:13563/api/tasks
 @user_id = 1
 @project_id = 1
-@task_id = 2
+@task_id = 3
 
 ### Greeting
 GET {{TMS.TaskService_HostAddress}}/greeting
@@ -15,7 +15,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "Title" : "Task #1",
+  "Title" : "Task #10",
   "Description" : "",
   "Deadline" : "2025-11-06T20:09:53+03:00",
   "Status" : 0,
@@ -40,7 +40,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "Title": "New Task #1",
+  "Title": "New Task #11",
   "Description": "New Description",
   "Deadline" : "2025-11-08T20:09:53+03:00",
   "Status": 1,

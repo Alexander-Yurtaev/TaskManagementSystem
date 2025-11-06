@@ -1,8 +1,8 @@
+using Grpc.Core;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security;
 using System.Text;
-using Grpc.Core;
-using Microsoft.IdentityModel.Tokens;
 
 namespace TMS.AuthService.Services.Grpc
 {
@@ -47,7 +47,7 @@ namespace TMS.AuthService.Services.Grpc
             };
 
             var result = new ValidateTokenReply();
-            
+
             try
             {
                 tokenHandler.ValidateToken(token, validationParameters, out var securityToken);

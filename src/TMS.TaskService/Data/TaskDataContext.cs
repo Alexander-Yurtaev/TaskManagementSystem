@@ -14,7 +14,7 @@ public class TaskDataContext : DbContext
     /// <param name="options"></param>
     public TaskDataContext(DbContextOptions<TaskDataContext> options) : base(options)
     {
-        
+
     }
 
     /// <summary>

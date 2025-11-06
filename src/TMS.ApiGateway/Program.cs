@@ -18,9 +18,9 @@ namespace TMS.ApiGateway
 
             // Чтобы в контроллере узнать текущие схему и хост
             builder.Services.AddHttpContextAccessor();
-            
+
             builder.Services.AddMvc();
-            
+
             builder.Services.AddEndpointsApiExplorer();
 
             // Ocelot Basic setup

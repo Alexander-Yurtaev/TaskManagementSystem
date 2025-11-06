@@ -14,8 +14,6 @@
   </PropertyGroup>
 
   <ItemGroup Label="Common">
-	<PackageReference Include="AutoMapper" />
-	<PackageReference Include="DotNetEnv" />
 	<PackageReference Include="Swashbuckle.AspNetCore" />
   </ItemGroup>
 
@@ -24,25 +22,9 @@
 	<PackageReference Include="StackExchange.Redis" />
   </ItemGroup>
 
-  <ItemGroup Label="EF Core">
-	<PackageReference Include="Microsoft.EntityFrameworkCore" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Design">
-		<PrivateAssets>all</PrivateAssets>
-		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	</PackageReference>
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
-		<PrivateAssets>all</PrivateAssets>
-		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	</PackageReference>
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
-	<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
-  </ItemGroup>
-
   <ItemGroup Label="JWT">
     <PackageReference Include="BCrypt.Net-Core" />
 	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
-	<PackageReference Include="Microsoft.IdentityModel.Tokens" />
-	<PackageReference Include="System.IdentityModel.Tokens.Jwt" />
   </ItemGroup>
 
   <ItemGroup>

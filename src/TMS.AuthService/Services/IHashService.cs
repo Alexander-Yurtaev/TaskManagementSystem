@@ -11,7 +11,7 @@ public interface IHashService
     /// <param name="password"></param>
     /// <returns></returns>
     string HashPassword(string password);
-    
+
     /// <summary>
     /// 
     /// </summary>
@@ -19,7 +19,7 @@ public interface IHashService
     /// <param name="password"></param>
     /// <returns></returns>
     bool VerifyPassword(string hash, string password);
-    
+
     /// <summary>
     /// 
     /// </summary>

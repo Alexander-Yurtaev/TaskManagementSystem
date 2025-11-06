@@ -11,7 +11,7 @@ public abstract class BaseRabbitMqService(ILogger<BaseRabbitMqService> logger) :
     public const string CreateQueueName = "task_create";
     public const string UpdateQueueName = "task_update";
     public const string DeleteQueueName = "task_delete";
-    
+
     public const string RoutingCreateKey = "task.create";
     public const string RoutingUpdateKey = "task.update";
     public const string RoutingDeleteKey = "task.delete";
@@ -42,7 +42,7 @@ public abstract class BaseRabbitMqService(ILogger<BaseRabbitMqService> logger) :
             autoDelete: false,
             arguments: null
         );
-        
+
         // Создаем и связываем очереди с exchange по routingKey
 
         #region Create

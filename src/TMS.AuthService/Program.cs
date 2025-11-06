@@ -104,7 +104,7 @@ namespace TMS.AuthService
                 logger.LogCritical(ex, "Ошибка при конфигурации Redis.");
                 throw;
             }
-            
+
             //
             var app = builder.Build();
 

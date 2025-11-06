@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TMS.FileStorageService.Models;
+using TMS.Common.Models;
+using TMS.Common.Services;
 
 namespace TMS.FileStorageService.Extensions.Endpoints;
 
@@ -13,10 +14,14 @@ public static class FileStorageEndpoints
     public static RouteHandlerBuilder AddFileStoragesEndpoint(this IEndpointRouteBuilder endpoints)
     {
         endpoints.MapGet("/files", (
-            [FromQuery] string fileName,
-            [FromQuery] string filePath,
+            [FromQuery] string name,
+            [FromQuery] string path,
+            [FromKeyedServices("AttachmentFiles")] IFileService fileService,
             [FromServices] ILogger<Program> logger) =>
         {
+            var fileName = name;
+            var filePath = path;
+
             // 1. Проверяем входные данные
             if (string.IsNullOrEmpty(fileName))
             {
@@ -28,41 +33,30 @@ public static class FileStorageEndpoints
                 return Results.BadRequest("FilePath is required.");
             }
 
-            // 2. Формируем полный путь
-            var basePath = Environment.GetEnvironmentVariable("FILES_PATH");
-            if (string.IsNullOrEmpty(basePath))
-            {
-                throw new InvalidOperationException("FILE_PATH not defined.");
-            }
-
-            string fullPath = Path.Combine(basePath, filePath, fileName);
-
-            // 3. Проверяем существование файла
-            if (!File.Exists(fullPath))
-            {
-                return Results.NotFound($"File not found: {fullPath}");
-            }
-
+            // 2. Получаем файл
             try
             {
-                // 4. Читаем файл и отдаём его
-                var fileStream = new FileStream(fullPath, FileMode.Open, FileAccess.Read);
+                Stream fileStream = fileService.GetFile(filePath);
 
-                // Определяем MIME‑тип (опционально)
-                string contentType = MimeTypes.GetMimeType(fileName);
-
-                return Results.File(fileStream, contentType, fileName);
+                // ASP.NET Core автоматически закроет поток после отправки клиенту
+                return Results.File(fileStream, contentType: "application/octet-stream", fileDownloadName: fileName);
+            }
+            catch (FileNotFoundException fnf)
+            {
+                logger.LogError(fnf, "Error reading file: {Path}", Path.Combine(filePath, fileName));
+                return Results.NotFound();
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Error reading file: {Path}", fullPath);
-                return Results.StatusCode(500);
+                // Логирование ошибки
+                return Results.Problem(detail: $"Error reading file: {ex.Message}", statusCode: StatusCodes.Status500InternalServerError);
             }
         });
 
         return endpoints.MapPost("/files", async (
             [FromForm] AttachmentModel attachment,
             [FromForm] IFormFile file,
+            [FromKeyedServices("AttachmentFiles")] IFileService fileService,
             [FromServices] ILogger<AttachmentModel> logger) =>
         {
             // 1. Проверка входных данных
@@ -76,41 +70,24 @@ public static class FileStorageEndpoints
                 return Results.BadRequest("The path to save is not specified.");
 
             // 2. Формируем полный путь к файлу
-            var filePath = Environment.GetEnvironmentVariable("FILES_PATH");
-            if (string.IsNullOrEmpty(filePath))
-            {
-                throw new InvalidOperationException("FILES_PATH does not defined.");
-            }
+            string filePath = Path.Combine(attachment.FilePath, attachment.FileName);
 
-            string fullPath = Path.Combine(filePath, attachment.FilePath, attachment.FileName);
-
-            // 3. Проверяем и создаём каталог, если его нет
-            string directory = Path.GetDirectoryName(fullPath)!;
-            if (!Directory.Exists(directory))
-            {
-                Directory.CreateDirectory(directory);
-            }
-
-            // 4. Сохраняем файл
+            // 3. Сохраняем файл
             try
             {
-                await using (var stream = new FileStream(fullPath, FileMode.Create))
+                await Task.Run(() =>
                 {
-                    await file.CopyToAsync(stream);
-                }
-
-                return Results.Ok(new
-                {
-                    Message = "The file was saved successfully.",
-                    FilePath = directory,
-                    FileName = attachment.FileName,
-                    FileSize = file.Length
+                    fileService.WriteFile(filePath, file.CopyTo);
                 });
+
+                return Results.Ok(new FileStorageResult(
+                    Message: "The file was saved successfully.",
+                    FilePath: filePath));
             }
             catch (Exception ex)
             {
                 return Results.Problem(
-                    detail:$"Error saving the file: {ex.Message}",
+                    detail: $"Error saving the file: {ex.Message}",
                     statusCode: StatusCodes.Status500InternalServerError);
             }
         })

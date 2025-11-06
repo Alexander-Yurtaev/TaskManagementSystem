@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using TMS.Common.Models;
 using TMS.TaskService.Data.Repositories;
 using TMS.TaskService.Entities;
-using TMS.TaskService.Models.Attachments;
 
 namespace TMS.TaskService.Extensions.Endpoints.Attachments;
 
@@ -28,45 +29,61 @@ public static class CreateAttachmentOperations
     {
         endpoints.MapPost("/tasks/{id}/attachments", async (
             [FromRoute] int id,
-            [FromBody] AttachmentCreate attachment,
+            [FromQuery] string fileName,
+            [FromForm] IFormFile file,
             [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] IMapper mapper,
-            [FromServices] IAttachmentRepository repository) =>
+            [FromServices] IAttachmentRepository repository,
+            [FromServices] IHttpClientFactory httpClientFactory) =>
         {
-            logger.LogInformation("For task with id={TaskId} start creating attachment with FileName: {FileName}.", id, attachment.FileName);
+            logger.LogInformation("For task with id={TaskId} start creating attachment with FileName: {FileName}.", id, fileName);
 
             try
             {
-                var attachmentExists = await repository.IsExistsAsync(attachment.FilePath, attachment.FileName, id);
-                if (attachmentExists)
-                {
-                    logger.LogError(
-                        "Attachment with FilePath='{FilePath}', FileName='{FileName}' for TaskId={TaskId}  already exists. Operation: {Operation}",
-                        attachment.FilePath,
-                        attachment.FileName,
-                        id,
-                        $"POST /tasks/{id}/attachments"
-                    );
+                // Сохранить файл
+                string filePath = GetFilePath(id);
 
-                    return Results.BadRequest(
-                        $"Attachment with FilePath='{attachment.FilePath}', FileName='{attachment.FileName}' for TaskId={id}  already exists.");
+                logger.LogInformation("Sending file to FileStorage.");
+                var response = await SendFileToStorageService(filePath, Guid.NewGuid().ToString(), file, httpClientFactory);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    logger.LogInformation($"File was not saved: {errorContent}");
+
+                    return Results.Problem(
+                        detail: errorContent,
+                        statusCode: StatusCodes.Status500InternalServerError
+                    );
                 }
 
-                var entity = mapper.Map<AttachmentEntity>(attachment);
+                var json = await response.Content.ReadAsStringAsync();
+                var fileStorageResult = JsonSerializer.Deserialize<FileStorageResult>(json,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-                entity.TaskId = id;
+                if (fileStorageResult is null)
+                {
+                    throw new InvalidOperationException("FileStorageResult should not be null!");
+                }
 
+                // сохраняем entity в БД
+                var entity = new AttachmentEntity
+                {
+                    TaskId = id,
+                    FileName = fileName,
+                    FilePath = fileStorageResult.FilePath
+                };
                 await repository.AddAsync(entity);
 
+                //
+                logger.LogInformation("{@FileStorageResult}", fileStorageResult);
                 return Results.Created($"api/attachments/{entity.Id}", entity);
             }
             catch (Exception ex)
             {
                 logger.LogError(
                     ex,
-                    "Error while creating attachment with FilePath='{FilePath}', FileName='{FileName}' for TaskId={TaskId}  already exists. Operation: {Operation}",
-                    attachment.FilePath,
-                    attachment.FileName,
+                    "Error while creating attachment for TaskId={TaskId}. Operation: {Operation}",
                     id,
                     $"POST /tasks/{id}/attachments"
                 );
@@ -76,6 +93,37 @@ public static class CreateAttachmentOperations
                     statusCode: StatusCodes.Status500InternalServerError
                 );
             }
-        });
+        }).DisableAntiforgery();
+    }
+
+    private static string GetFilePath(int taskId) => $"tasks/{taskId}/attachments";
+
+    private static async Task<HttpResponseMessage> SendFileToStorageService(string filePath,
+        [FromForm] string fileName,
+        [FromForm] IFormFile file,
+        [FromServices] IHttpClientFactory httpClientFactory)
+    {
+        HttpClient client = httpClientFactory.CreateClient("TMS.FileStorageClient");
+        using var content = new MultipartFormDataContent();
+
+        // 1. Добавляем метаданные
+        content.Add(new StringContent(fileName), "FileName");
+        content.Add(new StringContent(filePath), "FilePath");
+
+        // 2. Добавляем файл
+        await using var fileStream = file.OpenReadStream();
+        content.Add(
+            new StreamContent(fileStream),
+            "File",
+            file.FileName
+        );
+
+        // 3. Отправляем запрос
+        var response = await client.PostAsync(
+            "",
+            content
+        );
+
+        return response;
     }
 }

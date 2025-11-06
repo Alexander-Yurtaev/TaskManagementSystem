@@ -8,7 +8,7 @@ namespace TMS.TaskService.Data.Repositories;
 /// 
 /// </summary>
 /// <param name="db"></param>
-public class ProjectRepository(TaskDataContext db): IProjectRepository
+public class ProjectRepository(TaskDataContext db) : IProjectRepository
 {
     private readonly TaskDataContext _db = db;
 
@@ -46,7 +46,7 @@ public class ProjectRepository(TaskDataContext db): IProjectRepository
     {
         var project = await _db.Projects
             .FirstOrDefaultAsync(p => p.Id == id && p.Status != ProjectStatus.Cancelled);
-        
+
         return project;
     }
 

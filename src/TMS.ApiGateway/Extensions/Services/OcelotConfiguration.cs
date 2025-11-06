@@ -4,7 +4,7 @@ namespace TMS.ApiGateway.Extensions.Services;
 
 public static class OcelotConfiguration
 {
-    public static void AddOcelotConfiguration(this IServiceCollection services, 
+    public static void AddOcelotConfiguration(this IServiceCollection services,
         string contentRootPath, ConfigurationManager configuration)
     {
         configuration

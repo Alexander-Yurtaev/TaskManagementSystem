@@ -1,4 +1,4 @@
-@TMS.TaskService_HostAddress = https://localhost:8227/api/projects
+@TMS.TaskService_HostAddress = https://localhost:9668/api/projects
 @user_id = 1
 @new_project_id = 1
 

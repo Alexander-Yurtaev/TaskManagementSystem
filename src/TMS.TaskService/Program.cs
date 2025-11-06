@@ -40,6 +40,8 @@ namespace TMS.TaskService
             // RabbitMQ
             builder.Services.AddRabbitMqServiceConfiguration();
 
+            builder.Services.AddFileStorageClient();
+
             // Add services to the container.
             builder.Services.AddAuthorization();
 

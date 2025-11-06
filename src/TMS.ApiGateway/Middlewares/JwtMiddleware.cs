@@ -1,5 +1,4 @@
 ﻿using Grpc.Net.ClientFactory;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.Net.Http.Headers;
 using System.Security.Claims;
 using TMS.ApiGateway.Grpc.Clients;
@@ -32,7 +31,7 @@ public class JwtMiddleware
                 return;
             }
 
-            var response = await _authClient.ValidateTokenAsync(new ValidateTokenRequest{ Token = token });
+            var response = await _authClient.ValidateTokenAsync(new ValidateTokenRequest { Token = token });
             if (response is null || !response.IsValidate)
             {
                 await HandleUnauthorizedRequest(context);

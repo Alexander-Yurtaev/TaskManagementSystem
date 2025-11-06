@@ -66,7 +66,7 @@ public static class ReadProjectOperations
             [FromServices] IProjectRepository repository) =>
         {
             logger.LogInformation("Start getting project with id: {Id}.", id);
-            
+
             try
             {
                 var project = await repository.GetByIdAsync(id);

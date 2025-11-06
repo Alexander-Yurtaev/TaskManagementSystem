@@ -40,7 +40,7 @@ public static class CreateProjectOperations
                 if (projectExists)
                 {
                     logger.LogError(
-                        "Project with name='{ProjectName}' already exists. Operation: {Operation}", 
+                        "Project with name='{ProjectName}' already exists. Operation: {Operation}",
                         project.Name,
                         "POST /projects"
                     );

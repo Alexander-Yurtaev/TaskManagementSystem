@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TMS.Common.RabbitMq;
 using TMS.TaskService.Data.Repositories;
-using static Grpc.Core.Metadata;
 
 namespace TMS.TaskService.Extensions.Endpoints.Tasks;
 

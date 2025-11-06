@@ -7,7 +7,7 @@ public class NotificationDataContext : DbContext
 {
     public NotificationDataContext(DbContextOptions<NotificationDataContext> options) : base(options)
     {
-        
+
     }
 
     public DbSet<NotificationEntity> Notifications { get; set; }

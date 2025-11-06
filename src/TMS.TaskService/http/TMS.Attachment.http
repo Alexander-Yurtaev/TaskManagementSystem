@@ -1,29 +1,36 @@
-@TMS.TaskService_HostAddress = https://localhost:9616/api
+@TMS.TaskService_HostAddress = https://localhost:11159/api
 @user_id = 1
 @task_id = 2
 @comment_id = 4
-@attachment_id=1
+@attachment_id = 1
 
 #### Create
-POST {{TMS.TaskService_HostAddress}}/tasks/{{task_id}}/attachments
-Content-Type: application/json
-Accept: application/json
+POST {{TMS.TaskService_HostAddress}}/tasks/{{task_id}}/attachments?fileName=example.txt
+Content-Type: multipart/form-data; boundary="--------------------------abc123def456"
 
-{
-  "FileName": "FileName",
-  "FilePath": "/path"
-}
+----------------------------abc123def456
+Content-Disposition: form-data; name="file"; filename="example.txt"
+Content-Type: text/plain
 
-### Get
+<содержимое файла example.txt>
+----------------------------abc123def456--
+
+#### Get
 GET {{TMS.TaskService_HostAddress}}/attachments/{{attachment_id}}
 Content-Type: application/json
 Accept: application/json
 
 
-### GetByTaskId
+#### GetByTaskId
 GET {{TMS.TaskService_HostAddress}}/tasks/{{task_id}}/attachments
 Content-Type: application/json
 Accept: application/json
 
 
-###
+#### GetFileById
+GET {{TMS.TaskService_HostAddress}}/files?name=example.txt&path=tasks%2F2%2Fattachments%2F03ec4eee-2b5f-418e-9001-46c57832006d
+Content-Type: application/json
+Accept: application/json
+
+
+####

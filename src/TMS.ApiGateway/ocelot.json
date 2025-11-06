@@ -118,7 +118,7 @@
       "DangerousAcceptAnyServerCertificateValidator": true
     },
     {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamHttpMethod": [ "GET" ],
       "UpstreamPathTemplate": "/api/files/{everything}",
       "DownstreamPathTemplate": "/files/{everything}",
       "DownstreamScheme": "https",

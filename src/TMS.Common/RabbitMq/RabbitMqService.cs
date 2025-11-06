@@ -1,6 +1,6 @@
-﻿using System.Text;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
+using System.Text;
 
 namespace TMS.Common.RabbitMq;
 

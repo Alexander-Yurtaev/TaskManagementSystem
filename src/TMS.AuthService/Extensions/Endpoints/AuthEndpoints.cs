@@ -35,7 +35,7 @@ public static class AuthEndpoints
                     var userExists = await userRepository.UserExistsAsync(model.Username);
                     if (!userExists)
                         return Results.Unauthorized();
-                    
+
                     var user = (await userRepository.GetByUsernameAsync(model.Username))!;
 
                     // 2. Проверка пароля

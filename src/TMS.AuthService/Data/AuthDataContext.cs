@@ -15,7 +15,7 @@ public class AuthDataContext : DbContext
     /// <param name="options"></param>
     public AuthDataContext(DbContextOptions<AuthDataContext> options) : base(options)
     {
-        
+
     }
 
     /// <summary>

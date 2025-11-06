@@ -14,21 +14,21 @@ public interface IRedisService<T>
     /// <param name="expiry"></param>
     /// <returns></returns>
     Task SetAsync(string key, T value, TimeSpan expiry);
-    
+
     /// <summary>
     /// 
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
     Task<T?> GetAsync(string key);
-    
+
     /// <summary>
     /// 
     /// </summary>
     /// <param name="key"></param>
     /// <returns></returns>
     Task RemoveAsync(string key);
-    
+
     /// <summary>
     /// 
     /// </summary>

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TMS.TaskService.Data;
 using TMS.Common;
+using TMS.TaskService.Data;
 
 namespace TMS.TaskService.Extensions.Endpoints;
 

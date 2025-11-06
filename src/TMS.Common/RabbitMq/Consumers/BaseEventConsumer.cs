@@ -1,11 +1,12 @@
-﻿using System.Text;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using System.Text;
+using TMS.Common.Services;
 
 namespace TMS.Common.RabbitMq.Consumers;
 
-public abstract class BaseEventConsumer(ILogger<BaseEventConsumer> logger, string queueName, string filePathPrefix)
+public abstract class BaseEventConsumer(IFileService fileService, ILogger<BaseEventConsumer> logger, string queueName, string filePathPrefix)
     : BaseRabbitMqService(logger)
 {
     public override async Task<string> InitializeAsync()
@@ -35,31 +36,17 @@ public abstract class BaseEventConsumer(ILogger<BaseEventConsumer> logger, strin
 
     protected void ProcessMessage(string content)
     {
-        ArgumentException.ThrowIfNullOrEmpty(filePathPrefix);
-        ArgumentException.ThrowIfNullOrWhiteSpace(filePathPrefix);
+        // Создаём все недостающие папки (включая вложенные)
+        var filePath = filePathPrefix; // DirectoryFileHelper.CreateFilePath("BASE_EVENTS_PATH", filePathPrefix, logger);
 
-        var eventsPath = Environment.GetEnvironmentVariable("EVENTS_PATH");
-        if (string.IsNullOrEmpty(eventsPath))
+        if (string.IsNullOrEmpty(filePath)) throw new InvalidOperationException("FilePath is null.");
+
+        // Сохраняем файл с переданным содержимым
+        fileService.WriteFile(filePath, (stream) =>
         {
-            throw new Exception("EVENTS_PATH is not defined.");
-        }
+            stream.Write(Encoding.UTF8.GetBytes(content));
+        });
 
-        var filePath = Path.Combine(eventsPath, filePathPrefix);
-
-        // 1. Получаем каталог из полного пути к файлу
-        string? directoryPath = Path.GetDirectoryName(filePath);
-
-        if (string.IsNullOrEmpty(directoryPath)) throw new NullReferenceException("DirectoryPath is null.");
-
-        // 2. Создаём все недостающие папки (включая вложенные)
-        if (!string.IsNullOrEmpty(directoryPath) && !Directory.Exists(directoryPath))
-        {
-            Directory.CreateDirectory(directoryPath);
-            Console.WriteLine($"Создана структура папок: {directoryPath}");
-        }
-
-        // 3. Сохраняем файл с переданным содержимым
-        File.WriteAllText(filePath, content);
-        Console.WriteLine($"Файл сохранён: {filePath}");
+        logger.LogInformation($"The file is saved: {filePath}");
     }
 }

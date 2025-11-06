@@ -33,7 +33,7 @@ public class TaskRepository(TaskDataContext db) : ITaskRepository
         var tasks = await _db.Tasks
             .Where(t => t.Status != TaskStatus.Cancelled)
             .ToArrayAsync();
-        
+
         return tasks;
     }
 

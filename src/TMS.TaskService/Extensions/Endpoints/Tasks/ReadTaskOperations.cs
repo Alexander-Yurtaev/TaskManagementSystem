@@ -25,7 +25,7 @@ public static class ReadTaskOperations
     private static void AddGetTasksOperation(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapGet("/tasks", async (
-            [FromServices] ILogger<IApplicationBuilder> logger, 
+            [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] ITaskRepository repository) =>
         {
             logger.LogInformation("Start get all tasks.");
