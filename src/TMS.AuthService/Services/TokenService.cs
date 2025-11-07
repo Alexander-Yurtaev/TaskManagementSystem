@@ -10,7 +10,7 @@ using TMS.AuthService.Models;
 namespace TMS.AuthService.Services;
 
 /// <summary>
-/// 
+///
 /// </summary>
 public class TokenService : ITokenService
 {
@@ -21,7 +21,7 @@ public class TokenService : ITokenService
     private readonly ILogger<TokenService> _logger;
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="configuration"></param>
     /// <param name="redisService"></param>
@@ -42,7 +42,7 @@ public class TokenService : ITokenService
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="user"></param>
     /// <returns></returns>
@@ -54,7 +54,7 @@ public class TokenService : ITokenService
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="storedHash"></param>
     /// <param name="providedToken"></param>
@@ -65,7 +65,7 @@ public class TokenService : ITokenService
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="refreshToken"></param>
     /// <returns></returns>
@@ -130,8 +130,8 @@ public class TokenService : ITokenService
         };
 
         var token = new JwtSecurityToken(
-            issuer: _configuration["Jwt:Issuer"],
-            audience: _configuration["Jwt:Audience"],
+            issuer: jwtIssue,
+            audience: jwtAudience,
             claims: claims,
             expires: DateTime.UtcNow.AddMinutes(30),
             signingCredentials: credentials

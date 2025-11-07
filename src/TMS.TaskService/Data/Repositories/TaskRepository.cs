@@ -40,6 +40,20 @@ public class TaskRepository(TaskDataContext db) : ITaskRepository
     /// <summary>
     ///
     /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    public async Task<IEnumerable<TaskEntity>> GetAllByUserIdAsync(int userId)
+    {
+        var tasks = await _db.Tasks
+            .Where(t => t.Status != TaskStatus.Cancelled && t.AssigneeId == userId)
+            .ToArrayAsync();
+
+        return tasks;
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
     public async Task<TaskEntity?> GetByIdAsync(int id)

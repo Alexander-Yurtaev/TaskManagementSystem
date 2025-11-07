@@ -1,6 +1,5 @@
 using Ocelot.Middleware;
 using TMS.ApiGateway.Extensions.Services;
-using TMS.ApiGateway.Middlewares;
 
 namespace TMS.ApiGateway
 {
@@ -9,6 +8,9 @@ namespace TMS.ApiGateway
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            using var factory = LoggerFactory.Create(b => b.AddConsole());
+            ILogger logger = factory.CreateLogger<Program>();
 
             // Add your features
             if (builder.Environment.IsDevelopment())
@@ -24,7 +26,7 @@ namespace TMS.ApiGateway
             builder.Services.AddEndpointsApiExplorer();
 
             // Ocelot Basic setup
-            builder.Services.AddOcelotConfiguration(builder.Environment.ContentRootPath, builder.Configuration);
+            builder.Services.AddOcelotConfiguration(builder.Environment.ContentRootPath, builder.Configuration, logger);
 
             // gRPC
             builder.Services.AddRpcConfiguration(builder.Configuration);
@@ -44,6 +46,8 @@ namespace TMS.ApiGateway
 
             app.UseRouting();
 
+            app.UseAuthentication();   // добавление middleware аутентификации
+
             // Обрабатываем локальные маршруты
             app.MapWhen(context => context.Request.Path.StartsWithSegments("/"), appBuilder =>
             {
@@ -62,11 +66,13 @@ namespace TMS.ApiGateway
             app.UseOcelot().Wait();
 
             // Устанавливаем middleware для путей, доступ к которым доступен только авторизованным пользователям
-            var requireAuthorizationPaths = new[] { "/api/auth/users" };
-            app.MapWhen(context => requireAuthorizationPaths.Any(ep => context.Request.Path.ToString().Contains(ep)), appBuilder =>
-            {
-                appBuilder.UseMiddleware<JwtMiddleware>();
-            });
+            //var requireAuthorizationPaths = new[] { "/api/auth/users" };
+            //app.MapWhen(context => requireAuthorizationPaths.Any(ep => context.Request.Path.ToString().Contains(ep)), appBuilder =>
+            //{
+            //    appBuilder.UseMiddleware<JwtMiddleware>();
+            //});
+
+            app.UseAuthorization();   // добавление middleware авторизации
 
             await app.RunAsync();
         }

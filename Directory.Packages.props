@@ -19,6 +19,7 @@
     <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.10" />
     <PackageVersion Include="Microsoft.Net.Http.Headers" Version="9.0.10" />
     <PackageVersion Include="MimeTypes" Version="2.5.2" />
+    <PackageVersion Include="Ocelot.Administration" Version="23.4.3" />
     <PackageVersion Include="RabbitMQ.Client" Version="7.1.2" />
     <PackageVersion Include="StackExchange.Redis" Version="2.9.32" />
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="9.0.6" />

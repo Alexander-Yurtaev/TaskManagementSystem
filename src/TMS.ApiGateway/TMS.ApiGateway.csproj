@@ -11,8 +11,13 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
-  <ItemGroup Label="Common">
+  <ItemGroup Label="Ocelot">
 	<PackageReference Include="Ocelot" />
+	<PackageReference Include="Ocelot.Administration" />
+  </ItemGroup>
+
+  <ItemGroup Label="Jwt">
+	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
   </ItemGroup>
 
   <ItemGroup Label="gRPC">

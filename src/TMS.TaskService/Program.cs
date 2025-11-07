@@ -31,6 +31,8 @@ namespace TMS.TaskService
             using var factory = LoggerFactory.Create(b => b.AddConsole());
             ILogger logger = factory.CreateLogger<Program>();
 
+            builder.Services.AddJwtConfiguration(builder.Environment.ContentRootPath, builder.Configuration, logger);
+
             // Регистрация AutoMapper
             builder.Services.AddAutoMapper(_ => { }, AppDomain.CurrentDomain.GetAssemblies());
 

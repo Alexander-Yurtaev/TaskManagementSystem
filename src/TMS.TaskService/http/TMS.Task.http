@@ -1,4 +1,4 @@
-@TMS.TaskService_HostAddress = https://localhost:13563/api/tasks
+@TMS.TaskService_HostAddress = https://localhost:11964/api/tasks
 @user_id = 1
 @project_id = 1
 @task_id = 3
@@ -28,6 +28,7 @@ Accept: application/json
 GET {{TMS.TaskService_HostAddress}}
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVXNlck5hbWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJFbWFpbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE3NjI1MzEzNDgsImlzcyI6ImF1dGgtc2VydmljZSIsImF1ZCI6IlRNUyJ9.8u-xkXTFYJf2tBJ7onj3Ks9qPXNY2DoQZQH6XHGmlIE
 
 ### GetTask
 GET {{TMS.TaskService_HostAddress}}/{{task_id}}

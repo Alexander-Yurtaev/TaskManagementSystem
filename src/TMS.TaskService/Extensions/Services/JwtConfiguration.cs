@@ -1,14 +1,23 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Ocelot.Administration;
-using Ocelot.DependencyInjection;
 using System.Text;
 
-namespace TMS.ApiGateway.Extensions.Services;
+namespace TMS.TaskService.Extensions.Services;
 
-public static class OcelotConfiguration
+/// <summary>
+///
+/// </summary>
+public static class JwtConfiguration
 {
-    public static void AddOcelotConfiguration(this IServiceCollection services,
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="contentRootPath"></param>
+    /// <param name="configuration"></param>
+    /// <param name="logger"></param>
+    /// <exception cref="Exception"></exception>
+    public static void AddJwtConfiguration(this IServiceCollection services,
         string contentRootPath, ConfigurationManager configuration, ILogger logger)
     {
         var jwtKey = configuration["JWT_KEY"];
@@ -24,8 +33,7 @@ public static class OcelotConfiguration
         }
 
         configuration
-            .SetBasePath(contentRootPath)
-            .AddOcelot(); // single ocelot.json file in read-only mode
+            .SetBasePath(contentRootPath);
 
         void Options(JwtBearerOptions o)
         {
@@ -51,8 +59,7 @@ public static class OcelotConfiguration
             };
         }
 
-        services
-            .AddOcelot(configuration)
-            .AddAdministration("/administration", (Action<JwtBearerOptions>)Options);
+        services.AddAuthentication("Bearer")
+            .AddJwtBearer("Bearer", Options);
     }
 }

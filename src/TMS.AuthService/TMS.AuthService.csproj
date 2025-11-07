@@ -15,11 +15,11 @@
 
   <ItemGroup Label="Common">
 	<PackageReference Include="Swashbuckle.AspNetCore" />
+	<PackageReference Include="StackExchange.Redis" />
   </ItemGroup>
 
   <ItemGroup Label="gRPC">
 	<PackageReference Include="Grpc.AspNetCore" />
-	<PackageReference Include="StackExchange.Redis" />
   </ItemGroup>
 
   <ItemGroup Label="JWT">

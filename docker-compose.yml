@@ -8,6 +8,8 @@ services:
     container_name: tms-gateway
     environment:
       - JWT_KEY=${JWT_KEY}
+      - JWT_ISSUER=${JWT_ISSUER}
+      - JWT_AUDIENCE=${JWT_AUDIENCE}
     ports:
       - "8080"
       - "8081"
@@ -72,6 +74,8 @@ services:
       - POSTGRES_DB=${TASK_POSTGRES_DB}
       - POSTGRES_HOST=tms-task-db
       - JWT_KEY=${JWT_KEY}
+      - JWT_ISSUER=${JWT_ISSUER}
+      - JWT_AUDIENCE=${JWT_AUDIENCE}
       - RABBITMQ_HOST=${RABBITMQ_HOST}
       - FILES_HOST=tms-file-storage-service
     depends_on:

@@ -1,15 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TMS.TaskService.Data.Repositories;
 
 namespace TMS.TaskService.Extensions.Endpoints.Tasks;
 
 /// <summary>
-/// 
+///
 /// </summary>
 public static class ReadTaskOperations
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="endpoints"></param>
     public static void AddReadTaskOperations(this IEndpointRouteBuilder endpoints)
@@ -19,12 +21,13 @@ public static class ReadTaskOperations
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="endpoints"></param>
     private static void AddGetTasksOperation(IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet("/tasks", async (
+        endpoints.MapGet("/tasks", [Authorize] async (
+            HttpContext context,
             [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] ITaskRepository repository) =>
         {
@@ -32,7 +35,22 @@ public static class ReadTaskOperations
 
             try
             {
-                var tasks = (await repository.GetAllAsync()).ToArray();
+                #region Проверяем, что пользователь аутентифицирован
+
+                if (!context.User.Identity?.IsAuthenticated ?? false)
+                {
+                    return Results.Unauthorized();
+                }
+
+                // Получаем ID пользователя (claim "sub" или "nameid")
+                var userId = int.Parse(context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "0");
+
+                // Получаем имя пользователя (claim "name")
+                var userName = context.User.Identity?.Name;
+
+                #endregion Проверяем, что пользователь аутентифицирован
+
+                var tasks = (await repository.GetAllByUserIdAsync(userId)).ToArray();
 
                 logger.LogInformation("Found {TasksCount} tasks.", tasks.Length);
 
@@ -55,7 +73,7 @@ public static class ReadTaskOperations
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="endpoints"></param>
     private static void AddGetTaskOperation(IEndpointRouteBuilder endpoints)
