@@ -1419,72 +1419,72 @@
              </summary>
              <param name="args"></param>
         </member>
-        <member name="T:TMS.TaskManager.Grpc.Clients.TokenReflection">
-            <summary>Holder for reflection information generated from Protos/token.proto</summary>
+        <member name="T:TMS.Common.Grpc.Token.TokenReflection">
+            <summary>Holder for reflection information generated from token.proto</summary>
         </member>
-        <member name="P:TMS.TaskManager.Grpc.Clients.TokenReflection.Descriptor">
-            <summary>File descriptor for Protos/token.proto</summary>
+        <member name="P:TMS.Common.Grpc.Token.TokenReflection.Descriptor">
+            <summary>File descriptor for token.proto</summary>
         </member>
-        <member name="T:TMS.TaskManager.Grpc.Clients.Claim">
+        <member name="T:TMS.Common.Grpc.Token.Claim">
             <summary>
             Сообщение, представляющее одну claim в токене
             </summary>
         </member>
-        <member name="F:TMS.TaskManager.Grpc.Clients.Claim.TypeFieldNumber">
+        <member name="F:TMS.Common.Grpc.Token.Claim.TypeFieldNumber">
             <summary>Field number for the "type" field.</summary>
         </member>
-        <member name="F:TMS.TaskManager.Grpc.Clients.Claim.ValueFieldNumber">
+        <member name="F:TMS.Common.Grpc.Token.Claim.ValueFieldNumber">
             <summary>Field number for the "value" field.</summary>
         </member>
-        <member name="T:TMS.TaskManager.Grpc.Clients.ValidateTokenRequest">
+        <member name="T:TMS.Common.Grpc.Token.ValidateTokenRequest">
             <summary>
             Запрос на валидацию токена
             </summary>
         </member>
-        <member name="F:TMS.TaskManager.Grpc.Clients.ValidateTokenRequest.TokenFieldNumber">
+        <member name="F:TMS.Common.Grpc.Token.ValidateTokenRequest.TokenFieldNumber">
             <summary>Field number for the "token" field.</summary>
         </member>
-        <member name="T:TMS.TaskManager.Grpc.Clients.ValidateTokenReply">
+        <member name="T:TMS.Common.Grpc.Token.ValidateTokenReply">
             <summary>
             Ответ с результатом валидации токена
             </summary>
         </member>
-        <member name="F:TMS.TaskManager.Grpc.Clients.ValidateTokenReply.IsValidateFieldNumber">
+        <member name="F:TMS.Common.Grpc.Token.ValidateTokenReply.IsValidateFieldNumber">
             <summary>Field number for the "isValidate" field.</summary>
         </member>
-        <member name="F:TMS.TaskManager.Grpc.Clients.ValidateTokenReply.AuthenticationTypeFieldNumber">
+        <member name="F:TMS.Common.Grpc.Token.ValidateTokenReply.AuthenticationTypeFieldNumber">
             <summary>Field number for the "authenticationType" field.</summary>
         </member>
-        <member name="F:TMS.TaskManager.Grpc.Clients.ValidateTokenReply.ClaimsFieldNumber">
+        <member name="F:TMS.Common.Grpc.Token.ValidateTokenReply.ClaimsFieldNumber">
             <summary>Field number for the "claims" field.</summary>
         </member>
-        <member name="T:TMS.TaskManager.Grpc.Clients.Auth">
+        <member name="T:TMS.Common.Grpc.Token.Auth">
             <summary>
             Сервис для валидации токенов аутентификации
             </summary>
         </member>
-        <member name="P:TMS.TaskManager.Grpc.Clients.Auth.Descriptor">
+        <member name="P:TMS.Common.Grpc.Token.Auth.Descriptor">
             <summary>Service descriptor</summary>
         </member>
-        <member name="T:TMS.TaskManager.Grpc.Clients.Auth.AuthClient">
+        <member name="T:TMS.Common.Grpc.Token.Auth.AuthClient">
             <summary>Client for Auth</summary>
         </member>
-        <member name="M:TMS.TaskManager.Grpc.Clients.Auth.AuthClient.#ctor(Grpc.Core.ChannelBase)">
+        <member name="M:TMS.Common.Grpc.Token.Auth.AuthClient.#ctor(Grpc.Core.ChannelBase)">
             <summary>Creates a new client for Auth</summary>
             <param name="channel">The channel to use to make remote calls.</param>
         </member>
-        <member name="M:TMS.TaskManager.Grpc.Clients.Auth.AuthClient.#ctor(Grpc.Core.CallInvoker)">
+        <member name="M:TMS.Common.Grpc.Token.Auth.AuthClient.#ctor(Grpc.Core.CallInvoker)">
             <summary>Creates a new client for Auth that uses a custom <c>CallInvoker</c>.</summary>
             <param name="callInvoker">The callInvoker to use to make remote calls.</param>
         </member>
-        <member name="M:TMS.TaskManager.Grpc.Clients.Auth.AuthClient.#ctor">
+        <member name="M:TMS.Common.Grpc.Token.Auth.AuthClient.#ctor">
             <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
         </member>
-        <member name="M:TMS.TaskManager.Grpc.Clients.Auth.AuthClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+        <member name="M:TMS.Common.Grpc.Token.Auth.AuthClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
             <summary>Protected constructor to allow creation of configured clients.</summary>
             <param name="configuration">The client configuration.</param>
         </member>
-        <member name="M:TMS.TaskManager.Grpc.Clients.Auth.AuthClient.ValidateToken(TMS.TaskManager.Grpc.Clients.ValidateTokenRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+        <member name="M:TMS.Common.Grpc.Token.Auth.AuthClient.ValidateToken(TMS.Common.Grpc.Token.ValidateTokenRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
             <summary>
             Метод для валидации токена
             </summary>
@@ -1494,7 +1494,7 @@
             <param name="cancellationToken">An optional token for canceling the call.</param>
             <returns>The response received from the server.</returns>
         </member>
-        <member name="M:TMS.TaskManager.Grpc.Clients.Auth.AuthClient.ValidateToken(TMS.TaskManager.Grpc.Clients.ValidateTokenRequest,Grpc.Core.CallOptions)">
+        <member name="M:TMS.Common.Grpc.Token.Auth.AuthClient.ValidateToken(TMS.Common.Grpc.Token.ValidateTokenRequest,Grpc.Core.CallOptions)">
             <summary>
             Метод для валидации токена
             </summary>
@@ -1502,7 +1502,7 @@
             <param name="options">The options for the call.</param>
             <returns>The response received from the server.</returns>
         </member>
-        <member name="M:TMS.TaskManager.Grpc.Clients.Auth.AuthClient.ValidateTokenAsync(TMS.TaskManager.Grpc.Clients.ValidateTokenRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+        <member name="M:TMS.Common.Grpc.Token.Auth.AuthClient.ValidateTokenAsync(TMS.Common.Grpc.Token.ValidateTokenRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
             <summary>
             Метод для валидации токена
             </summary>
@@ -1512,7 +1512,7 @@
             <param name="cancellationToken">An optional token for canceling the call.</param>
             <returns>The call object.</returns>
         </member>
-        <member name="M:TMS.TaskManager.Grpc.Clients.Auth.AuthClient.ValidateTokenAsync(TMS.TaskManager.Grpc.Clients.ValidateTokenRequest,Grpc.Core.CallOptions)">
+        <member name="M:TMS.Common.Grpc.Token.Auth.AuthClient.ValidateTokenAsync(TMS.Common.Grpc.Token.ValidateTokenRequest,Grpc.Core.CallOptions)">
             <summary>
             Метод для валидации токена
             </summary>
@@ -1520,7 +1520,7 @@
             <param name="options">The options for the call.</param>
             <returns>The call object.</returns>
         </member>
-        <member name="M:TMS.TaskManager.Grpc.Clients.Auth.AuthClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+        <member name="M:TMS.Common.Grpc.Token.Auth.AuthClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
             <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
         </member>
     </members>

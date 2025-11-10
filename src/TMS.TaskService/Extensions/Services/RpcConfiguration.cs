@@ -1,4 +1,4 @@
-﻿using TMS.TaskManager.Grpc.Clients;
+﻿using TMS.Common.Grpc.Token;
 
 namespace TMS.TaskService.Extensions.Services;
 

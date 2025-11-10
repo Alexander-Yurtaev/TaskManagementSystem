@@ -470,81 +470,13 @@
              <param name="configuration"></param>
              <param name="logger"></param>
         </member>
-        <member name="M:TMS.AuthService.Services.Grpc.AuthService.ValidateToken(TMS.AuthService.Services.Grpc.ValidateTokenRequest,Grpc.Core.ServerCallContext)">
+        <member name="M:TMS.AuthService.Services.Grpc.AuthService.ValidateToken(TMS.Common.Grpc.Token.ValidateTokenRequest,Grpc.Core.ServerCallContext)">
              <summary>
             
              </summary>
              <param name="request"></param>
              <param name="context"></param>
              <returns></returns>
-        </member>
-        <member name="T:TMS.AuthService.Services.Grpc.TokenReflection">
-            <summary>Holder for reflection information generated from Protos/token.proto</summary>
-        </member>
-        <member name="P:TMS.AuthService.Services.Grpc.TokenReflection.Descriptor">
-            <summary>File descriptor for Protos/token.proto</summary>
-        </member>
-        <member name="T:TMS.AuthService.Services.Grpc.Claim">
-            <summary>
-            Сообщение, представляющее одну claim в токене
-            </summary>
-        </member>
-        <member name="F:TMS.AuthService.Services.Grpc.Claim.TypeFieldNumber">
-            <summary>Field number for the "type" field.</summary>
-        </member>
-        <member name="F:TMS.AuthService.Services.Grpc.Claim.ValueFieldNumber">
-            <summary>Field number for the "value" field.</summary>
-        </member>
-        <member name="T:TMS.AuthService.Services.Grpc.ValidateTokenRequest">
-            <summary>
-            Запрос на валидацию токена
-            </summary>
-        </member>
-        <member name="F:TMS.AuthService.Services.Grpc.ValidateTokenRequest.TokenFieldNumber">
-            <summary>Field number for the "token" field.</summary>
-        </member>
-        <member name="T:TMS.AuthService.Services.Grpc.ValidateTokenReply">
-            <summary>
-            Ответ с результатом валидации токена
-            </summary>
-        </member>
-        <member name="F:TMS.AuthService.Services.Grpc.ValidateTokenReply.IsValidateFieldNumber">
-            <summary>Field number for the "isValidate" field.</summary>
-        </member>
-        <member name="F:TMS.AuthService.Services.Grpc.ValidateTokenReply.AuthenticationTypeFieldNumber">
-            <summary>Field number for the "authenticationType" field.</summary>
-        </member>
-        <member name="F:TMS.AuthService.Services.Grpc.ValidateTokenReply.ClaimsFieldNumber">
-            <summary>Field number for the "claims" field.</summary>
-        </member>
-        <member name="T:TMS.AuthService.Services.Grpc.Auth">
-            <summary>
-            Сервис для валидации токенов аутентификации
-            </summary>
-        </member>
-        <member name="P:TMS.AuthService.Services.Grpc.Auth.Descriptor">
-            <summary>Service descriptor</summary>
-        </member>
-        <member name="T:TMS.AuthService.Services.Grpc.Auth.AuthBase">
-            <summary>Base class for server-side implementations of Auth</summary>
-        </member>
-        <member name="M:TMS.AuthService.Services.Grpc.Auth.AuthBase.ValidateToken(TMS.AuthService.Services.Grpc.ValidateTokenRequest,Grpc.Core.ServerCallContext)">
-            <summary>
-            Метод для валидации токена
-            </summary>
-            <param name="request">The request received from the client.</param>
-            <param name="context">The context of the server-side call handler being invoked.</param>
-            <returns>The response to send back to the client (wrapped by a task).</returns>
-        </member>
-        <member name="M:TMS.AuthService.Services.Grpc.Auth.BindService(TMS.AuthService.Services.Grpc.Auth.AuthBase)">
-            <summary>Creates service definition that can be registered with a server</summary>
-            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
-        </member>
-        <member name="M:TMS.AuthService.Services.Grpc.Auth.BindService(Grpc.Core.ServiceBinderBase,TMS.AuthService.Services.Grpc.Auth.AuthBase)">
-            <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
-            Note: this method is part of an experimental API that can change or be removed without any prior notice.</summary>
-            <param name="serviceBinder">Service methods will be bound by calling <c>AddMethod</c> on this object.</param>
-            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
         </member>
         <member name="T:TMS.AuthService.Services.HashService">
             <summary>
@@ -742,6 +674,74 @@
              <param name="refreshToken"></param>
              <returns></returns>
              <exception cref="T:System.UnauthorizedAccessException"></exception>
+        </member>
+        <member name="T:TMS.Common.Grpc.Token.TokenReflection">
+            <summary>Holder for reflection information generated from token.proto</summary>
+        </member>
+        <member name="P:TMS.Common.Grpc.Token.TokenReflection.Descriptor">
+            <summary>File descriptor for token.proto</summary>
+        </member>
+        <member name="T:TMS.Common.Grpc.Token.Claim">
+            <summary>
+            Сообщение, представляющее одну claim в токене
+            </summary>
+        </member>
+        <member name="F:TMS.Common.Grpc.Token.Claim.TypeFieldNumber">
+            <summary>Field number for the "type" field.</summary>
+        </member>
+        <member name="F:TMS.Common.Grpc.Token.Claim.ValueFieldNumber">
+            <summary>Field number for the "value" field.</summary>
+        </member>
+        <member name="T:TMS.Common.Grpc.Token.ValidateTokenRequest">
+            <summary>
+            Запрос на валидацию токена
+            </summary>
+        </member>
+        <member name="F:TMS.Common.Grpc.Token.ValidateTokenRequest.TokenFieldNumber">
+            <summary>Field number for the "token" field.</summary>
+        </member>
+        <member name="T:TMS.Common.Grpc.Token.ValidateTokenReply">
+            <summary>
+            Ответ с результатом валидации токена
+            </summary>
+        </member>
+        <member name="F:TMS.Common.Grpc.Token.ValidateTokenReply.IsValidateFieldNumber">
+            <summary>Field number for the "isValidate" field.</summary>
+        </member>
+        <member name="F:TMS.Common.Grpc.Token.ValidateTokenReply.AuthenticationTypeFieldNumber">
+            <summary>Field number for the "authenticationType" field.</summary>
+        </member>
+        <member name="F:TMS.Common.Grpc.Token.ValidateTokenReply.ClaimsFieldNumber">
+            <summary>Field number for the "claims" field.</summary>
+        </member>
+        <member name="T:TMS.Common.Grpc.Token.Auth">
+            <summary>
+            Сервис для валидации токенов аутентификации
+            </summary>
+        </member>
+        <member name="P:TMS.Common.Grpc.Token.Auth.Descriptor">
+            <summary>Service descriptor</summary>
+        </member>
+        <member name="T:TMS.Common.Grpc.Token.Auth.AuthBase">
+            <summary>Base class for server-side implementations of Auth</summary>
+        </member>
+        <member name="M:TMS.Common.Grpc.Token.Auth.AuthBase.ValidateToken(TMS.Common.Grpc.Token.ValidateTokenRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            Метод для валидации токена
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
+        <member name="M:TMS.Common.Grpc.Token.Auth.BindService(TMS.Common.Grpc.Token.Auth.AuthBase)">
+            <summary>Creates service definition that can be registered with a server</summary>
+            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+        </member>
+        <member name="M:TMS.Common.Grpc.Token.Auth.BindService(Grpc.Core.ServiceBinderBase,TMS.Common.Grpc.Token.Auth.AuthBase)">
+            <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
+            Note: this method is part of an experimental API that can change or be removed without any prior notice.</summary>
+            <param name="serviceBinder">Service methods will be bound by calling <c>AddMethod</c> on this object.</param>
+            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
         </member>
     </members>
 </doc>

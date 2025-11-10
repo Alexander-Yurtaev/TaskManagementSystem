@@ -29,10 +29,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TMS.Common\TMS.Common.csproj" />
+    <ProjectReference Include="..\TMS.Contracts\TMS.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-	<Protobuf Include="Protos\token.proto" GrpcServices="Server" />
+	<Protobuf Include="..\TMS.Contracts\Protos\token.proto" GrpcServices="Server" />
   </ItemGroup>
 
   <ItemGroup>

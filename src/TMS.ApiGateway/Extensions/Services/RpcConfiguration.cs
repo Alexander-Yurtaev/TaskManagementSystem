@@ -1,4 +1,4 @@
-﻿using TMS.ApiGateway.Grpc.Clients;
+﻿using TMS.Common.Grpc.Token;
 
 namespace TMS.ApiGateway.Extensions.Services;
 

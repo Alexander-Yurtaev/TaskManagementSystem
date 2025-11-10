@@ -103,7 +103,143 @@
     
 
 ## Структура проекта
-> раздел будет обновлён
+```
+├── src
+│   └── TMS.ApiGateway                  # Точка входа в систему
+│       ├── Controllers/                # Контроллеры web-интерфейса
+│       ├── Extensions/                 # Расширения
+│       |   └── Services/               # для IServiceCollection
+│       ├── Views/                      # Представления (cshtml)
+│       ├── appsettings.json            # Настройки
+│       ├── Dockerfile                  # образ Docker
+│       ├── ocelot.json                 # настройки для ocelot
+│       └── Program.cs                  # Точка входа
+│   └──  TMS.AuthService                # Сервис аутентификации
+│       ├── Configurations/             # Файл для работы с конфигурациями
+│       ├── Data/                       # Конфигурация БД и миграции
+│       ├── Entities/                   # Entity-файлы для EF Core
+│       ├── Extensions/                 # Расширения
+│       |   └── ApiEndpoints/           # для MinimalAPI
+│       |   └── Services/               # для IServiceCollection
+│       ├── Models                      # Модели и dto-файлы
+│       ├── HttpExamples/               # http-запросы для тестирования
+│       ├── Services/                   # Сервисы
+│       ├── APIAuthService.xml          # Сгенерированный файл для gRPC, созданный Visual Studio
+│       ├── appsettings.json            # Настройки
+│       ├── Dockerfile                  # образ Docker
+│       └── Program.cs                  # Точка входа
+│   └── TMS.Common                      # Сборка с общими классами
+│       ├── Extensions/                 # Расширения для IServiceCollection
+│       ├── Helpers/                    # Вспомогательный классы длч работы со строками
+│       ├── Models                      # Модели и dto-файлы
+│       ├── RabbitMq                    # Consumers, сервис для инициализации очередей, TaskMessage
+│       ├── Services/                   # Сервисы
+│       └── AuthDataContextFactory.cs   # Вспомогательный файл для фиксации ошибки при запуске миграции
+│   └── TMS.Contracts                   # Проект с proto-файлами
+│       ├── Protos                      # Proto-файлы
+│   └── TMS.FileStorageService          # Сервис хранения файлов
+│       ├── Extensions/                 # Расширения
+│       |   └── ApiEndpoints/           # для MinimalAPI
+│       ├── HttpExamples/               # http-запросы для тестирования
+│       ├── appsettings.json            # Настройки
+│       ├── Dockerfile                  # образ Docker
+│       └── Program.cs                  # Точка входа
+│   └── TMS.NotificationService         # Сервис рассылки сообщений
+│       ├── Data/                       # Конфигурация БД и миграции
+│       ├── Entities/                   # Entity-файлы для EF Core
+        ├── Extensions/                 # Расширения
+│       |   └── ApiEndpoints/           # для MinimalAPI
+│       |   └── Services/               # для IServiceCollection
+│       ├── HttpExamples/               # http-запросы для тестирования
+│       ├── appsettings.json            # Настройки
+│       ├── Dockerfile                  # образ Docker
+│       └── Program.cs                  # Точка входа
+│   └── TMS.TaskService                 # Сервис для работы с задачами
+│       ├── Data/                       # Конфигурация БД и миграции
+│       ├── Entities/                   # Entity-файлы для EF Core
+        ├── Extensions/                 # Расширения
+│       |   └── ApiEndpoints/           # для MinimalAPI
+│       |   └── Services/               # для IServiceCollection
+│       ├── HttpExamples/               # http-запросы для тестирования
+│       ├── MappingProfiles/            # Настройки для AutoMapper
+│       ├── Models                      # Модели и dto-файлы
+│       ├── APIAuthService.xml          # Сгенерированный файл для gRPC, созданный Visual Studio
+│       ├── appsettings.json            # Настройки
+│       ├── Dockerfile                  # образ Docker
+│       └── Program.cs                  # Точка входа
+├── docker-compose/                     # Конфигурационный файл, который описывает инфраструктуру проекта
+├── docs/                               # Дополнительная документация
+├── scripts/                            # Скрипты развертывания/миграции
+├── tests/                              # Для юнит- и интеграционных тестов
+│   └── TMS.ApiGateway.Tests            # Точка входа в систему
+│       ├── Fixtures/                   # Вспомогательные классы для настройки тестов
+│       |   ├── DatabaseFixture.cs      # Инициализация тестовой БД
+│       |   └── WebAppFixture.cs        # Инициализация тестовой БД
+│       ├── WebAppFixture.cs            # Запуск тестового хоста (TestServer)
+│       ├── Integration/                # Интеграционные тесты (с внешними зависимостями
+│       |   ├── ApiTests/               # 
+│       |   └── DbTests/                # 
+│       ├── HttpExamples/               # 
+│       ├── Unit/                       # Юнит‑тесты (без внешних зависимостей)
+│       └── Utilities/                  # Общие утилиты для тестов
+│           └── TestDataGenerator.cs    # Генерация тестовых данных
+│   └── TMS.AuthService.Tests           # Сервис аутентификации
+│       ├── Fixtures/                   # Вспомогательные классы для настройки тестов
+│       |   ├── DatabaseFixture.cs      # Инициализация тестовой БД
+│       |   └── WebAppFixture.cs        # Инициализация тестовой БД
+│       ├── WebAppFixture.cs            # Запуск тестового хоста (TestServer)
+│       ├── Integration/                # Интеграционные тесты (с внешними зависимостями
+│       |   ├── ApiTests/               # 
+│       |   └── DbTests/                # 
+│       ├── HttpExamples/               # 
+│       ├── Unit/                       # Юнит‑тесты (без внешних зависимостей)
+│       └── Utilities/                  # Общие утилиты для тестов
+│           └── TestDataGenerator.cs    # Генерация тестовых данных
+│   └── TMS.Common.Tests                # Сборка с общими классами
+│       ├── Unit/                       # Юнит‑тесты (без внешних зависимостей)
+│       └── Utilities/                  # Общие утилиты для тестов
+│           └── TestDataGenerator.cs    # Генерация тестовых данных
+│   └── TMS.FileStorageService.Tests    # Сервис хранения файлов
+│       ├── Fixtures/                   # Вспомогательные классы для настройки тестов
+│       |   ├── DatabaseFixture.cs      # Инициализация тестовой БД
+│       |   └── WebAppFixture.cs        # Инициализация тестовой БД
+│       ├── WebAppFixture.cs            # Запуск тестового хоста (TestServer)
+│       ├── Integration/                # Интеграционные тесты (с внешними зависимостями
+│       |   ├── ApiTests/               # 
+│       |   └── DbTests/                # 
+│       ├── HttpExamples/               # 
+│       ├── Unit/                       # Юнит‑тесты (без внешних зависимостей)
+│       └── Utilities/                  # Общие утилиты для тестов
+│           └── TestDataGenerator.cs    # Генерация тестовых данных
+│   └── TMS.NotificationService.Tests   # Сервис рассылки сообщений
+│       ├── Fixtures/                   # Вспомогательные классы для настройки тестов
+│       |   ├── DatabaseFixture.cs      # Инициализация тестовой БД
+│       |   └── WebAppFixture.cs        # Инициализация тестовой БД
+│       ├── WebAppFixture.cs            # Запуск тестового хоста (TestServer)
+│       ├── Integration/                # Интеграционные тесты (с внешними зависимостями
+│       |   ├── ApiTests/               # 
+│       |   └── DbTests/                # 
+│       ├── HttpExamples/               # 
+│       ├── Unit/                       # Юнит‑тесты (без внешних зависимостей)
+│       └── Utilities/                  # Общие утилиты для тестов
+│           └── TestDataGenerator.cs    # Генерация тестовых данных
+│   └── TMS.TaskService.Tests           # Сервис для работы с задачами
+│       ├── Fixtures/                   # Вспомогательные классы для настройки тестов
+│       |   ├── DatabaseFixture.cs      # Инициализация тестовой БД
+│       |   └── WebAppFixture.cs        # Инициализация тестовой БД
+│       ├── WebAppFixture.cs            # Запуск тестового хоста (TestServer)
+│       ├── Integration/                # Интеграционные тесты (с внешними зависимостями
+│       |   ├── ApiTests/               # 
+│       |   └── DbTests/                # 
+│       ├── HttpExamples/               # 
+│       ├── Unit/                       # Юнит‑тесты (без внешних зависимостей)
+│       └── Utilities/                  # Общие утилиты для тестов
+│           └── TestDataGenerator.cs    # Генерация тестовых данных
+├── .env                                # Файл с переменными для окружения
+├── .env.example                        # Шаблон для файла с переменными для окружения
+├── Directory.Packages.props            # Файл для определения версий пакетов NuGet
+└── README.md                           # Документация
+```
 
 
 ## Требования

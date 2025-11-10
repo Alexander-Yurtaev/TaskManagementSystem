@@ -30,7 +30,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\token.proto" GrpcServices="Client" />
+    <ProjectReference Include="..\TMS.Contracts\TMS.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\TMS.Contracts\Protos\token.proto" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>
