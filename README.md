@@ -99,6 +99,57 @@
   **Параметры**: отсутствуют.  
   **Ответ**: см. Примечание.
 
+
+  ### Аутентификация
+
+* **`POST /api/auth/register`**  
+  Регистрация пользователя.  
+  **Тело запроса**:  
+    ```json
+    {
+      "username": "string",
+      "email": "string",
+      "password": "string",
+      "role": "inteter"
+    }
+    ```  
+  **Ответ**: 201 Created при успешной регистрации или 400, если пользователь уже существует
+
+
+* **`POST /api/auth/login`**  
+  Аутентификация пользователя и получение JWT‑токена.  
+  **Тело запроса**:  
+    ```json
+    {
+      "username": "string",
+      "password": "string"
+    }
+    ```  
+  **Ответ**:  
+    ```json
+    {
+      "token": "JWT-token-string",
+      "expiresIn": "seconds"
+    }
+    ```
+
+* **`GET /api/auth/refresh`**  
+  Запрос на обновление JWT‑токена.  
+  **Тело запроса**:  
+    ```json
+    {
+      "refresh-token": "string"
+    }
+    ```  
+  **Ответ**:  
+    ```json
+    {
+      "access_token": "JWT-token-string",
+      "refresh_token": "JWT-token-string"
+    }
+    ```
+
+
 ### Задачи
 
 * **`GET /api/tasks`**  
@@ -130,24 +181,6 @@
     * `id` — уникальный идентификатор задачи (целое число).  
   **Ответ**: 204 No Content при успешном удалении или 404, если задача не найдена.
 
-### Аутентификация
-
-* **`POST /api/auth/login`**  
-  Аутентификация пользователя и получение JWT‑токена.  
-  **Тело запроса**:  
-    ```json
-    {
-      "username": "string",
-      "password": "string"
-    }
-    ```  
-  **Ответ**:  
-    ```json
-    {
-      "token": "JWT-token-string",
-      "expiresIn": "seconds"
-    }
-    ```
 
 ## Развёртывание
 

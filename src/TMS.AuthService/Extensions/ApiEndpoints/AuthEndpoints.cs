@@ -91,11 +91,11 @@ public static class AuthEndpoints
                     };
 
                     await userRepository.AddUserAsync(newUser);
-                    return Results.Created($"/users/{newUser.Id}", new { message = "Пользователь создан" });
+                    return Results.Created($"/users/{newUser.Id}", new { message = "Пользователь создан." });
                 }
                 catch (Exception ex)
                 {
-                    logger?.LogError(ex, "/register");
+                    logger.LogError(ex, "/register");
                     return Results.Problem(
                         detail: ex.Message,
                         statusCode: StatusCodes.Status500InternalServerError
@@ -117,12 +117,12 @@ public static class AuthEndpoints
             }
             catch (UnauthorizedAccessException ex)
             {
-                logger?.LogError(ex, "/refresh");
+                logger.LogError(ex, "/refresh");
                 return Results.Unauthorized();
             }
             catch (Exception ex)
             {
-                logger?.LogError(ex, "/refresh");
+                logger.LogError(ex, "/refresh");
                 return Results.Problem(detail: ex.Message, statusCode: 500);
             }
         })
