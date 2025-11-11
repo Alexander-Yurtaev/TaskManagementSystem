@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using TMS.AuthService.Data;
-using TMS.Common;
-using TMS.Common.Models;
+using TMS.Common.Helpers;
 
-namespace TMS.AuthService.Extensions.Endpoints;
+namespace TMS.AuthService.Extensions.ApiEndpoints;
 
 /// <summary>
 ///
@@ -22,57 +20,13 @@ public static class MigrationEndpoints
                 [FromServices] AuthDataContext db,
                 [FromServices] ILogger<IApplicationBuilder> logger) =>
         {
-            string databaseName;
-
-            try
+            var details = await MigrateHelper.Migrate(db, logger);
+            if (details.StatusCode == StatusCodes.Status200OK)
             {
-                databaseName = db.Database.GetDbConnection().Database;
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(
-                    ex,
-                    "Error while getting database."
-                );
-
-                return Results.Problem(
-                    detail: ex.Message,
-                    statusCode: StatusCodes.Status500InternalServerError
-                );
+                return Results.Ok(details.Result);
             }
 
-            logger.LogInformation("Start migrating for database: {DatabaseName}.", databaseName);
-
-            try
-            {
-                var result = new MigrationResult
-                {
-                    PendingMigrations = await db.Database.GetPendingMigrationsAsync()
-                };
-
-                await db.Database.MigrateAsync();
-
-                result.AppliedMigrations = await db.Database.GetAppliedMigrationsAsync();
-
-                result.Message = $"База данных {databaseName} успешно обновлена!";
-
-                logger.LogInformation("Migrate for database={DatabaseName} finish with result: {@Result}", databaseName, result);
-
-                return Results.Ok(result);
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(
-                    ex,
-                    "Error while migrating database with Name: {DatabaseName}.",
-                    databaseName
-                );
-
-                return Results.Problem(
-                    detail: ex.Message,
-                    statusCode: StatusCodes.Status500InternalServerError
-                );
-            }
+            return Results.Problem(detail: details.Detail, statusCode: details.StatusCode);
         })
         .AllowAnonymous();
     }

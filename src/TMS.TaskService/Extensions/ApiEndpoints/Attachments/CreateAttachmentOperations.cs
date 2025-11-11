@@ -1,11 +1,11 @@
-﻿using AutoMapper;
+﻿using System.Text.Json;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 using TMS.Common.Models;
 using TMS.TaskService.Data.Repositories;
 using TMS.TaskService.Entities;
 
-namespace TMS.TaskService.Extensions.Endpoints.Attachments;
+namespace TMS.TaskService.Extensions.ApiEndpoints.Attachments;
 
 /// <summary>
 /// 

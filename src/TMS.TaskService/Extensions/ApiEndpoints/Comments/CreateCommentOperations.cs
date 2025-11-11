@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using TMS.Common;
 using TMS.Common.Helpers;
 using TMS.TaskService.Data.Repositories;
 using TMS.TaskService.Entities;
 using TMS.TaskService.Models.Comments;
 
-namespace TMS.TaskService.Extensions.Endpoints.Comments;
+namespace TMS.TaskService.Extensions.ApiEndpoints.Comments;
 
 /// <summary>
 /// 

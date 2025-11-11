@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TMS.TaskService.Data.Repositories;
 using TMS.TaskService.Models.Projects;
 
-namespace TMS.TaskService.Extensions.Endpoints.Projects;
+namespace TMS.TaskService.Extensions.ApiEndpoints.Projects;
 
 /// <summary>
 /// 

@@ -1,10 +1,10 @@
 using Microsoft.OpenApi.Models;
 using TMS.TaskService.Data.Extensions;
-using TMS.TaskService.Extensions.Endpoints;
-using TMS.TaskService.Extensions.Endpoints.Attachments;
-using TMS.TaskService.Extensions.Endpoints.Comments;
-using TMS.TaskService.Extensions.Endpoints.Projects;
-using TMS.TaskService.Extensions.Endpoints.Tasks;
+using TMS.TaskService.Extensions.ApiEndpoints;
+using TMS.TaskService.Extensions.ApiEndpoints.Attachments;
+using TMS.TaskService.Extensions.ApiEndpoints.Comments;
+using TMS.TaskService.Extensions.ApiEndpoints.Projects;
+using TMS.TaskService.Extensions.ApiEndpoints.Tasks;
 using TMS.TaskService.Extensions.Services;
 
 namespace TMS.TaskService

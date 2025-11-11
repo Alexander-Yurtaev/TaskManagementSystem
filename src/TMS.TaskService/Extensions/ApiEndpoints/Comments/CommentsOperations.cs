@@ -1,4 +1,4 @@
-﻿namespace TMS.TaskService.Extensions.Endpoints.Comments;
+﻿namespace TMS.TaskService.Extensions.ApiEndpoints.Comments;
 
 /// <summary>
 /// 

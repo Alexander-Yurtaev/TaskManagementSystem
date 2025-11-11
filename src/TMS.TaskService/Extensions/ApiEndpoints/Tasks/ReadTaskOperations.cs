@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using TMS.TaskService.Data.Repositories;
 
-namespace TMS.TaskService.Extensions.Endpoints.Tasks;
+namespace TMS.TaskService.Extensions.ApiEndpoints.Tasks;
 
 /// <summary>
 ///

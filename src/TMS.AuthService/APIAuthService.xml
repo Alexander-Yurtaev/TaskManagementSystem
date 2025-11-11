@@ -235,47 +235,47 @@
             
             </summary>
         </member>
-        <member name="T:TMS.AuthService.Extensions.Endpoints.AuthEndpoints">
+        <member name="T:TMS.AuthService.Extensions.ApiEndpoints.AuthEndpoints">
              <summary>
             
              </summary>
         </member>
-        <member name="M:TMS.AuthService.Extensions.Endpoints.AuthEndpoints.AddAuthEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+        <member name="M:TMS.AuthService.Extensions.ApiEndpoints.AuthEndpoints.AddAuthEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
              <summary>
             
              </summary>
              <param name="app"></param>
              <returns></returns>
         </member>
-        <member name="T:TMS.AuthService.Extensions.Endpoints.GreetingEndpoints">
+        <member name="T:TMS.AuthService.Extensions.ApiEndpoints.GreetingEndpoints">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.AuthService.Extensions.Endpoints.GreetingEndpoints.AddGreetingEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.AuthService.Extensions.ApiEndpoints.GreetingEndpoints.AddGreetingEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
             <returns></returns>
         </member>
-        <member name="T:TMS.AuthService.Extensions.Endpoints.MigrationEndpoints">
+        <member name="T:TMS.AuthService.Extensions.ApiEndpoints.MigrationEndpoints">
              <summary>
             
              </summary>
         </member>
-        <member name="M:TMS.AuthService.Extensions.Endpoints.MigrationEndpoints.AddMigrateEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+        <member name="M:TMS.AuthService.Extensions.ApiEndpoints.MigrationEndpoints.AddMigrateEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
              <summary>
             
              </summary>
              <param name="app"></param>
         </member>
-        <member name="T:TMS.AuthService.Extensions.Endpoints.UserEndpoints">
+        <member name="T:TMS.AuthService.Extensions.ApiEndpoints.UserEndpoints">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.AuthService.Extensions.Endpoints.UserEndpoints.AddUserEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.AuthService.Extensions.ApiEndpoints.UserEndpoints.AddUserEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>

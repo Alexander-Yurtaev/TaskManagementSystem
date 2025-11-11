@@ -1,4 +1,4 @@
-﻿namespace TMS.FileStorageService.Extensions.Endpoints;
+﻿namespace TMS.FileStorageService.Extensions.ApiEndpoints;
 
 /// <summary>
 /// 

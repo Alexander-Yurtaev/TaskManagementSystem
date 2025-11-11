@@ -159,30 +159,43 @@
         }
       ],
       "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/api/notify/migrate",
+      "DownstreamPathTemplate": "/migrate",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-notification-service",
+          "Port": 8081
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/{everything}",
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "pleasureplan-web",
+          "Port": 8081
+        }
+      ],
+      "FileExtensionWhitelist": [
+        "html",
+        "css",
+        "js",
+        "jpg",
+        "jpeg",
+        "png",
+        "gif",
+        "ico"
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true
     }
-    //{
-    //  "UpstreamHttpMethod": [ "GET" ],
-    //  "UpstreamPathTemplate": "/{everything}",
-    //  "DownstreamPathTemplate": "/{everything}",
-    //  "DownstreamScheme": "https",
-    //  "DownstreamHostAndPorts": [
-    //    {
-    //      "Host": "pleasureplan-web",
-    //      "Port": 8081
-    //    }
-    //  ],
-    //  "FileExtensionWhitelist": [
-    //    "html",
-    //    "css",
-    //    "js",
-    //    "jpg",
-    //    "jpeg",
-    //    "png",
-    //    "gif",
-    //    "ico"
-    //  ],
-    //  "DangerousAcceptAnyServerCertificateValidator": true
-    //}
   ],
   //"GlobalConfiguration": {
   //  "RequestIdKey": "ocelot-request-id",

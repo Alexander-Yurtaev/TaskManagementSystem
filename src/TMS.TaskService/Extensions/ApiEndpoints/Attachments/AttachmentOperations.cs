@@ -1,4 +1,4 @@
-﻿namespace TMS.TaskService.Extensions.Endpoints.Attachments;
+﻿namespace TMS.TaskService.Extensions.ApiEndpoints.Attachments;
 
 /// <summary>
 /// 

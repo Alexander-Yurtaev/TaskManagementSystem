@@ -4,7 +4,7 @@ using TMS.Common.RabbitMq;
 using TMS.TaskService.Data.Repositories;
 using TMS.TaskService.Models.Tasks;
 
-namespace TMS.TaskService.Extensions.Endpoints.Tasks;
+namespace TMS.TaskService.Extensions.ApiEndpoints.Tasks;
 
 /// <summary>
 /// 

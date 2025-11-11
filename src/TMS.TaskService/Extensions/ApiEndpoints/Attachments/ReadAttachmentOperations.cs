@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TMS.TaskService.Data.Repositories;
 
-namespace TMS.TaskService.Extensions.Endpoints.Attachments;
+namespace TMS.TaskService.Extensions.ApiEndpoints.Attachments;
 
 /// <summary>
 /// 

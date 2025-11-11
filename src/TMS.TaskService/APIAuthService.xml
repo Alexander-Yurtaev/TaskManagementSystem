@@ -863,296 +863,296 @@
             
             </summary>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Attachments.AttachmentOperations">
+        <member name="T:TMS.TaskService.Extensions.ApiEndpoints.Attachments.AttachmentOperations">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.AttachmentOperations.AddAttachmentsOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Attachments.CreateAttachmentOperations">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.CreateAttachmentOperations.AddCreateAttachmentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Attachments.AttachmentOperations.AddAttachmentsOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.CreateAttachmentOperations.AddCreateAttachmentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="T:TMS.TaskService.Extensions.ApiEndpoints.Attachments.CreateAttachmentOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Attachments.CreateAttachmentOperations.AddCreateAttachmentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Attachments.ReadAttachmentOperations">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.ReadAttachmentOperations.AddReadAttachmentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Attachments.CreateAttachmentOperations.AddCreateAttachmentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.ReadAttachmentOperations.AddGetAttachmentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="T:TMS.TaskService.Extensions.ApiEndpoints.Attachments.ReadAttachmentOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Attachments.ReadAttachmentOperations.AddReadAttachmentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Attachments.ReadAttachmentOperations.AddGetAttachmentsByTaskIdOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Attachments.ReadAttachmentOperations.AddGetAttachmentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Comments.CommentsOperations">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.CommentsOperations.AddCommentsOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Attachments.ReadAttachmentOperations.AddGetAttachmentsByTaskIdOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Comments.CreateCommentOperations">
+        <member name="T:TMS.TaskService.Extensions.ApiEndpoints.Comments.CommentsOperations">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.CreateCommentOperations.AddCreateCommentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.CreateCommentOperations.AddCreateCommentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Comments.CommentsOperations.AddCommentsOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Comments.ReadCommentOperations">
+        <member name="T:TMS.TaskService.Extensions.ApiEndpoints.Comments.CreateCommentOperations">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.ReadCommentOperations.AddReadCommentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.ReadCommentOperations.AddGetCommentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Comments.CreateCommentOperations.AddCreateCommentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Comments.ReadCommentOperations.AddGetCommentsByTaskIdOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Comments.CreateCommentOperations.AddCreateCommentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.GreetingEndpoints">
+        <member name="T:TMS.TaskService.Extensions.ApiEndpoints.Comments.ReadCommentOperations">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.GreetingEndpoints.AddGreetingEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Comments.ReadCommentOperations.AddReadCommentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Comments.ReadCommentOperations.AddGetCommentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Comments.ReadCommentOperations.AddGetCommentsByTaskIdOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.ApiEndpoints.GreetingEndpoints">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.GreetingEndpoints.AddGreetingEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
             <returns></returns>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.MigrationEndpoints">
+        <member name="T:TMS.TaskService.Extensions.ApiEndpoints.MigrationEndpoints">
              <summary>
             
              </summary>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.MigrationEndpoints.AddMigrateEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.MigrationEndpoints.AddMigrateEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
              <summary>
             
              </summary>
              <param name="app"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Projects.CreateProjectOperations">
+        <member name="T:TMS.TaskService.Extensions.ApiEndpoints.Projects.CreateProjectOperations">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.CreateProjectOperations.AddCreateProjectOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.CreateProjectOperations.AddCreateProjectOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.CreateProjectOperations.AddCreateProjectOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Projects.DeleteProjectOperations">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.DeleteProjectOperations.AddDeleteProjectOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.CreateProjectOperations.AddCreateProjectOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.DeleteProjectOperations.AddDeleteProjectOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="T:TMS.TaskService.Extensions.ApiEndpoints.Projects.DeleteProjectOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.DeleteProjectOperations.AddDeleteProjectOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Projects.ProjectsOperations">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.ProjectsOperations.AddProjectsOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.DeleteProjectOperations.AddDeleteProjectOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Projects.ReadProjectOperations">
+        <member name="T:TMS.TaskService.Extensions.ApiEndpoints.Projects.ProjectsOperations">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.ReadProjectOperations.AddReadProjectOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.ReadProjectOperations.AddGetProjectsOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.ProjectsOperations.AddProjectsOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.ReadProjectOperations.AddGetProjectOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="T:TMS.TaskService.Extensions.ApiEndpoints.Projects.ReadProjectOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.ReadProjectOperations.AddReadProjectOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Projects.UpdateProjectOperations">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.UpdateProjectOperations.AddUpdateProjectOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.ReadProjectOperations.AddGetProjectsOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Projects.UpdateProjectOperations.AddUpdateProjectOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.ReadProjectOperations.AddGetProjectOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Tasks.CreateTaskOperations">
+        <member name="T:TMS.TaskService.Extensions.ApiEndpoints.Projects.UpdateProjectOperations">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.CreateTaskOperations.AddCreateTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.CreateTaskOperations.AddCreateTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.UpdateProjectOperations.AddUpdateProjectOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Tasks.DeleteTaskOperations">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.DeleteTaskOperations.AddDeleteTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.UpdateProjectOperations.AddUpdateProjectOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.DeleteTaskOperations.AddDeleteTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="T:TMS.TaskService.Extensions.ApiEndpoints.Tasks.CreateTaskOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.CreateTaskOperations.AddCreateTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Tasks.ReadTaskOperations">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.CreateTaskOperations.AddCreateTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.ApiEndpoints.Tasks.DeleteTaskOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.DeleteTaskOperations.AddDeleteTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.DeleteTaskOperations.AddDeleteTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.ApiEndpoints.Tasks.ReadTaskOperations">
              <summary>
             
              </summary>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.ReadTaskOperations.AddReadTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-             <summary>
-            
-             </summary>
-             <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.ReadTaskOperations.AddGetTasksOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.ReadTaskOperations.AddReadTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
              <summary>
             
              </summary>
              <param name="endpoints"></param>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.ReadTaskOperations.AddGetTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.ReadTaskOperations.AddGetTasksOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
              <summary>
             
              </summary>
              <param name="endpoints"></param>
         </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Tasks.TasksOperations">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.ReadTaskOperations.AddGetTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+             <summary>
+            
+             </summary>
+             <param name="endpoints"></param>
+        </member>
+        <member name="T:TMS.TaskService.Extensions.ApiEndpoints.Tasks.TasksOperations">
             <summary>
             
             </summary>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.TasksOperations.AddTasksOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="T:TMS.TaskService.Extensions.Endpoints.Tasks.UpdateTaskOperations">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.UpdateTaskOperations.AddUpdateTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.TasksOperations.AddTasksOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>
             <param name="endpoints"></param>
         </member>
-        <member name="M:TMS.TaskService.Extensions.Endpoints.Tasks.UpdateTaskOperations.AddUpdateTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+        <member name="T:TMS.TaskService.Extensions.ApiEndpoints.Tasks.UpdateTaskOperations">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.UpdateTaskOperations.AddUpdateTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            
+            </summary>
+            <param name="endpoints"></param>
+        </member>
+        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.UpdateTaskOperations.AddUpdateTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
             
             </summary>

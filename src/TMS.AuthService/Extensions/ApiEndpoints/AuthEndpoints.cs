@@ -4,7 +4,7 @@ using TMS.AuthService.Entities;
 using TMS.AuthService.Models;
 using TMS.AuthService.Services;
 
-namespace TMS.AuthService.Extensions.Endpoints;
+namespace TMS.AuthService.Extensions.ApiEndpoints;
 
 /// <summary>
 ///

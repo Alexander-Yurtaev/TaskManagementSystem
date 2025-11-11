@@ -1,6 +1,6 @@
 using TMS.Common.Extensions;
 using TMS.NotificationService.Data.Extensions;
-using TMS.NotificationService.Extensions.Endpoints;
+using TMS.NotificationService.Extensions.ApiEndpoints;
 using TMS.NotificationService.Extensions.Services;
 
 namespace TMS.NotificationService
@@ -34,6 +34,7 @@ namespace TMS.NotificationService
             app.UseAuthorization();
 
             app.AddGreetingEndpoint();
+            app.AddMigrateEndpoint();
 
             app.Run();
         }

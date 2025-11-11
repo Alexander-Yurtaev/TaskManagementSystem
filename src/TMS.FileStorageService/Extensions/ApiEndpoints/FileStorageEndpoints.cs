@@ -2,7 +2,7 @@
 using TMS.Common.Models;
 using TMS.Common.Services;
 
-namespace TMS.FileStorageService.Extensions.Endpoints;
+namespace TMS.FileStorageService.Extensions.ApiEndpoints;
 
 public static class FileStorageEndpoints
 {

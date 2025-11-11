@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TMS.Common.Helpers;
-using TMS.TaskService.Data;
+using TMS.NotificationService.Data;
 
-namespace TMS.TaskService.Extensions.ApiEndpoints;
+namespace TMS.NotificationService.Extensions.ApiEndpoints;
 
 /// <summary>
 ///
@@ -17,17 +17,17 @@ public static class MigrationEndpoints
     {
         var endpoints = (IEndpointRouteBuilder)app;
         endpoints.MapGet("/migrate", async (
-                [FromServices] TaskDataContext db,
+                [FromServices] NotificationDataContext db,
                 [FromServices] ILogger<IApplicationBuilder> logger) =>
-        {
-            var details = await MigrateHelper.Migrate(db, logger);
-            if (details.StatusCode == StatusCodes.Status200OK)
             {
-                return Results.Ok(details.Result);
-            }
-
-            return Results.Problem(detail: details.Detail, statusCode: details.StatusCode);
-        })
+                var details = await MigrateHelper.Migrate(db, logger);
+                if (details.StatusCode == StatusCodes.Status200OK)
+                {
+                    return Results.Ok(details.Result);
+                }
+                
+                return Results.Problem(detail: details.Detail, statusCode: details.StatusCode);
+            })
         .AllowAnonymous();
     }
 }

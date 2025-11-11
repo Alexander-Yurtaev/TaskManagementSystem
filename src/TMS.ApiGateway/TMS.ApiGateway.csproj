@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup Label="Ocelot">
+	<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
 	<PackageReference Include="Ocelot" />
 	<PackageReference Include="Ocelot.Administration" />
   </ItemGroup>

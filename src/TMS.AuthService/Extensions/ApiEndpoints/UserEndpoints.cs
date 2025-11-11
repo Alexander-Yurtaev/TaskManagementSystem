@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TMS.AuthService.Data;
 
-namespace TMS.AuthService.Extensions.Endpoints;
+namespace TMS.AuthService.Extensions.ApiEndpoints;
 
 /// <summary>
 /// 

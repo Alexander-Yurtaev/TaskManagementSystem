@@ -1,5 +1,5 @@
 using TMS.Common.Extensions;
-using TMS.FileStorageService.Extensions.Endpoints;
+using TMS.FileStorageService.Extensions.ApiEndpoints;
 
 namespace TMS.FileStorageService
 {
