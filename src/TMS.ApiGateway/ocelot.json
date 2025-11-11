@@ -1,7 +1,11 @@
 ﻿{
   "Routes": [
+    //Migrations
+    //    GET /api/auth/migrate
+    //    GET /api/tasks/migrate
+    //    GET /api/notify/migrate
     {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamHttpMethod": [ "GET" ],
       "UpstreamPathTemplate": "/api/auth/migrate",
       "DownstreamPathTemplate": "/migrate",
       "DownstreamScheme": "https",
@@ -11,46 +15,8 @@
           "Port": 8081
         }
       ],
-      "DangerousAcceptAnyServerCertificateValidator": true
-    },
-    {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "UpstreamPathTemplate": "/api/auth/{everything}",
-      "DownstreamPathTemplate": "/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-auth-service",
-          "Port": 8081
-        }
-      ],
-      "DangerousAcceptAnyServerCertificateValidator": true
-    },
-    {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "UpstreamPathTemplate": "/api/users/{everything}",
-      "DownstreamPathTemplate": "/users/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-auth-service",
-          "Port": 8081
-        }
-      ],
-      "DangerousAcceptAnyServerCertificateValidator": true
-    },
-    {
-      "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/api/tasks/greeting",
-      "DownstreamPathTemplate": "/greeting",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-task-service",
-          "Port": 8081
-        }
-      ],
-      "DangerousAcceptAnyServerCertificateValidator": true
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "AuthService"
     },
     {
       "UpstreamHttpMethod": [ "GET" ],
@@ -63,115 +29,12 @@
           "Port": 8081
         }
       ],
-      "DangerousAcceptAnyServerCertificateValidator": true
-    },
-    {
-      "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/api/tasks",
-      "DownstreamPathTemplate": "/tasks",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-task-service",
-          "Port": 8081
-        }
-      ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "Bearer",
         "AllowedScopes": []
       },
-      "DangerousAcceptAnyServerCertificateValidator": true
-    },
-    {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "UpstreamPathTemplate": "/api/tasks/{everything}",
-      "DownstreamPathTemplate": "/tasks/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-task-service",
-          "Port": 8081
-        }
-      ],
-      "DangerousAcceptAnyServerCertificateValidator": true
-    },
-    {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "UpstreamPathTemplate": "/api/projects/{everything}",
-      "DownstreamPathTemplate": "/projects/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-task-service",
-          "Port": 8081
-        }
-      ],
-      "DangerousAcceptAnyServerCertificateValidator": true
-    },
-    {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "UpstreamPathTemplate": "/api/comments/{everything}",
-      "DownstreamPathTemplate": "/comments/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-task-service",
-          "Port": 8081
-        }
-      ],
-      "DangerousAcceptAnyServerCertificateValidator": true
-    },
-    {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "UpstreamPathTemplate": "/api/attachments/{everything}",
-      "DownstreamPathTemplate": "/attachments/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-task-service",
-          "Port": 8081
-        }
-      ],
-      "DangerousAcceptAnyServerCertificateValidator": true
-    },
-    {
-      "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/api/files/greeting",
-      "DownstreamPathTemplate": "/greeting",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-file-storage-service",
-          "Port": 8081
-        }
-      ],
-      "DangerousAcceptAnyServerCertificateValidator": true
-    },
-    {
-      "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/api/files/{everything}",
-      "DownstreamPathTemplate": "/files/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-file-storage-service",
-          "Port": 8081
-        }
-      ],
-      "DangerousAcceptAnyServerCertificateValidator": true
-    },
-    {
-      "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/api/notify/greeting",
-      "DownstreamPathTemplate": "/greeting",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-notification-service",
-          "Port": 8081
-        }
-      ],
-      "DangerousAcceptAnyServerCertificateValidator": true
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "TaskService"
     },
     {
       "UpstreamHttpMethod": [ "GET" ],
@@ -184,8 +47,202 @@
           "Port": 8081
         }
       ],
-      "DangerousAcceptAnyServerCertificateValidator": true
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "NotifyService"
     },
+    // Authentications
+    //    POST /api/auth/register
+    //    POST /api/auth/login
+    //    GET /api/auth/refresh
+    {
+      "UpstreamHttpMethod": [ "GET", "POST" ],
+      "UpstreamPathTemplate": "/api/auth/{everything}",
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-auth-service",
+          "Port": 8081
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "AuthService"
+    },
+    // Projects
+    //    GET /api/projects
+    //    POST /api/projects
+    //    GET /api/projects/{id}
+    //    PUT /api/tasks/{id}
+    //    DELETE /api/tasks/{id}
+    {
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamPathTemplate": "/api/projects/{everything}",
+      "DownstreamPathTemplate": "/projects/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-task-service",
+          "Port": 8081
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "TaskService"
+    },
+    // Tasks
+    //    GET /api/tasks
+    //    POST /api/tasks
+    //    GET /api/tasks/{id}
+    //    PUT /api/tasks/{id}
+    //    DELETE /api/tasks/{id}
+    {
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamPathTemplate": "/api/tasks/{everything}",
+      "DownstreamPathTemplate": "/tasks/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-task-service",
+          "Port": 8081
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "TaskService"
+    },
+    // Comments
+    //    POST /api/tasks/{task_id}/comments
+    //    GET /api/comments/{id}
+    //    GET /api/tasks/{task_id}/comments
+    {
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamPathTemplate": "/api/comments/{everything}",
+      "DownstreamPathTemplate": "/comments/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-task-service",
+          "Port": 8081
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "TaskService"
+    },
+    // Attachments
+    //    GET /api/attachments/{id}
+    {
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/api/attachments/{everything}",
+      "DownstreamPathTemplate": "/attachments/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-task-service",
+          "Port": 8081
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "TaskService"
+    },
+    // Attachments
+    //    POST /api/tasks/{task_id}/attachments?fileName=example.txt
+    //    GET /api/tasks/{task_id}/attachments
+    {
+      "UpstreamHttpMethod": [ "GET", "POST" ],
+      "UpstreamPathTemplate": "/api/tasks/{task_id}/attachments",
+      "DownstreamPathTemplate": "/tasks/{task_id}/attachments",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-file-storage-service",
+          "Port": 8081
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "FileStorageService"
+    },
+
+    // Others
+    {
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamPathTemplate": "/api/users/{everything}",
+      "DownstreamPathTemplate": "/users/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-auth-service",
+          "Port": 8081
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "AuthService"
+    },
+    // Greetings
+    {
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/api/tasks/greeting",
+      "DownstreamPathTemplate": "/greeting",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-task-service",
+          "Port": 8081
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "TaskService"
+    },
+    {
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/api/files/greeting",
+      "DownstreamPathTemplate": "/greeting",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-file-storage-service",
+          "Port": 8081
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "FileStorageService"
+    },
+    {
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/api/notify/greeting",
+      "DownstreamPathTemplate": "/greeting",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-notification-service",
+          "Port": 8081
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "NotificationService"
+    },
+    // HTML
     {
       "UpstreamHttpMethod": [ "GET" ],
       "UpstreamPathTemplate": "/{everything}",
@@ -210,9 +267,7 @@
       "DangerousAcceptAnyServerCertificateValidator": true
     }
   ],
-  //"GlobalConfiguration": {
-  //  "RequestIdKey": "ocelot-request-id",
-  //  "AdministrationPath": "/administration",
-  //  "BaseUrl": "https://localhost:8081"
-  //}
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:8081"
+  }
 }
