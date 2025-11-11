@@ -76,7 +76,9 @@ public static class AuthEndpoints
                 {
                     // Проверка существования пользователя
                     if (await userRepository.UserExistsAsync(model.UserName))
-                        return Results.BadRequest("Пользователь уже существует");
+                    {
+                        return Results.BadRequest($"The user with name={model.UserName} already exists.");
+                    }
 
                     // Хеширование пароля
                     var hashedPassword = hashService.HashPassword(model.Password);
@@ -91,7 +93,7 @@ public static class AuthEndpoints
                     };
 
                     await userRepository.AddUserAsync(newUser);
-                    return Results.Created($"/users/{newUser.Id}", new { message = "Пользователь создан." });
+                    return Results.Created($"/users/{newUser.Id}", new { message = $"The user with name={newUser.UserName} is created." });
                 }
                 catch (Exception ex)
                 {
