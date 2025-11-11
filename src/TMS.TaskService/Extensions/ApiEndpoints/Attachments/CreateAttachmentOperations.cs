@@ -1,6 +1,7 @@
-﻿using System.Text.Json;
-using AutoMapper;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using TMS.Common.Models;
 using TMS.TaskService.Data.Repositories;
 using TMS.TaskService.Entities;
@@ -63,7 +64,10 @@ public static class CreateAttachmentOperations
 
                 if (fileStorageResult is null)
                 {
-                    throw new InvalidOperationException("FileStorageResult should not be null!");
+                    return Results.Problem(
+                        detail: "FileStorageResult should not be null!",
+                        statusCode: StatusCodes.Status500InternalServerError
+                    );
                 }
 
                 // сохраняем entity в БД
