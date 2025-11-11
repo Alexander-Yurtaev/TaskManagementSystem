@@ -9,21 +9,14 @@ namespace TMS.TaskService.Extensions.ApiEndpoints.Projects;
 public static class DeleteProjectOperations
 {
     /// <summary>
-    /// 
+    /// Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+    /// проектов в API:
+    ///   DELETE /projects/{id}            → Удаление проекта по идентификатору;
     /// </summary>
     /// <param name="endpoints"></param>
-    public static void AddDeleteProjectOperations(this IEndpointRouteBuilder endpoints)
+    public static RouteHandlerBuilder AddDeleteProjectOperations(this IEndpointRouteBuilder endpoints)
     {
-        AddDeleteProjectOperation(endpoints);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="endpoints"></param>
-    private static void AddDeleteProjectOperation(IEndpointRouteBuilder endpoints)
-    {
-        endpoints.MapDelete("/projects/{id}", async (
+        return endpoints.MapDelete("/projects/{id}", async (
             [FromRoute] int id,
             [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] IProjectRepository repository) =>
@@ -63,6 +56,11 @@ public static class DeleteProjectOperations
                     statusCode: StatusCodes.Status500InternalServerError
                 );
             }
+        })
+        .WithMetadata(new
+        {
+            // Для Swagger/документации
+            Summary = "Удаление проекта по идентификатору."
         });
     }
 }

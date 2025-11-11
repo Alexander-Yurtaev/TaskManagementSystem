@@ -881,13 +881,9 @@
         </member>
         <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Attachments.CreateAttachmentOperations.AddCreateAttachmentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Attachments.CreateAttachmentOperations.AddCreateAttachmentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
+            Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+            вложений в API:
+              POST /tasks/{id}/attachments   →    добавление файла как вложения к указанной задаче;
             </summary>
             <param name="endpoints"></param>
         </member>
@@ -898,19 +894,9 @@
         </member>
         <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Attachments.ReadAttachmentOperations.AddReadAttachmentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Attachments.ReadAttachmentOperations.AddGetAttachmentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Attachments.ReadAttachmentOperations.AddGetAttachmentsByTaskIdOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
+            Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+            вложений в API:
+              POST /tasks/{id}/attachments   →    добавление файла как вложения к указанной задаче;
             </summary>
             <param name="endpoints"></param>
         </member>
@@ -932,13 +918,9 @@
         </member>
         <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Comments.CreateCommentOperations.AddCreateCommentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Comments.CreateCommentOperations.AddCreateCommentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
+            Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+            комментариев в API:
+              POST /tasks/{id}/comments      → Создание нового комментария, прикрепленного к указанной задаче;
             </summary>
             <param name="endpoints"></param>
         </member>
@@ -949,19 +931,10 @@
         </member>
         <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Comments.ReadCommentOperations.AddReadCommentOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Comments.ReadCommentOperations.AddGetCommentOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Comments.ReadCommentOperations.AddGetCommentsByTaskIdOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
+            Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+            комментариев в API:
+              GET /comments/{id}            → Получение комментария по идентификатору;
+              GET /tasks/{id}/comments      → Получение всех комментариев, прикрепленных к указанной задаче;
             </summary>
             <param name="endpoints"></param>
         </member>
@@ -983,10 +956,10 @@
              </summary>
         </member>
         <member name="M:TMS.TaskService.Extensions.ApiEndpoints.MigrationEndpoints.AddMigrateEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
-             <summary>
-            
-             </summary>
-             <param name="app"></param>
+            <summary>
+            Запуск миграции БД для Сервиса для работы с задачами
+            </summary>
+            <param name="app"></param>
         </member>
         <member name="T:TMS.TaskService.Extensions.ApiEndpoints.Projects.CreateProjectOperations">
             <summary>
@@ -995,13 +968,9 @@
         </member>
         <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.CreateProjectOperations.AddCreateProjectOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.CreateProjectOperations.AddCreateProjectOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
+            Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+            проектов в API:
+              POST /projects            → Создание нового проекта;
             </summary>
             <param name="endpoints"></param>
         </member>
@@ -1012,13 +981,9 @@
         </member>
         <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.DeleteProjectOperations.AddDeleteProjectOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.DeleteProjectOperations.AddDeleteProjectOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
+            Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+            проектов в API:
+              DELETE /projects/{id}            → Удаление проекта по идентификатору;
             </summary>
             <param name="endpoints"></param>
         </member>
@@ -1040,19 +1005,10 @@
         </member>
         <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.ReadProjectOperations.AddReadProjectOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.ReadProjectOperations.AddGetProjectsOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.ReadProjectOperations.AddGetProjectOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
+            Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+            проектов в API:
+              GET /projects            → Получение списка всех проектов;
+              GET /projects/{id}       → Получение проекта по идентификатору;
             </summary>
             <param name="endpoints"></param>
         </member>
@@ -1063,13 +1019,9 @@
         </member>
         <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.UpdateProjectOperations.AddUpdateProjectOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Projects.UpdateProjectOperations.AddUpdateProjectOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
+            Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+            проектов в API:
+              PUT /projects/{id}       → Обновление проекта по идентификатору;
             </summary>
             <param name="endpoints"></param>
         </member>
@@ -1080,13 +1032,9 @@
         </member>
         <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.CreateTaskOperations.AddCreateTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.CreateTaskOperations.AddCreateTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
+            Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+            задач в API:
+              POST /projects/{id}       → Создание новой задачи;
             </summary>
             <param name="endpoints"></param>
         </member>
@@ -1097,13 +1045,9 @@
         </member>
         <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.DeleteTaskOperations.AddDeleteTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.DeleteTaskOperations.AddDeleteTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
+            Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+            задач в API:
+              DELETE /tasks/{id}       → Удаление задачи по идентификатору;
             </summary>
             <param name="endpoints"></param>
         </member>
@@ -1113,22 +1057,13 @@
              </summary>
         </member>
         <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.ReadTaskOperations.AddReadTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-             <summary>
-            
-             </summary>
-             <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.ReadTaskOperations.AddGetTasksOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-             <summary>
-            
-             </summary>
-             <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.ReadTaskOperations.AddGetTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-             <summary>
-            
-             </summary>
-             <param name="endpoints"></param>
+            <summary>
+            Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+            задач в API:
+              GET /tasks            → Получение списка задач текущего пользователя;
+              GET /tasks/{id}       → Получение задачи по идентификатору;
+            </summary>
+            <param name="endpoints"></param>
         </member>
         <member name="T:TMS.TaskService.Extensions.ApiEndpoints.Tasks.TasksOperations">
             <summary>
@@ -1148,13 +1083,9 @@
         </member>
         <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.UpdateTaskOperations.AddUpdateTaskOperations(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
-            
-            </summary>
-            <param name="endpoints"></param>
-        </member>
-        <member name="M:TMS.TaskService.Extensions.ApiEndpoints.Tasks.UpdateTaskOperations.AddUpdateTaskOperation(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
-            <summary>
-            
+            Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+            задач в API:
+              PUT /tasks/{id}            → Обновление задачи по идентификатору;
             </summary>
             <param name="endpoints"></param>
         </member>

@@ -2,6 +2,19 @@
   "Routes": [
     {
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "UpstreamPathTemplate": "/api/auth/migrate",
+      "DownstreamPathTemplate": "/migrate",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-auth-service",
+          "Port": 8081
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "UpstreamPathTemplate": "/api/auth/{everything}",
       "DownstreamPathTemplate": "/{everything}",
       "DownstreamScheme": "https",

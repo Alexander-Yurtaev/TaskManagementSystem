@@ -10,21 +10,14 @@ namespace TMS.TaskService.Extensions.ApiEndpoints.Tasks;
 public static class DeleteTaskOperations
 {
     /// <summary>
-    /// 
+    /// Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+    /// задач в API:
+    ///   DELETE /tasks/{id}       → Удаление задачи по идентификатору;
     /// </summary>
     /// <param name="endpoints"></param>
-    public static void AddDeleteTaskOperations(this IEndpointRouteBuilder endpoints)
+    public static RouteHandlerBuilder AddDeleteTaskOperations(this IEndpointRouteBuilder endpoints)
     {
-        AddDeleteTaskOperation(endpoints);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="endpoints"></param>
-    private static void AddDeleteTaskOperation(IEndpointRouteBuilder endpoints)
-    {
-        endpoints.MapDelete("/tasks/{id}", async (
+        return endpoints.MapDelete("/tasks/{id}", async (
             [FromRoute] int id,
             [FromServices] IRabbitMqService rabbitMqService,
             [FromServices] ILogger<IApplicationBuilder> logger,
@@ -68,6 +61,11 @@ public static class DeleteTaskOperations
                     statusCode: StatusCodes.Status500InternalServerError
                 );
             }
+        })
+        .WithMetadata(new
+        {
+            // Для Swagger/документации
+            Summary = "Удаление задачи по идентификатору."
         });
     }
 }

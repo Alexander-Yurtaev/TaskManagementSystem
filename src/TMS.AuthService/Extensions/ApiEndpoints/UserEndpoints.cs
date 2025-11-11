@@ -9,7 +9,9 @@ namespace TMS.AuthService.Extensions.ApiEndpoints;
 public static class UserEndpoints
 {
     /// <summary>
-    /// 
+    /// Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+    /// пользователей в API:
+    ///   GET /users       → Получить всех пользователей;
     /// </summary>
     /// <param name="endpoints"></param>
     /// <returns></returns>
@@ -25,7 +27,7 @@ public static class UserEndpoints
                 {
                     var users = (await repository.GetUsersAsync()).ToArray();
 
-                    logger.LogInformation("Found {ProjectsCount} projects.", users.Length);
+                    logger.LogInformation("Found {UserCount} users.", users.Length);
 
                     return Results.Ok(users);
                 }
@@ -43,6 +45,12 @@ public static class UserEndpoints
                     );
                 }
             })
-            .WithName("users");
+            .ExcludeFromDescription() // временно исключен из общего API
+            .WithName("users")
+            .WithMetadata(new
+            {
+                // Для Swagger/документации
+                Summary = "Get all users."
+            });
     }
 }

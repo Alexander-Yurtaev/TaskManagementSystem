@@ -240,12 +240,17 @@
             
              </summary>
         </member>
-        <member name="M:TMS.AuthService.Extensions.ApiEndpoints.AuthEndpoints.AddAuthEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
-             <summary>
-            
-             </summary>
-             <param name="app"></param>
-             <returns></returns>
+        <member name="M:TMS.AuthService.Extensions.ApiEndpoints.AuthEndpoints.AddAuthEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+            аутентификации в API:
+              POST /login      → аутентификация, возврат access/refresh-токенов;
+              POST /register   → регистрация пользователя;
+              POST /refresh    → обновление токена по refresh-токену.
+            Включает валидацию, хеширование паролей, генерацию токенов и логирование.
+            </summary>
+            <param name="endpoints"></param>
+            <returns></returns>
         </member>
         <member name="T:TMS.AuthService.Extensions.ApiEndpoints.GreetingEndpoints">
             <summary>
@@ -264,11 +269,11 @@
             
              </summary>
         </member>
-        <member name="M:TMS.AuthService.Extensions.ApiEndpoints.MigrationEndpoints.AddMigrateEndpoint(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
-             <summary>
-            
-             </summary>
-             <param name="app"></param>
+        <member name="M:TMS.AuthService.Extensions.ApiEndpoints.MigrationEndpoints.AddMigrateEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
+            <summary>
+            Запуск миграции БД для Сервиса Сервис аутентификации.
+            </summary>
+            <param name="endpoints"></param>
         </member>
         <member name="T:TMS.AuthService.Extensions.ApiEndpoints.UserEndpoints">
             <summary>
@@ -277,7 +282,9 @@
         </member>
         <member name="M:TMS.AuthService.Extensions.ApiEndpoints.UserEndpoints.AddUserEndpoint(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)">
             <summary>
-            
+            Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+            пользователей в API:
+              GET /users       → Получить всех пользователей;
             </summary>
             <param name="endpoints"></param>
             <returns></returns>

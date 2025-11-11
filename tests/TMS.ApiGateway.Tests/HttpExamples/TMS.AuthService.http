@@ -1,40 +1,68 @@
-@TMS.AuthService_HostAddress = https://localhost:9668/api/auth
+@TMS.AuthService_HostAddress = https://localhost:6233/api/auth
 
 ### Migrate
 GET {{TMS.AuthService_HostAddress}}/migrate
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiQWRtaW5OYW1lIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZW1haWxhZGRyZXNzIjoiQWRtaW5FbWFpbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkFkbWluIiwiZXhwIjoxNzYyODU0NDg0LCJpc3MiOiJhdXRoLXNlcnZpY2UiLCJhdWQiOiJUTVMifQ.SIRI8FIHPYvuZw--I654RfFjy62hlpnGgIT8RQYykoI
 
+### Register admin
+POST {{TMS.AuthService_HostAddress}}/register
+Content-Type: application/json
+Accept: application/json
 
-### Register
+{
+    "username": "AdminName",
+    "email": "AdminEmail",
+    "password": "AdminPassword",
+    "role": 1
+}
+
+### Register user
 POST {{TMS.AuthService_HostAddress}}/register
 Content-Type: application/json
 Accept: application/json
 
 {
     "username": "UserName",
-    "email": "Email",
-    "password": "Password",
+    "email": "UserEmail",
+    "password": "UserPassword",
     "role": 0
 }
 
 
-### Login
+### Login Admin
+POST {{TMS.AuthService_HostAddress}}/login
+Content-Type: application/json
+Accept: application/json
+
+{
+    "username": "AdminName",
+    "password": "AdminPassword"
+}
+
+### Login User
 POST {{TMS.AuthService_HostAddress}}/login
 Content-Type: application/json
 Accept: application/json
 
 {
     "username": "UserName",
-    "password": "Password"
+    "password": "UserPassword"
 }
+
+### Log out
+POST {{TMS.AuthService_HostAddress}}/logout
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVXNlck5hbWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJVc2VyRW1haWwiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNzYyODc5ODY5LCJpc3MiOiJhdXRoLXNlcnZpY2UiLCJhdWQiOiJUTVMifQ.vFWqkQoB99pb9ELte6GPGpRMkm4CMKIBmZRPSRiSEKs
 
 
 ### GET USERS
 GET {{TMS.AuthService_HostAddress}}/users
 Content-Type: application/json
 Accept: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVXNlck5hbWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJFbWFpbCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE3NjIzNTg1NTB9.S7OoKNlB6sGMShHfQwDWKQccGYMqO6s5PT8Id4E1T0Q
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiVXNlck5hbWUiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJVc2VyRW1haWwiLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwiZXhwIjoxNzYyODc5ODY5LCJpc3MiOiJhdXRoLXNlcnZpY2UiLCJhdWQiOiJUTVMifQ.vFWqkQoB99pb9ELte6GPGpRMkm4CMKIBmZRPSRiSEKs
 
 
 ### GET REFRESH TOKEN
@@ -43,7 +71,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "refresh-token": "YWaPX4p9ThjV7JYrX4y8lZ7tnJNHEdmzFzPs06I+A7923IjbT6FKkoMoXIu5Lu2t3VmuAir38z1iBp6C1/G0Mg=="
+  "refresh-token": "l7H1i1GOj4T3KfwJ+xo7x2B9vKQc4/+dKrD29bmHGmCPZPv05XYSIt58KuiSYOnR+sHOjatL1o2RNbIsCk7KOg=="
 }
 
 

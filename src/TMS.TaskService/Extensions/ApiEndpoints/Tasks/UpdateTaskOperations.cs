@@ -12,21 +12,14 @@ namespace TMS.TaskService.Extensions.ApiEndpoints.Tasks;
 public static class UpdateTaskOperations
 {
     /// <summary>
-    /// 
+    /// Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+    /// задач в API:
+    ///   PUT /tasks/{id}            → Обновление задачи по идентификатору;
     /// </summary>
     /// <param name="endpoints"></param>
-    public static void AddUpdateTaskOperations(this IEndpointRouteBuilder endpoints)
+    public static RouteHandlerBuilder AddUpdateTaskOperations(this IEndpointRouteBuilder endpoints)
     {
-        AddUpdateTaskOperation(endpoints);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="endpoints"></param>
-    private static void AddUpdateTaskOperation(IEndpointRouteBuilder endpoints)
-    {
-        endpoints.MapPut("/tasks/{id}", async (
+        return endpoints.MapPut("/tasks/{id}", async (
             [FromRoute] int id,
             [FromBody] TaskUpdate taskUpdate,
             [FromServices] IRabbitMqService rabbitMqService,
@@ -70,6 +63,11 @@ public static class UpdateTaskOperations
                     statusCode: StatusCodes.Status500InternalServerError
                 );
             }
+        })
+        .WithMetadata(new
+        {
+            // Для Swagger/документации
+            Summary = "Обновление задачи по идентификатору."
         });
     }
 }

@@ -36,6 +36,8 @@ namespace TMS.AuthService
 
             builder.Configuration.AddEnvironmentVariables();
 
+            builder.Services.AddAntiforgery();
+
             using var factory = LoggerFactory.Create(b => b.AddConsole());
             ILogger logger = factory.CreateLogger<Program>();
 

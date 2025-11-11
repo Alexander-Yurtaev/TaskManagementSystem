@@ -9,95 +9,91 @@ namespace TMS.TaskService.Extensions.ApiEndpoints.Comments;
 public static class ReadCommentOperations
 {
     /// <summary>
-    /// 
+    /// Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+    /// комментариев в API:
+    ///   GET /comments/{id}            → Получение комментария по идентификатору;
+    ///   GET /tasks/{id}/comments      → Получение всех комментариев, прикрепленных к указанной задаче;
     /// </summary>
     /// <param name="endpoints"></param>
-    public static void AddReadCommentOperations(this IEndpointRouteBuilder endpoints)
-    {
-        AddGetCommentOperation(endpoints);
-        AddGetCommentsByTaskIdOperation(endpoints);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="endpoints"></param>
-    private static void AddGetCommentOperation(IEndpointRouteBuilder endpoints)
+    public static RouteHandlerBuilder AddReadCommentOperations(this IEndpointRouteBuilder endpoints)
     {
         endpoints.MapGet("/comments/{id}", async (
-            [FromRoute] int id,
-            [FromServices] ILogger<IApplicationBuilder> logger,
-            [FromServices] ICommentRepository repository) =>
-        {
-            logger.LogInformation("Start getting comment with id: {Id}.", id);
-
-            try
+                [FromRoute] int id,
+                [FromServices] ILogger<IApplicationBuilder> logger,
+                [FromServices] ICommentRepository repository) =>
             {
-                var comment = await repository.GetByIdAsync(id);
+                logger.LogInformation("Start getting comment with id: {Id}.", id);
 
-                if (comment is null)
+                try
                 {
-                    logger.LogInformation("Comment not found with Id: {Id}.", id);
+                    var comment = await repository.GetByIdAsync(id);
 
-                    return Results.NotFound();
+                    if (comment is null)
+                    {
+                        logger.LogInformation("Comment not found with Id: {Id}.", id);
+
+                        return Results.NotFound();
+                    }
+
+                    logger.LogInformation("Comment found with id={Id}.", id);
+
+                    return Results.Ok(comment);
                 }
+                catch (Exception ex)
+                {
+                    logger.LogError(
+                        ex,
+                        "Error while getting comment with Id: {CommentId}. Operation: {Operation}",
+                        id,
+                        $"GET /comments/{id}"
+                    );
 
-                logger.LogInformation("Comment found with id={Id}.", id);
-
-                return Results.Ok(comment);
-            }
-            catch (Exception ex)
+                    return Results.Problem(
+                        detail: ex.Message,
+                        statusCode: StatusCodes.Status500InternalServerError
+                    );
+                }
+            })
+            .WithMetadata(new
             {
-                logger.LogError(
-                    ex,
-                    "Error while getting comment with Id: {CommentId}. Operation: {Operation}",
-                    id,
-                    $"GET /comments/{id}"
-                );
+                // Для Swagger/документации
+                Summary = "Получение комментария по идентификатору."
+            });
 
-                return Results.Problem(
-                    detail: ex.Message,
-                    statusCode: StatusCodes.Status500InternalServerError
-                );
-            }
-        });
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="endpoints"></param>
-    private static void AddGetCommentsByTaskIdOperation(IEndpointRouteBuilder endpoints)
-    {
-        endpoints.MapGet("/tasks/{id}/comments", async (
-            [FromRoute] int id,
-            [FromServices] ILogger<IApplicationBuilder> logger,
-            [FromServices] ICommentRepository repository) =>
-        {
-            logger.LogInformation("Start getting comment by task with id: {TaskId}.", id);
-
-            try
+        return endpoints.MapGet("/tasks/{id}/comments", async (
+                [FromRoute] int id,
+                [FromServices] ILogger<IApplicationBuilder> logger,
+                [FromServices] ICommentRepository repository) =>
             {
-                var comments = (await repository.GetByTaskIdAsync(id)).ToArray();
+                logger.LogInformation("Start getting comment by task with id: {TaskId}.", id);
 
-                logger.LogInformation("Found {CommentsCount} by task with id={TaskId}.", comments.Count(), id);
+                try
+                {
+                    var comments = (await repository.GetByTaskIdAsync(id)).ToArray();
 
-                return Results.Ok(comments);
-            }
-            catch (Exception ex)
+                    logger.LogInformation("Found {CommentsCount} by task with id={TaskId}.", comments.Count(), id);
+
+                    return Results.Ok(comments);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(
+                        ex,
+                        "Error while getting comments by task with Id: {TaskId}. Operation: {Operation}",
+                        id,
+                        $"GET /tasks/{id}/comments"
+                    );
+
+                    return Results.Problem(
+                        detail: ex.Message,
+                        statusCode: StatusCodes.Status500InternalServerError
+                    );
+                }
+            })
+            .WithMetadata(new
             {
-                logger.LogError(
-                    ex,
-                    "Error while getting comments by task with Id: {TaskId}. Operation: {Operation}",
-                    id,
-                    $"GET /tasks/{id}/comments"
-                );
-
-                return Results.Problem(
-                    detail: ex.Message,
-                    statusCode: StatusCodes.Status500InternalServerError
-                );
-            }
-        });
+                // Для Swagger/документации
+                Summary = "Получение всех комментариев, прикрепленных к указанной задаче."
+            });
     }
 }

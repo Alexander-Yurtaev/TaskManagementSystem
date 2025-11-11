@@ -9,20 +9,13 @@ namespace TMS.TaskService.Extensions.ApiEndpoints.Projects;
 public static class ReadProjectOperations
 {
     /// <summary>
-    /// 
+    /// Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+    /// проектов в API:
+    ///   GET /projects            → Получение списка всех проектов;
+    ///   GET /projects/{id}       → Получение проекта по идентификатору;
     /// </summary>
     /// <param name="endpoints"></param>
-    public static void AddReadProjectOperations(this IEndpointRouteBuilder endpoints)
-    {
-        AddGetProjectsOperation(endpoints);
-        AddGetProjectOperation(endpoints);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="endpoints"></param>
-    private static void AddGetProjectsOperation(IEndpointRouteBuilder endpoints)
+    public static RouteHandlerBuilder AddReadProjectOperations(this IEndpointRouteBuilder endpoints)
     {
         endpoints.MapGet("/projects", async (
             [FromServices] ILogger<IApplicationBuilder> logger,
@@ -51,16 +44,14 @@ public static class ReadProjectOperations
                     statusCode: StatusCodes.Status500InternalServerError
                 );
             }
+        })
+        .WithMetadata(new
+        {
+            // Для Swagger/документации
+            Summary = "Получение списка всех проектов."
         });
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="endpoints"></param>
-    private static void AddGetProjectOperation(IEndpointRouteBuilder endpoints)
-    {
-        endpoints.MapGet("/projects/{id}", async (
+    
+        return endpoints.MapGet("/projects/{id}", async (
             [FromRoute] int id,
             [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] IProjectRepository repository) =>
@@ -96,6 +87,11 @@ public static class ReadProjectOperations
                     statusCode: StatusCodes.Status500InternalServerError
                 );
             }
+        })
+        .WithMetadata(new
+        {
+            // Для Swagger/документации
+            Summary = "Получение проекта по идентификатору."
         });
     }
 }

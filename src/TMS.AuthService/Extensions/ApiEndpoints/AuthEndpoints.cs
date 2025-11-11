@@ -12,14 +12,17 @@ namespace TMS.AuthService.Extensions.ApiEndpoints;
 public static class AuthEndpoints
 {
     /// <summary>
-    ///
+    /// Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+    /// аутентификации в API:
+    ///   POST /login      → аутентификация, возврат access/refresh-токенов;
+    ///   POST /register   → регистрация пользователя;
+    ///   POST /refresh    → обновление токена по refresh-токену.
+    /// Включает валидацию, хеширование паролей, генерацию токенов и логирование.
     /// </summary>
-    /// <param name="app"></param>
+    /// <param name="endpoints"></param>
     /// <returns></returns>
-    public static RouteHandlerBuilder AddAuthEndpoint(this IApplicationBuilder app)
+    public static RouteHandlerBuilder AddAuthEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        var endpoints = (IEndpointRouteBuilder)app;
-
         endpoints.MapPost("/login", async (
                 [FromBody] LoginModel model,
                 [FromServices] ILogger<IApplicationBuilder> logger,
@@ -34,13 +37,13 @@ public static class AuthEndpoints
                     // 1. Поиск пользователя
                     var userExists = await userRepository.UserExistsAsync(model.Username);
                     if (!userExists)
-                        return Results.Unauthorized();
+                        return Results.NotFound();
 
                     var user = (await userRepository.GetByUsernameAsync(model.Username))!;
 
                     // 2. Проверка пароля
                     if (!hashService.VerifyPassword(user.PasswordHash, model.Password))
-                        return Results.Unauthorized();
+                        return Results.NotFound();
 
                     // 3. Генерация токенов
                     var (accessToken, refreshToken) = await tokenService.GenerateTokensAsync(user);
@@ -64,7 +67,11 @@ public static class AuthEndpoints
                 }
             })
             .WithName("login")
-            .AllowAnonymous();
+            .WithMetadata(new
+            {
+                // Для Swagger/документации
+                Summary = "Аутентификация пользователя и получение JWT‑токена."
+            });
 
         endpoints.MapPost("/register", async (
                 [FromBody] RegisterModel model,
@@ -105,7 +112,11 @@ public static class AuthEndpoints
                 }
             })
             .WithName("register")
-            .AllowAnonymous();
+            .WithMetadata(new
+            {
+                // Для Swagger/документации
+                Summary = "Регистрация пользователя."
+            });
 
         return endpoints.MapPost("/refresh", async (
             [FromBody] TokenRefreshModel model,
@@ -129,6 +140,10 @@ public static class AuthEndpoints
             }
         })
         .WithName("refresh")
-        .AllowAnonymous();
+        .WithMetadata(new
+        {
+            // Для Swagger/документации
+            Summary = "Запрос на обновление JWT‑токена."
+        });
     }
 }

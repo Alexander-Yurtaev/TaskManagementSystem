@@ -11,20 +11,13 @@ namespace TMS.TaskService.Extensions.ApiEndpoints.Tasks;
 public static class ReadTaskOperations
 {
     /// <summary>
-    ///
+    /// Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+    /// задач в API:
+    ///   GET /tasks            → Получение списка задач текущего пользователя;
+    ///   GET /tasks/{id}       → Получение задачи по идентификатору;
     /// </summary>
     /// <param name="endpoints"></param>
-    public static void AddReadTaskOperations(this IEndpointRouteBuilder endpoints)
-    {
-        AddGetTasksOperation(endpoints);
-        AddGetTaskOperation(endpoints);
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="endpoints"></param>
-    private static void AddGetTasksOperation(IEndpointRouteBuilder endpoints)
+    public static RouteHandlerBuilder AddReadTaskOperations(this IEndpointRouteBuilder endpoints)
     {
         endpoints.MapGet("/tasks", [Authorize] async (
             HttpContext context,
@@ -69,16 +62,13 @@ public static class ReadTaskOperations
                     statusCode: StatusCodes.Status500InternalServerError
                 );
             }
+        })
+        .WithMetadata(new
+        {
+            // Для Swagger/документации
+            Summary = "Получение списка задач текущего пользователя."
         });
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
-    /// <param name="endpoints"></param>
-    private static void AddGetTaskOperation(IEndpointRouteBuilder endpoints)
-    {
-        endpoints.MapGet("/tasks/{id}", async (
+    return endpoints.MapGet("/tasks/{id}", async (
             [FromRoute] int id,
             [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] ITaskRepository repository) =>
@@ -114,6 +104,11 @@ public static class ReadTaskOperations
                     statusCode: StatusCodes.Status500InternalServerError
                 );
             }
+        })
+        .WithMetadata(new
+        {
+            // Для Swagger/документации
+            Summary = "Получение задачи по идентификатору."
         });
     }
 }

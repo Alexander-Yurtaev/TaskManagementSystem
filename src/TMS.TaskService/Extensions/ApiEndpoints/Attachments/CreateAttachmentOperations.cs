@@ -13,21 +13,14 @@ namespace TMS.TaskService.Extensions.ApiEndpoints.Attachments;
 public static class CreateAttachmentOperations
 {
     /// <summary>
-    /// 
+    /// Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+    /// вложений в API:
+    ///   POST /tasks/{id}/attachments   →    добавление файла как вложения к указанной задаче;
     /// </summary>
     /// <param name="endpoints"></param>
-    public static void AddCreateAttachmentOperations(this IEndpointRouteBuilder endpoints)
+    public static RouteHandlerBuilder AddCreateAttachmentOperations(this IEndpointRouteBuilder endpoints)
     {
-        AddCreateAttachmentOperation(endpoints);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="endpoints"></param>
-    private static void AddCreateAttachmentOperation(IEndpointRouteBuilder endpoints)
-    {
-        endpoints.MapPost("/tasks/{id}/attachments", async (
+        return endpoints.MapPost("/tasks/{id}/attachments", async (
             [FromRoute] int id,
             [FromQuery] string fileName,
             [FromForm] IFormFile file,
@@ -96,8 +89,16 @@ public static class CreateAttachmentOperations
                     statusCode: StatusCodes.Status500InternalServerError
                 );
             }
-        }).DisableAntiforgery();
+        })
+        .DisableAntiforgery()
+        .WithMetadata(new
+        {
+            // Для Swagger/документации
+            Summary = "Добавление файла как вложения к указанной задаче."
+        });
     }
+
+    #region Private Methods
 
     private static string GetFilePath(int taskId) => $"tasks/{taskId}/attachments";
 
@@ -129,4 +130,6 @@ public static class CreateAttachmentOperations
 
         return response;
     }
+
+    #endregion Private Methods
 }

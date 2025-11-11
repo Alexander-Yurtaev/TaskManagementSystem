@@ -12,64 +12,62 @@ namespace TMS.TaskService.Extensions.ApiEndpoints.Projects;
 public static class CreateProjectOperations
 {
     /// <summary>
-    /// 
+    /// Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+    /// проектов в API:
+    ///   POST /projects            → Создание нового проекта;
     /// </summary>
     /// <param name="endpoints"></param>
-    public static void AddCreateProjectOperations(this IEndpointRouteBuilder endpoints)
+    public static RouteHandlerBuilder AddCreateProjectOperations(this IEndpointRouteBuilder endpoints)
     {
-        AddCreateProjectOperation(endpoints);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="endpoints"></param>
-    private static void AddCreateProjectOperation(IEndpointRouteBuilder endpoints)
-    {
-        endpoints.MapPost("/projects", async (
-            [FromBody] ProjectCreate project,
-            [FromServices] ILogger<IApplicationBuilder> logger,
-            [FromServices] IMapper mapper,
-            [FromServices] IProjectRepository repository) =>
-        {
-            logger.LogInformation("Start creating project with name: {Name}.", project.Name);
-
-            try
+        return endpoints.MapPost("/projects", async (
+                [FromBody] ProjectCreate project,
+                [FromServices] ILogger<IApplicationBuilder> logger,
+                [FromServices] IMapper mapper,
+                [FromServices] IProjectRepository repository) =>
             {
-                var projectExists = await repository.IsExistsAsync(project.Name);
-                if (projectExists)
+                logger.LogInformation("Start creating project with name: {Name}.", project.Name);
+
+                try
+                {
+                    var projectExists = await repository.IsExistsAsync(project.Name);
+                    if (projectExists)
+                    {
+                        logger.LogError(
+                            "Project with name='{ProjectName}' already exists. Operation: {Operation}",
+                            project.Name,
+                            "POST /projects"
+                        );
+
+                        return Results.BadRequest($"Project with name='{project.Name}' already exists.");
+                    }
+
+                    var entity = mapper.Map<ProjectEntity>(project);
+
+                    await repository.AddAsync(entity);
+
+                    logger.LogInformation($"Finish create project with name={project.Name}.");
+
+                    return Results.Created($"api/projects/{entity.Id}", entity);
+                }
+                catch (Exception ex)
                 {
                     logger.LogError(
-                        "Project with name='{ProjectName}' already exists. Operation: {Operation}",
+                        ex,
+                        "Error while creating project with Name: {ProjectName}. Operation: {Operation}",
                         project.Name,
                         "POST /projects"
                     );
 
-                    return Results.BadRequest($"Project with name='{project.Name}' already exists.");
+                    return Results.Problem(
+                        detail: ex.Message,
+                        statusCode: StatusCodes.Status500InternalServerError
+                    );
                 }
-
-                var entity = mapper.Map<ProjectEntity>(project);
-
-                await repository.AddAsync(entity);
-
-                logger.LogInformation($"Finish create project with name={project.Name}.");
-
-                return Results.Created($"api/projects/{entity.Id}", entity);
-            }
-            catch (Exception ex)
+            })
+            .WithMetadata(new
             {
-                logger.LogError(
-                    ex,
-                    "Error while creating project with Name: {ProjectName}. Operation: {Operation}",
-                    project.Name,
-                    "POST /projects"
-                );
-
-                return Results.Problem(
-                    detail: ex.Message,
-                    statusCode: StatusCodes.Status500InternalServerError
-                );
-            }
-        });
+                // Для Swagger/документации
+                Summary = "Создание нового проекта."
+            });
     }
 }

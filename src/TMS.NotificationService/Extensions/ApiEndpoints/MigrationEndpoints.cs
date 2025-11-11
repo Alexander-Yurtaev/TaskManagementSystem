@@ -10,13 +10,12 @@ namespace TMS.NotificationService.Extensions.ApiEndpoints;
 public static class MigrationEndpoints
 {
     /// <summary>
-    ///
+    /// Запуск миграции БД для Сервиса рассылки сообщений
     /// </summary>
-    /// <param name="app"></param>
-    public static void AddMigrateEndpoint(this IApplicationBuilder app)
+    /// <param name="endpoints"></param>
+    public static RouteHandlerBuilder AddMigrateEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        var endpoints = (IEndpointRouteBuilder)app;
-        endpoints.MapGet("/migrate", async (
+        return endpoints.MapGet("/migrate", async (
                 [FromServices] NotificationDataContext db,
                 [FromServices] ILogger<IApplicationBuilder> logger) =>
             {
@@ -28,6 +27,10 @@ public static class MigrationEndpoints
                 
                 return Results.Problem(detail: details.Detail, statusCode: details.StatusCode);
             })
-        .AllowAnonymous();
+            .WithMetadata(new
+            {
+                // Для Swagger/документации
+                Summary = "Запуск миграции БД для Сервис рассылки сообщений."
+            });
     }
 }

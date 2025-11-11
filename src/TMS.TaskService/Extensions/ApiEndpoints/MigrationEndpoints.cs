@@ -10,7 +10,7 @@ namespace TMS.TaskService.Extensions.ApiEndpoints;
 public static class MigrationEndpoints
 {
     /// <summary>
-    ///
+    /// Запуск миграции БД для Сервиса для работы с задачами
     /// </summary>
     /// <param name="app"></param>
     public static void AddMigrateEndpoint(this IApplicationBuilder app)
@@ -28,6 +28,10 @@ public static class MigrationEndpoints
 
             return Results.Problem(detail: details.Detail, statusCode: details.StatusCode);
         })
-        .AllowAnonymous();
+        .WithMetadata(new
+        {
+            // Для Swagger/документации
+            Summary = "Запуск миграции БД для Сервис для работы с задачами."
+        });
     }
 }

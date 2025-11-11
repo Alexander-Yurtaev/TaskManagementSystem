@@ -9,95 +9,90 @@ namespace TMS.TaskService.Extensions.ApiEndpoints.Attachments;
 public static class ReadAttachmentOperations
 {
     /// <summary>
-    /// 
+    /// Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+    /// вложений в API:
+    ///   POST /tasks/{id}/attachments   →    добавление файла как вложения к указанной задаче;
     /// </summary>
     /// <param name="endpoints"></param>
-    public static void AddReadAttachmentOperations(this IEndpointRouteBuilder endpoints)
-    {
-        AddGetAttachmentOperation(endpoints);
-        AddGetAttachmentsByTaskIdOperation(endpoints);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="endpoints"></param>
-    private static void AddGetAttachmentOperation(IEndpointRouteBuilder endpoints)
+    public static RouteHandlerBuilder AddReadAttachmentOperations(this IEndpointRouteBuilder endpoints)
     {
         endpoints.MapGet("/attachments/{id}", async (
-            [FromRoute] int id,
-            [FromServices] ILogger<IApplicationBuilder> logger,
-            [FromServices] IAttachmentRepository repository) =>
-        {
-            logger.LogInformation("Start getting Attachment with id: {Id}.", id);
-
-            try
+                [FromRoute] int id,
+                [FromServices] ILogger<IApplicationBuilder> logger,
+                [FromServices] IAttachmentRepository repository) =>
             {
-                var attachment = await repository.GetByIdAsync(id);
+                logger.LogInformation("Start getting Attachment with id: {Id}.", id);
 
-                if (attachment is null)
+                try
                 {
-                    logger.LogInformation("Attachment not found with Id: {Id}.", id);
+                    var attachment = await repository.GetByIdAsync(id);
 
-                    return Results.NotFound();
+                    if (attachment is null)
+                    {
+                        logger.LogInformation("Attachment not found with Id: {Id}.", id);
+
+                        return Results.NotFound();
+                    }
+
+                    logger.LogInformation("Attachment found with id={Id}.", id);
+
+                    return Results.Ok(attachment);
                 }
+                catch (Exception ex)
+                {
+                    logger.LogError(
+                        ex,
+                        "Error while getting attachment with Id: {AttachmentId}. Operation: {Operation}",
+                        id,
+                        $"GET /attachments/{id}"
+                    );
 
-                logger.LogInformation("Attachment found with id={Id}.", id);
-
-                return Results.Ok(attachment);
-            }
-            catch (Exception ex)
+                    return Results.Problem(
+                        detail: ex.Message,
+                        statusCode: StatusCodes.Status500InternalServerError
+                    );
+                }
+            })
+            .WithMetadata(new
             {
-                logger.LogError(
-                    ex,
-                    "Error while getting attachment with Id: {AttachmentId}. Operation: {Operation}",
-                    id,
-                    $"GET /attachments/{id}"
-                );
+                // Для Swagger/документации
+                Summary = "Получение вложения по идентификатору."
+            });
 
-                return Results.Problem(
-                    detail: ex.Message,
-                    statusCode: StatusCodes.Status500InternalServerError
-                );
-            }
-        });
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="endpoints"></param>
-    private static void AddGetAttachmentsByTaskIdOperation(IEndpointRouteBuilder endpoints)
-    {
-        endpoints.MapGet("/tasks/{id}/attachments", async (
-            [FromRoute] int id,
-            [FromServices] ILogger<IApplicationBuilder> logger,
-            [FromServices] IAttachmentRepository repository) =>
-        {
-            logger.LogInformation("Start getting Attachment for task with id: {TaskId}.", id);
-
-            try
+        return endpoints.MapGet("/tasks/{id}/attachments", async (
+                [FromRoute] int id,
+                [FromServices] ILogger<IApplicationBuilder> logger,
+                [FromServices] IAttachmentRepository repository) =>
             {
-                var attachments = (await repository.GetByTaskIdAsync(id)).ToArray();
+                logger.LogInformation("Start getting Attachment for task with id: {TaskId}.", id);
 
-                logger.LogInformation("Found {AttachmentsCount} attachments.", attachments.Count());
+                try
+                {
+                    var attachments = (await repository.GetByTaskIdAsync(id)).ToArray();
 
-                return Results.Ok(attachments);
-            }
-            catch (Exception ex)
+                    logger.LogInformation("Found {AttachmentsCount} attachments.", attachments.Count());
+
+                    return Results.Ok(attachments);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError(
+                        ex,
+                        "Error while getting attachments for task with Id: {TaskId}. Operation: {Operation}",
+                        id,
+                        $"GET /tasks/{id}/attachments"
+                    );
+
+                    return Results.Problem(
+                        detail: ex.Message,
+                        statusCode: StatusCodes.Status500InternalServerError
+                    );
+                }
+            })
+            .WithMetadata(new
             {
-                logger.LogError(
-                    ex,
-                    "Error while getting attachments for task with Id: {TaskId}. Operation: {Operation}",
-                    id,
-                    $"GET /tasks/{id}/attachments"
-                );
-
-                return Results.Problem(
-                    detail: ex.Message,
-                    statusCode: StatusCodes.Status500InternalServerError
-                );
-            }
-        });
+                // Для Swagger/документации
+                Summary = "Получение всех вложений, прикрепленных к указанной задаче."
+            });
     }
 }

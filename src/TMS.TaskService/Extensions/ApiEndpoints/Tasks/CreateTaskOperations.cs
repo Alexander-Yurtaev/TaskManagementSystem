@@ -13,21 +13,14 @@ namespace TMS.TaskService.Extensions.ApiEndpoints.Tasks;
 public static class CreateTaskOperations
 {
     /// <summary>
-    /// 
+    /// Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+    /// задач в API:
+    ///   POST /projects/{id}       → Создание новой задачи;
     /// </summary>
     /// <param name="endpoints"></param>
-    public static void AddCreateTaskOperations(this IEndpointRouteBuilder endpoints)
+    public static RouteHandlerBuilder AddCreateTaskOperations(this IEndpointRouteBuilder endpoints)
     {
-        AddCreateTaskOperation(endpoints);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="endpoints"></param>
-    private static void AddCreateTaskOperation(IEndpointRouteBuilder endpoints)
-    {
-        endpoints.MapPost("/tasks", async (
+        return endpoints.MapPost("/tasks", async (
             [FromBody] TaskCreate task,
             [FromServices] IRabbitMqService rabbitMqService,
             [FromServices] ILogger<IApplicationBuilder> logger,
@@ -73,6 +66,11 @@ public static class CreateTaskOperations
                     statusCode: StatusCodes.Status500InternalServerError
                 );
             }
+        })
+        .WithMetadata(new
+        {
+            // Для Swagger/документации
+            Summary = "Создание новой задачи."
         });
     }
 }

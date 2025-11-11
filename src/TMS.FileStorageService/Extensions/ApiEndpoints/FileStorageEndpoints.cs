@@ -7,7 +7,10 @@ namespace TMS.FileStorageService.Extensions.ApiEndpoints;
 public static class FileStorageEndpoints
 {
     /// <summary>
-    /// 
+    /// Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+    /// файлового хранилища в API:
+    ///   GET /files      → получение файла (не объекта) вложения;
+    ///   POST /files     → сохранение файла (не объекта) в хранилище;
     /// </summary>
     /// <param name="endpoints"></param>
     /// <returns></returns>
@@ -51,6 +54,11 @@ public static class FileStorageEndpoints
                 // Логирование ошибки
                 return Results.Problem(detail: $"Error reading file: {ex.Message}", statusCode: StatusCodes.Status500InternalServerError);
             }
+        })
+        .WithMetadata(new
+        {
+            // Для Swagger/документации
+            Summary = "Получение файла (не объекта) вложения."
         });
 
         return endpoints.MapPost("/files", async (
@@ -91,6 +99,11 @@ public static class FileStorageEndpoints
                     statusCode: StatusCodes.Status500InternalServerError);
             }
         })
-        .DisableAntiforgery();
+        .DisableAntiforgery()
+        .WithMetadata(new
+        {
+            // Для Swagger/документации
+            Summary = "Сохранение файла (не объекта) в хранилище."
+        });
     }
 }

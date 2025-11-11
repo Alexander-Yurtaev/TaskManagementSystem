@@ -11,21 +11,14 @@ namespace TMS.TaskService.Extensions.ApiEndpoints.Projects;
 public static class UpdateProjectOperations
 {
     /// <summary>
-    /// 
+    /// Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
+    /// проектов в API:
+    ///   PUT /projects/{id}       → Обновление проекта по идентификатору;
     /// </summary>
     /// <param name="endpoints"></param>
-    public static void AddUpdateProjectOperations(this IEndpointRouteBuilder endpoints)
+    public static RouteHandlerBuilder AddUpdateProjectOperations(this IEndpointRouteBuilder endpoints)
     {
-        AddUpdateProjectOperation(endpoints);
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="endpoints"></param>
-    private static void AddUpdateProjectOperation(IEndpointRouteBuilder endpoints)
-    {
-        endpoints.MapPut("/projects/{id}", async (
+        return endpoints.MapPut("/projects/{id}", async (
             [FromRoute] int id,
             [FromBody] ProjectUpdate projectUpdate,
             [FromServices] ILogger<IApplicationBuilder> logger,
@@ -65,6 +58,11 @@ public static class UpdateProjectOperations
                     statusCode: StatusCodes.Status500InternalServerError
                 );
             }
+        })
+        .WithMetadata(new
+        {
+            // Для Swagger/документации
+            Summary = "Обновление проекта по идентификатору."
         });
     }
 }
