@@ -41,6 +41,21 @@ namespace TMS.AuthService
                     Description = "Minimal API для Сервиса аутентификации."
                 });
 
+                // Применение схемы безопасности ко всем эндпоинтам
+                // Настройка схемы безопасности
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT токен авторизации (Bearer {token})",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT"
+                });
+
+                // Для конкретного эндпоинта добавим условную безопасность
+                c.OperationFilter<MigrationSecurityFilter>();
+
                 // Добавляем фильтр операций здесь
                 c.OperationFilter<AuthMigrationOperationFilter>();
 
