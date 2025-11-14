@@ -1,9 +1,11 @@
+using DotNetEnv;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using TMS.TaskService.Data.Extensions;
 using TMS.TaskService.Extensions.ApiEndpoints;
 using TMS.TaskService.Extensions.ApiEndpoints.Attachments;
 using TMS.TaskService.Extensions.ApiEndpoints.Comments;
+using TMS.TaskService.Extensions.ApiEndpoints.OperationFilters;
 using TMS.TaskService.Extensions.ApiEndpoints.Projects;
 using TMS.TaskService.Extensions.ApiEndpoints.Tasks;
 using TMS.TaskService.Extensions.Services;
@@ -23,11 +25,10 @@ namespace TMS.TaskService
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add your features
-            if (builder.Environment.IsDevelopment())
-            {
-                builder.Logging.AddConsole();
-            }
+            // автоматически ищет .env в текущей директории
+            Env.Load();
+
+            builder.Configuration.AddEnvironmentVariables();
 
             using var factory = LoggerFactory.Create(b => b.AddConsole());
             ILogger logger = factory.CreateLogger<Program>();
@@ -46,8 +47,6 @@ namespace TMS.TaskService
             builder.Services.AddFileStorageClient();
 
             // Add services to the container.
-            builder.Services.AddAuthorization();
-
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
@@ -57,6 +56,9 @@ namespace TMS.TaskService
                     Title = "AuthService API",
                     Description = "Minimal API для Сервиса работы с задачами."
                 });
+
+                // Добавляем фильтр операций здесь
+                c.OperationFilter<TaskMigrationOperationFilter>();
 
                 // Путь к XML-файлу (имя сборки)
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -89,12 +91,12 @@ namespace TMS.TaskService
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth API v1");
+                    c.RoutePrefix = "swagger"; // URL: /swagger
+                });
             }
-
-            app.UseHttpsRedirection();
-
-            app.UseAuthorization();
 
             app.AddGreetingEndpoint();
             app.AddMigrateEndpoint();
@@ -103,6 +105,10 @@ namespace TMS.TaskService
             app.AddProjectsOperations();
             app.AddCommentsOperations();
             app.AddAttachmentsOperations();
+
+            app.UseHttpsRedirection();
+
+            logger.LogInformation("Приложение успешно запущено.");
 
             app.Run();
         }

@@ -1,5 +1,4 @@
 using DotNetEnv;
-using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using TMS.Common.Extensions;
@@ -29,6 +28,9 @@ namespace TMS.NotificationService
 
             builder.Configuration.AddEnvironmentVariables();
 
+            using var factory = LoggerFactory.Create(b => b.AddConsole());
+            ILogger logger = factory.CreateLogger<Program>();
+
             // Add services to the container.
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
@@ -48,7 +50,16 @@ namespace TMS.NotificationService
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
-            builder.Services.AddNotifyDataContext();
+            // Data Context configurations
+            try
+            {
+                builder.Services.AddNotifyDataContext();
+            }
+            catch (Exception ex)
+            {
+                logger.LogCritical(ex, "Ошибка при конфигурации TaskDataContext.");
+                throw;
+            }
 
             builder.Services.AddFileService("EmailEvents", service =>
             {
@@ -59,11 +70,9 @@ namespace TMS.NotificationService
 
             builder.Services.AddRabbitMqConsumerConfiguration();
 
-            builder.Services.AddAuthorization();
-            
             var app = builder.Build();
 
-            var logger = app.Services.GetRequiredService<ILogger<Program>>();
+            logger = app.Services.GetRequiredService<ILogger<Program>>();
             logger.LogInformation("Приложение успешно построено. Начинается настройка.");
 
             if (app.Environment.IsDevelopment())
