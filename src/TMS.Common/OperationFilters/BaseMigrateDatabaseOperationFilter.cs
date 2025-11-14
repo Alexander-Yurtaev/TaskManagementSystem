@@ -2,12 +2,12 @@
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace TMS.AuthService.Extensions.ApiEndpoints.OperationFilters;
+namespace TMS.Common.OperationFilters;
 
 /// <summary>
 /// 
 /// </summary>
-public abstract class BaseMigrationOperationFilter : IOperationFilter
+public abstract class BaseMigrateDatabaseOperationFilter : IOperationFilter
 {
     /// <summary>
     /// 

@@ -15,7 +15,7 @@
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>	
 
-  <ItemGroup Label="Common">
+  <ItemGroup Label="Swagger">
 	<PackageReference Include="Swashbuckle.AspNetCore" />
   </ItemGroup>
 

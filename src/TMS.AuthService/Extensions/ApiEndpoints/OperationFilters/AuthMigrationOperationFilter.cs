@@ -1,9 +1,11 @@
-﻿namespace TMS.AuthService.Extensions.ApiEndpoints.OperationFilters;
+﻿using TMS.Common.OperationFilters;
+
+namespace TMS.AuthService.Extensions.ApiEndpoints.OperationFilters;
 
 /// <summary>
 /// 
 /// </summary>
-public class AuthMigrationOperationFilter : BaseMigrationOperationFilter
+public class AuthMigrationOperationFilter : BaseMigrateDatabaseOperationFilter
 {
     /// <summary>
     /// 

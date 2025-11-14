@@ -29,7 +29,7 @@ namespace TMS.AuthService
             // Проверка обязательных настроек перед регистрацией сервисов
             ValidateConfiguration(builder.Configuration);
 
-            // Регистрация основных сервисов
+            // Add services to the container.
             builder.Services.AddGrpc();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
@@ -58,7 +58,6 @@ namespace TMS.AuthService
             var app = builder.Build();
 
             var logger = app.Services.GetRequiredService<ILogger<Program>>();
-
             logger.LogInformation("Приложение успешно построено. Начинается настройка.");
 
             // Настройка middleware

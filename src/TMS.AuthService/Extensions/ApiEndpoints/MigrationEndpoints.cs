@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TMS.AuthService.Data;
 using TMS.Common.Helpers;
@@ -60,9 +58,7 @@ public static class MigrationEndpoints
             })
             .Produces<MigrationResult>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
-            .Produces(StatusCodes.Status500InternalServerError)
-            .WithName("MigrateDatabase");
-            //.WithOpenApi(operation => OpenApiHelper.ConfigureMigrationOperation(operation))
+            .Produces(StatusCodes.Status500InternalServerError);
     }
 
     #region Private Methods

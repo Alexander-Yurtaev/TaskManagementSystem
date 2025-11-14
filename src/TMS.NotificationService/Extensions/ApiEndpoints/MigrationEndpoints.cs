@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TMS.Common.Helpers;
+using TMS.Common.Models;
 using TMS.NotificationService.Data;
 
 namespace TMS.NotificationService.Extensions.ApiEndpoints;
@@ -27,10 +28,14 @@ public static class MigrationEndpoints
                 
                 return Results.Problem(detail: details.Detail, statusCode: details.StatusCode);
             })
+            .WithName("MigrateDatabase")
             .WithMetadata(new
             {
                 // Для Swagger/документации
                 Summary = "Запуск миграции БД для Сервис рассылки сообщений."
-            });
+            })
+            .Produces<MigrationResult>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status401Unauthorized)
+            .Produces(StatusCodes.Status500InternalServerError);
     }
 }

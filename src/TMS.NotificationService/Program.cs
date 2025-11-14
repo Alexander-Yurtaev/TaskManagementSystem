@@ -1,9 +1,11 @@
+using DotNetEnv;
 using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using TMS.Common.Extensions;
 using TMS.NotificationService.Data.Extensions;
 using TMS.NotificationService.Extensions.ApiEndpoints;
+using TMS.NotificationService.Extensions.ApiEndpoints.OperationFilters;
 using TMS.NotificationService.Extensions.Services;
 
 namespace TMS.NotificationService
@@ -22,9 +24,12 @@ namespace TMS.NotificationService
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            builder.Services.AddAuthorization();
+            // автоматически ищет .env в текущей директории
+            Env.Load();
 
+            builder.Configuration.AddEnvironmentVariables();
+
+            // Add services to the container.
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
@@ -34,6 +39,9 @@ namespace TMS.NotificationService
                     Title = "AuthService API",
                     Description = "Minimal API для Сервиса рассылки сообщений."
                 });
+
+                // Добавляем фильтр операций здесь
+                c.OperationFilter<NotifyMigrationOperationFilter>();
 
                 // Путь к XML-файлу (имя сборки)
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -51,22 +59,30 @@ namespace TMS.NotificationService
 
             builder.Services.AddRabbitMqConsumerConfiguration();
 
+            builder.Services.AddAuthorization();
+            
             var app = builder.Build();
+
+            var logger = app.Services.GetRequiredService<ILogger<Program>>();
+            logger.LogInformation("Приложение успешно построено. Начинается настройка.");
 
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth API v1");
+                    c.RoutePrefix = "swagger"; // URL: /swagger
+                });
             }
 
             // Configure the HTTP request pipeline.
+            app.AddGreetingEndpoint();
+            app.AddMigrateEndpoint();
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
-
-            app.AddGreetingEndpoint();
-            app.AddMigrateEndpoint();
+            logger.LogInformation("Приложение успешно запущено.");
 
             app.Run();
         }
