@@ -1,6 +1,26 @@
 ﻿{
   "Routes": [
-    //Migrations
+    // Swagger
+    {
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/swagger/{everything}",
+      "DownstreamPathTemplate": "/swagger/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8081
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "NoLoadBalancer": true,
+      "RouteIsCaseSensitive": false,
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 0
+      }
+    },
+
+    // Migrations
     //    GET /api/auth/migrate
     //    GET /api/tasks/migrate
     //    GET /api/notify/migrate
@@ -16,7 +36,7 @@
         }
       ],
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "AuthService"
+      "SwaggerKey": "tms-auth-service"
     },
     {
       "UpstreamHttpMethod": [ "GET" ],
@@ -34,7 +54,7 @@
         "AllowedScopes": []
       },
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "TaskService"
+      "SwaggerKey": "tms-task-service"
     },
     {
       "UpstreamHttpMethod": [ "GET" ],
@@ -52,8 +72,9 @@
         "AllowedScopes": []
       },
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "NotifyService"
+      "SwaggerKey": "tms-notification-service"
     },
+
     // Authentications
     //    POST /api/auth/register
     //    POST /api/auth/login
@@ -70,8 +91,9 @@
         }
       ],
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "AuthService"
+      "SwaggerKey": "tms-auth-service"
     },
+
     // Projects
     //    GET /api/projects
     //    POST /api/projects
@@ -94,8 +116,9 @@
         "AllowedScopes": []
       },
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "TaskService"
+      "SwaggerKey": "tms-task-service"
     },
+
     // Tasks
     //    GET /api/tasks
     //    POST /api/tasks
@@ -118,8 +141,9 @@
         "AllowedScopes": []
       },
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "TaskService"
+      "SwaggerKey": "tms-task-service"
     },
+
     // Comments
     //    POST /api/tasks/{task_id}/comments
     //    GET /api/comments/{id}
@@ -140,8 +164,9 @@
         "AllowedScopes": []
       },
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "TaskService"
+      "SwaggerKey": "tms-task-service"
     },
+
     // Attachments
     //    GET /api/attachments/{id}
     {
@@ -160,8 +185,9 @@
         "AllowedScopes": []
       },
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "TaskService"
+      "SwaggerKey": "tms-task-service"
     },
+
     // Attachments
     //    POST /api/tasks/{task_id}/attachments?fileName=example.txt
     //    GET /api/tasks/{task_id}/attachments
@@ -181,7 +207,7 @@
         "AllowedScopes": []
       },
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "FileStorageService"
+      "SwaggerKey": "tms-file-storage-service"
     },
 
     // Others
@@ -197,8 +223,9 @@
         }
       ],
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "AuthService"
+      "SwaggerKey": "tms-auth-service"
     },
+
     // Greetings
     {
       "UpstreamHttpMethod": [ "GET" ],
@@ -212,7 +239,7 @@
         }
       ],
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "TaskService"
+      "SwaggerKey": "tms-task-service"
     },
     {
       "UpstreamHttpMethod": [ "GET" ],
@@ -226,7 +253,7 @@
         }
       ],
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "FileStorageService"
+      "SwaggerKey": "tms-file-storage-service"
     },
     {
       "UpstreamHttpMethod": [ "GET" ],
@@ -240,31 +267,77 @@
         }
       ],
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "NotificationService"
+      "SwaggerKey": "tms-notification-service"
     },
     // HTML
+    //{
+    //  "UpstreamHttpMethod": [ "GET" ],
+    //  "UpstreamPathTemplate": "/{everything}",
+    //  "DownstreamPathTemplate": "/{everything}",
+    //  "DownstreamScheme": "https",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 8081
+    //    }
+    //  ],
+    //  "FileExtensionWhitelist": [
+    //    "html",
+    //    "css",
+    //    "js",
+    //    "jpg",
+    //    "jpeg",
+    //    "png",
+    //    "gif",
+    //    "ico"
+    //  ],
+    //  "DangerousAcceptAnyServerCertificateValidator": true
+    //}
+  ],
+  "SwaggerEndPoints": [
     {
-      "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/{everything}",
-      "DownstreamPathTemplate": "/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
+      "Key": "/tms-auth-service",
+      "TransformByOcelotConfig": false,
+      "Config": [
         {
-          "Host": "pleasureplan-web",
-          "Port": 8081
+          "Name": "Auth API",
+          "Version": "v1",
+          "Url": "http://tms-auth-service:8080/swagger/v1/swagger.json"
         }
-      ],
-      "FileExtensionWhitelist": [
-        "html",
-        "css",
-        "js",
-        "jpg",
-        "jpeg",
-        "png",
-        "gif",
-        "ico"
-      ],
-      "DangerousAcceptAnyServerCertificateValidator": true
+      ]
+    },
+    {
+      "Key": "/tms-task-service",
+      "TransformByOcelotConfig": false,
+      "Config": [
+        {
+          "Name": "Task API",
+          "Version": "v1",
+          "Url": "http://tms-task-service:8080/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "/tms-file-storage-service",
+      "TransformByOcelotConfig": false,
+      "Config": [
+        {
+          "Name": "File Storage API",
+          "Version": "v1",
+          "Url": "http://tms-file-storage-service:8080/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "/tms-notification-service",
+      "TransformByOcelotConfig": false,
+      "Config": [
+        {
+          "Name": "Notification API",
+          "Version": "v1",
+          "Url": "http://tms-notification-service:8080/swagger/v1/swagger.json"
+        }
+      ]
     }
   ],
   "GlobalConfiguration": {

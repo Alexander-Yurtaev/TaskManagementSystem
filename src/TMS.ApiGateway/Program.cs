@@ -1,80 +1,136 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Ocelot.Administration;
+using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using System.Text;
 using TMS.ApiGateway.Extensions.Services;
 
-namespace TMS.ApiGateway
+namespace TMS.ApiGateway;
+
+public class Program
 {
-    public class Program
+    public static async Task Main(string[] args)
     {
-        public static async Task Main(string[] args)
+        // WebApplicationBuilder
+        var builder = WebApplication.CreateBuilder(args);
+
+        builder.Services.AddHttpContextAccessor();
+
+        if (builder.Environment.IsDevelopment())
         {
-            var builder = WebApplication.CreateBuilder(args);
-
-            using var factory = LoggerFactory.Create(b => b.AddConsole());
-            ILogger logger = factory.CreateLogger<Program>();
-
-            // Add your features
-            if (builder.Environment.IsDevelopment())
-            {
-                builder.Logging.AddConsole();
-            }
-
-            // Чтобы в контроллере узнать текущие схему и хост
-            builder.Services.AddHttpContextAccessor();
-
-            builder.Services.AddMvc();
-
-            builder.Services.AddEndpointsApiExplorer();
-
-            // Ocelot Basic setup
-            builder.Services.AddOcelotConfiguration(builder.Environment.ContentRootPath, builder.Configuration, logger);
-
-            // gRPC
-            builder.Services.AddRpcConfiguration(builder.Configuration);
-
-            //
-            var app = builder.Build();
-
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            app.UseAuthentication();   // добавление middleware аутентификации
-
-            // Обрабатываем локальные маршруты
-            app.MapWhen(context => context.Request.Path.StartsWithSegments("/"), appBuilder =>
-            {
-                appBuilder
-                    .UseRouting()
-                    .UseEndpoints(endpoints =>
-                    {
-                        endpoints.MapControllerRoute(
-                            name: "default",
-                            pattern: "{controller=Home}/{action=Index}/{id?}");
-                        endpoints.MapRazorPages();
-                    });
-            });
-
-            // Настраиваем Ocelot для остальных маршрутов
-            app.UseOcelot().Wait();
-
-            // Устанавливаем middleware для путей, доступ к которым доступен только авторизованным пользователям
-            //var requireAuthorizationPaths = new[] { "/api/auth/users" };
-            //app.MapWhen(context => requireAuthorizationPaths.Any(ep => context.Request.Path.ToString().Contains(ep)), appBuilder =>
-            //{
-            //    appBuilder.UseMiddleware<JwtMiddleware>();
-            //});
-
-            app.UseAuthorization();   // добавление middleware авторизации
-
-            await app.RunAsync();
+            builder.Logging.AddConsole();
         }
+
+        // Ocelot Basic setup
+        builder.Configuration
+            .SetBasePath(builder.Environment.ContentRootPath)
+            .AddOcelot(); // single ocelot.json file in read-only mode
+
+        #region Ocelot + JWT
+
+        // Проверка JWT-настроек
+        var jwtKey = builder.Configuration["JWT_KEY"];
+        var jwtIssuer = builder.Configuration["JWT_ISSUER"];
+        var jwtAudience = builder.Configuration["JWT_AUDIENCE"];
+
+        if (string.IsNullOrEmpty(jwtKey) ||
+            string.IsNullOrEmpty(jwtIssuer) ||
+            string.IsNullOrEmpty(jwtAudience))
+        {
+            throw new InvalidOperationException("JWT configuration is missing.");
+        }
+
+        // Проверка наличия ocelot.json
+        if (!File.Exists(Path.Combine(builder.Environment.ContentRootPath, "ocelot.json")))
+            throw new FileNotFoundException("ocelot.json не найден.");
+
+        using var factory = LoggerFactory.Create(b => b.AddConsole());
+        ILogger logger = factory.CreateLogger<Program>();
+
+        builder.Services
+            .AddOcelot(builder.Configuration)
+            .AddAdministration("/administration", options => ConfigJwt(options, builder, jwtIssuer, jwtAudience, jwtKey, logger));
+
+        #endregion Ocelot + JWT
+
+        #region Ocelot + Swagger
+
+        // Добавление сервисов
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Auth API", Version = "v1" });
+        });
+
+        // Настройка Ocelot + Swagger
+        builder.Services.AddSwaggerForOcelot(builder.Configuration);
+
+        #endregion Ocelot + Swagger
+
+        // gRPC
+        builder.Services.AddRpcConfiguration(builder.Configuration);
+
+        // MVC
+        builder.Services.AddMvc();
+
+        // WebApplication
+        var app = builder.Build();
+
+        // Middleware: порядок критичен!
+        app.UseHttpsRedirection();
+        app.UseRouting();
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        #region Swagger + Ocelot
+
+        // Swagger и UI
+        app.UseSwagger();
+        app.UseSwaggerForOcelotUI(opt =>
+        {
+            opt.PathToSwaggerGenerator = "/swagger/docs";
+        });
+
+        // Ocelot — после Swagger
+        await app.UseOcelot();
+
+        #endregion Swagger + Ocelot
+
+        await app.RunAsync();
     }
+
+    #region Private Methods
+
+    private static void ConfigJwt(JwtBearerOptions options,
+        WebApplicationBuilder builder,
+        string jwtIssuer,
+        string jwtAudience,
+        string jwtKey,
+        ILogger logger)
+    {
+        options.Authority = builder.Configuration["AuthService:Authority"];
+        options.RequireHttpsMetadata = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtIssuer,
+            ValidAudience = jwtAudience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+        };
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                logger.LogError("Authentication failed: {ex}", context.Exception);
+                return Task.CompletedTask;
+            }
+        };
+    }
+
+    #endregion Private Methods
 }

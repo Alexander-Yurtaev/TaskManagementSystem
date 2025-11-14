@@ -1,4 +1,5 @@
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using TMS.TaskService.Data.Extensions;
 using TMS.TaskService.Extensions.ApiEndpoints;
 using TMS.TaskService.Extensions.ApiEndpoints.Attachments;
@@ -50,10 +51,16 @@ namespace TMS.TaskService
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Auth Service", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "AuthService API",
+                    Description = "Minimal API для Сервиса работы с задачами."
+                });
 
-                var filePath = Path.Combine(AppContext.BaseDirectory, "APIAuthService.xml");
-                c.IncludeXmlComments(filePath);
+                // Путь к XML-файлу (имя сборки)
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
             // Data Context configurations
@@ -79,8 +86,7 @@ namespace TMS.TaskService
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();

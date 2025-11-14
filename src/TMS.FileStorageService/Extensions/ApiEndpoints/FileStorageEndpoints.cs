@@ -4,6 +4,9 @@ using TMS.Common.Services;
 
 namespace TMS.FileStorageService.Extensions.ApiEndpoints;
 
+/// <summary>
+/// 
+/// </summary>
 public static class FileStorageEndpoints
 {
     /// <summary>
@@ -63,7 +66,7 @@ public static class FileStorageEndpoints
 
         return endpoints.MapPost("/files", async (
             [FromForm] AttachmentModel attachment,
-            [FromForm] IFormFile file,
+            IFormFile file,
             [FromKeyedServices("AttachmentFiles")] IFileService fileService,
             [FromServices] ILogger<AttachmentModel> logger) =>
         {

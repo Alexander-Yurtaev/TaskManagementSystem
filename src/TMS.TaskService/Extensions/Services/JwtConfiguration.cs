@@ -37,7 +37,7 @@ public static class JwtConfiguration
 
         void Options(JwtBearerOptions o)
         {
-            o.Authority = "https://tms-auth-service:8081";
+            o.Authority = configuration["TaskService:Authority"];
             o.RequireHttpsMetadata = true;
             o.TokenValidationParameters = new TokenValidationParameters
             {
@@ -53,7 +53,7 @@ public static class JwtConfiguration
             {
                 OnAuthenticationFailed = context =>
                 {
-                    logger.LogError("Authentication failed: {ex}", context.Exception);
+                    logger.LogError("Authentication failed: {Exception}", context.Exception);
                     return Task.CompletedTask;
                 }
             };

@@ -3,8 +3,15 @@ using TMS.Common.RabbitMq.Consumers.Initializers;
 
 namespace TMS.NotificationService.Extensions.Services;
 
+/// <summary>
+/// 
+/// </summary>
 public static class RabbitMqConsumerConfiguration
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="services"></param>
     public static void AddRabbitMqConsumerConfiguration(this IServiceCollection services)
     {
         services.AddSingleton<IRabbitMqCreateConsumer, TaskCreateEventConsumer>();

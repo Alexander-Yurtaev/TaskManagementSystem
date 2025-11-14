@@ -14,7 +14,7 @@ public static class RedisConfiguration
     /// </summary>
     public static void AddRedisConfiguration(this IServiceCollection services, ConfigurationManager configuration)
     {
-        services.AddSingleton<ConnectionMultiplexer>(provider =>
+        services.AddSingleton<ConnectionMultiplexer>(_ =>
         {
             var host = configuration["REDIS_HOST"];
             var port = configuration["REDIS_PORT"];

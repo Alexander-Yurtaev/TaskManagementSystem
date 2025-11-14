@@ -1,135 +1,104 @@
+using DotNetEnv;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 using TMS.AuthService.Data.Extensions;
 using TMS.AuthService.Extensions.ApiEndpoints;
+using TMS.AuthService.Extensions.ApiEndpoints.OperationFilters;
 using TMS.AuthService.Extensions.Services;
 
 namespace TMS.AuthService
 {
     /// <summary>
-    ///
+    /// Точка входа в приложение Auth Service.
     /// </summary>
     public class Program
     {
         /// <summary>
-        ///
+        /// 
         /// </summary>
         /// <param name="args"></param>
-        /// <exception cref="Exception"></exception>
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Загружаем .env-файл
-            var envPath = Path.Combine(Directory.GetCurrentDirectory(), ".env");
-            if (File.Exists(envPath))
-            {
-                foreach (var line in File.ReadAllLines(envPath))
-                {
-                    if (line.StartsWith("#") || string.IsNullOrWhiteSpace(line)) continue;
-                    var parts = line.Split('=', 2);
-                    if (parts.Length == 2)
-                    {
-                        Environment.SetEnvironmentVariable(parts[0], parts[1]);
-                    }
-                }
-            }
+            // автоматически ищет .env в текущей директории
+            Env.Load();
 
             builder.Configuration.AddEnvironmentVariables();
 
-            builder.Services.AddAntiforgery();
+            // Проверка обязательных настроек перед регистрацией сервисов
+            ValidateConfiguration(builder.Configuration);
 
-            using var factory = LoggerFactory.Create(b => b.AddConsole());
-            ILogger logger = factory.CreateLogger<Program>();
-
-            // Add services to the container.
-            try
-            {
-                builder.Services.AddGrpc();
-            }
-            catch (Exception ex)
-            {
-                logger.LogCritical(ex, "Ошибка при конфигурации gRPC.");
-                throw;
-            }
-
+            // Регистрация основных сервисов
+            builder.Services.AddGrpc();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Auth Service", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "AuthService API",
+                    Description = "Minimal API для Сервиса аутентификации."
+                });
 
-                var filePath = Path.Combine(AppContext.BaseDirectory, "APIAuthService.xml");
-                c.IncludeXmlComments(filePath);
+                // Добавляем фильтр операций здесь
+                c.OperationFilter<AuthMigrationOperationFilter>();
+
+                // Путь к XML-файлу (имя сборки)
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
-            // Jwt configurations
-            try
-            {
-                builder.Services.AddJwtAuthentication(builder.Configuration, logger);
-            }
-            catch (Exception ex)
-            {
-                logger.LogCritical(ex, "Ошибка при конфигурации JWT.");
-                throw;
-            }
-
-            //
+            builder.Services.AddJwtAuthentication(builder.Configuration);
             builder.Services.AddAuthorization();
+            builder.Services.AddAuthDataContext();
+            builder.Services.AddAuthServices();
+            builder.Services.AddRedisConfiguration(builder.Configuration);
 
-            // Data Context configurations
-            try
-            {
-                builder.Services.AddAuthDataContext();
-            }
-            catch (Exception ex)
-            {
-                logger.LogCritical(ex, "Ошибка при конфигурации AuthDataContext.");
-                throw;
-            }
-
-            try
-            {
-                builder.Services.AddAuthServices();
-            }
-            catch (Exception ex)
-            {
-                logger.LogCritical(ex, "Ошибка при конфигурации AuthServices.");
-                throw;
-            }
-
-            // Redis configurations
-            try
-            {
-                builder.Services.AddRedisConfiguration(builder.Configuration);
-            }
-            catch (Exception ex)
-            {
-                logger.LogCritical(ex, "Ошибка при конфигурации Redis.");
-                throw;
-            }
-
-            //
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+            var logger = app.Services.GetRequiredService<ILogger<Program>>();
+
+            logger.LogInformation("Приложение успешно построено. Начинается настройка.");
+
+            // Настройка middleware
+            // Включение Swagger и SwaggerUI только в разработке
+            if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth API v1");
+                    c.RoutePrefix = "swagger"; // URL: /swagger
+                });
             }
 
             app.MapGrpcService<Services.Grpc.AuthService>();
 
-            app.UseHttpsRedirection();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
+            // Регистрация API-эндпоинтов
             app.AddGreetingEndpoint();
             app.AddMigrateEndpoint();
             app.AddAuthEndpoint();
             app.AddUserEndpoint();
 
+            app.UseHttpsRedirection();
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            logger.LogInformation("Приложение успешно запущено.");
+
             app.Run();
+        }
+
+        /// <summary>
+        /// Проверяет наличие обязательных настроек конфигурации.
+        /// </summary>
+        /// <param name="configuration">Конфигурация приложения.</param>
+        /// <exception cref="ConfigurationException">Если обязательные настройки отсутствуют.</exception>
+        private static void ValidateConfiguration(IConfiguration configuration)
+        {
+            if (string.IsNullOrEmpty(configuration["JWT_KEY"]))
+                throw new ConfigurationException("Обязательный параметр JWT_KEY не задан в конфигурации.");
         }
     }
 }

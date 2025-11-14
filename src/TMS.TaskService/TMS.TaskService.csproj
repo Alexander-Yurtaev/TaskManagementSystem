@@ -8,10 +8,13 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 	<DockerfileContext>..\..</DockerfileContext>
 	<DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
-    <DocumentationFile>APIAuthService.xml</DocumentationFile>
 	<InvariantGlobalization>false</InvariantGlobalization> 
 	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
+
+  <PropertyGroup>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>	
 
   <ItemGroup Label="Common">
 	<PackageReference Include="AutoMapper" />
@@ -33,7 +36,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TMS.Common\TMS.Common.csproj" />
-    <ProjectReference Include="..\TMS.Contracts\TMS.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

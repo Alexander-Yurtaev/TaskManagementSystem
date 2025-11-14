@@ -5,15 +5,8 @@ using TMS.Common.Models;
 
 namespace TMS.Common.Helpers;
 
-public class MigrateHelper
+public partial class MigrateHelper
 {
-    public record MigrationDetails(string Detail, int StatusCode)
-    {
-        public string Detail { get; init; } = Detail;
-        public int StatusCode { get; init; } = StatusCode;
-        public MigrationResult Result { get; set; } = null!;
-    }
-
     public static async Task<MigrationDetails> Migrate<T>(T db, ILogger logger) where T : DbContext
     {
         string databaseName;
@@ -49,7 +42,7 @@ public class MigrateHelper
 
             logger.LogInformation("Migrate for database={DatabaseName} finish with result: {@Result}", databaseName, result);
 
-            return new MigrationDetails(Detail: "", StatusCode: StatusCodes.Status200OK) { Result = result };
+            return new MigrationDetails(Detail: "Success.", StatusCode: StatusCodes.Status200OK) { Result = result };
         }
         catch (Exception ex)
         {

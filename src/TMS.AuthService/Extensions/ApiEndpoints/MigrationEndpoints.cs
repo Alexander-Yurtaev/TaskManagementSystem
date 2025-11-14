@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TMS.AuthService.Data;
 using TMS.Common.Helpers;
+using TMS.Common.Models;
 
 namespace TMS.AuthService.Extensions.ApiEndpoints;
 
@@ -14,41 +17,52 @@ public static class MigrationEndpoints
     /// Запуск миграции БД для Сервиса Сервис аутентификации.
     /// </summary>
     /// <param name="endpoints"></param>
+    /// <response code="200">
+    /// > - Message: результат миграции
+    /// > - PendingMigrations: список ожидающих миграций
+    /// > - AppliedMigrations: список всех примененных когда-либо миграций
+    /// </response>
+    /// <response code="500">Ошибка при миграции.</response>
     public static RouteHandlerBuilder AddMigrateEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints.MapGet("/migrate", async (
                 HttpContext context,
                 [FromServices] AuthDataContext db,
                 [FromServices] ILogger<IApplicationBuilder> logger) =>
-        {
-            if (await DatabaseIsExists(db))
             {
-                // если Identity==null или пользователь не авторизован, то выходим
-                if (!context.User.Identity?.IsAuthenticated ?? true)
+                if (await DatabaseIsExists(db))
                 {
-                    return Results.Unauthorized();
+                    // если Identity==null или пользователь не авторизован, то выходим
+                    if (!context.User.Identity?.IsAuthenticated ?? true)
+                    {
+                        return Results.Unauthorized();
+                    }
+
+                    if (!context.User.IsInRole("Admin"))
+                    {
+                        return Results.Forbid();
+                    }
                 }
 
-                if (!context.User.IsInRole("Admin"))
+                var details = await MigrateHelper.Migrate(db, logger);
+                if (details.StatusCode == StatusCodes.Status200OK)
                 {
-                    return Results.Forbid();
+                    return Results.Ok(details.Result);
                 }
-            }
 
-            var details = await MigrateHelper.Migrate(db, logger);
-            if (details.StatusCode == StatusCodes.Status200OK)
+                return Results.Problem(detail: details.Detail, statusCode: details.StatusCode);
+            })
+            .WithName("MigrateDatabase")
+            .WithMetadata(new
             {
-                return Results.Ok(details.Result);
-            }
-
-            return Results.Problem(detail: details.Detail, statusCode: details.StatusCode);
-        })
-        .WithName("migrate")
-        .WithMetadata(new
-        {
-            // Для Swagger/документации
-            Summary = "Запуск миграции БД для Сервиса Сервис аутентификации."
-        });
+                // Для Swagger/документации
+                Summary = "Запуск миграции БД для Сервиса Сервис аутентификации."
+            })
+            .Produces<MigrationResult>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status401Unauthorized)
+            .Produces(StatusCodes.Status500InternalServerError)
+            .WithName("MigrateDatabase");
+            //.WithOpenApi(operation => OpenApiHelper.ConfigureMigrationOperation(operation))
     }
 
     #region Private Methods

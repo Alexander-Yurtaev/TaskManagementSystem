@@ -11,6 +11,14 @@
 	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
+  <PropertyGroup>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>	
+
+  <ItemGroup Label="Common">
+	<PackageReference Include="Swashbuckle.AspNetCore" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\TMS.Common\TMS.Common.csproj" />
   </ItemGroup>

@@ -23,7 +23,7 @@ public static class CreateAttachmentOperations
         return endpoints.MapPost("/tasks/{id}/attachments", async (
             [FromRoute] int id,
             [FromQuery] string fileName,
-            [FromForm] IFormFile file,
+            IFormFile file,
             [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] IMapper mapper,
             [FromServices] IAttachmentRepository repository,
@@ -104,7 +104,7 @@ public static class CreateAttachmentOperations
 
     private static async Task<HttpResponseMessage> SendFileToStorageService(string filePath,
         [FromForm] string fileName,
-        [FromForm] IFormFile file,
+        IFormFile file,
         [FromServices] IHttpClientFactory httpClientFactory)
     {
         HttpClient client = httpClientFactory.CreateClient("TMS.FileStorageClient");

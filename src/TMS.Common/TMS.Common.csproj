@@ -7,6 +7,12 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Protos\**" />
+    <EmbeddedResource Remove="Protos\**" />
+    <None Remove="Protos\**" />
+  </ItemGroup>
+
   <ItemGroup Label="Common">
 	<PackageReference Include="DotNetEnv" />
 	<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
@@ -17,18 +23,6 @@
 
   <ItemGroup Label="EF Core">
 	<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Microsoft.AspNetCore">
-      <HintPath>..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.10\Microsoft.AspNetCore.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Http">
-      <HintPath>..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\9.0.10\Microsoft.Extensions.Http.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Protos\" />
+	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" />
   </ItemGroup>
 </Project>

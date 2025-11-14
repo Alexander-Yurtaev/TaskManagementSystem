@@ -12,9 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup Label="Ocelot">
-	<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
 	<PackageReference Include="Ocelot" />
 	<PackageReference Include="Ocelot.Administration" />
+	<PackageReference Include="Swashbuckle.AspNetCore" />	  
+	<PackageReference Include="MMLib.SwaggerForOcelot" />
   </ItemGroup>
 
   <ItemGroup Label="Jwt">
@@ -22,12 +23,12 @@
   </ItemGroup>
 
   <ItemGroup Label="gRPC">
-	  <PackageReference Include="Google.Protobuf" />
-	  <PackageReference Include="Grpc.Net.ClientFactory" />
-	  <PackageReference Include="Grpc.Tools">
-		  <PrivateAssets>all</PrivateAssets>
-		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	  </PackageReference>
+	<PackageReference Include="Google.Protobuf" />
+	<PackageReference Include="Grpc.Net.ClientFactory" />
+	<PackageReference Include="Grpc.Tools">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
   </ItemGroup>
 
   <ItemGroup>
