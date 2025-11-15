@@ -7,6 +7,8 @@ services:
       - GRPC_SERVER_SCHEMA=https
       - GRPC_SERVER_HOST=tms-auth-service
       - GRPC_SERVER_PORT=8081
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/etc/ssl/certs/tms-gateway.crt
+      - ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/etc/ssl/certs/tms-gateway.key
     ports:
       - "8080"
       - "8081"

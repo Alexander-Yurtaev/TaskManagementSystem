@@ -3,16 +3,31 @@
     // Swagger
     {
       "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/swagger/auth/v1/swagger.json",
+      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-auth-service",
+          "Port": 8081
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": false,
+      "NoLoadBalancer": true,
+      "RouteIsCaseSensitive": false
+    },
+    {
+      "UpstreamHttpMethod": [ "GET" ],
       "UpstreamPathTemplate": "/swagger/{everything}",
       "DownstreamPathTemplate": "/swagger/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "tms-gateway",
           "Port": 8081
         }
       ],
-      "DangerousAcceptAnyServerCertificateValidator": true,
+      "DangerousAcceptAnyServerCertificateValidator": false,
       "NoLoadBalancer": true,
       "RouteIsCaseSensitive": false,
       "QoSOptions": {
@@ -268,7 +283,7 @@
       ],
       "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "tms-notification-service"
-    },
+    }
     // HTML
     //{
     //  "UpstreamHttpMethod": [ "GET" ],
@@ -302,45 +317,45 @@
         {
           "Name": "Auth API",
           "Version": "v1",
-          "Url": "http://tms-auth-service:8080/swagger/v1/swagger.json"
+          "Url": "https://tms-gateway:8081/swagger/auth/v1/swagger.json"
         }
       ]
     },
-    {
-      "Key": "/tms-task-service",
-      "TransformByOcelotConfig": false,
-      "Config": [
-        {
-          "Name": "Task API",
-          "Version": "v1",
-          "Url": "http://tms-task-service:8080/swagger/v1/swagger.json"
-        }
-      ]
-    },
-    {
-      "Key": "/tms-file-storage-service",
-      "TransformByOcelotConfig": false,
-      "Config": [
-        {
-          "Name": "File Storage API",
-          "Version": "v1",
-          "Url": "http://tms-file-storage-service:8080/swagger/v1/swagger.json"
-        }
-      ]
-    },
-    {
-      "Key": "/tms-notification-service",
-      "TransformByOcelotConfig": false,
-      "Config": [
-        {
-          "Name": "Notification API",
-          "Version": "v1",
-          "Url": "http://tms-notification-service:8080/swagger/v1/swagger.json"
-        }
-      ]
-    }
+    //{
+    //  "Key": "/tms-task-service",
+    //  "TransformByOcelotConfig": false,
+    //  "Config": [
+    //    {
+    //      "Name": "Task API",
+    //      "Version": "v1",
+    //      "Url": "http://tms-task-service:8080/swagger/v1/swagger.json"
+    //    }
+    //  ]
+    //},
+    //{
+    //  "Key": "/tms-file-storage-service",
+    //  "TransformByOcelotConfig": false,
+    //  "Config": [
+    //    {
+    //      "Name": "File Storage API",
+    //      "Version": "v1",
+    //      "Url": "http://tms-file-storage-service:8080/swagger/v1/swagger.json"
+    //    }
+    //  ]
+    //},
+    //{
+    //  "Key": "/tms-notification-service",
+    //  "TransformByOcelotConfig": false,
+    //  "Config": [
+    //    {
+    //      "Name": "Notification API",
+    //      "Version": "v1",
+    //      "Url": "http://tms-notification-service:8080/swagger/v1/swagger.json"
+    //    }
+    //  ]
+    //}
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:8081"
+    "BaseUrl": "https://tms-gateway:8081"
   }
 }
