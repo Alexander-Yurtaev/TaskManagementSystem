@@ -3,7 +3,7 @@
     // Swagger
     {
       "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/swagger/auth/v1/swagger.json",
+      "UpstreamPathTemplate": "/swagger/tms-auth-service/v1/swagger.json", // Совпадает с Url в SwaggerEndPoints
       "DownstreamPathTemplate": "/swagger/v1/swagger.json",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -12,9 +12,11 @@
           "Port": 8081
         }
       ],
-      "DangerousAcceptAnyServerCertificateValidator": false,
+      "DangerousAcceptAnyServerCertificateValidator": true,
       "NoLoadBalancer": true,
-      "RouteIsCaseSensitive": false
+      "RouteIsCaseSensitive": false,
+      "RequestIdKey": "Oc-RequestId",
+      "SwaggerKey": "tms-auth-service"
     },
     {
       "UpstreamHttpMethod": [ "GET" ],
@@ -27,18 +29,10 @@
           "Port": 8081
         }
       ],
-      "DangerousAcceptAnyServerCertificateValidator": false,
+      "DangerousAcceptAnyServerCertificateValidator": true,
       "NoLoadBalancer": true,
-      "RouteIsCaseSensitive": false,
-      "QoSOptions": {
-        "ExceptionsAllowedBeforeBreaking": 0
-      }
+      "RouteIsCaseSensitive": false
     },
-
-    // Migrations
-    //    GET /api/auth/migrate
-    //    GET /api/tasks/migrate
-    //    GET /api/notify/migrate
     {
       "UpstreamHttpMethod": [ "GET" ],
       "UpstreamPathTemplate": "/api/auth/migrate",
@@ -54,50 +48,9 @@
       "SwaggerKey": "tms-auth-service"
     },
     {
-      "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/api/tasks/migrate",
-      "DownstreamPathTemplate": "/migrate",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-task-service",
-          "Port": 8081
-        }
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      },
-      "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "tms-task-service"
-    },
-    {
-      "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/api/notify/migrate",
-      "DownstreamPathTemplate": "/migrate",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-notification-service",
-          "Port": 8081
-        }
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      },
-      "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "tms-notification-service"
-    },
-
-    // Authentications
-    //    POST /api/auth/register
-    //    POST /api/auth/login
-    //    GET /api/auth/refresh
-    {
-      "UpstreamHttpMethod": [ "GET", "POST" ],
-      "UpstreamPathTemplate": "/api/auth/{everything}",
-      "DownstreamPathTemplate": "/{everything}",
+      "UpstreamHttpMethod": [ "POST" ],
+      "UpstreamPathTemplate": "/api/auth/login",
+      "DownstreamPathTemplate": "/login",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -108,128 +61,10 @@
       "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "tms-auth-service"
     },
-
-    // Projects
-    //    GET /api/projects
-    //    POST /api/projects
-    //    GET /api/projects/{id}
-    //    PUT /api/tasks/{id}
-    //    DELETE /api/tasks/{id}
     {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "UpstreamPathTemplate": "/api/projects/{everything}",
-      "DownstreamPathTemplate": "/projects/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-task-service",
-          "Port": 8081
-        }
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      },
-      "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "tms-task-service"
-    },
-
-    // Tasks
-    //    GET /api/tasks
-    //    POST /api/tasks
-    //    GET /api/tasks/{id}
-    //    PUT /api/tasks/{id}
-    //    DELETE /api/tasks/{id}
-    {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "UpstreamPathTemplate": "/api/tasks/{everything}",
-      "DownstreamPathTemplate": "/tasks/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-task-service",
-          "Port": 8081
-        }
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      },
-      "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "tms-task-service"
-    },
-
-    // Comments
-    //    POST /api/tasks/{task_id}/comments
-    //    GET /api/comments/{id}
-    //    GET /api/tasks/{task_id}/comments
-    {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "UpstreamPathTemplate": "/api/comments/{everything}",
-      "DownstreamPathTemplate": "/comments/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-task-service",
-          "Port": 8081
-        }
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      },
-      "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "tms-task-service"
-    },
-
-    // Attachments
-    //    GET /api/attachments/{id}
-    {
-      "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/api/attachments/{everything}",
-      "DownstreamPathTemplate": "/attachments/{everything}",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-task-service",
-          "Port": 8081
-        }
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      },
-      "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "tms-task-service"
-    },
-
-    // Attachments
-    //    POST /api/tasks/{task_id}/attachments?fileName=example.txt
-    //    GET /api/tasks/{task_id}/attachments
-    {
-      "UpstreamHttpMethod": [ "GET", "POST" ],
-      "UpstreamPathTemplate": "/api/tasks/{task_id}/attachments",
-      "DownstreamPathTemplate": "/tasks/{task_id}/attachments",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-file-storage-service",
-          "Port": 8081
-        }
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": []
-      },
-      "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "tms-file-storage-service"
-    },
-
-    // Others
-    {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "UpstreamPathTemplate": "/api/users/{everything}",
-      "DownstreamPathTemplate": "/users/{everything}",
+      "UpstreamHttpMethod": [ "POST" ],
+      "UpstreamPathTemplate": "/api/auth/register",
+      "DownstreamPathTemplate": "/register",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -240,7 +75,20 @@
       "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "tms-auth-service"
     },
-
+    {
+      "UpstreamHttpMethod": [ "POST" ],
+      "UpstreamPathTemplate": "/api/auth/refresh",
+      "DownstreamPathTemplate": "/refresh",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-auth-service",
+          "Port": 8081
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "tms-auth-service"
+    },
     // Greetings
     {
       "UpstreamHttpMethod": [ "GET" ],
@@ -311,49 +159,17 @@
   ],
   "SwaggerEndPoints": [
     {
-      "Key": "/tms-auth-service",
-      "TransformByOcelotConfig": false,
+      "Key": "tms-auth-service",
+      "TransformByOcelotConfig": true,
+      "TakeServersFromDownstreamService": false,
       "Config": [
         {
           "Name": "Auth API",
           "Version": "v1",
-          "Url": "https://tms-gateway:8081/swagger/auth/v1/swagger.json"
+          "Url": "https://tms-gateway:8081/swagger/tms-auth-service/v1/swagger.json" // Путь должен совпадать с маршрутом ниже
         }
       ]
-    },
-    //{
-    //  "Key": "/tms-task-service",
-    //  "TransformByOcelotConfig": false,
-    //  "Config": [
-    //    {
-    //      "Name": "Task API",
-    //      "Version": "v1",
-    //      "Url": "http://tms-task-service:8080/swagger/v1/swagger.json"
-    //    }
-    //  ]
-    //},
-    //{
-    //  "Key": "/tms-file-storage-service",
-    //  "TransformByOcelotConfig": false,
-    //  "Config": [
-    //    {
-    //      "Name": "File Storage API",
-    //      "Version": "v1",
-    //      "Url": "http://tms-file-storage-service:8080/swagger/v1/swagger.json"
-    //    }
-    //  ]
-    //},
-    //{
-    //  "Key": "/tms-notification-service",
-    //  "TransformByOcelotConfig": false,
-    //  "Config": [
-    //    {
-    //      "Name": "Notification API",
-    //      "Version": "v1",
-    //      "Url": "http://tms-notification-service:8080/swagger/v1/swagger.json"
-    //    }
-    //  ]
-    //}
+    }
   ],
   "GlobalConfiguration": {
     "BaseUrl": "https://tms-gateway:8081"

@@ -17,6 +17,7 @@
   </PropertyGroup>
 	
   <ItemGroup Label="Swagger">
+	<PackageReference Include="MMLib.SwaggerForOcelot" />
 	<PackageReference Include="Swashbuckle.AspNetCore" />
   </ItemGroup>
 
@@ -31,6 +32,7 @@
   <ItemGroup Label="JWT">
     <PackageReference Include="BCrypt.Net-Core" />
 	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" />
   </ItemGroup>
 
   <ItemGroup>

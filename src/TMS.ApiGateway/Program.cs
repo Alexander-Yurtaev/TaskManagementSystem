@@ -59,9 +59,9 @@ public class Program
 
         // Добавление сервисов
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen(c =>
+        builder.Services.AddSwaggerGen(options =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Auth API", Version = "v1" });
+            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Auth API", Version = "v1" });
         });
 
         // Настройка Ocelot + Swagger

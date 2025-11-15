@@ -32,9 +32,9 @@ namespace TMS.AuthService
             // Add services to the container.
             builder.Services.AddGrpc();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(c =>
+            builder.Services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
+                options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
                     Title = "AuthService API",
@@ -43,7 +43,7 @@ namespace TMS.AuthService
 
                 // Применение схемы безопасности ко всем эндпоинтам
                 // Настройка схемы безопасности
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "JWT токен авторизации (Bearer {token})",
                     Name = "Authorization",
@@ -54,14 +54,14 @@ namespace TMS.AuthService
                 });
 
                 // Для конкретного эндпоинта добавим условную безопасность
-                c.OperationFilter<MigrationSecurityFilter>();
+                options.OperationFilter<MigrationSecurityFilter>();
 
                 // Добавляем фильтр операций здесь
-                c.OperationFilter<AuthMigrationOperationFilter>();
+                options.OperationFilter<AuthMigrationOperationFilter>();
 
                 // Путь к XML-файлу (имя сборки)
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
             builder.Services.AddJwtAuthentication(builder.Configuration);
@@ -80,10 +80,10 @@ namespace TMS.AuthService
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI(c =>
+                app.UseSwaggerUI(options =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth API v1");
-                    c.RoutePrefix = "swagger"; // URL: /swagger
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth API v1");
+                    options.RoutePrefix = "swagger"; // URL: /swagger
                 });
             }
 

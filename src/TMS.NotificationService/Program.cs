@@ -78,10 +78,10 @@ namespace TMS.NotificationService
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI(c =>
+                app.UseSwaggerUI(options =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth API v1");
-                    c.RoutePrefix = "swagger"; // URL: /swagger
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth API v1");
+                    options.RoutePrefix = "swagger"; // URL: /swagger
                 });
             }
 

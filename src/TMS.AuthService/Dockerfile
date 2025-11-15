@@ -12,6 +12,7 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+
 COPY ["Directory.Packages.props", "."]
 COPY ["src/TMS.AuthService/TMS.AuthService.csproj", "src/TMS.AuthService/"]
 COPY ["src/TMS.Common/TMS.Common.csproj", "src/TMS.Common/"]

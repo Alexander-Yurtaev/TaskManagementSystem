@@ -14,6 +14,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Directory.Packages.props", "."]
 COPY ["src/TMS.ApiGateway/TMS.ApiGateway.csproj", "src/TMS.ApiGateway/"]
+COPY ["src/TMS.Contracts/TMS.Contracts.csproj", "src/TMS.Contracts/"]
 RUN dotnet restore "./src/TMS.ApiGateway/TMS.ApiGateway.csproj"
 COPY . .
 WORKDIR "/src/src/TMS.ApiGateway"
@@ -28,4 +29,5 @@ RUN dotnet publish "./TMS.ApiGateway.csproj" -c $BUILD_CONFIGURATION -o /app/pub
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
 ENTRYPOINT ["dotnet", "TMS.ApiGateway.dll"]
