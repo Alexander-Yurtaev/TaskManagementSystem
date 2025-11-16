@@ -3,7 +3,7 @@
     // Swagger
     {
       "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/swagger/tms-auth-service/v1/swagger.json", // Совпадает с Url в SwaggerEndPoints
+      "UpstreamPathTemplate": "/swagger/auth/v1/swagger.json", // Совпадает с Url в SwaggerEndPoints
       "DownstreamPathTemplate": "/swagger/v1/swagger.json",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -16,7 +16,7 @@
       "NoLoadBalancer": true,
       "RouteIsCaseSensitive": false,
       "RequestIdKey": "Oc-RequestId",
-      "SwaggerKey": "tms-auth-service"
+      "SwaggerKey": "auth"
     },
     {
       "UpstreamHttpMethod": [ "GET" ],
@@ -45,7 +45,7 @@
         }
       ],
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "tms-auth-service"
+      "SwaggerKey": "auth"
     },
     {
       "UpstreamHttpMethod": [ "POST" ],
@@ -59,7 +59,7 @@
         }
       ],
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "tms-auth-service"
+      "SwaggerKey": "auth"
     },
     {
       "UpstreamHttpMethod": [ "POST" ],
@@ -73,7 +73,7 @@
         }
       ],
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "tms-auth-service"
+      "SwaggerKey": "auth"
     },
     {
       "UpstreamHttpMethod": [ "POST" ],
@@ -87,7 +87,7 @@
         }
       ],
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "tms-auth-service"
+      "SwaggerKey": "auth"
     },
     // Greetings
     {
@@ -159,14 +159,14 @@
   ],
   "SwaggerEndPoints": [
     {
-      "Key": "tms-auth-service",
+      "Key": "auth",
       "TransformByOcelotConfig": true,
       "TakeServersFromDownstreamService": false,
       "Config": [
         {
           "Name": "Auth API",
           "Version": "v1",
-          "Url": "https://tms-gateway:8081/swagger/tms-auth-service/v1/swagger.json" // Путь должен совпадать с маршрутом ниже
+          "Url": "https://tms-gateway:8081/swagger/auth/v1/swagger.json" // Путь должен совпадать с маршрутом ниже
         }
       ]
     }
