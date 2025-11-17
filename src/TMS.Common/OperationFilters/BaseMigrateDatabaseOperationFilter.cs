@@ -26,10 +26,11 @@ public abstract class BaseMigrateDatabaseOperationFilter : IOperationFilter
         var okResponse = operation.Responses["200"];
         okResponse.Description = "Миграция выполнена. Возвращает информацию о применённых и ожидающих миграциях.";
 
+        var content = okResponse.Content.First(c => c.Key.StartsWith("application/json")).Value;
         var openApiExampleMessage = $"База данных {DatabaseName} успешно обновлена!";
 
         // Пример 1: «Самая первая миграция»
-        okResponse.Content["application/json"].Examples.Add(
+        content.Examples.Add(
             "FirstMigration", new OpenApiExample
             {
                 Summary = "Самая первая миграция",
@@ -48,7 +49,7 @@ public abstract class BaseMigrateDatabaseOperationFilter : IOperationFilter
             });
 
         // Пример 2: «Нет текущих миграций» (pendingMigrations пустой)
-        okResponse.Content["application/json"].Examples.Add(
+        content.Examples.Add(
             "NoPendingMigrations", new OpenApiExample
             {
                 Summary = "Нет текущих миграций",
@@ -65,7 +66,7 @@ public abstract class BaseMigrateDatabaseOperationFilter : IOperationFilter
             });
 
         // Пример 3: «Последующие миграции»
-        okResponse.Content["application/json"].Examples.Add(
+        content.Examples.Add(
             "NextMigrations", new OpenApiExample
             {
                 Summary = "Последующие миграции",
