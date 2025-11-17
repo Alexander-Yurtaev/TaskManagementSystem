@@ -53,11 +53,11 @@ namespace TMS.AuthService
                     BearerFormat = "JWT"
                 });
 
-                // Для конкретного эндпоинта добавим условную безопасность
-                options.OperationFilter<MigrationSecurityFilter>();
-
                 // Добавляем фильтр операций здесь
                 options.OperationFilter<AuthMigrationOperationFilter>();
+
+                // Для конкретного эндпоинта добавим условную безопасность
+                options.OperationFilter<MigrationSecurityFilter>();
 
                 // Путь к XML-файлу (имя сборки)
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
