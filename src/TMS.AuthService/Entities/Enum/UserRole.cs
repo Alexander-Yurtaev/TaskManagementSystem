@@ -8,32 +8,32 @@ namespace TMS.AuthService.Entities.Enum;
 public enum UserRole
 {
     /// <summary>
+    /// Роль для гостей (без регистрации)
+    /// </summary>
+    [Description("Гость")]
+    Guest = 0,
+
+    /// <summary>
     /// Базовая роль для всех пользователей
     /// </summary>
     [Description("Стандартный пользователь")]
-    User = 0,
+    User = 1,
 
     /// <summary>
     /// Роль для администраторов системы
     /// </summary>
     [Description("Администратор системы")]
-    Admin = 1,
+    Admin = 2,
 
     /// <summary>
     /// Роль для модераторов контента
     /// </summary>
     [Description("Модератор")]
-    Moderator = 2,
+    Moderator = 3,
 
     /// <summary>
     /// Роль для супер-администраторов
     /// </summary>
     [Description("Супер-администратор")]
-    SuperAdmin = 3,
-
-    /// <summary>
-    /// Роль для гостей (без регистрации)
-    /// </summary>
-    [Description("Гость")]
-    Guest = 4
+    SuperAdmin = 4
 }

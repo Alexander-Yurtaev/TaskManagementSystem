@@ -3,7 +3,6 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using TMS.AuthService.Data.Extensions;
 using TMS.AuthService.Extensions.ApiEndpoints;
-using TMS.AuthService.Extensions.ApiEndpoints.OperationFilters;
 using TMS.AuthService.Extensions.Services;
 
 namespace TMS.AuthService
@@ -52,12 +51,6 @@ namespace TMS.AuthService
                     Scheme = "Bearer",
                     BearerFormat = "JWT"
                 });
-
-                // Добавляем фильтр операций здесь
-                options.OperationFilter<AuthMigrationOperationFilter>();
-
-                // Для конкретного эндпоинта добавим условную безопасность
-                options.OperationFilter<MigrationSecurityFilter>();
 
                 // Путь к XML-файлу (имя сборки)
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";

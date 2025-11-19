@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TMS.Common.Helpers;
-using TMS.Common.Models;
 using TMS.TaskService.Data;
 
 namespace TMS.TaskService.Extensions.ApiEndpoints;
@@ -35,8 +34,8 @@ public static class MigrationEndpoints
             // Для Swagger/документации
             Summary = "Запуск миграции БД для Сервис для работы с задачами."
         })
-        .Produces<MigrationResult>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status401Unauthorized)
-        .Produces(StatusCodes.Status500InternalServerError);
+        .Produces(StatusCodes.Status500InternalServerError)
+        .WithOpenApi(operation => OpenApiHelper.InitOperationForInitialMigration(operation, "tms-task-db"));
     }
 }

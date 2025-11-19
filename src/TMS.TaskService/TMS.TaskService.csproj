@@ -18,6 +18,10 @@
 
   <ItemGroup Label="Common">
 	<PackageReference Include="AutoMapper" />
+  </ItemGroup>
+
+  <ItemGroup Label="Swagger">
+	<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
 	<PackageReference Include="Swashbuckle.AspNetCore" />
   </ItemGroup>
 

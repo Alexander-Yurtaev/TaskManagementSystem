@@ -34,8 +34,8 @@ public static class MigrationEndpoints
                 // Для Swagger/документации
                 Summary = "Запуск миграции БД для Сервис рассылки сообщений."
             })
-            .Produces<MigrationResult>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
-            .Produces(StatusCodes.Status500InternalServerError);
+            .Produces(StatusCodes.Status500InternalServerError)
+            .WithOpenApi(operation => OpenApiHelper.InitOperationForInitialMigration(operation, "tms-notify-db"));
     }
 }

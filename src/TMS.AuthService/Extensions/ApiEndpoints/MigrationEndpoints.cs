@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using TMS.AuthService.Data;
 using TMS.Common.Helpers;
-using TMS.Common.Models;
 
 namespace TMS.AuthService.Extensions.ApiEndpoints;
 
@@ -51,14 +51,13 @@ public static class MigrationEndpoints
                 return Results.Problem(detail: details.Detail, statusCode: details.StatusCode);
             })
             .WithName("MigrateDatabase")
-            .WithMetadata(new
+            .WithMetadata(new OpenApiOperation
             {
-                // Для Swagger/документации
-                Summary = "Запуск миграции БД для Сервиса Сервис аутентификации."
+                Summary = "Запуск миграции БД для Сервиса аутентификации."
             })
-            .Produces<MigrationResult>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status401Unauthorized)
-            .Produces(StatusCodes.Status500InternalServerError);
+            .Produces(StatusCodes.Status500InternalServerError)
+            .WithOpenApi(operation => OpenApiHelper.InitOperationForInitialMigration(operation, "tms-auth-db"));
     }
 
     #region Private Methods

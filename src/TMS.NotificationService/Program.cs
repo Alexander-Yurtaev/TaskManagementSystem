@@ -4,7 +4,6 @@ using System.Reflection;
 using TMS.Common.Extensions;
 using TMS.NotificationService.Data.Extensions;
 using TMS.NotificationService.Extensions.ApiEndpoints;
-using TMS.NotificationService.Extensions.ApiEndpoints.OperationFilters;
 using TMS.NotificationService.Extensions.Services;
 
 namespace TMS.NotificationService
@@ -41,9 +40,6 @@ namespace TMS.NotificationService
                     Title = "AuthService API",
                     Description = "Minimal API для Сервиса рассылки сообщений."
                 });
-
-                // Добавляем фильтр операций здесь
-                c.OperationFilter<NotifyMigrationOperationFilter>();
 
                 // Путь к XML-файлу (имя сборки)
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";

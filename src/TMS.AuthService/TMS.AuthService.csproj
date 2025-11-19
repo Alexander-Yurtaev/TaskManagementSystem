@@ -17,6 +17,11 @@
   </PropertyGroup>
 	
   <ItemGroup Label="Swagger">
+	<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
 	<PackageReference Include="MMLib.SwaggerForOcelot" />
 	<PackageReference Include="Swashbuckle.AspNetCore" />
   </ItemGroup>

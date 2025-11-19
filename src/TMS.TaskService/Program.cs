@@ -5,7 +5,6 @@ using TMS.TaskService.Data.Extensions;
 using TMS.TaskService.Extensions.ApiEndpoints;
 using TMS.TaskService.Extensions.ApiEndpoints.Attachments;
 using TMS.TaskService.Extensions.ApiEndpoints.Comments;
-using TMS.TaskService.Extensions.ApiEndpoints.OperationFilters;
 using TMS.TaskService.Extensions.ApiEndpoints.Projects;
 using TMS.TaskService.Extensions.ApiEndpoints.Tasks;
 using TMS.TaskService.Extensions.Services;
@@ -56,9 +55,6 @@ namespace TMS.TaskService
                     Title = "AuthService API",
                     Description = "Minimal API для Сервиса работы с задачами."
                 });
-
-                // Добавляем фильтр операций здесь
-                c.OperationFilter<TaskMigrationOperationFilter>();
 
                 // Путь к XML-файлу (имя сборки)
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
