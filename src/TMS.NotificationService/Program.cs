@@ -1,4 +1,5 @@
 using DotNetEnv;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using TMS.Common.Extensions;
@@ -32,18 +33,30 @@ namespace TMS.NotificationService
 
             // Add services to the container.
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(c =>
+            builder.Services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo
+                options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
                     Title = "AuthService API",
                     Description = "Minimal API для Сервиса рассылки сообщений."
                 });
 
+                // Применение схемы безопасности ко всем эндпоинтам
+                // Настройка схемы безопасности
+                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT токен авторизации (Bearer {token})",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT"
+                });
+
                 // Путь к XML-файлу (имя сборки)
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
 
             // Data Context configurations
@@ -60,10 +73,12 @@ namespace TMS.NotificationService
             builder.Services.AddFileService("EmailEvents", service =>
             {
                 service.BasePath = Environment.GetEnvironmentVariable("BASE_EVENTS_PATH")
-                                      ??
-                                      throw new InvalidOperationException("BASE_EVENTS_PATH does not defined.");
+                                   ??
+                                   throw new InvalidOperationException("BASE_EVENTS_PATH does not defined.");
             });
 
+            builder.Services.AddJwtAuthentication(builder.Configuration);
+            builder.Services.AddAuthorization();
             builder.Services.AddRabbitMqConsumerConfiguration();
 
             var app = builder.Build();

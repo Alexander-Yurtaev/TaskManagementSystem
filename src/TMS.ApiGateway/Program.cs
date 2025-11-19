@@ -50,8 +50,11 @@ public class Program
         ILogger logger = factory.CreateLogger<Program>();
 
         builder.Services
-            .AddOcelot(builder.Configuration)
-            .AddAdministration("/administration", options => ConfigJwt(options, builder, jwtIssuer, jwtAudience, jwtKey, logger));
+            .AddOcelot(builder.Configuration);
+
+        builder.Services
+            .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options => ConfigJwt(options, builder, jwtIssuer, jwtAudience, jwtKey, logger));
 
         #endregion Ocelot + JWT
 

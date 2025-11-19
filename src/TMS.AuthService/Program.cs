@@ -4,6 +4,7 @@ using System.Reflection;
 using TMS.AuthService.Data.Extensions;
 using TMS.AuthService.Extensions.ApiEndpoints;
 using TMS.AuthService.Extensions.Services;
+using TMS.Common.Extensions;
 
 namespace TMS.AuthService
 {

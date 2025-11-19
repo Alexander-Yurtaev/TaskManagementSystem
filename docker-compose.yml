@@ -135,6 +135,9 @@ services:
       - POSTGRES_HOST=tms-notify-db
       - RABBITMQ_HOST=${RABBITMQ_HOST}
       - BASE_EVENTS_PATH=${BASE_EVENTS_PATH}
+      - JWT_KEY=${JWT_KEY}
+      - JWT_ISSUER=${JWT_ISSUER}
+      - JWT_AUDIENCE=${JWT_AUDIENCE}
     depends_on:
       - tms.authservice
       - tms.notify-db

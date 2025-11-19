@@ -36,6 +36,6 @@ public static class MigrationEndpoints
             })
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status500InternalServerError)
-            .WithOpenApi(operation => OpenApiHelper.InitOperationForInitialMigration(operation, "tms-notify-db"));
+            .WithOpenApi(operation => OpenApiHelper.InitOperationForMigration(operation, "tms-notify-db"));
     }
 }

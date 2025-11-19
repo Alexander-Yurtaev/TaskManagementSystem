@@ -3,7 +3,7 @@
     // Swagger
     {
       "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/swagger/auth/v1/swagger.json", // Совпадает с Url в SwaggerEndPoints
+      "UpstreamPathTemplate": "/swagger/auth/v1/swagger.json",
       "DownstreamPathTemplate": "/swagger/v1/swagger.json",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -20,6 +20,23 @@
     },
     {
       "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/swagger/notify/v1/swagger.json",
+      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-notification-service",
+          "Port": 8081
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "NoLoadBalancer": true,
+      "RouteIsCaseSensitive": false,
+      "RequestIdKey": "Oc-RequestId",
+      "SwaggerKey": "notify"
+    },
+    {
+      "UpstreamHttpMethod": [ "GET" ],
       "UpstreamPathTemplate": "/swagger/{everything}",
       "DownstreamPathTemplate": "/swagger/{everything}",
       "DownstreamScheme": "https",
@@ -33,6 +50,7 @@
       "NoLoadBalancer": true,
       "RouteIsCaseSensitive": false
     },
+    // Migrate
     {
       "UpstreamHttpMethod": [ "GET" ],
       "UpstreamPathTemplate": "/api/auth/migrate",
@@ -47,6 +65,25 @@
       "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "auth"
     },
+    {
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/api/notify/migrate",
+      "DownstreamPathTemplate": "/migrate",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-notification-service",
+          "Port": 8081
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": ["Admin"]
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "notify"
+    },
+    // Auth
     {
       "UpstreamHttpMethod": [ "POST" ],
       "UpstreamPathTemplate": "/api/auth/login",
@@ -166,10 +203,34 @@
         {
           "Name": "Auth API",
           "Version": "v1",
-          "Url": "https://tms-gateway:8081/swagger/auth/v1/swagger.json" // Путь должен совпадать с маршрутом ниже
+          "Url": "https://tms-gateway:8081/swagger/auth/v1/swagger.json"
         }
       ]
-    }
+    },
+    {
+      "Key": "notify",
+      "TransformByOcelotConfig": true,
+      "TakeServersFromDownstreamService": false,
+      "Config": [
+        {
+          "Name": "Notification API",
+          "Version": "v1",
+          "Url": "https://tms-gateway:8081/swagger/notify/v1/swagger.json"
+        }
+      ]
+    },
+    //{
+    //  "Key": "task",
+    //  "TransformByOcelotConfig": true,
+    //  "TakeServersFromDownstreamService": false,
+    //  "Config": [
+    //    {
+    //      "Name": "Task API",
+    //      "Version": "v1",
+    //      "Url": "https://tms-gateway:8081/swagger/task/v1/swagger.json"
+    //    }
+    //  ]
+    //}
   ],
   "GlobalConfiguration": {
     "BaseUrl": "https://tms-gateway:8081"

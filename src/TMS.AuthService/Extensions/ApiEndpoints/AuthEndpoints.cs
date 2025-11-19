@@ -7,6 +7,7 @@ using TMS.AuthService.Entities;
 using TMS.AuthService.Entities.Enum;
 using TMS.AuthService.Models;
 using TMS.AuthService.Services;
+using TMS.Common.Helpers;
 
 namespace TMS.AuthService.Extensions.ApiEndpoints;
 
@@ -171,7 +172,7 @@ public static class AuthEndpoints
                         }
                     }
                 };
-                EnsureResponseWithExamples(operation, StatusCodes.Status201Created.ToString(), examples);
+                OpenApiHelper.EnsureResponseWithExamples(operation, StatusCodes.Status201Created.ToString(), examples);
 
                 // Добавляем другие возможные ответы
                 operation.Responses["400"] = new OpenApiResponse
@@ -313,7 +314,7 @@ public static class AuthEndpoints
                         }
                     }
                 };
-                EnsureResponseWithExamples(operation, StatusCodes.Status200OK.ToString(), examples);
+                OpenApiHelper.EnsureResponseWithExamples(operation, StatusCodes.Status200OK.ToString(), examples);
 
                 // Добавляем другие возможные ответы
                 operation.Responses["404"] = new OpenApiResponse
@@ -415,7 +416,7 @@ public static class AuthEndpoints
                     }
                 }
             };
-            EnsureResponseWithExamples(operation, StatusCodes.Status200OK.ToString(), examples);
+            OpenApiHelper.EnsureResponseWithExamples(operation, StatusCodes.Status200OK.ToString(), examples);
 
             // Добавляем другие возможные ответы
             operation.Responses["401"] = new OpenApiResponse
@@ -452,42 +453,6 @@ public static class AuthEndpoints
 
         return attribute?.Description ?? value.ToString();
     }
-
-    private static void EnsureResponseWithExamples(
-        OpenApiOperation operation,
-        string statusCode,
-        Dictionary<string, OpenApiExample> examples)
-    {
-        if (!operation.Responses.TryGetValue(statusCode, out var response))
-        {
-            response = new OpenApiResponse
-            {
-                Description = GetDefaultDescription(statusCode),
-                Content = new Dictionary<string, OpenApiMediaType>()
-            };
-            operation.Responses.Add(statusCode, response);
-        }
-
-        response.Content ??= new Dictionary<string, OpenApiMediaType>();
-
-        if (!response.Content.ContainsKey("application/json"))
-        {
-            response.Content["application/json"] = new OpenApiMediaType();
-        }
-
-        response.Content["application/json"].Examples = examples;
-    }
-
-    private static string GetDefaultDescription(string statusCode) => statusCode switch
-    {
-        "200" => "Успешный запрос",
-        "201" => "Успешное создание",
-        "400" => "Неверный запрос",
-        "401" => "Неавторизован",
-        "404" => "Не найдено",
-        "500" => "Внутренняя ошибка сервера",
-        _ => "Ответ"
-    };
 
     #endregion Private Methods
 }

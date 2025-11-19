@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace TMS.AuthService.Extensions.Services;
+namespace TMS.Common.Extensions;
 
-/// <summary>
-///
-/// </summary>
-public static class JwtAuthentication
+public static class JwtAuthenticationExtensions
 {
     /// <summary>
     ///
