@@ -29,6 +29,7 @@ public static class MigrationEndpoints
                 return Results.Problem(detail: details.Detail, statusCode: details.StatusCode);
             })
             .WithName("MigrateDatabase")
+            .RequireAuthorization()
             .WithMetadata(new
             {
                 // Для Swagger/документации
@@ -36,6 +37,11 @@ public static class MigrationEndpoints
             })
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status500InternalServerError)
-            .WithOpenApi(operation => OpenApiHelper.InitOperationForMigration(operation, "tms-notify-db"));
+            .WithOpenApi(operation =>
+             {
+                 operation = OpenApiHelper.InitOperationForMigration(operation, "tms-notify-db", "Notify");
+                 operation = OpenApiHelper.AddSecurityRequirementHelper(operation);
+                 return operation;
+             });
     }
 }

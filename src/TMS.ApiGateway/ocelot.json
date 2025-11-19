@@ -50,7 +50,21 @@
       "NoLoadBalancer": true,
       "RouteIsCaseSensitive": false
     },
-    // Migrate
+    // Ыуегз&Migrate
+    {
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/api/auth/setup",
+      "DownstreamPathTemplate": "/setup",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-auth-service",
+          "Port": 8081
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "auth"
+    },
     {
       "UpstreamHttpMethod": [ "GET" ],
       "UpstreamPathTemplate": "/api/auth/migrate",
@@ -62,6 +76,12 @@
           "Port": 8081
         }
       ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "RouteClaimsRequirement": {
+        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
+      },
       "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "auth"
     },
@@ -77,8 +97,10 @@
         }
       ],
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer",
-        "AllowedScopes": ["Admin"]
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "RouteClaimsRequirement": {
+        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
       },
       "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "notify"

@@ -1,11 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Ocelot.Administration;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
-using System.Text;
 using TMS.ApiGateway.Extensions.Services;
+using TMS.Common.Extensions;
+using TMS.Common.Helpers;
 
 namespace TMS.ApiGateway;
 
@@ -28,20 +27,6 @@ public class Program
             .SetBasePath(builder.Environment.ContentRootPath)
             .AddOcelot(); // single ocelot.json file in read-only mode
 
-        #region Ocelot + JWT
-
-        // Проверка JWT-настроек
-        var jwtKey = builder.Configuration["JWT_KEY"];
-        var jwtIssuer = builder.Configuration["JWT_ISSUER"];
-        var jwtAudience = builder.Configuration["JWT_AUDIENCE"];
-
-        if (string.IsNullOrEmpty(jwtKey) ||
-            string.IsNullOrEmpty(jwtIssuer) ||
-            string.IsNullOrEmpty(jwtAudience))
-        {
-            throw new InvalidOperationException("JWT configuration is missing.");
-        }
-
         // Проверка наличия ocelot.json
         if (!File.Exists(Path.Combine(builder.Environment.ContentRootPath, "ocelot.json")))
             throw new FileNotFoundException("ocelot.json не найден.");
@@ -49,12 +34,28 @@ public class Program
         using var factory = LoggerFactory.Create(b => b.AddConsole());
         ILogger logger = factory.CreateLogger<Program>();
 
+        #region Ocelot + JWT
+
+        // Проверка JWT-настроек
+        var jwtKey = builder.Configuration["JWT_KEY"];
+        var jwtIssuer = builder.Configuration["JWT_ISSUER"];
+        var jwtAudience = builder.Configuration["JWT_AUDIENCE"];
+        var authority = builder.Configuration["AuthService:Authority"];
+
+        if (string.IsNullOrEmpty(jwtKey) ||
+            string.IsNullOrEmpty(jwtIssuer) ||
+            string.IsNullOrEmpty(jwtAudience) ||
+            string.IsNullOrEmpty(authority))
+        {
+            throw new InvalidOperationException("JWT configuration is missing.");
+        }
+
         builder.Services
             .AddOcelot(builder.Configuration);
 
         builder.Services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options => ConfigJwt(options, builder, jwtIssuer, jwtAudience, jwtKey, logger));
+            .AddJwtBearer(options => JwtAuthenticationExtensions.ConfigJwt(options, builder, jwtIssuer, jwtAudience, jwtKey, logger));
 
         #endregion Ocelot + JWT
 
@@ -62,10 +63,7 @@ public class Program
 
         // Добавление сервисов
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen(options =>
-        {
-            options.SwaggerDoc("v1", new OpenApiInfo { Title = "Auth API", Version = "v1" });
-        });
+        builder.Services.AddSwaggerGen(options => OpenApiHelper.AddSwaggerGenHelper(options));
 
         // Настройка Ocelot + Swagger
         builder.Services.AddSwaggerForOcelot(builder.Configuration);
@@ -103,37 +101,4 @@ public class Program
 
         await app.RunAsync();
     }
-
-    #region Private Methods
-
-    private static void ConfigJwt(JwtBearerOptions options,
-        WebApplicationBuilder builder,
-        string jwtIssuer,
-        string jwtAudience,
-        string jwtKey,
-        ILogger logger)
-    {
-        options.Authority = builder.Configuration["AuthService:Authority"];
-        options.RequireHttpsMetadata = true;
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = jwtIssuer,
-            ValidAudience = jwtAudience,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
-        };
-        options.Events = new JwtBearerEvents
-        {
-            OnAuthenticationFailed = context =>
-            {
-                logger.LogError("Authentication failed: {ex}", context.Exception);
-                return Task.CompletedTask;
-            }
-        };
-    }
-
-    #endregion Private Methods
 }

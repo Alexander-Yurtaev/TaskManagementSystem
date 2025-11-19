@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 
@@ -6,31 +7,51 @@ namespace TMS.Common.Helpers;
 
 public static class OpenApiHelper
 {
-    public static OpenApiOperation InitOperationForInitialMigration(OpenApiOperation operation, string dbName)
+    public static void AddSwaggerGenHelper(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions options, Action? after = null)
+    {
+        options.SwaggerDoc("v1", new OpenApiInfo { Title = "Auth API", Version = "v1" });
+
+        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        {
+            Description = "JWT токен авторизации (Bearer {token})",
+            Name = "Authorization",
+            In = ParameterLocation.Header,
+            Type = SecuritySchemeType.Http,
+            Scheme = "bearer",
+            BearerFormat = "JWT"
+        });
+
+        after?.Invoke();
+    }
+
+    public static OpenApiOperation InitOperationForSetup(OpenApiOperation operation, string dbName, string tag)
     {
         operation = BaseInitOperationForMigration(operation, dbName);
 
-        operation.Tags = new List<OpenApiTag>
-        {
-            new OpenApiTag { Name = "Auth" }
-        };
+        AddTag(operation, tag);
 
         operation.Description = """
                 ### Условия доступа
-                * **Без авторизации** — если БД не создана (нет ни одной миграции)
-                * **Требуется роль Admin** — если БД существует (есть хотя бы одна миграция)
+                * **Без авторизации**
 
                 ### Описание
-                Эндпоинт для выполнения миграций базы данных. При первом запуске миграции могут быть выполнены без авторизации. 
-                После создания БД требуется наличие роли Admin для выполнения дальнейших миграций.
+                Эндпоинт для выполнения настройки базы данных. Если БД уже создана, то выполнение будет прервано.
                 """;
+
+        // Добавляем другие возможные ответы
+        operation.Responses["400"] = new OpenApiResponse
+        {
+            Description = "Система уже настроена."
+        };
 
         return operation;
     }
 
-    public static OpenApiOperation InitOperationForMigration(OpenApiOperation operation, string dbName)
+    public static OpenApiOperation InitOperationForMigration(OpenApiOperation operation, string dbName, string tag)
     {
         operation = BaseInitOperationForMigration(operation, dbName);
+
+        AddTag(operation, tag);
 
         operation.Description = """
                 ### Условия доступа
@@ -39,6 +60,12 @@ public static class OpenApiHelper
                 ### Описание
                 Эндпоинт для выполнения миграций базы данных. Требуется наличие роли Admin для выполнения миграций.
                 """;
+
+        // Добавляем другие возможные ответы
+        operation.Responses["401"] = new OpenApiResponse
+        {
+            Description = "Неверный или просроченный refresh токен"
+        };
 
         return operation;
     }
@@ -68,37 +95,21 @@ public static class OpenApiHelper
         response.Content["application/json"].Examples = examples;
     }
 
-    public static List<OpenApiSecurityRequirement> GetSecurity(List<string> scopes)
+    public static OpenApiOperation AddSecurityRequirementHelper(OpenApiOperation operation)
     {
-        var security = new List<OpenApiSecurityRequirement>
-                {
-                    new OpenApiSecurityRequirement
-                    {
-                        {
-                            new OpenApiSecurityScheme
-                            {
-                                Reference = new OpenApiReference
-                                {
-                                    Type = ReferenceType.SecurityScheme,
-                                    Id = "Bearer"
-                                },
-                                Scheme = "bearer",
-                                In = ParameterLocation.Header
-                            },
-                            scopes
-                        }
-                    }
-                };
-        return security;
+        var securities = GetSecurity();
+        foreach (var security in securities)
+        {
+            operation.Security.Add(security);
+        }
+
+        return operation;
     }
 
     #region Private Methods
 
     private static OpenApiOperation BaseInitOperationForMigration(OpenApiOperation operation, string dbName)
     {
-        // Настраиваем схему безопасности
-        operation.Security = GetSecurity([ "Admin" ]);
-
         var openApiExampleMessage = $"База данных {dbName} успешно обновлена!";
 
         operation.Summary = "Запуск миграции БД для Сервиса аутентификации.";
@@ -157,12 +168,6 @@ public static class OpenApiHelper
 
         EnsureResponseWithExamples(operation, StatusCodes.Status200OK.ToString(), examples);
 
-        // Добавляем другие возможные ответы
-        operation.Responses["401"] = new OpenApiResponse
-        {
-            Description = "Неверный или просроченный refresh токен"
-        };
-
         operation.Responses["500"] = new OpenApiResponse
         {
             Description = "Внутренняя ошибка сервера"
@@ -181,6 +186,38 @@ public static class OpenApiHelper
         "500" => "Внутренняя ошибка сервера",
         _ => "Ответ"
     };
+
+    private static void AddTag(OpenApiOperation operation, string tag)
+    {
+        operation.Tags = new List<OpenApiTag>
+        {
+            new OpenApiTag { Name = tag }
+        };
+    }
+
+    private static List<OpenApiSecurityRequirement> GetSecurity()
+    {
+        var security = new List<OpenApiSecurityRequirement>
+                {
+                    new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Type = ReferenceType.SecurityScheme,
+                                    Id = "Bearer"
+                                },
+                                Scheme = "bearer",
+                                In = ParameterLocation.Header
+                            },
+                            Array.Empty<string>()
+                        }
+                    }
+                };
+        return security;
+    }
 
     #endregion Private Methods
 }

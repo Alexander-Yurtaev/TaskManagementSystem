@@ -23,41 +23,52 @@ public static class MigrationEndpoints
     /// <response code="500">Ошибка при миграции.</response>
     public static RouteHandlerBuilder AddMigrateEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapGet("/migrate", async (
+        endpoints.MapGet("/setup", async (
                 HttpContext context,
                 [FromServices] AuthDataContext db,
                 [FromServices] ILogger<IApplicationBuilder> logger) =>
             {
                 if (await DatabaseIsExists(db))
                 {
-                    // если Identity==null или пользователь не авторизован, то выходим
-                    if (!context.User.Identity?.IsAuthenticated ?? true)
-                    {
-                        return Results.Unauthorized();
-                    }
-
-                    if (!context.User.IsInRole("Admin"))
-                    {
-                        return Results.Forbid();
-                    }
+                    return Results.BadRequest("Система уже настроена.");
                 }
 
-                var details = await MigrateHelper.Migrate(db, logger);
-                if (details.StatusCode == StatusCodes.Status200OK)
-                {
-                    return Results.Ok(details.Result);
-                }
-
-                return Results.Problem(detail: details.Detail, statusCode: details.StatusCode);
+                return await Migrate(db, logger);
             })
+            .WithName("SetupDatabase")
+            .WithMetadata(new OpenApiOperation
+            {
+                Summary = "Запуск начальной настройки БД."
+            })
+            .Produces<string>(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status500InternalServerError)
+            .WithOpenApi(operation =>
+            {
+                operation = OpenApiHelper.InitOperationForSetup(operation, "tms-auth-db", "Auth");
+                return operation;
+            });
+
+        return endpoints.MapGet("/migrate", async (
+                HttpContext context,
+                [FromServices] AuthDataContext db,
+                [FromServices] ILogger<IApplicationBuilder> logger) =>
+        {
+            return await Migrate(db, logger);
+        })
             .WithName("MigrateDatabase")
             .WithMetadata(new OpenApiOperation
             {
                 Summary = "Запуск миграции БД для Сервиса аутентификации."
             })
+            .RequireAuthorization()
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status500InternalServerError)
-            .WithOpenApi(operation => OpenApiHelper.InitOperationForInitialMigration(operation, "tms-auth-db"));
+            .WithOpenApi(operation =>
+            {
+                operation = OpenApiHelper.InitOperationForMigration(operation, "tms-auth-db", "Auth");
+                operation = OpenApiHelper.AddSecurityRequirementHelper(operation);
+                return operation;
+            });
     }
 
     #region Private Methods
@@ -73,6 +84,17 @@ public static class MigrationEndpoints
         {
             return false;
         }
+    }
+
+    private static async Task<IResult> Migrate(AuthDataContext db, ILogger<IApplicationBuilder> logger)
+    {
+        var details = await MigrateHelper.Migrate(db, logger);
+        if (details.StatusCode == StatusCodes.Status200OK)
+        {
+            return Results.Ok(details.Result);
+        }
+
+        return Results.Problem(detail: details.Detail, statusCode: details.StatusCode);
     }
 
     #endregion Private Methods

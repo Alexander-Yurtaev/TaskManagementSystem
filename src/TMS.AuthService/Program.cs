@@ -1,10 +1,12 @@
 using DotNetEnv;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using TMS.AuthService.Data.Extensions;
 using TMS.AuthService.Extensions.ApiEndpoints;
 using TMS.AuthService.Extensions.Services;
 using TMS.Common.Extensions;
+using TMS.Common.Helpers;
 
 namespace TMS.AuthService
 {
@@ -21,6 +23,9 @@ namespace TMS.AuthService
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            using var factory = LoggerFactory.Create(b => b.AddConsole());
+            ILogger logger = factory.CreateLogger<Program>();
+
             // автоматически ищет .env в текущей директории
             Env.Load();
 
@@ -29,36 +34,26 @@ namespace TMS.AuthService
             // Проверка обязательных настроек перед регистрацией сервисов
             ValidateConfiguration(builder.Configuration);
 
+            // Проверка JWT-настроек
+            var jwtKey = builder.Configuration["JWT_KEY"]!;
+            var jwtIssuer = builder.Configuration["JWT_ISSUER"]!;
+            var jwtAudience = builder.Configuration["JWT_AUDIENCE"]!;
+
+            builder.Services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => JwtAuthenticationExtensions.ConfigJwt(options, builder, jwtIssuer, jwtAudience, jwtKey, logger));
+
             // Add services to the container.
             builder.Services.AddGrpc();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(options =>
+            builder.Services.AddSwaggerGen(options => OpenApiHelper.AddSwaggerGenHelper(options, () =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Version = "v1",
-                    Title = "AuthService API",
-                    Description = "Minimal API для Сервиса аутентификации."
-                });
-
-                // Применение схемы безопасности ко всем эндпоинтам
-                // Настройка схемы безопасности
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = "JWT токен авторизации (Bearer {token})",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
-                    BearerFormat = "JWT"
-                });
-
                 // Путь к XML-файлу (имя сборки)
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-            });
+            }));
 
-            builder.Services.AddJwtAuthentication(builder.Configuration);
+            //builder.Services.AddJwtAuthentication(builder.Configuration);
             builder.Services.AddAuthorization();
             builder.Services.AddAuthDataContext();
             builder.Services.AddAuthServices();
@@ -66,7 +61,7 @@ namespace TMS.AuthService
 
             var app = builder.Build();
 
-            var logger = app.Services.GetRequiredService<ILogger<Program>>();
+            logger = app.Services.GetRequiredService<ILogger<Program>>();
             logger.LogInformation("Приложение успешно построено. Начинается настройка.");
 
             // Настройка middleware
@@ -105,8 +100,18 @@ namespace TMS.AuthService
         /// <exception cref="ConfigurationException">Если обязательные настройки отсутствуют.</exception>
         private static void ValidateConfiguration(IConfiguration configuration)
         {
-            if (string.IsNullOrEmpty(configuration["JWT_KEY"]))
-                throw new ConfigurationException("Обязательный параметр JWT_KEY не задан в конфигурации.");
+            var jwtKey = configuration["JWT_KEY"];
+            var jwtIssuer = configuration["JWT_ISSUER"];
+            var jwtAudience = configuration["JWT_AUDIENCE"];
+            var authority = configuration["AuthService:Authority"];
+
+            if (string.IsNullOrEmpty(jwtKey) ||
+                string.IsNullOrEmpty(jwtIssuer) ||
+                string.IsNullOrEmpty(jwtAudience) ||
+                string.IsNullOrEmpty(authority))
+            {
+                throw new InvalidOperationException("JWT configuration is missing.");
+            }
         }
     }
 }

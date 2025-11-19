@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -40,5 +42,34 @@ public static class JwtAuthenticationExtensions
                     )
                 };
             });
+    }
+
+    public static void ConfigJwt(JwtBearerOptions options,
+        WebApplicationBuilder builder,
+        string jwtIssuer,
+        string jwtAudience,
+        string jwtKey,
+        ILogger logger)
+    {
+        options.Authority = builder.Configuration["AuthService:Authority"];
+        options.RequireHttpsMetadata = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtIssuer,
+            ValidAudience = jwtAudience,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+        };
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                logger.LogError("Authentication failed: {ex}", context.Exception);
+                return Task.CompletedTask;
+            }
+        };
     }
 }
