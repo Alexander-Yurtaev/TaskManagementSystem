@@ -45,13 +45,22 @@ public static class JwtAuthenticationExtensions
     }
 
     public static void ConfigJwt(JwtBearerOptions options,
-        WebApplicationBuilder builder,
-        string jwtIssuer,
-        string jwtAudience,
-        string jwtKey,
-        ILogger logger)
+        WebApplicationBuilder builder)
     {
-        options.Authority = builder.Configuration["AuthService:Authority"];
+        var jwtKey = builder.Configuration["JWT_KEY"];
+        var jwtIssuer = builder.Configuration["JWT_ISSUER"];
+        var jwtAudience = builder.Configuration["JWT_AUDIENCE"];
+        var authority = builder.Configuration["AuthService:Authority"];
+
+        if (string.IsNullOrEmpty(jwtKey) ||
+            string.IsNullOrEmpty(jwtIssuer) ||
+            string.IsNullOrEmpty(jwtAudience) ||
+            string.IsNullOrEmpty(authority))
+        {
+            throw new Exception("JWT configuration is not properly set up");
+        }
+
+        options.Authority = authority;
         options.RequireHttpsMetadata = true;
         options.TokenValidationParameters = new TokenValidationParameters
         {
@@ -62,14 +71,6 @@ public static class JwtAuthenticationExtensions
             ValidIssuer = jwtIssuer,
             ValidAudience = jwtAudience,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
-        };
-        options.Events = new JwtBearerEvents
-        {
-            OnAuthenticationFailed = context =>
-            {
-                logger.LogError("Authentication failed: {ex}", context.Exception);
-                return Task.CompletedTask;
-            }
         };
     }
 }

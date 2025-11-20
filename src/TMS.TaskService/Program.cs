@@ -1,6 +1,10 @@
 using DotNetEnv;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
+using TMS.Common.Extensions;
+using TMS.Common.Helpers;
 using TMS.TaskService.Data.Extensions;
 using TMS.TaskService.Extensions.ApiEndpoints;
 using TMS.TaskService.Extensions.ApiEndpoints.Attachments;
@@ -24,15 +28,29 @@ namespace TMS.TaskService
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            using var factory = LoggerFactory.Create(b => b.AddConsole());
+            ILogger logger = factory.CreateLogger<Program>();
+
             // автоматически ищет .env в текущей директории
             Env.Load();
 
             builder.Configuration.AddEnvironmentVariables();
 
-            using var factory = LoggerFactory.Create(b => b.AddConsole());
-            ILogger logger = factory.CreateLogger<Program>();
+            // Проверка обязательных настроек перед регистрацией сервисов
+            JwtHelper.ValidateConfiguration(builder.Configuration);
 
-            builder.Services.AddJwtConfiguration(builder.Environment.ContentRootPath, builder.Configuration, logger);
+            builder.Services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => JwtAuthenticationExtensions.ConfigJwt(options, builder));
+
+            // Add services to the container.
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen(options => OpenApiHelper.AddSwaggerGenHelper(options, () =>
+            {
+                // Путь к XML-файлу (имя сборки)
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+            }));
 
             // Регистрация AutoMapper
             builder.Services.AddAutoMapper(_ => { }, AppDomain.CurrentDomain.GetAssemblies());
@@ -44,22 +62,6 @@ namespace TMS.TaskService
             builder.Services.AddRabbitMqServiceConfiguration();
 
             builder.Services.AddFileStorageClient();
-
-            // Add services to the container.
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Version = "v1",
-                    Title = "AuthService API",
-                    Description = "Minimal API для Сервиса работы с задачами."
-                });
-
-                // Путь к XML-файлу (имя сборки)
-                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-            });
 
             // Data Context configurations
             try
@@ -82,6 +84,8 @@ namespace TMS.TaskService
                 throw;
             }
 
+            builder.Services.AddAuthorization();
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -103,6 +107,8 @@ namespace TMS.TaskService
             app.AddAttachmentsOperations();
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             logger.LogInformation("Приложение успешно запущено.");
 

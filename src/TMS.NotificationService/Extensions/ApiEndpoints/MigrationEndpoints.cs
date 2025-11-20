@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TMS.Common.Helpers;
-using TMS.Common.Models;
 using TMS.NotificationService.Data;
 
 namespace TMS.NotificationService.Extensions.ApiEndpoints;

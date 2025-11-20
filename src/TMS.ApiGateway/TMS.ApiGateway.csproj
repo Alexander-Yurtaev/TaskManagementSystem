@@ -41,4 +41,10 @@
     <Protobuf Include="..\TMS.Contracts\Protos\token.proto" GrpcServices="Client" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="ocelot.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

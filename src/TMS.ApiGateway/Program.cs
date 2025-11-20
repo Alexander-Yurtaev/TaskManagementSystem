@@ -36,26 +36,12 @@ public class Program
 
         #region Ocelot + JWT
 
-        // Проверка JWT-настроек
-        var jwtKey = builder.Configuration["JWT_KEY"];
-        var jwtIssuer = builder.Configuration["JWT_ISSUER"];
-        var jwtAudience = builder.Configuration["JWT_AUDIENCE"];
-        var authority = builder.Configuration["AuthService:Authority"];
-
-        if (string.IsNullOrEmpty(jwtKey) ||
-            string.IsNullOrEmpty(jwtIssuer) ||
-            string.IsNullOrEmpty(jwtAudience) ||
-            string.IsNullOrEmpty(authority))
-        {
-            throw new InvalidOperationException("JWT configuration is missing.");
-        }
-
         builder.Services
             .AddOcelot(builder.Configuration);
 
         builder.Services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options => JwtAuthenticationExtensions.ConfigJwt(options, builder, jwtIssuer, jwtAudience, jwtKey, logger));
+            .AddJwtBearer(options => JwtAuthenticationExtensions.ConfigJwt(options, builder));
 
         #endregion Ocelot + JWT
 

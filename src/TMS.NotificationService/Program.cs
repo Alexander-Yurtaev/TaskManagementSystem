@@ -1,8 +1,8 @@
 using DotNetEnv;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using TMS.Common.Extensions;
+using TMS.Common.Helpers;
 using TMS.NotificationService.Data.Extensions;
 using TMS.NotificationService.Extensions.ApiEndpoints;
 using TMS.NotificationService.Extensions.Services;
@@ -33,31 +33,12 @@ namespace TMS.NotificationService
 
             // Add services to the container.
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(options =>
+            builder.Services.AddSwaggerGen(options => OpenApiHelper.AddSwaggerGenHelper(options, () =>
             {
-                options.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Version = "v1",
-                    Title = "AuthService API",
-                    Description = "Minimal API для Сервиса рассылки сообщений."
-                });
-
-                // Применение схемы безопасности ко всем эндпоинтам
-                // Настройка схемы безопасности
-                options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                    Description = "JWT токен авторизации (Bearer {token})",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer",
-                    BearerFormat = "JWT"
-                });
-
                 // Путь к XML-файлу (имя сборки)
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-            });
+            }));
 
             // Data Context configurations
             try

@@ -37,6 +37,23 @@
     },
     {
       "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/swagger/task/v1/swagger.json",
+      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-task-service",
+          "Port": 8081
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "NoLoadBalancer": true,
+      "RouteIsCaseSensitive": false,
+      "RequestIdKey": "Oc-RequestId",
+      "SwaggerKey": "task"
+    },
+    {
+      "UpstreamHttpMethod": [ "GET" ],
       "UpstreamPathTemplate": "/swagger/{everything}",
       "DownstreamPathTemplate": "/swagger/{everything}",
       "DownstreamScheme": "https",
@@ -50,7 +67,7 @@
       "NoLoadBalancer": true,
       "RouteIsCaseSensitive": false
     },
-    // Ыуегз&Migrate
+    // Setup&Migrate
     {
       "UpstreamHttpMethod": [ "GET" ],
       "UpstreamPathTemplate": "/api/auth/setup",
@@ -104,6 +121,26 @@
       },
       "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "notify"
+    },
+    {
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/api/task/migrate",
+      "DownstreamPathTemplate": "/migrate",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-task-service",
+          "Port": 8081
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "RouteClaimsRequirement": {
+        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "task"
     },
     // Auth
     {
@@ -241,18 +278,18 @@
         }
       ]
     },
-    //{
-    //  "Key": "task",
-    //  "TransformByOcelotConfig": true,
-    //  "TakeServersFromDownstreamService": false,
-    //  "Config": [
-    //    {
-    //      "Name": "Task API",
-    //      "Version": "v1",
-    //      "Url": "https://tms-gateway:8081/swagger/task/v1/swagger.json"
-    //    }
-    //  ]
-    //}
+    {
+      "Key": "task",
+      "TransformByOcelotConfig": true,
+      "TakeServersFromDownstreamService": false,
+      "Config": [
+        {
+          "Name": "Task API",
+          "Version": "v1",
+          "Url": "https://tms-gateway:8081/swagger/task/v1/swagger.json"
+        }
+      ]
+    }
   ],
   "GlobalConfiguration": {
     "BaseUrl": "https://tms-gateway:8081"
