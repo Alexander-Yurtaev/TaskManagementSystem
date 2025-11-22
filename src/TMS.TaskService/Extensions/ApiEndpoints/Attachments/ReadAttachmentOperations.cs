@@ -242,7 +242,7 @@ public static class ReadAttachmentOperations
             {
                 operation.Summary = "Получение всех вложений, прикрепленных к указанной задаче.";
                 operation.Description = "Возвращает список всех вложений, связанных с указанной задачей.";
-                OpenApiHelper.AddTag(operation, "Task");
+                OpenApiHelper.AddTag(operation, "Attachment");
 
                 // Добавляем параметры
                 operation.Parameters = new List<OpenApiParameter>
