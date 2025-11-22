@@ -182,6 +182,26 @@
       "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "tasks"
     },
+    {
+      "UpstreamHttpMethod": [ "GET", "POST" ],
+      "UpstreamPathTemplate": "/api/projects/{everything}",
+      "DownstreamPathTemplate": "/projects/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-task-service",
+          "Port": 8081
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "RouteClaimsRequirement": {
+        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "tasks"
+    },
     // Auth
     {
       "UpstreamHttpMethod": [ "POST" ],
