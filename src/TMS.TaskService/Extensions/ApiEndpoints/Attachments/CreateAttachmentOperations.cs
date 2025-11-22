@@ -98,15 +98,11 @@ public static class CreateAttachmentOperations
             }
             catch (Exception ex)
             {
-                return ResultHelper.CreateProblemResult(
-                    detail: "Internal server error",
-                    statusCode: StatusCodes.Status500InternalServerError,
-                    logger,
-                    ex);
+                return ResultHelper.CreateInternalServerErrorProblemResult(logger, ex);
             }
         })
         .DisableAntiforgery()
-        .WithName("Attachments")
+        .WithName("AddAttachment")
         .RequireAuthorization()
         .WithMetadata(new
         {
@@ -121,7 +117,7 @@ public static class CreateAttachmentOperations
         {
             operation.Summary = "Добавление файла как вложения к указанной задаче.";
             operation.Description = "Загружает файл и прикрепляет его к задаче с указанным идентификатором.";
-            OpenApiHelper.AddTag(operation, "Task");
+            OpenApiHelper.AddTag(operation, "Attachment");
 
             // Добавляем параметры
             operation.Parameters = new List<OpenApiParameter>

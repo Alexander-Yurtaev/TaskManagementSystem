@@ -53,10 +53,7 @@ public static class ReadAttachmentOperations
                     $"GET /attachments/{id}"
                 );
 
-                return Results.Problem(
-                    detail: ex.Message,
-                    statusCode: StatusCodes.Status500InternalServerError
-                );
+                return ResultHelper.CreateInternalServerErrorProblemResult(logger, ex);
             }
         })
             .WithName("GetAttachmentById")
@@ -223,10 +220,7 @@ public static class ReadAttachmentOperations
                     $"GET /tasks/{id}/attachments"
                 );
 
-                return Results.Problem(
-                    detail: ex.Message,
-                    statusCode: StatusCodes.Status500InternalServerError
-                );
+                return ResultHelper.CreateInternalServerErrorProblemResult(logger, ex);
             }
         })
             .WithName("GetAttachmentsByTaskId")

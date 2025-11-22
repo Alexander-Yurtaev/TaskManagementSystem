@@ -10,4 +10,9 @@ public static class ResultHelper
         logger.LogError(ex, "Operation failed: {Detail}", detail);
         return Results.Problem(detail: "Internal server error", statusCode: statusCode);
     }
+
+    public static IResult CreateInternalServerErrorProblemResult(ILogger logger, Exception? ex = null)
+    {
+        return CreateProblemResult("Internal server error", StatusCodes.Status500InternalServerError, logger, ex);
+    }
 }

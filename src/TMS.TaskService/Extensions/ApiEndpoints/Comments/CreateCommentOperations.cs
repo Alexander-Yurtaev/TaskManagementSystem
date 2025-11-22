@@ -71,13 +71,10 @@ public static class CreateCommentOperations
                         StringHelper.GetStringForLogger(comment.Text)
                     );
 
-                    return ResultHelper.CreateProblemResult(
-                            detail: ex.Message,
-                            statusCode: StatusCodes.Status500InternalServerError,
-                            logger);
+                    return ResultHelper.CreateInternalServerErrorProblemResult(logger, ex);
                 }
             })
-            .WithName("Comments")
+            .WithName("AddComment")
             .RequireAuthorization()
             .WithMetadata(new
             {
@@ -91,7 +88,7 @@ public static class CreateCommentOperations
             {
                 operation.Summary = "Создание нового комментария, прикрепленного к указанной задаче.";
                 operation.Description = "Создает новый комментарий и прикрепляет его к задаче с указанным идентификатором.";
-                OpenApiHelper.AddTag(operation, "Task");
+                OpenApiHelper.AddTag(operation, "Comment");
 
                 // Добавляем параметры
                 operation.Parameters = new List<OpenApiParameter>
