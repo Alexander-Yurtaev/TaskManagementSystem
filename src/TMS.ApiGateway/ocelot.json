@@ -142,6 +142,7 @@
       "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "task"
     },
+      "UpstreamPathTemplate": "/api/attachments/{everything}",
     // Auth
     {
       "UpstreamHttpMethod": [ "POST" ],
