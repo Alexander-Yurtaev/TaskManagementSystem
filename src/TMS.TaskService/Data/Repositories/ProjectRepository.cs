@@ -64,6 +64,19 @@ public class ProjectRepository(TaskDataContext db) : IProjectRepository
     }
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    public async Task<IEnumerable<ProjectEntity>> GetProjectsByUserIdAsync(int userId)
+    {
+        return await _db.Projects
+            .Where(p => p.UserId == userId || p.Tasks.Any(t => t.AssigneeId == userId))
+            .AsNoTracking()
+            .ToArrayAsync();
+    }
+
+    /// <summary>
     ///
     /// </summary>
     /// <param name="project"></param>

@@ -10,9 +10,9 @@ public interface IProjectRepository
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="task"></param>
+    /// <param name="project"></param>
     /// <returns></returns>
-    Task AddAsync(ProjectEntity task);
+    Task AddAsync(ProjectEntity project);
 
     /// <summary>
     /// 
@@ -37,9 +37,16 @@ public interface IProjectRepository
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="task"></param>
+    /// <param name="userId"></param>
     /// <returns></returns>
-    Task<ProjectEntity> UpdateAsync(ProjectEntity task);
+    Task<IEnumerable<ProjectEntity>> GetProjectsByUserIdAsync(int userId);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="project"></param>
+    /// <returns></returns>
+    Task<ProjectEntity> UpdateAsync(ProjectEntity project);
 
     /// <summary>
     /// 
