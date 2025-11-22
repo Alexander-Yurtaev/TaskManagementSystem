@@ -34,7 +34,7 @@ public static class CreateAttachmentOperations
             IFormFile file,
             [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] IMapper mapper,
-            ITaskRepository taskRepository,
+            [FromServices] ITaskRepository taskRepository,
             [FromServices] IAttachmentRepository attachmentRepository,
             [FromServices] IHttpClientFactory httpClientFactory) =>
         {
