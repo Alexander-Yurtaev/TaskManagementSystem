@@ -49,7 +49,7 @@ public class Program
 
         // Добавление сервисов
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen(options => OpenApiHelper.AddSwaggerGenHelper(options));
+        builder.Services.AddSwaggerGen(options => OpenApiHelper.AddSwaggerGenHelper(options, "TMS API", "v1"));
 
         // Настройка Ocelot + Swagger
         builder.Services.AddSwaggerForOcelot(builder.Configuration);

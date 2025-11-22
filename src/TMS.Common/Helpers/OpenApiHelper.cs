@@ -7,9 +7,12 @@ namespace TMS.Common.Helpers;
 
 public static class OpenApiHelper
 {
-    public static void AddSwaggerGenHelper(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions options, Action? after = null)
+    public static void AddSwaggerGenHelper(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions options,
+        string title,
+        string version,
+        Action? after = null)
     {
-        options.SwaggerDoc("v1", new OpenApiInfo { Title = "Auth API", Version = "v1" });
+        options.SwaggerDoc(version, new OpenApiInfo { Title = title, Version = version });
 
         options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
         {
@@ -62,10 +65,10 @@ public static class OpenApiHelper
                 """;
 
         // Добавляем другие возможные ответы
-        operation.Responses["401"] = new OpenApiResponse
-        {
-            Description = "Неверный или просроченный refresh токен"
-        };
+        //operation.Responses["401"] = new OpenApiResponse
+        //{
+        //    Description = "Неверный или просроченный refresh токен"
+        //};
 
         return operation;
     }
@@ -104,6 +107,13 @@ public static class OpenApiHelper
         }
 
         return operation;
+    }
+    public static void AddTag(OpenApiOperation operation, string tag)
+    {
+        operation.Tags = new List<OpenApiTag>
+        {
+            new OpenApiTag { Name = tag }
+        };
     }
 
     #region Private Methods
@@ -186,14 +196,6 @@ public static class OpenApiHelper
         "500" => "Внутренняя ошибка сервера",
         _ => "Ответ"
     };
-
-    private static void AddTag(OpenApiOperation operation, string tag)
-    {
-        operation.Tags = new List<OpenApiTag>
-        {
-            new OpenApiTag { Name = tag }
-        };
-    }
 
     private static List<OpenApiSecurityRequirement> GetSecurity()
     {

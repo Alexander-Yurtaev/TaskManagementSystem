@@ -37,7 +37,7 @@
     },
     {
       "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/swagger/task/v1/swagger.json",
+      "UpstreamPathTemplate": "/swagger/tasks/v1/swagger.json",
       "DownstreamPathTemplate": "/swagger/v1/swagger.json",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -50,7 +50,7 @@
       "NoLoadBalancer": true,
       "RouteIsCaseSensitive": false,
       "RequestIdKey": "Oc-RequestId",
-      "SwaggerKey": "task"
+      "SwaggerKey": "tasks"
     },
     {
       "UpstreamHttpMethod": [ "GET" ],
@@ -123,9 +123,9 @@
       "SwaggerKey": "notify"
     },
     {
-      "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/api/task/migrate",
-      "DownstreamPathTemplate": "/migrate",
+      "UpstreamHttpMethod": [ "GET", "POST" ],
+      "UpstreamPathTemplate": "/api/tasks/{everything}",
+      "DownstreamPathTemplate": "/tasks/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -140,9 +140,28 @@
         "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
       },
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "task"
+      "SwaggerKey": "tasks"
     },
+    {
+      "UpstreamHttpMethod": [ "GET", "POST" ],
       "UpstreamPathTemplate": "/api/attachments/{everything}",
+      "DownstreamPathTemplate": "/attachments/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-task-service",
+          "Port": 8081
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "RouteClaimsRequirement": {
+        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "tasks"
+    },
     // Auth
     {
       "UpstreamHttpMethod": [ "POST" ],
@@ -187,20 +206,20 @@
       "SwaggerKey": "auth"
     },
     // Greetings
-    {
-      "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/api/tasks/greeting",
-      "DownstreamPathTemplate": "/greeting",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-task-service",
-          "Port": 8081
-        }
-      ],
-      "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "tms-task-service"
-    },
+    //{
+    //  "UpstreamHttpMethod": [ "GET" ],
+    //  "UpstreamPathTemplate": "/api/tasks/greeting",
+    //  "DownstreamPathTemplate": "/greeting",
+    //  "DownstreamScheme": "https",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "tms-task-service",
+    //      "Port": 8081
+    //    }
+    //  ],
+    //  "DangerousAcceptAnyServerCertificateValidator": true,
+    //  "SwaggerKey": "tasks"
+    //},
     {
       "UpstreamHttpMethod": [ "GET" ],
       "UpstreamPathTemplate": "/api/files/greeting",
@@ -280,14 +299,14 @@
       ]
     },
     {
-      "Key": "task",
+      "Key": "tasks",
       "TransformByOcelotConfig": true,
       "TakeServersFromDownstreamService": false,
       "Config": [
         {
           "Name": "Task API",
           "Version": "v1",
-          "Url": "https://tms-gateway:8081/swagger/task/v1/swagger.json"
+          "Url": "https://tms-gateway:8081/swagger/tasks/v1/swagger.json"
         }
       ]
     }

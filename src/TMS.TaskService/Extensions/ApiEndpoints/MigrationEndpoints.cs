@@ -16,7 +16,7 @@ public static class MigrationEndpoints
     public static void AddMigrateEndpoint(this IApplicationBuilder app)
     {
         var endpoints = (IEndpointRouteBuilder)app;
-        endpoints.MapGet("/migrate", async (
+        endpoints.MapGet("/tasks/migrate", async (
                 [FromServices] TaskDataContext db,
                 [FromServices] ILogger<IApplicationBuilder> logger) =>
         {

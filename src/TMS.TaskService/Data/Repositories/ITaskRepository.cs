@@ -43,6 +43,13 @@ public interface ITaskRepository
     /// <summary>
     ///
     /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    Task<bool> IsExistsAsync(int id);
+
+    /// <summary>
+    ///
+    /// </summary>
     /// <param name="task"></param>
     /// <returns></returns>
     Task<TaskEntity> UpdateAsync(TaskEntity task);

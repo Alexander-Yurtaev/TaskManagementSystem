@@ -419,10 +419,10 @@ public static class AuthEndpoints
             OpenApiHelper.EnsureResponseWithExamples(operation, StatusCodes.Status200OK.ToString(), examples);
 
             // Добавляем другие возможные ответы
-            operation.Responses["401"] = new OpenApiResponse
-            {
-                Description = "Неверный или просроченный refresh токен"
-            };
+            //operation.Responses["401"] = new OpenApiResponse
+            //{
+            //    Description = "Неверный или просроченный refresh токен"
+            //};
 
             operation.Responses["500"] = new OpenApiResponse
             {

@@ -1,7 +1,5 @@
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
 using System.Reflection;
 using TMS.Common.Extensions;
 using TMS.Common.Helpers;
@@ -45,7 +43,7 @@ namespace TMS.TaskService
 
             // Add services to the container.
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(options => OpenApiHelper.AddSwaggerGenHelper(options, () =>
+            builder.Services.AddSwaggerGen(options => OpenApiHelper.AddSwaggerGenHelper(options, "Task API", "v1", () =>
             {
                 // Путь к XML-файлу (имя сборки)
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -93,7 +91,7 @@ namespace TMS.TaskService
                 app.UseSwagger();
                 app.UseSwaggerUI(options =>
                 {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth API v1");
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Task API v1");
                     options.RoutePrefix = "swagger"; // URL: /swagger
                 });
             }

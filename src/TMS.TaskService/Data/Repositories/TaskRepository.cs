@@ -79,6 +79,22 @@ public class TaskRepository(TaskDataContext db) : ITaskRepository
     }
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<bool> IsExistsAsync(int id)
+    {
+        if (id <= 0)
+        {
+            throw new ArgumentException(nameof(id));
+        }
+
+        return await _db.Tasks.AnyAsync(t => t.Id == id);
+    }
+
+    /// <summary>
     ///
     /// </summary>
     /// <param name="task"></param>
