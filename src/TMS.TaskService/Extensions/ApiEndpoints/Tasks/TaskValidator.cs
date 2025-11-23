@@ -14,7 +14,7 @@ public static class TaskValidator
     /// </summary>
     /// <param name="task"></param>
     /// <returns></returns>
-    public static ValidationResult ProjectValidate(TaskModelBase task)
+    public static ValidationResult TaskValidate(TaskModelBase task)
     {
         var trimmedTitle = task.Title?.Trim();
 

@@ -418,7 +418,7 @@ public static class CreateTaskOperations
             return taskValidation;
         }
 
-        var validationResult = TaskValidator.ProjectValidate(task);
+        var validationResult = TaskValidator.TaskValidate(task);
         if (!validationResult.IsValid)
         {
             logger.LogWarning("Task validation failed: {TaskTitle}, Error: {Error}", task.Title, validationResult.ErrorMessage);
