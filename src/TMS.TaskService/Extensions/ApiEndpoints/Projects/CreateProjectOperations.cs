@@ -6,7 +6,6 @@ using TMS.Common.Helpers;
 using TMS.Common.Validators;
 using TMS.TaskService.Data.Repositories;
 using TMS.TaskService.Entities;
-using TMS.TaskService.Entities.Enum;
 using TMS.TaskService.Models.Projects;
 
 namespace TMS.TaskService.Extensions.ApiEndpoints.Projects;
@@ -366,9 +365,11 @@ public static class CreateProjectOperations
 
     private static async Task<ValidationResult> ValidateData(ProjectCreate project, IProjectRepository repository, ILogger<IApplicationBuilder> logger)
     {
-        if (project is null)
+        // Валидация на null
+        var projectValidation = CommonValidator.EntityNotNullValidate(project, "Project");
+        if (!projectValidation.IsValid)
         {
-            return ValidationResult.Error("Project must be set.");
+            return projectValidation;
         }
 
         var validationResult = ProjectValidator.ProjectValidate(project);

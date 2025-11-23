@@ -27,6 +27,7 @@ public class TaskEntity
     /// <summary>
     /// 
     /// </summary>
+    [StringLength(500)]
     public string Description { get; set; } = string.Empty;
 
     /// <summary>
@@ -58,7 +59,7 @@ public class TaskEntity
     /// 
     /// </summary>
     [Required]
-    public int AssigneeId { get; set; }
+    public int? AssigneeId { get; set; }
 
     /// <summary>
     /// 

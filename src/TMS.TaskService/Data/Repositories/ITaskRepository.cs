@@ -37,8 +37,9 @@ public interface ITaskRepository
     ///
     /// </summary>
     /// <param name="title"></param>
+    /// <param name="projectId"></param>
     /// <returns></returns>
-    Task<bool> IsExistsAsync(string title);
+    Task<bool> IsExistsAsync(string title, int projectId);
 
     /// <summary>
     ///

@@ -69,13 +69,14 @@ public class TaskRepository(TaskDataContext db) : ITaskRepository
     ///
     /// </summary>
     /// <param name="title"></param>
+    /// <param name="projectId"></param>
     /// <returns></returns>
-    public async Task<bool> IsExistsAsync(string title)
+    public async Task<bool> IsExistsAsync(string title, int projectId)
     {
         ArgumentException.ThrowIfNullOrEmpty(title);
         ArgumentException.ThrowIfNullOrWhiteSpace(title);
 
-        return await _db.Tasks.AnyAsync(t => t.Title.ToLower() == title.ToLower());
+        return await _db.Tasks.AnyAsync(t => t.Title.ToLower() == title.ToLower() && t.ProjectId == projectId);
     }
 
     /// <summary>
