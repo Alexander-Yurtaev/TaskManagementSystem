@@ -16,7 +16,6 @@
   <ItemGroup Label="Common">
 	<PackageReference Include="DotNetEnv" />
 	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
-	<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
 	<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" />
 	<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
 	<PackageReference Include="RabbitMQ.Client" />

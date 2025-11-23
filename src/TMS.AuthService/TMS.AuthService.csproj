@@ -18,12 +18,7 @@
 	
   <ItemGroup Label="Swagger">
 	<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Design">
-	  <PrivateAssets>all</PrivateAssets>
-	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	</PackageReference>
 	<PackageReference Include="MMLib.SwaggerForOcelot" />
-	<PackageReference Include="Swashbuckle.AspNetCore" />
   </ItemGroup>
 
   <ItemGroup Label="Redis">
@@ -36,8 +31,6 @@
 
   <ItemGroup Label="JWT">
     <PackageReference Include="BCrypt.Net-Core" />
-	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
-	<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" />
   </ItemGroup>
 
   <ItemGroup>

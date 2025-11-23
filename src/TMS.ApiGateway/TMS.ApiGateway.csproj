@@ -12,15 +12,11 @@
   </PropertyGroup>
 
   <ItemGroup Label="Ocelot">
-	<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
-	<PackageReference Include="Ocelot" />
-	<PackageReference Include="Ocelot.Administration" />
-	<PackageReference Include="Swashbuckle.AspNetCore" />	  
+	<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />	  
+	<PackageReference Include="Ocelot">
+	  <TreatAsUsed>true</TreatAsUsed>
+	</PackageReference>	  
 	<PackageReference Include="MMLib.SwaggerForOcelot" />
-  </ItemGroup>
-
-  <ItemGroup Label="Jwt">
-	<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
   </ItemGroup>
 
   <ItemGroup Label="gRPC">
@@ -34,7 +30,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TMS.Common\TMS.Common.csproj" />
-    <ProjectReference Include="..\TMS.Contracts\TMS.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
