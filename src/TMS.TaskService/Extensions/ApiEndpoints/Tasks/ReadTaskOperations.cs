@@ -66,7 +66,7 @@ public static class ReadTaskOperations
         {
             operation.Summary = "Получение всех задач, прикрепленных к текущему пользователю.";
             operation.Description = "Возвращает список всех задач, связанных с текущим пользователем.";
-            OpenApiHelper.AddTag(operation, "Task");
+            OpenApiMigrationHelper.AddTag(operation, "Task");
 
             // Настраиваем ответы
             operation.Responses["200"] = new OpenApiResponse
@@ -216,7 +216,7 @@ public static class ReadTaskOperations
                 }
             };
 
-            operation = OpenApiHelper.AddSecurityRequirementHelper(operation);
+            operation = OpenApiSecurityHelper.AddSecurityRequirementHelper(operation);
 
             return operation;
         });
@@ -273,7 +273,7 @@ public static class ReadTaskOperations
         {
             operation.Summary = "Получение задачи по идентификатору.";
             operation.Description = "Возвращает задачу по указанному идентификатору.";
-            OpenApiHelper.AddTag(operation, "Task");
+            OpenApiMigrationHelper.AddTag(operation, "Task");
 
             // Добавляем параметры
             operation.Parameters = new List<OpenApiParameter>
@@ -446,7 +446,7 @@ public static class ReadTaskOperations
                 }
             };
 
-            operation = OpenApiHelper.AddSecurityRequirementHelper(operation);
+            operation = OpenApiSecurityHelper.AddSecurityRequirementHelper(operation);
 
             return operation;
         });

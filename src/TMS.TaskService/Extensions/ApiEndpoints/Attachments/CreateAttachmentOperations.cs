@@ -33,6 +33,7 @@ public static class CreateAttachmentOperations
             [FromRoute] int id,
             [FromQuery] string fileName,
             IFormFile file,
+            IConfiguration configuration,
             [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] IMapper mapper,
             [FromServices] ITaskRepository taskRepository,
@@ -41,7 +42,7 @@ public static class CreateAttachmentOperations
         {
             logger.LogInformation("For task with id={TaskId} start creating attachment with FileName: {FileName}.", id, fileName);
 
-            var result = await ValidateData(id, fileName, file, taskRepository, logger);
+            var result = await ValidateData(id, fileName, file, configuration, taskRepository, logger);
 
             if (!result.IsValid)
             {
@@ -119,7 +120,7 @@ public static class CreateAttachmentOperations
         {
             operation.Summary = "Добавление файла как вложения к указанной задаче.";
             operation.Description = "Загружает файл и прикрепляет его к задаче с указанным идентификатором.";
-            OpenApiHelper.AddTag(operation, "Attachment");
+            OpenApiMigrationHelper.AddTag(operation, "Attachment");
 
             // Добавляем параметры
             operation.Parameters = new List<OpenApiParameter>
@@ -272,7 +273,7 @@ public static class CreateAttachmentOperations
                 }
             };
 
-            operation = OpenApiHelper.AddSecurityRequirementHelper(operation);
+            operation = OpenApiSecurityHelper.AddSecurityRequirementHelper(operation);
 
             return operation;
         });
@@ -284,6 +285,7 @@ public static class CreateAttachmentOperations
             int taskId,
             string fileName,
             IFormFile file,
+            IConfiguration configuration,
             ITaskRepository taskRepository,
             ILogger logger)
     {
@@ -302,7 +304,7 @@ public static class CreateAttachmentOperations
         }
 
         // Валидация имени файла
-        var fileNameValidation = FileNameValidator.ValidateFileName(fileName);
+        var fileNameValidation = FileNameValidator.ValidateFileName(fileName, configuration);
         if (!fileNameValidation.IsValid)
         {
             logger.LogWarning("File name validation failed: {FileName}, Error: {Error}", fileName, fileNameValidation.ErrorMessage);

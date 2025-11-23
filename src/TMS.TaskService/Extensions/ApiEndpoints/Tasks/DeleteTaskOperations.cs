@@ -36,7 +36,7 @@ public static class DeleteTaskOperations
             {
                 return ResultHelper.CreateValidationErrorResult(
                     entityName: "Task",
-                    entityIdentifier: id,
+                    entityIdentifier: id.ToString(),
                     errorMessage: result.ErrorMessage,
                     logger);
             }
@@ -79,7 +79,7 @@ public static class DeleteTaskOperations
         {
             operation.Summary = "Удаление задачи по идентификатору.";
             operation.Description = "Удаляет задачу с указанным идентификатором. Задача должна существовать для успешного удаления.";
-            OpenApiHelper.AddTag(operation, "Task");
+            OpenApiMigrationHelper.AddTag(operation, "Task");
 
             // Добавляем параметры
             operation.Parameters = new List<OpenApiParameter>
@@ -208,7 +208,7 @@ public static class DeleteTaskOperations
                 }
             };
 
-            operation = OpenApiHelper.AddSecurityRequirementHelper(operation);
+            operation = OpenApiSecurityHelper.AddSecurityRequirementHelper(operation);
 
             return operation;
         });

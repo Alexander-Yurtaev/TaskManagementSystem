@@ -43,7 +43,7 @@ public static class UpdateTaskOperations
             {
                 return ResultHelper.CreateValidationErrorResult(
                     entityName: "Task",
-                    entityIdentifier: id,
+                    entityIdentifier: id.ToString(),
                     errorMessage: validationResult.ErrorMessage,
                     logger);
             }
@@ -100,7 +100,7 @@ public static class UpdateTaskOperations
         {
             operation.Summary = "Обновление задачи по идентификатору.";
             operation.Description = "Обновляет задачу с указанным идентификатором.";
-            OpenApiHelper.AddTag(operation, "Task");
+            OpenApiMigrationHelper.AddTag(operation, "Task");
 
             // Добавляем параметры
             operation.Parameters = new List<OpenApiParameter>
@@ -419,7 +419,7 @@ public static class UpdateTaskOperations
                 }
             };
 
-            operation = OpenApiHelper.AddSecurityRequirementHelper(operation);
+            operation = OpenApiSecurityHelper.AddSecurityRequirementHelper(operation);
 
             return operation;
         });

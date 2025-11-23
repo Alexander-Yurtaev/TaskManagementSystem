@@ -77,7 +77,7 @@ public static class CreateProjectOperations
             {
                 operation.Summary = "Создание нового проекта.";
                 operation.Description = "Создает новый проект с указанными параметрами.";
-                OpenApiHelper.AddTag(operation, "Project");
+                OpenApiMigrationHelper.AddTag(operation, "Project");
 
                 // Настраиваем запрос
                 operation.RequestBody = new OpenApiRequestBody
@@ -356,7 +356,7 @@ public static class CreateProjectOperations
                     }
                 };
 
-                operation = OpenApiHelper.AddSecurityRequirementHelper(operation);
+                operation = OpenApiSecurityHelper.AddSecurityRequirementHelper(operation);
 
                 return operation;
             });

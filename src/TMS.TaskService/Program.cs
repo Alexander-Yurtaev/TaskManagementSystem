@@ -43,7 +43,7 @@ namespace TMS.TaskService
 
             // Add services to the container.
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(options => OpenApiHelper.AddSwaggerGenHelper(options, "Task API", "v1", () =>
+            builder.Services.AddSwaggerGen(options => OpenApiSecurityHelper.AddSwaggerGenHelper(options, "Task API", "v1", () =>
             {
                 // Путь к XML-файлу (имя сборки)
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";

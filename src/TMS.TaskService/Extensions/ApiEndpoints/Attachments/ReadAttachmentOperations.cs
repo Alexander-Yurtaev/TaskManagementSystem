@@ -70,7 +70,7 @@ public static class ReadAttachmentOperations
             {
                 operation.Summary = "Получение вложения по идентификатору.";
                 operation.Description = "Возвращает метаданные вложения по указанному идентификатору.";
-                OpenApiHelper.AddTag(operation, "Attachment");
+                OpenApiMigrationHelper.AddTag(operation, "Attachment");
 
                 // Добавляем параметры
                 operation.Parameters = new List<OpenApiParameter>
@@ -190,7 +190,7 @@ public static class ReadAttachmentOperations
                     }
                 };
 
-                operation = OpenApiHelper.AddSecurityRequirementHelper(operation);
+                operation = OpenApiSecurityHelper.AddSecurityRequirementHelper(operation);
 
                 return operation;
             });
@@ -236,7 +236,7 @@ public static class ReadAttachmentOperations
             {
                 operation.Summary = "Получение всех вложений, прикрепленных к указанной задаче.";
                 operation.Description = "Возвращает список всех вложений, связанных с указанной задачей.";
-                OpenApiHelper.AddTag(operation, "Attachment");
+                OpenApiMigrationHelper.AddTag(operation, "Attachment");
 
                 // Добавляем параметры
                 operation.Parameters = new List<OpenApiParameter>
@@ -359,7 +359,7 @@ public static class ReadAttachmentOperations
                     }
                 };
 
-                operation = OpenApiHelper.AddSecurityRequirementHelper(operation);
+                operation = OpenApiSecurityHelper.AddSecurityRequirementHelper(operation);
 
                 return operation;
             });

@@ -32,7 +32,7 @@ public static class DeleteProjectOperations
             {
                 return ResultHelper.CreateValidationErrorResult(
                     entityName: "Project",
-                    entityIdentifier: id,
+                    entityIdentifier: id.ToString(),
                     errorMessage: result.ErrorMessage,
                     logger);
             }
@@ -74,7 +74,7 @@ public static class DeleteProjectOperations
         {
             operation.Summary = "Удаление проекта по идентификатору.";
             operation.Description = "Удаляет проект с указанным идентификатором. Проект должен существовать и не иметь связанных задач для успешного удаления.";
-            OpenApiHelper.AddTag(operation, "Project");
+            OpenApiMigrationHelper.AddTag(operation, "Project");
 
             // Добавляем параметры
             operation.Parameters = new List<OpenApiParameter>
@@ -203,7 +203,7 @@ public static class DeleteProjectOperations
                 }
             };
 
-            operation = OpenApiHelper.AddSecurityRequirementHelper(operation);
+            operation = OpenApiSecurityHelper.AddSecurityRequirementHelper(operation);
 
             return operation;
         });

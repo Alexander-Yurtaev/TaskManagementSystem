@@ -40,7 +40,7 @@ public static class UpdateProjectOperations
             {
                 return ResultHelper.CreateValidationErrorResult(
                     entityName: "Project",
-                    entityIdentifier: id,
+                    entityIdentifier: id.ToString(),
                     errorMessage: validationResult.ErrorMessage,
                     logger);
             }
@@ -85,7 +85,7 @@ public static class UpdateProjectOperations
         {
             operation.Summary = "Обновление проекта по идентификатору.";
             operation.Description = "Обновляет проект с указанным идентификатором.";
-            OpenApiHelper.AddTag(operation, "Project");
+            OpenApiMigrationHelper.AddTag(operation, "Project");
 
             // Добавляем параметры
             operation.Parameters = new List<OpenApiParameter>
@@ -311,7 +311,7 @@ public static class UpdateProjectOperations
                 }
             };
 
-            operation = OpenApiHelper.AddSecurityRequirementHelper(operation);
+            operation = OpenApiSecurityHelper.AddSecurityRequirementHelper(operation);
 
             return operation;
         });

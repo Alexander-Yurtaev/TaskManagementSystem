@@ -71,7 +71,7 @@ public static class ReadCommentOperations
             {
                 operation.Summary = "Получение комментария по идентификатору.";
                 operation.Description = "Возвращает комментарий по указанному идентификатору.";
-                OpenApiHelper.AddTag(operation, "Comment");
+                OpenApiMigrationHelper.AddTag(operation, "Comment");
 
                 // Добавляем параметры
                 operation.Parameters = new List<OpenApiParameter>
@@ -197,7 +197,7 @@ public static class ReadCommentOperations
                     }
                 };
 
-                operation = OpenApiHelper.AddSecurityRequirementHelper(operation);
+                operation = OpenApiSecurityHelper.AddSecurityRequirementHelper(operation);
 
                 return operation;
             });
@@ -244,7 +244,7 @@ public static class ReadCommentOperations
             {
                 operation.Summary = "Получение всех комментариев, прикрепленных к указанной задаче.";
                 operation.Description = "Возвращает список всех комментариев, связанных с указанной задачей.";
-                OpenApiHelper.AddTag(operation, "Comment");
+                OpenApiMigrationHelper.AddTag(operation, "Comment");
 
                 // Добавляем параметры
                 operation.Parameters = new List<OpenApiParameter>
@@ -374,7 +374,7 @@ public static class ReadCommentOperations
                     }
                 };
 
-                operation = OpenApiHelper.AddSecurityRequirementHelper(operation);
+                operation = OpenApiSecurityHelper.AddSecurityRequirementHelper(operation);
 
                 return operation;
             });

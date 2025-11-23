@@ -89,7 +89,7 @@ public static class CreateCommentOperations
             {
                 operation.Summary = "Создание нового комментария, прикрепленного к указанной задаче.";
                 operation.Description = "Создает новый комментарий и прикрепляет его к задаче с указанным идентификатором.";
-                OpenApiHelper.AddTag(operation, "Comment");
+                OpenApiMigrationHelper.AddTag(operation, "Comment");
 
                 // Добавляем параметры
                 operation.Parameters = new List<OpenApiParameter>
@@ -302,7 +302,7 @@ public static class CreateCommentOperations
                     }
                 };
 
-                operation = OpenApiHelper.AddSecurityRequirementHelper(operation);
+                operation = OpenApiSecurityHelper.AddSecurityRequirementHelper(operation);
 
                 return operation;
             });

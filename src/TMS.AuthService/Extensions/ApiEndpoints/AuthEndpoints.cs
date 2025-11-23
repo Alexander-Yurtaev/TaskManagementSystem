@@ -172,7 +172,7 @@ public static class AuthEndpoints
                         }
                     }
                 };
-                OpenApiHelper.EnsureResponseWithExamples(operation, StatusCodes.Status201Created.ToString(), examples);
+                OpenApiMigrationHelper.EnsureResponseWithExamples(operation, StatusCodes.Status201Created.ToString(), examples);
 
                 // Добавляем другие возможные ответы
                 operation.Responses["400"] = new OpenApiResponse
@@ -314,7 +314,7 @@ public static class AuthEndpoints
                         }
                     }
                 };
-                OpenApiHelper.EnsureResponseWithExamples(operation, StatusCodes.Status200OK.ToString(), examples);
+                OpenApiMigrationHelper.EnsureResponseWithExamples(operation, StatusCodes.Status200OK.ToString(), examples);
 
                 // Добавляем другие возможные ответы
                 operation.Responses["404"] = new OpenApiResponse
@@ -416,7 +416,7 @@ public static class AuthEndpoints
                     }
                 }
             };
-            OpenApiHelper.EnsureResponseWithExamples(operation, StatusCodes.Status200OK.ToString(), examples);
+            OpenApiMigrationHelper.EnsureResponseWithExamples(operation, StatusCodes.Status200OK.ToString(), examples);
 
             // Добавляем другие возможные ответы
             //operation.Responses["401"] = new OpenApiResponse

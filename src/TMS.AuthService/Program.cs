@@ -38,7 +38,7 @@ namespace TMS.AuthService
             builder.Services.AddGrpc();
 
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen(options => OpenApiHelper.AddSwaggerGenHelper(options, "Auth API", "v1", () =>
+            builder.Services.AddSwaggerGen(options => OpenApiSecurityHelper.AddSwaggerGenHelper(options, "Auth API", "v1", () =>
             {
                 // Путь к XML-файлу (имя сборки)
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";

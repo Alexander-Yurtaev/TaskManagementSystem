@@ -1,32 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 
 namespace TMS.Common.Helpers;
 
-public static class OpenApiHelper
+public static class OpenApiMigrationHelper
 {
-    public static void AddSwaggerGenHelper(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions options,
-        string title,
-        string version,
-        Action? after = null)
-    {
-        options.SwaggerDoc(version, new OpenApiInfo { Title = title, Version = version });
-
-        options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-        {
-            Description = "JWT токен авторизации (Bearer {token})",
-            Name = "Authorization",
-            In = ParameterLocation.Header,
-            Type = SecuritySchemeType.Http,
-            Scheme = "bearer",
-            BearerFormat = "JWT"
-        });
-
-        after?.Invoke();
-    }
-
     public static OpenApiOperation InitOperationForSetup(OpenApiOperation operation, string dbName, string tag)
     {
         operation = BaseInitOperationForMigration(operation, dbName);
@@ -73,10 +52,8 @@ public static class OpenApiHelper
         return operation;
     }
 
-    public static void EnsureResponseWithExamples(
-        OpenApiOperation operation,
-        string statusCode,
-        Dictionary<string, OpenApiExample> examples)
+    public static void EnsureResponseWithExamples(OpenApiOperation operation, string statusCode, Dictionary<string, OpenApiExample> examples)
+    
     {
         if (!operation.Responses.TryGetValue(statusCode, out var response))
         {
@@ -96,25 +73,6 @@ public static class OpenApiHelper
         }
 
         response.Content["application/json"].Examples = examples;
-    }
-
-    public static OpenApiOperation AddSecurityRequirementHelper(OpenApiOperation operation)
-    {
-        var securities = GetSecurity();
-        foreach (var security in securities)
-        {
-            operation.Security.Add(security);
-        }
-
-        return operation;
-    }
-
-    public static void AddTag(OpenApiOperation operation, string tag)
-    {
-        operation.Tags = new List<OpenApiTag>
-        {
-            new OpenApiTag { Name = tag }
-        };
     }
 
     #region Private Methods
@@ -198,28 +156,12 @@ public static class OpenApiHelper
         _ => "Ответ"
     };
 
-    private static List<OpenApiSecurityRequirement> GetSecurity()
+    public static void AddTag(OpenApiOperation operation, string tag)
     {
-        var security = new List<OpenApiSecurityRequirement>
-                {
-                    new OpenApiSecurityRequirement
-                    {
-                        {
-                            new OpenApiSecurityScheme
-                            {
-                                Reference = new OpenApiReference
-                                {
-                                    Type = ReferenceType.SecurityScheme,
-                                    Id = "Bearer"
-                                },
-                                Scheme = "bearer",
-                                In = ParameterLocation.Header
-                            },
-                            Array.Empty<string>()
-                        }
-                    }
-                };
-        return security;
+        operation.Tags = new List<OpenApiTag>
+        {
+            new OpenApiTag { Name = tag }
+        };
     }
 
     #endregion Private Methods

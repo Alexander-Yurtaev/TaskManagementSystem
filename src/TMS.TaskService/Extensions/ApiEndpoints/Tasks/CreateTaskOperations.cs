@@ -77,7 +77,7 @@ public static class CreateTaskOperations
         {
             operation.Summary = "Создание новой задачи.";
             operation.Description = "Создает новую задачу с указанными параметрами.";
-            OpenApiHelper.AddTag(operation, "Task");
+            OpenApiMigrationHelper.AddTag(operation, "Task");
 
             // Настраиваем запрос
             operation.RequestBody = new OpenApiRequestBody
@@ -402,7 +402,7 @@ public static class CreateTaskOperations
                 }
             };
 
-            operation = OpenApiHelper.AddSecurityRequirementHelper(operation);
+            operation = OpenApiSecurityHelper.AddSecurityRequirementHelper(operation);
 
             return operation;
         });

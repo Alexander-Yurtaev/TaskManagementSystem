@@ -66,7 +66,7 @@ public static class ReadProjectOperations
         {
             operation.Summary = "Получение всех проектов, прикрепленных к текущему пользователю.";
             operation.Description = "Возвращает список всех проектов, связанных с текущим пользователем.";
-            OpenApiHelper.AddTag(operation, "Project");
+            OpenApiMigrationHelper.AddTag(operation, "Project");
 
             // Настраиваем ответы
             operation.Responses["200"] = new OpenApiResponse
@@ -205,7 +205,7 @@ public static class ReadProjectOperations
                 }
             };
 
-            operation = OpenApiHelper.AddSecurityRequirementHelper(operation);
+            operation = OpenApiSecurityHelper.AddSecurityRequirementHelper(operation);
 
             return operation;
         });
@@ -263,7 +263,7 @@ public static class ReadProjectOperations
         {
             operation.Summary = "Получение проекта по идентификатору.";
             operation.Description = "Возвращает проект по указанному идентификатору.";
-            OpenApiHelper.AddTag(operation, "Project");
+            OpenApiMigrationHelper.AddTag(operation, "Project");
 
             // Добавляем параметры
             operation.Parameters = new List<OpenApiParameter>
@@ -398,7 +398,7 @@ public static class ReadProjectOperations
                 }
             };
 
-            operation = OpenApiHelper.AddSecurityRequirementHelper(operation);
+            operation = OpenApiSecurityHelper.AddSecurityRequirementHelper(operation);
 
             return operation;
         });
