@@ -30,9 +30,10 @@ public static class DeleteProjectOperations
             var result = await ValidateData(id, repository, logger);
             if (!result.IsValid)
             {
-                return ResultHelper.CreateProblemResult(
-                    detail: result.ErrorMessage,
-                    statusCode: StatusCodes.Status400BadRequest,
+                return ResultHelper.CreateValidationErrorResult(
+                    entityName: "Project",
+                    entityIdentifier: id,
+                    errorMessage: result.ErrorMessage,
                     logger);
             }
 

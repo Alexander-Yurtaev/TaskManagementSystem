@@ -1,4 +1,5 @@
-﻿using TMS.Common.Validators;
+﻿using Microsoft.Extensions.Configuration;
+using TMS.Common.Validators;
 
 namespace TMS.Common.Helpers;
 
@@ -11,12 +12,7 @@ public class FileNameValidator
         "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"
     };
 
-    // Разрешенные расширения (опционально)
-    private static readonly string[] _allowedExtensions = {
-        ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".txt", ".jpg", ".jpeg", ".png", ".gif"
-    };
-
-    public static ValidationResult ValidateFileName(string fileName, bool checkExtension = true)
+    public static ValidationResult ValidateFileName(string fileName, IConfiguration configuration, bool checkExtension = true)
     {
         // Базовые проверки
         if (string.IsNullOrWhiteSpace(fileName))
@@ -41,7 +37,8 @@ public class FileNameValidator
         // Проверка расширения
         if (checkExtension)
         {
-            var extensionResult = ValidateFileExtension(fileName);
+            var allowedExtensions = configuration.GetSection("AllowedFileExtensions").Get<string[]>();
+            var extensionResult = ValidateFileExtension(fileName, allowedExtensions);
             if (!extensionResult.IsValid)
                 return extensionResult;
         }
@@ -49,7 +46,7 @@ public class FileNameValidator
         return ValidationResult.Success();
     }
 
-    public static ValidationResult ValidateFileExtension(string fileName)
+    public static ValidationResult ValidateFileExtension(string fileName, string[]? allowedExtensions)
     {
         var extension = Path.GetExtension(fileName);
 
@@ -59,7 +56,7 @@ public class FileNameValidator
         if (extension.Length > 10)
             return ValidationResult.Error("File extension is too long");
 
-        if (_allowedExtensions != null && !_allowedExtensions.Contains(extension.ToLowerInvariant()))
+        if (allowedExtensions != null && !allowedExtensions.Contains(extension.ToLowerInvariant()))
             return ValidationResult.Error($"File extension '{extension}' is not allowed");
 
         return ValidationResult.Success();

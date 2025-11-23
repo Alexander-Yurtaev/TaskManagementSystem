@@ -37,9 +37,10 @@ public static class CreateTaskOperations
             var result = await ValidateData(task, repository, logger);
             if (!result.IsValid)
             {
-                return ResultHelper.CreateProblemResult(
-                    detail: result.ErrorMessage,
-                    statusCode: StatusCodes.Status400BadRequest,
+                return ResultHelper.CreateValidationErrorResult(
+                    entityName: "Task",
+                    entityIdentifier: task.Title,
+                    errorMessage: result.ErrorMessage,
                     logger);
             }
 

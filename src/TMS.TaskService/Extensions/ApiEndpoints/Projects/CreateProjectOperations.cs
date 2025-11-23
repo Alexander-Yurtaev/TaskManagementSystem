@@ -34,10 +34,11 @@ public static class CreateProjectOperations
                 var result = await ValidateData(project, repository, logger);
                 if (!result.IsValid)
                 {
-                    return ResultHelper.CreateProblemResult(
-                        detail: result.ErrorMessage,
-                        statusCode: StatusCodes.Status400BadRequest,
-                        logger);
+                    return ResultHelper.CreateValidationErrorResult(
+                    entityName: "Project",
+                    entityIdentifier: project.Name,
+                    errorMessage: result.ErrorMessage,
+                    logger);
                 }
 
                 try

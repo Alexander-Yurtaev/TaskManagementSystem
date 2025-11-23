@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using System.Text.Json;
+using System.Threading.Tasks;
 using TMS.Common.Helpers;
 using TMS.Common.Models;
 using TMS.Common.Validators;
@@ -44,9 +45,10 @@ public static class CreateAttachmentOperations
 
             if (!result.IsValid)
             {
-                return ResultHelper.CreateProblemResult(
-                    detail: result.ErrorMessage,
-                    statusCode: StatusCodes.Status400BadRequest,
+                return ResultHelper.CreateValidationErrorResult(
+                    entityName: "Attachment",
+                    entityIdentifier: fileName,
+                    errorMessage: result.ErrorMessage,
                     logger);
             }
 

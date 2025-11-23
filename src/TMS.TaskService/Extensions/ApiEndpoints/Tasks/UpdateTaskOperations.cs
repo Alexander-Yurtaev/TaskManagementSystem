@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using Sprache;
+using System.Threading.Tasks;
 using TMS.Common.Helpers;
 using TMS.Common.RabbitMq;
 using TMS.Common.Validators;
@@ -39,8 +41,11 @@ public static class UpdateTaskOperations
             var validationResult = await ValidateData(id, taskUpdate, repository, logger);
             if (!validationResult.IsValid)
             {
-                logger.LogWarning("Task validation failed for task {TaskId}: {Error}", id, validationResult.ErrorMessage);
-                return Results.BadRequest(validationResult.ErrorMessage);
+                return ResultHelper.CreateValidationErrorResult(
+                    entityName: "Task",
+                    entityIdentifier: id,
+                    errorMessage: validationResult.ErrorMessage,
+                    logger);
             }
 
             try

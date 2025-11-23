@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using System.Threading.Tasks;
 using TMS.Common.Helpers;
 using TMS.Common.RabbitMq;
 using TMS.Common.Validators;
@@ -33,9 +34,10 @@ public static class DeleteTaskOperations
             var result = await ValidateData(id, repository, logger);
             if (!result.IsValid)
             {
-                return ResultHelper.CreateProblemResult(
-                    detail: result.ErrorMessage,
-                    statusCode: StatusCodes.Status400BadRequest,
+                return ResultHelper.CreateValidationErrorResult(
+                    entityName: "Task",
+                    entityIdentifier: id,
+                    errorMessage: result.ErrorMessage,
                     logger);
             }
 

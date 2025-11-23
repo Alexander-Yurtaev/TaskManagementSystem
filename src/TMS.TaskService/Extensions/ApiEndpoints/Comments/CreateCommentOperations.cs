@@ -37,10 +37,11 @@ public static class CreateCommentOperations
                 var result = await ValidateData(id, comment, taskRepository, logger);
                 if (!result.IsValid)
                 {
-                    return ResultHelper.CreateProblemResult(
-                        detail: result.ErrorMessage,
-                        statusCode: StatusCodes.Status400BadRequest,
-                        logger);
+                    return ResultHelper.CreateValidationErrorResult(
+                    entityName: "Comments",
+                    entityIdentifier: $"TaskId={id}",
+                    errorMessage: result.ErrorMessage,
+                    logger);
                 }
 
                 try

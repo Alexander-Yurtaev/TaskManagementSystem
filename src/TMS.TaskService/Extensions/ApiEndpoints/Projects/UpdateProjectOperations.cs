@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using Sprache;
 using TMS.Common.Helpers;
 using TMS.Common.Validators;
 using TMS.TaskService.Data.Repositories;
@@ -37,8 +38,11 @@ public static class UpdateProjectOperations
             var validationResult = await ValidateData(id, projectUpdate, repository, logger);
             if (!validationResult.IsValid)
             {
-                logger.LogWarning("Project validation failed for project {ProjectId}: {Error}", id, validationResult.ErrorMessage);
-                return Results.BadRequest(validationResult.ErrorMessage);
+                return ResultHelper.CreateValidationErrorResult(
+                    entityName: "Project",
+                    entityIdentifier: id,
+                    errorMessage: validationResult.ErrorMessage,
+                    logger);
             }
 
             try

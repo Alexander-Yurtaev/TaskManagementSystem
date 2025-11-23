@@ -108,6 +108,7 @@ public static class OpenApiHelper
 
         return operation;
     }
+
     public static void AddTag(OpenApiOperation operation, string tag)
     {
         operation.Tags = new List<OpenApiTag>
