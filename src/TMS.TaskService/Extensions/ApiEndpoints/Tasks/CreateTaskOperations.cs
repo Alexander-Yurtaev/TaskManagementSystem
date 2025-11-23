@@ -59,7 +59,7 @@ public static class CreateTaskOperations
             }
             catch (Exception ex)
             {
-                return ResultHelper.CreateInternalServerErrorProblemResult(logger, ex);
+                return ResultHelper.CreateInternalServerErrorProblemResult($"Error while creating task '{task.Title}'", logger, ex);
             }
         })
         .WithName("CreateTask")

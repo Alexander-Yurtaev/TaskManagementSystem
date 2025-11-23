@@ -2,8 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
-using Sprache;
-using System.Threading.Tasks;
 using TMS.Common.Helpers;
 using TMS.Common.RabbitMq;
 using TMS.Common.Validators;
@@ -71,17 +69,7 @@ public static class UpdateTaskOperations
             }
             catch (Exception ex)
             {
-                logger.LogError(
-                    ex,
-                    "Error while updating task with Id: {TaskId}. Operation: {Operation}",
-                    id,
-                    $"PUT /tasks/{id}"
-                );
-
-                return Results.Problem(
-                    detail: ex.Message,
-                    statusCode: StatusCodes.Status500InternalServerError
-                );
+                return ResultHelper.CreateInternalServerErrorProblemResult($"Error while updating task ID={id}", logger, ex);
             }
         })
         .WithName("UpdateTask")

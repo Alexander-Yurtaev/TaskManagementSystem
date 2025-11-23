@@ -16,8 +16,9 @@ public class FileSizeValidator
 
         if (file.Length > maxFileSize)
         {
-            var maxSizeMB = maxFileSize / 1024 / 1024;
-            var actualSizeMB = file.Length / 1024 / 1024;
+            var maxSizeMB = Math.Round(maxFileSize.Value / 1024.0 / 1024.0, 2);
+            var actualSizeMB = Math.Round(file.Length / 1024.0 / 1024.0, 2);
+
             return ValidationResult.Error($"File size {actualSizeMB}MB exceeds maximum allowed size {maxSizeMB}MB");
         }
 

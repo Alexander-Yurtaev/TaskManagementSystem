@@ -10,6 +10,7 @@ using TMS.TaskService.Extensions.ApiEndpoints.Comments;
 using TMS.TaskService.Extensions.ApiEndpoints.Projects;
 using TMS.TaskService.Extensions.ApiEndpoints.Tasks;
 using TMS.TaskService.Extensions.Services;
+using TMS.TaskService.Services;
 
 namespace TMS.TaskService
 {
@@ -58,6 +59,8 @@ namespace TMS.TaskService
 
             // RabbitMQ
             builder.Services.AddRabbitMqServiceConfiguration();
+
+            builder.Services.AddSingleton<IFileToStorageService, FileToStorageService>();
 
             builder.Services.AddFileStorageClient();
 

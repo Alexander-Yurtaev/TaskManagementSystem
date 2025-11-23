@@ -53,7 +53,7 @@ public static class ReadCommentOperations
                 }
                 catch (Exception ex)
                 {
-                    return ResultHelper.CreateInternalServerErrorProblemResult(logger, ex);
+                    return ResultHelper.CreateInternalServerErrorProblemResult($"Error retrieving comment by ID={id}", logger, ex);
                 }
             })
             .WithName("GetCommentById")
@@ -227,7 +227,7 @@ public static class ReadCommentOperations
                 }
                 catch (Exception ex)
                 {
-                    return ResultHelper.CreateInternalServerErrorProblemResult(logger, ex);
+                    return ResultHelper.CreateInternalServerErrorProblemResult($"Error retrieving comments by task ID={id}", logger, ex);
                 }
             })
             .WithName("GetCommentsByTaskId")

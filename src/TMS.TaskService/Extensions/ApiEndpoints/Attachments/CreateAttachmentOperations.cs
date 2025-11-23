@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using System.Text.Json;
-using System.Threading.Tasks;
 using TMS.Common.Helpers;
 using TMS.Common.Models;
 using TMS.Common.Validators;
 using TMS.TaskService.Data.Repositories;
 using TMS.TaskService.Entities;
+using TMS.TaskService.Models.Attachments;
+using TMS.TaskService.Services;
 
 namespace TMS.TaskService.Extensions.ApiEndpoints.Attachments;
 
@@ -19,7 +20,6 @@ public static class CreateAttachmentOperations
 {
     // Лимит размера файла
     private const long MaxFileSize = 10 * 1024 * 1024; // 10MB
-    private const string FileStorageClientName = "TMS.FileStorageClient";
 
     /// <summary>
     /// Набор методов расширения для IApplicationBuilder, конфигурирующих endpoints
@@ -31,24 +31,24 @@ public static class CreateAttachmentOperations
     {
         return endpoints.MapPost("/tasks/{id}/attachments", async (
             [FromRoute] int id,
-            [FromQuery] string fileName,
-            IFormFile file,
+            [FromForm] AttachmentUploadRequest request,
             IConfiguration configuration,
-            [FromServices] ILogger<IApplicationBuilder> logger,
-            [FromServices] IMapper mapper,
-            [FromServices] ITaskRepository taskRepository,
-            [FromServices] IAttachmentRepository attachmentRepository,
-            [FromServices] IHttpClientFactory httpClientFactory) =>
+            IFileToStorageService fileToStorageService,
+            ILogger <IApplicationBuilder> logger,
+            IMapper mapper,
+            ITaskRepository taskRepository,
+            IAttachmentRepository attachmentRepository,
+            IHttpClientFactory httpClientFactory) =>
         {
-            logger.LogInformation("For task with id={TaskId} start creating attachment with FileName: {FileName}.", id, fileName);
+            logger.LogInformation("For task with id={TaskId} start creating attachment with FileName: {FileName}.", id, request.FileName);
 
-            var result = await ValidateData(id, fileName, file, configuration, taskRepository, logger);
+            var result = await ValidateData(id, request.FileName, request.File, configuration, taskRepository, logger);
 
             if (!result.IsValid)
             {
                 return ResultHelper.CreateValidationErrorResult(
                     entityName: "Attachment",
-                    entityIdentifier: fileName,
+                    entityIdentifier: request.FileName,
                     errorMessage: result.ErrorMessage,
                     logger);
             }
@@ -59,19 +59,18 @@ public static class CreateAttachmentOperations
                 string filePath = GetFilePath(id);
 
                 logger.LogInformation("Sending file to FileStorage.");
-                var response = await SendFileToStorageService(filePath, Guid.NewGuid().ToString(), file, httpClientFactory);
+                var response = await fileToStorageService.SendFileToStorageService(filePath, Guid.NewGuid().ToString(), request.File, httpClientFactory);
 
                 if (!response.IsSuccessStatusCode)
                 {
                     var errorContent = await response.Content.ReadAsStringAsync();
 
-                    logger.LogError("File storage error: {StatusCode}, {ErrorContent}",
-                        response.StatusCode, errorContent);
-
-                    return ResultHelper.CreateProblemResult(
-                        detail: $"File storage service returned: {response.StatusCode}",
-                        statusCode: (int)response.StatusCode,
-                        logger);
+                    return ResultHelper.CreateExternalServiceErrorResult(
+                        serviceName: "FileStorage",
+                        operation: "file_upload",
+                        statusCode: response.StatusCode,
+                        logger: logger,
+                        additionalInfo: errorContent.Length > 0 ? errorContent : null);
                 }
 
                 var json = await response.Content.ReadAsStringAsync();
@@ -90,7 +89,7 @@ public static class CreateAttachmentOperations
                 var entity = new AttachmentEntity
                 {
                     TaskId = id,
-                    FileName = fileName,
+                    FileName = request.FileName,
                     FilePath = fileStorageResult.FilePath
                 };
                 await attachmentRepository.AddAsync(entity);
@@ -101,7 +100,7 @@ public static class CreateAttachmentOperations
             }
             catch (Exception ex)
             {
-                return ResultHelper.CreateInternalServerErrorProblemResult(logger, ex);
+                return ResultHelper.CreateInternalServerErrorProblemResult($"Error while creating attachment for task with ID {id}", logger, ex);
             }
         })
         .DisableAntiforgery()
@@ -122,7 +121,6 @@ public static class CreateAttachmentOperations
             operation.Description = "Загружает файл и прикрепляет его к задаче с указанным идентификатором.";
             OpenApiMigrationHelper.AddTag(operation, "Attachment");
 
-            // Добавляем параметры
             operation.Parameters = new List<OpenApiParameter>
             {
                 new()
@@ -132,18 +130,9 @@ public static class CreateAttachmentOperations
                     Required = true,
                     Description = "Идентификатор задачи",
                     Schema = new OpenApiSchema { Type = "integer", Format = "int32" }
-                },
-                new()
-                {
-                    Name = "fileName",
-                    In = ParameterLocation.Query,
-                    Required = true,
-                    Description = "Имя файла для сохранения",
-                    Schema = new OpenApiSchema { Type = "string" }
                 }
             };
 
-            // Настраиваем запрос
             operation.RequestBody = new OpenApiRequestBody
             {
                 Required = true,
@@ -156,6 +145,13 @@ public static class CreateAttachmentOperations
                             Type = "object",
                             Properties = new Dictionary<string, OpenApiSchema>
                             {
+                                ["fileName"] = new()
+                                {
+                                    Type = "string",
+                                    Description = "Имя файла для сохранения",
+                                    MinLength = 1,
+                                    MaxLength = 255
+                                },
                                 ["file"] = new()
                                 {
                                     Type = "string",
@@ -163,11 +159,35 @@ public static class CreateAttachmentOperations
                                     Description = "Файл для загрузки"
                                 }
                             },
-                            Required = new HashSet<string> { "file" }
+                            Required = new HashSet<string> { "fileName", "file" }
                         },
                         Encoding = new Dictionary<string, OpenApiEncoding>
                         {
+                            ["fileName"] = new() { ContentType = "text/plain" },
                             ["file"] = new() { ContentType = "application/octet-stream" }
+                        },
+                        Examples = new Dictionary<string, OpenApiExample>
+                        {
+                            ["DocumentUpload"] = new()
+                            {
+                                Summary = "Загрузка документа",
+                                Description = "Пример загрузки PDF документа",
+                                Value = new OpenApiObject
+                                {
+                                    ["fileName"] = new OpenApiString("project-specification.pdf"),
+                                    ["file"] = new OpenApiString("[binary file data]")
+                                }
+                            },
+                            ["ImageUpload"] = new()
+                            {
+                                Summary = "Загрузка изображения",
+                                Description = "Пример загрузки JPEG изображения",
+                                Value = new OpenApiObject
+                                {
+                                    ["fileName"] = new OpenApiString("screenshot.jpg"),
+                                    ["file"] = new OpenApiString("[binary file data]")
+                                }
+                            }
                         }
                     }
                 }
@@ -230,6 +250,89 @@ public static class CreateAttachmentOperations
                                     ["filePath"] = new OpenApiString("tasks/123/attachments/guid-string"),
                                     ["taskId"] = new OpenApiInteger(123),
                                     ["task"] = new OpenApiNull()
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            operation.Responses["400"] = new OpenApiResponse
+            {
+                Description = "Некорректный запрос",
+                Content = new Dictionary<string, OpenApiMediaType>
+                {
+                    ["application/json"] = new()
+                    {
+                        Schema = new OpenApiSchema
+                        {
+                            Type = "object",
+                            Properties = new Dictionary<string, OpenApiSchema>
+                            {
+                                ["type"] = new() { Type = "string" },
+                                ["title"] = new() { Type = "string" },
+                                ["status"] = new() { Type = "integer" },
+                                ["detail"] = new() { Type = "string" }
+                            }
+                        },
+                        Examples = new Dictionary<string, OpenApiExample>
+                        {
+                            ["ValidationError"] = new()
+                            {
+                                Summary = "Ошибка валидации файла",
+                                Value = new OpenApiObject
+                                {
+                                    ["type"] = new OpenApiString("https://tools.ietf.org/html/rfc7231#section-6.5.1"),
+                                    ["title"] = new OpenApiString("Bad Request"),
+                                    ["status"] = new OpenApiInteger(400),
+                                    ["detail"] = new OpenApiString("File name contains invalid characters")
+                                }
+                            },
+                            ["FileSizeError"] = new()
+                            {
+                                Summary = "Превышен размер файла",
+                                Value = new OpenApiObject
+                                {
+                                    ["type"] = new OpenApiString("https://tools.ietf.org/html/rfc7231#section-6.5.1"),
+                                    ["title"] = new OpenApiString("Bad Request"),
+                                    ["status"] = new OpenApiInteger(400),
+                                    ["detail"] = new OpenApiString("File size 15.25MB exceeds maximum allowed size 10MB")
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            operation.Responses["502"] = new OpenApiResponse
+            {
+                Description = "Ошибка внешнего сервиса",
+                Content = new Dictionary<string, OpenApiMediaType>
+                {
+                    ["application/json"] = new()
+                    {
+                        Schema = new OpenApiSchema
+                        {
+                            Type = "object",
+                            Properties = new Dictionary<string, OpenApiSchema>
+                            {
+                                ["type"] = new() { Type = "string" },
+                                ["title"] = new() { Type = "string" },
+                                ["status"] = new() { Type = "integer" },
+                                ["detail"] = new() { Type = "string" }
+                            }
+                        },
+                        Examples = new Dictionary<string, OpenApiExample>
+                        {
+                            ["FileStorageError"] = new()
+                            {
+                                Summary = "Ошибка файлового хранилища",
+                                Value = new OpenApiObject
+                                {
+                                    ["type"] = new OpenApiString("https://tools.ietf.org/html/rfc7231#section-6.6.2"),
+                                    ["title"] = new OpenApiString("Bad Gateway"),
+                                    ["status"] = new OpenApiInteger(502),
+                                    ["detail"] = new OpenApiString("External service 'FileStorage' returned error during file_upload: InternalServerError")
                                 }
                             }
                         }
@@ -312,7 +415,8 @@ public static class CreateAttachmentOperations
         }
 
         // Валидация MIME типа
-        var mimeValidation = MimeTypeValidator.ValidateMimeType(file);
+        var allowedExtensions = configuration.GetSection("AllowedFileExtensions").Get<string[]>();
+        var mimeValidation = MimeTypeValidator.ValidateMimeType(file, allowedExtensions);
         if (!mimeValidation.IsValid)
         {
             logger.LogWarning("MIME type validation failed: {FileName}, Error: {Error}", file.FileName, mimeValidation.ErrorMessage);
@@ -353,35 +457,6 @@ public static class CreateAttachmentOperations
     }
 
     private static string GetFilePath(int taskId) => $"tasks/{taskId}/attachments";
-
-    private static async Task<HttpResponseMessage> SendFileToStorageService(string filePath,
-        [FromForm] string fileName,
-        IFormFile file,
-        [FromServices] IHttpClientFactory httpClientFactory)
-    {
-        using var client = httpClientFactory.CreateClient(FileStorageClientName);
-        using var content = new MultipartFormDataContent();
-
-        // 1. Добавляем метаданные
-        content.Add(new StringContent(fileName), "FileName");
-        content.Add(new StringContent(filePath), "FilePath");
-
-        // 2. Добавляем файл
-        await using var fileStream = file.OpenReadStream();
-        content.Add(
-            new StreamContent(fileStream),
-            "File",
-            file.FileName
-        );
-
-        // 3. Отправляем запрос
-        var response = await client.PostAsync(
-            "",
-            content
-        );
-
-        return response;
-    }
 
     #endregion Private Methods
 }

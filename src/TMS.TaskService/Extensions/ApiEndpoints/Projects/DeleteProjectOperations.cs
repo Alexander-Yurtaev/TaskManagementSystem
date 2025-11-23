@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
+using System.Threading.Tasks;
 using TMS.Common.Helpers;
 using TMS.Common.Validators;
 using TMS.TaskService.Data.Repositories;
@@ -55,7 +56,7 @@ public static class DeleteProjectOperations
             }
             catch (Exception ex)
             {
-                return ResultHelper.CreateInternalServerErrorProblemResult(logger, ex);
+                return ResultHelper.CreateInternalServerErrorProblemResult($"Error while deleting project ID={id}", logger, ex);
             }
         })
         .WithName("DeleteProject")

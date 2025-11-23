@@ -65,14 +65,7 @@ public static class CreateCommentOperations
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(
-                        ex,
-                        "Error while creating for task with id={TaskId} comment with Text: {CommentText}.",
-                        id,
-                        StringHelper.GetStringForLogger(comment.Text)
-                    );
-
-                    return ResultHelper.CreateInternalServerErrorProblemResult(logger, ex);
+                    return ResultHelper.CreateInternalServerErrorProblemResult($"Error while creating comment for task with ID {id}", logger, ex);
                 }
             })
             .WithName("AddComment")

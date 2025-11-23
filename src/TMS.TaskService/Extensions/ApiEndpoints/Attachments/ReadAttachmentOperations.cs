@@ -46,14 +46,7 @@ public static class ReadAttachmentOperations
             }
             catch (Exception ex)
             {
-                logger.LogError(
-                    ex,
-                    "Error while getting attachment with Id: {AttachmentId}. Operation: {Operation}",
-                    id,
-                    $"GET /attachments/{id}"
-                );
-
-                return ResultHelper.CreateInternalServerErrorProblemResult(logger, ex);
+                return ResultHelper.CreateInternalServerErrorProblemResult($"Error while getting attachments for task ID={id}", logger, ex);
             }
         })
             .WithName("GetAttachmentById")
@@ -215,12 +208,11 @@ public static class ReadAttachmentOperations
             {
                 logger.LogError(
                     ex,
-                    "Error while getting attachments for task with Id: {TaskId}. Operation: {Operation}",
-                    id,
-                    $"GET /tasks/{id}/attachments"
+                    "Error while getting attachments for task with Id: {TaskId}.",
+                    id
                 );
 
-                return ResultHelper.CreateInternalServerErrorProblemResult(logger, ex);
+                return ResultHelper.CreateInternalServerErrorProblemResult($"Error while getting attachments for task with ID {id}", logger, ex);
             }
         })
             .WithName("GetAttachmentsByTaskId")

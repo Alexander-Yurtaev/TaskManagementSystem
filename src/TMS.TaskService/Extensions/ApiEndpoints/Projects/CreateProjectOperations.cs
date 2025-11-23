@@ -53,13 +53,7 @@ public static class CreateProjectOperations
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(
-                        ex,
-                        "Error while creating project with Name: {ProjectName}.",
-                        project.Name
-                    );
-
-                    return ResultHelper.CreateInternalServerErrorProblemResult(logger, ex);
+                    return ResultHelper.CreateInternalServerErrorProblemResult($"Error while creating project '{project.Name}'", logger, ex);
                 }
             })
             .WithName("CreateProject")

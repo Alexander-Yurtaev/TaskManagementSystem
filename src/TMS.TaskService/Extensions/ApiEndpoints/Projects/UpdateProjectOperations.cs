@@ -66,7 +66,7 @@ public static class UpdateProjectOperations
             }
             catch (Exception ex)
             {
-                return ResultHelper.CreateInternalServerErrorProblemResult(logger, ex);
+                return ResultHelper.CreateInternalServerErrorProblemResult($"Error while updating project ID={id}", logger, ex);
             }
         })
         .WithName("UpdateProject")

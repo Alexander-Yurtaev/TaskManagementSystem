@@ -48,7 +48,7 @@ public static class ReadProjectOperations
             }
             catch (Exception ex)
             {
-                return ResultHelper.CreateInternalServerErrorProblemResult(logger, ex);
+                return ResultHelper.CreateInternalServerErrorProblemResult("Error retrieving projects", logger, ex);
             }
         })
         .WithName("GetProjects")
@@ -234,17 +234,7 @@ public static class ReadProjectOperations
             }
             catch (Exception ex)
             {
-                logger.LogError(
-                    ex,
-                    "Error while getting project with Id: {ProjectId}. Operation: {Operation}",
-                    id,
-                    $"GET /projects/{id}"
-                );
-
-                return Results.Problem(
-                    detail: ex.Message,
-                    statusCode: StatusCodes.Status500InternalServerError
-                );
+                return ResultHelper.CreateInternalServerErrorProblemResult($"Error retrieving project with ID {id}", logger, ex);
             }
         })
         .WithName("GetProjectById")

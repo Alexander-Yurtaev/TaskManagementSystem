@@ -60,7 +60,7 @@ public static class DeleteTaskOperations
             }
             catch (Exception ex)
             {
-                return ResultHelper.CreateInternalServerErrorProblemResult(logger, ex);
+                return ResultHelper.CreateInternalServerErrorProblemResult($"Error while creating task ID={id}", logger, ex);
             }
         })
         .WithName("DeleteTask")

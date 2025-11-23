@@ -48,7 +48,7 @@ public static class ReadTaskOperations
             }
             catch (Exception ex)
             {
-                return ResultHelper.CreateInternalServerErrorProblemResult(logger, ex);
+                return ResultHelper.CreateInternalServerErrorProblemResult("Error while getting tasks", logger, ex);
             }
         })
         .WithName("GetTasks")
@@ -244,17 +244,7 @@ public static class ReadTaskOperations
             }
             catch (Exception ex)
             {
-                logger.LogError(
-                    ex,
-                    "Error while getting task with Id: {TaskId}. Operation: {Operation}",
-                    id,
-                    $"GET /tasks/{id}"
-                );
-
-                return Results.Problem(
-                    detail: ex.Message,
-                    statusCode: StatusCodes.Status500InternalServerError
-                );
+                return ResultHelper.CreateInternalServerErrorProblemResult($"Error while getting task ID={id}", logger, ex);
             }
         })
         .WithName("GetTaskById")
