@@ -66,6 +66,22 @@ public class ProjectRepository(TaskDataContext db) : IProjectRepository
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    public async Task<bool> IsExistsAsync(int id)
+    {
+        if (id <= 0)
+        {
+            throw new ArgumentException("Id must be positive.");
+        }
+
+        return await _db.Projects.AnyAsync(p => p.Id == id);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
     public async Task<IEnumerable<ProjectEntity>> GetProjectsByUserIdAsync(int userId)

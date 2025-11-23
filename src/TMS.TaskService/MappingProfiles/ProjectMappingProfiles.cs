@@ -14,28 +14,23 @@ public class ProjectMappingProfiles : Profile
     /// </summary>
     public ProjectMappingProfiles()
     {
-        #region ProjectCreate
-
-        CreateMap<ProjectCreate, ProjectEntity>()
+        // Базовый маппинг для всех проектов
+        CreateMap<ProjectModelBase, ProjectEntity>()
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name.Trim()))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src =>
                 string.IsNullOrWhiteSpace(src.Description) ? string.Empty : src.Description.Trim()))
-            .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow))
-            .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow));
+            .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow))
+            .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.Status))
+            .ForMember(dest => dest.UserId, opt => opt.Ignore()); // Игнорируем по умолчанию
 
-        CreateMap<ProjectEntity, ProjectCreate>();
+        // Специфичный маппинг для создания
+        CreateMap<ProjectCreate, ProjectEntity>()
+            .IncludeBase<ProjectModelBase, ProjectEntity>()
+            .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
+            .ForMember(dest => dest.CreatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow));
 
-        #endregion ProjectCreate
-
-        #region ProjectUpdate
-
+        // Специфичный маппинг для обновления
         CreateMap<ProjectUpdate, ProjectEntity>()
-            .ForMember(dest => dest.Id, opt => opt.Ignore())
-            .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-            .ForMember(desc => desc.UpdatedAt, opt => opt.Ignore());
-
-        CreateMap<ProjectEntity, ProjectUpdate>();
-
-        #endregion ProjectUpdate
+            .IncludeBase<ProjectModelBase, ProjectEntity>();
     }
 }

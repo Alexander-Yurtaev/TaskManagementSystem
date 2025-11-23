@@ -37,6 +37,13 @@ public interface IProjectRepository
     /// <summary>
     /// 
     /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    Task<bool> IsExistsAsync(int id);
+
+    /// <summary>
+    /// 
+    /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
     Task<IEnumerable<ProjectEntity>> GetProjectsByUserIdAsync(int userId);

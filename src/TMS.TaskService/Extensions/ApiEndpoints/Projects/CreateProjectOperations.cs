@@ -371,40 +371,21 @@ public static class CreateProjectOperations
             return ValidationResult.Error("Project must be set.");
         }
 
-        var trimmedName = project.Name?.Trim();
-
-        if (string.IsNullOrEmpty(trimmedName))
+        var validationResult = ProjectValidator.ProjectValidate(project);
+        if (!validationResult.IsValid)
         {
-            return ValidationResult.Error("Project Name must be set.");
+            logger.LogWarning("Project validation failed: {ProjectName}, Error: {Error}", project.Name, validationResult.ErrorMessage);
+            return validationResult;
         }
 
-        if (trimmedName.Length < 2)
+        validationResult = ProjectValidator.UserIdValidation(project.UserId);
+        if (!validationResult.IsValid)
         {
-            return ValidationResult.Error("Project Name must be at least 2 characters long.");
+            logger.LogWarning("Project validation failed: {ProjectName}, Error: {Error}", project.Name, validationResult.ErrorMessage);
+            return validationResult;
         }
 
-        if (trimmedName.Length > 50)
-        {
-            return ValidationResult.Error("Length of Project Name must be less or equals 50.");
-        }
-
-        var trimmedDescription = project.Description?.Trim();
-
-        if (!string.IsNullOrEmpty(trimmedDescription) && trimmedDescription.Length > 500)
-        {
-            return ValidationResult.Error("Length of Project Description must be less or equals 500.");
-        }
-
-        if (!Enum.IsDefined(typeof(ProjectStatus), project.Status))
-        {
-            return ValidationResult.Error($"Project Status '{project.Status}' is not valid. Must be between 1 and 10.");
-        }
-
-        if (project.UserId <= 0)
-        {
-            return ValidationResult.Error("Project UserId must be positive.");
-        }
-
+        var trimmedName = project.Name.Trim();
         var projectExists = await repository.IsExistsAsync(trimmedName);
         if (projectExists)
         {
