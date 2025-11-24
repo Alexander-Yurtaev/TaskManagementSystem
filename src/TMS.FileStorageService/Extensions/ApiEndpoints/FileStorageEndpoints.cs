@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using TMS.Common.Models;
 using TMS.Common.Services;
 
@@ -81,6 +82,11 @@ public static class FileStorageEndpoints
                 return Results.BadRequest("The path to save is not specified.");
 
             // 2. Формируем полный путь к файлу
+            if (!IsPathSafe(attachment.FilePath, attachment.FileName))
+            {
+                throw new ArgumentException(nameof(attachment.FilePath));
+            }
+
             string filePath = Path.Combine(attachment.FilePath, attachment.FileName);
 
             // 3. Сохраняем файл
@@ -108,5 +114,11 @@ public static class FileStorageEndpoints
             // Для Swagger/документации
             Summary = "Сохранение файла (не объекта) в хранилище."
         });
+    }
+
+    private static bool IsPathSafe(string basePath, string userPath)
+    {
+        var fullPath = Path.GetFullPath(Path.Combine(basePath, userPath));
+        return fullPath.StartsWith(basePath);
     }
 }
