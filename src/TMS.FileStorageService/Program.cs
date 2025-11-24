@@ -38,7 +38,7 @@ namespace TMS.FileStorageService
             {
                 options.BasePath = Environment.GetEnvironmentVariable("BASE_FILES_PATH")
                                       ??
-                                      throw new InvalidOperationException("BASE_EVENTS_PATH does not defined.");
+                                      throw new InvalidOperationException("BASE_FILES_PATH does not defined.");
             });
 
             builder.Services.AddEndpointsApiExplorer();
