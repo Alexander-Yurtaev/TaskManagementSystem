@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Reflection;
 using TMS.Common.Extensions;
 using TMS.Common.Helpers;
+using TMS.Common.Validators;
 using TMS.TaskService.Data.Extensions;
 using TMS.TaskService.Extensions.ApiEndpoints;
 using TMS.TaskService.Extensions.ApiEndpoints.Attachments;
@@ -36,11 +37,11 @@ namespace TMS.TaskService
             builder.Configuration.AddEnvironmentVariables();
 
             // Проверка обязательных настроек перед регистрацией сервисов
-            JwtHelper.ValidateConfiguration(builder.Configuration);
+            JwtValidator.JwtConfigurationValidate(builder.Configuration);
 
             builder.Services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => JwtAuthenticationExtensions.ConfigJwt(options, builder));
+                .AddJwtBearer(options => JwtHelper.ConfigJwt(options, builder.Configuration));
 
             // Add services to the container.
             builder.Services.AddEndpointsApiExplorer();

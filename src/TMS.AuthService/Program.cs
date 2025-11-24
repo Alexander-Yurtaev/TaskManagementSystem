@@ -6,6 +6,7 @@ using TMS.AuthService.Extensions.ApiEndpoints;
 using TMS.AuthService.Extensions.Services;
 using TMS.Common.Extensions;
 using TMS.Common.Helpers;
+using TMS.Common.Validators;
 
 namespace TMS.AuthService
 {
@@ -28,11 +29,11 @@ namespace TMS.AuthService
             builder.Configuration.AddEnvironmentVariables();
 
             // Проверка обязательных настроек перед регистрацией сервисов
-            JwtHelper.ValidateConfiguration(builder.Configuration);
+            JwtValidator.JwtConfigurationValidate(builder.Configuration);
 
             builder.Services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => JwtAuthenticationExtensions.ConfigJwt(options, builder));
+                .AddJwtBearer(options => JwtHelper.ConfigJwt(options, builder.Configuration));
 
             // Add services to the container.
             builder.Services.AddGrpc();

@@ -40,7 +40,7 @@ public class Program
 
         builder.Services
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options => JwtAuthenticationExtensions.ConfigJwt(options, builder));
+            .AddJwtBearer(options => JwtHelper.ConfigJwt(options, builder.Configuration));
 
         #endregion Ocelot + JWT
 
