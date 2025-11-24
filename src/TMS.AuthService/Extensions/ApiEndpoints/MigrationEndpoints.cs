@@ -36,6 +36,7 @@ public static class MigrationEndpoints
                 return await Migrate(db, logger);
             })
             .WithName("SetupDatabase")
+            .AllowAnonymous()
             .WithMetadata(new OpenApiOperation
             {
                 Summary = "Запуск начальной настройки БД."
@@ -56,11 +57,11 @@ public static class MigrationEndpoints
             return await Migrate(db, logger);
         })
             .WithName("MigrateDatabase")
+            .RequireAuthorization()
             .WithMetadata(new OpenApiOperation
             {
                 Summary = "Запуск миграции БД для Сервиса аутентификации."
             })
-            .RequireAuthorization()
             .Produces(StatusCodes.Status401Unauthorized)
             .Produces(StatusCodes.Status500InternalServerError)
             .WithOpenApi(operation =>

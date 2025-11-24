@@ -67,6 +67,7 @@ public static class AuthEndpoints
             }
         })
             .WithName("register")
+            .AllowAnonymous()
             .Produces<object>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError)
@@ -232,6 +233,7 @@ public static class AuthEndpoints
                 }
             })
             .WithName("login")
+            .AllowAnonymous()
             .Produces<TokensModel>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status404NotFound)
             .Produces(StatusCodes.Status500InternalServerError)
@@ -352,6 +354,7 @@ public static class AuthEndpoints
                     }
                 })
         .WithName("refresh")
+        .RequireAuthorization()
         .Produces<TokensModel>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status401Unauthorized)
         .Produces(StatusCodes.Status500InternalServerError)
