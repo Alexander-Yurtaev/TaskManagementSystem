@@ -24,10 +24,12 @@ public static class JwtAuthenticationExtensions
         var jwtKey = configuration["JWT_KEY"]!;
         var jwtIssuer = configuration["JWT_ISSUER"];
         var jwtAudience = configuration["JWT_AUDIENCE"];
+        var authority = configuration["AuthService:Authority"];
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
+                options.Authority = authority;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
