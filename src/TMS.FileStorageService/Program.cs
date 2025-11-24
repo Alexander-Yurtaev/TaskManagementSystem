@@ -32,8 +32,6 @@ namespace TMS.FileStorageService
             }
 
             // Add services to the container.
-            builder.Services.AddAuthorization();
-
             builder.Services.AddFileService("AttachmentFiles", options =>
             {
                 options.BasePath = Environment.GetEnvironmentVariable("BASE_FILES_PATH")

@@ -76,6 +76,9 @@ namespace TMS.NotificationService
                 });
             }
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             // Configure the HTTP request pipeline.
             app.AddGreetingEndpoint();
             app.AddMigrateEndpoint();

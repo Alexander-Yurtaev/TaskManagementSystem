@@ -32,6 +32,7 @@ public static class JwtHelper
             ValidateIssuerSigningKey = true,
             ValidIssuer = jwtIssuer,
             ValidAudience = jwtAudience,
+            ValidAlgorithms = new[] { SecurityAlgorithms.HmacSha256 },
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
         };
     }
