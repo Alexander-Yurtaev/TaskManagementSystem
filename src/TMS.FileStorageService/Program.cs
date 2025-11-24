@@ -1,4 +1,3 @@
-using Microsoft.OpenApi;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using TMS.Common.Extensions;
@@ -35,9 +34,9 @@ namespace TMS.FileStorageService
             // Add services to the container.
             builder.Services.AddAuthorization();
 
-            builder.Services.AddFileService("AttachmentFiles", service =>
+            builder.Services.AddFileService("AttachmentFiles", options =>
             {
-                service.BasePath = Environment.GetEnvironmentVariable("BASE_FILES_PATH")
+                options.BasePath = Environment.GetEnvironmentVariable("BASE_FILES_PATH")
                                       ??
                                       throw new InvalidOperationException("BASE_EVENTS_PATH does not defined.");
             });

@@ -1,10 +1,20 @@
-﻿namespace TMS.Common.Services;
+﻿using TMS.Common.Extensions;
+
+namespace TMS.Common.Services;
 
 public class FileService : IFileService
 {
     private readonly Lock _lock = new Lock();
+    private FileServiceOptions _options = new FileServiceOptions();
 
-    public string BasePath { get; set; } = string.Empty;
+    public FileService(FileServiceOptions options)
+    {
+        ArgumentNullException.ThrowIfNull(options);
+
+        options = _options;
+    }
+
+    public string BasePath => _options.BasePath;
 
     public void WriteFile(string path, Action<FileStream> action)
     {

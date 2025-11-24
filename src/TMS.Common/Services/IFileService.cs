@@ -2,7 +2,7 @@
 
 public interface IFileService
 {
-    string BasePath { get; set; }
+    string BasePath { get; }
 
     void WriteFile(string path, Action<FileStream> action);
 
