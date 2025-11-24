@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+using TMS.Common.Helpers;
 using TMS.Common.Models;
 using TMS.Common.Services;
 
@@ -59,6 +59,7 @@ public static class FileStorageEndpoints
                 return Results.Problem(detail: $"Error reading file: {ex.Message}", statusCode: StatusCodes.Status500InternalServerError);
             }
         })
+        .RequireAuthorization()
         .WithMetadata(new
         {
             // Для Swagger/документации
@@ -69,7 +70,7 @@ public static class FileStorageEndpoints
             [FromForm] AttachmentModel attachment,
             IFormFile file,
             [FromKeyedServices("AttachmentFiles")] IFileService fileService,
-            [FromServices] ILogger<AttachmentModel> logger) =>
+            [FromServices] ILogger logger) =>
         {
             // 1. Проверка входных данных
             if (file.Length == 0)
@@ -82,7 +83,7 @@ public static class FileStorageEndpoints
                 return Results.BadRequest("The path to save is not specified.");
 
             // 2. Формируем полный путь к файлу
-            if (!IsPathSafe(attachment.FilePath, attachment.FileName))
+            if (!FileHelper.IsPathSafe(attachment.FilePath, attachment.FileName))
             {
                 throw new ArgumentException(nameof(attachment.FilePath));
             }
@@ -109,16 +110,11 @@ public static class FileStorageEndpoints
             }
         })
         .DisableAntiforgery()
+        .RequireAuthorization()
         .WithMetadata(new
         {
             // Для Swagger/документации
             Summary = "Сохранение файла (не объекта) в хранилище."
         });
-    }
-
-    private static bool IsPathSafe(string basePath, string userPath)
-    {
-        var fullPath = Path.GetFullPath(Path.Combine(basePath, userPath));
-        return fullPath.StartsWith(basePath);
     }
 }

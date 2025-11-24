@@ -1,41 +1,40 @@
 ﻿using TMS.Common.Extensions;
+using TMS.Common.Helpers;
 
 namespace TMS.Common.Services;
 
 public class FileService : IFileService
 {
-    private readonly Lock _lock = new Lock();
     private FileServiceOptions _options = new FileServiceOptions();
 
     public FileService(FileServiceOptions options)
     {
         ArgumentNullException.ThrowIfNull(options);
 
-        options = _options;
+        _options = options;
     }
 
     public string BasePath => _options.BasePath;
 
     public void WriteFile(string path, Action<FileStream> action)
     {
-        lock (_lock)
-        {
-            var filePath = Path.Combine(BasePath, path);
-            EnsureDirectoryExists(filePath);
+        var filePath = Path.Combine(BasePath, path);
+        EnsureDirectoryExists(filePath);
 
-            using var stream = new FileStream(filePath, FileMode.Create);
+        using var stream = new FileStream(filePath, FileMode.Create);
             action(stream);
-        }
     }
 
     public void WriteFile(string path, string content)
     {
-        lock (_lock)
+        var filePath = Path.Combine(BasePath, path);
+        if (!FileHelper.IsPathSafe(BasePath, path))
         {
-            var filePath = Path.Combine(BasePath, path);
-            EnsureDirectoryExists(filePath);
-            File.WriteAllText(path, content);
+            throw new InvalidOperationException($"'{filePath}' is wrong.");
         }
+
+        EnsureDirectoryExists(filePath);
+        File.WriteAllText(filePath, content);
     }
 
     public Stream GetFile(string filePath)
