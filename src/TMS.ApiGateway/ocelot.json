@@ -274,20 +274,20 @@
     //  "DangerousAcceptAnyServerCertificateValidator": true,
     //  "SwaggerKey": "tms-file-storage-service"
     //},
-    {
-      "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/api/notify/greeting",
-      "DownstreamPathTemplate": "/greeting",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-notification-service",
-          "Port": 8081
-        }
-      ],
-      "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "notify"
-    }
+    //{
+    //  "UpstreamHttpMethod": [ "GET" ],
+    //  "UpstreamPathTemplate": "/api/notify/greeting",
+    //  "DownstreamPathTemplate": "/greeting",
+    //  "DownstreamScheme": "https",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "tms-notification-service",
+    //      "Port": 8081
+    //    }
+    //  ],
+    //  "DangerousAcceptAnyServerCertificateValidator": true,
+    //  "SwaggerKey": "notify"
+    //}
     // HTML
     //{
     //  "UpstreamHttpMethod": [ "GET" ],
