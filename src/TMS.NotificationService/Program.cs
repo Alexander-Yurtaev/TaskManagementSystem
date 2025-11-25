@@ -24,7 +24,6 @@ namespace TMS.NotificationService
 
             // автоматически ищет .env в текущей директории
             Env.Load();
-
             builder.Configuration.AddEnvironmentVariables();
 
             using var factory = LoggerFactory.Create(b => b.AddConsole());
@@ -50,12 +49,7 @@ namespace TMS.NotificationService
                 throw;
             }
 
-            builder.Services.AddFileService("EmailEvents", service =>
-            {
-                service.BasePath = Environment.GetEnvironmentVariable("BASE_EVENTS_PATH")
-                                   ??
-                                   throw new InvalidOperationException("BASE_EVENTS_PATH does not defined.");
-            });
+            builder.Services.AddEmailService();
 
             builder.Services.AddJwtAuthentication(builder.Configuration);
             builder.Services.AddAuthorization();

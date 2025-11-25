@@ -1,7 +1,9 @@
+using DotNetEnv;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using TMS.Common.Extensions;
 using TMS.FileStorageService.Extensions.ApiEndpoints;
+using TMS.FileStorageService.Extensions.Services;
 
 namespace TMS.FileStorageService
 {
@@ -19,12 +21,12 @@ namespace TMS.FileStorageService
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            #region Logging
+            // автоматически ищет .env в текущей директории
+            Env.Load();
+            builder.Configuration.AddEnvironmentVariables();
 
             using var factory = LoggerFactory.Create(b => b.AddConsole());
             ILogger logger = factory.CreateLogger<Program>();
-
-            #endregion Logging
 
             if (builder.Environment.IsDevelopment())
             {
@@ -32,12 +34,7 @@ namespace TMS.FileStorageService
             }
 
             // Add services to the container.
-            builder.Services.AddFileService("AttachmentFiles", options =>
-            {
-                options.BasePath = Environment.GetEnvironmentVariable("BASE_FILES_PATH")
-                                      ??
-                                      throw new InvalidOperationException("BASE_FILES_PATH does not defined.");
-            });
+            builder.Services.AddFileService();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(c =>
@@ -53,6 +50,9 @@ namespace TMS.FileStorageService
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
+
+            builder.Services.AddJwtAuthentication(builder.Configuration);
+            builder.Services.AddAuthorization();
 
             var app = builder.Build();
 

@@ -24,7 +24,7 @@ public static class JwtAuthenticationExtensions
         var jwtKey = configuration["JWT_KEY"]!;
         var jwtIssuer = configuration["JWT_ISSUER"];
         var jwtAudience = configuration["JWT_AUDIENCE"];
-        var authority = configuration["AuthService:Authority"];
+        var authority = configuration["JWT_AUTHORITY"];
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>

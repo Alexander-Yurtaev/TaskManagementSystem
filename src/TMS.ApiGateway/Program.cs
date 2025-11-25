@@ -1,8 +1,8 @@
+using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using TMS.ApiGateway.Extensions.Services;
-using TMS.Common.Extensions;
 using TMS.Common.Helpers;
 
 namespace TMS.ApiGateway;
@@ -13,6 +13,10 @@ public class Program
     {
         // WebApplicationBuilder
         var builder = WebApplication.CreateBuilder(args);
+
+        // автоматически ищет .env в текущей директории
+        Env.Load();
+        builder.Configuration.AddEnvironmentVariables();
 
         builder.Services.AddHttpContextAccessor();
 

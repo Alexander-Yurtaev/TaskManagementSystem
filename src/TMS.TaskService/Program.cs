@@ -1,7 +1,6 @@
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Reflection;
-using TMS.Common.Extensions;
 using TMS.Common.Helpers;
 using TMS.Common.Validators;
 using TMS.TaskService.Data.Extensions;
@@ -33,7 +32,6 @@ namespace TMS.TaskService
 
             // автоматически ищет .env в текущей директории
             Env.Load();
-
             builder.Configuration.AddEnvironmentVariables();
 
             // Проверка обязательных настроек перед регистрацией сервисов

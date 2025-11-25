@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TMS.Common\TMS.Common.csproj" />
+    <ProjectReference Include="..\TMS.FileStorageService\TMS.FileStorageService.csproj" />
   </ItemGroup>
 
   <ItemGroup>

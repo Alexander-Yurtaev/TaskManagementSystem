@@ -6,10 +6,8 @@ services:
       context: .
       dockerfile: src/TMS.ApiGateway/Dockerfile
     container_name: tms-gateway
-    environment:
-      - JWT_KEY=${JWT_KEY}
-      - JWT_ISSUER=${JWT_ISSUER}
-      - JWT_AUDIENCE=${JWT_AUDIENCE}
+    env_file:
+      - .env
     ports:
       - "8080"
       - "8081"
@@ -26,16 +24,15 @@ services:
       context: .
       dockerfile: src/TMS.AuthService/Dockerfile
     container_name: tms-auth-service
+    env_file:
+      - .env
     environment:
       - POSTGRES_USER=${AUTH_POSTGRES_USER}
       - POSTGRES_PASSWORD=${AUTH_POSTGRES_PASSWORD}
-      - POSTGRES_DB=${AUTH_POSTGRES_DB}
+      - POSTGRES_DB=auth_db
       - POSTGRES_HOST=tms-auth-db
-      - JWT_KEY=${JWT_KEY}
-      - JWT_ISSUER=${JWT_ISSUER}
-      - JWT_AUDIENCE=${JWT_AUDIENCE}
       - REDIS_HOST=tms-auth-redis
-      - REDIS_PORT=${AUTH_REDIS_PORT}
+      - REDIS_PORT=6379
       - REDIS_PASSWORD=${AUTH_REDIS_PASSWORD}
     depends_on:
       - tms.auth-db
@@ -48,7 +45,7 @@ services:
     environment:
       - POSTGRES_USER=${AUTH_POSTGRES_USER}
       - POSTGRES_PASSWORD=${AUTH_POSTGRES_PASSWORD}
-      - POSTGRES_DB=${AUTH_POSTGRES_DB}
+      - POSTGRES_DB=tms-auth-db
     volumes:
       - auth-db-data:/var/lib/postgresql/data
     
@@ -68,15 +65,14 @@ services:
       context: .
       dockerfile: src/TMS.TaskService/Dockerfile
     container_name: tms-task-service
+    env_file:
+      - .env
     environment:
       - POSTGRES_USER=${TASK_POSTGRES_USER}
       - POSTGRES_PASSWORD=${TASK_POSTGRES_PASSWORD}
-      - POSTGRES_DB=${TASK_POSTGRES_DB}
+      - POSTGRES_DB=task_db
       - POSTGRES_HOST=tms-task-db
-      - JWT_KEY=${JWT_KEY}
-      - JWT_ISSUER=${JWT_ISSUER}
-      - JWT_AUDIENCE=${JWT_AUDIENCE}
-      - RABBITMQ_HOST=${RABBITMQ_HOST}
+      - RABBITMQ_HOST=tms-rabbitmq
       - FILES_HOST=tms-file-storage-service
     depends_on:
       - tms.task-db
@@ -90,7 +86,7 @@ services:
     environment:
       - POSTGRES_USER=${TASK_POSTGRES_USER}
       - POSTGRES_PASSWORD=${TASK_POSTGRES_PASSWORD}
-      - POSTGRES_DB=${TASK_POSTGRES_DB}
+      - POSTGRES_DB=tms-task-db
     volumes:
       - task-db-data:/var/lib/postgresql/data
 
@@ -101,12 +97,13 @@ services:
       context: .
       dockerfile: src/TMS.FileStorageService/Dockerfile
     container_name: tms-file-storage-service
+    env_file:
+      - .env
     environment:
       - POSTGRES_USER=${FILE_POSTGRES_USER}
       - POSTGRES_PASSWORD=${FILE_POSTGRES_PASSWORD}
-      - POSTGRES_DB=${FILE_POSTGRES_DB}
+      - POSTGRES_DB=tms-files-db
       - POSTGRES_HOST=tms-files-db
-      - BASE_FILES_PATH=${BASE_FILES_PATH}
     depends_on:
       - tms.files-db
 
@@ -117,7 +114,7 @@ services:
     environment:
       - POSTGRES_USER=${FILE_POSTGRES_USER}
       - POSTGRES_PASSWORD=${FILE_POSTGRES_PASSWORD}
-      - POSTGRES_DB=${FILE_POSTGRES_DB}
+      - POSTGRES_DB=tms-files-db
     volumes:
       - files-db-data:/var/lib/postgresql/data
 
@@ -128,16 +125,14 @@ services:
       context: .
       dockerfile: src/TMS.NotificationService/Dockerfile
     container_name: tms-notification-service
+    env_file:
+      - .env
     environment:
       - POSTGRES_USER=${NOTIFY_POSTGRES_USER}
       - POSTGRES_PASSWORD=${NOTIFY_POSTGRES_PASSWORD}
-      - POSTGRES_DB=${NOTIFY_POSTGRES_DB}
+      - POSTGRES_DB=tms-notify-db
       - POSTGRES_HOST=tms-notify-db
-      - RABBITMQ_HOST=${RABBITMQ_HOST}
-      - BASE_EVENTS_PATH=${BASE_EVENTS_PATH}
-      - JWT_KEY=${JWT_KEY}
-      - JWT_ISSUER=${JWT_ISSUER}
-      - JWT_AUDIENCE=${JWT_AUDIENCE}
+      - RABBITMQ_HOST=tms-rabbitmq
     depends_on:
       - tms.authservice
       - tms.notify-db
@@ -149,7 +144,7 @@ services:
     environment:
       - POSTGRES_USER=${NOTIFY_POSTGRES_USER}
       - POSTGRES_PASSWORD=${NOTIFY_POSTGRES_PASSWORD}
-      - POSTGRES_DB=${NOTIFY_POSTGRES_DB}
+      - POSTGRES_DB=tms-notify-db
     volumes:
       - notify-db-data:/var/lib/postgresql/data
  

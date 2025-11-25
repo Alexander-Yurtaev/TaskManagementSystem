@@ -4,7 +4,6 @@ using System.Reflection;
 using TMS.AuthService.Data.Extensions;
 using TMS.AuthService.Extensions.ApiEndpoints;
 using TMS.AuthService.Extensions.Services;
-using TMS.Common.Extensions;
 using TMS.Common.Helpers;
 using TMS.Common.Validators;
 
@@ -25,7 +24,6 @@ namespace TMS.AuthService
 
             // автоматически ищет .env в текущей директории
             Env.Load();
-
             builder.Configuration.AddEnvironmentVariables();
 
             // Проверка обязательных настроек перед регистрацией сервисов

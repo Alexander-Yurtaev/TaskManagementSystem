@@ -9,7 +9,7 @@ public static class JwtValidator
         var jwtKey = configuration["JWT_KEY"];
         var jwtIssuer = configuration["JWT_ISSUER"];
         var jwtAudience = configuration["JWT_AUDIENCE"];
-        var authority = configuration["AuthService:Authority"];
+        var authority = configuration["JWT_AUTHORITY"];
 
         if (string.IsNullOrEmpty(jwtKey) ||
             string.IsNullOrEmpty(jwtIssuer) ||

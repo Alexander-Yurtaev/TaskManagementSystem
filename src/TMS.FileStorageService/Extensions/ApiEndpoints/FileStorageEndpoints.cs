@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TMS.Common.Helpers;
 using TMS.Common.Models;
-using TMS.Common.Services;
+using TMS.FileStorageService.Models;
+using TMS.FileStorageService.Services;
 
 namespace TMS.FileStorageService.Extensions.ApiEndpoints;
 
@@ -20,7 +21,7 @@ public static class FileStorageEndpoints
     /// <returns></returns>
     public static RouteHandlerBuilder AddFileStoragesEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        endpoints.MapGet("/files", (
+        endpoints.MapGet("/files", async (
             [FromQuery] string name,
             [FromQuery] string path,
             [FromKeyedServices("AttachmentFiles")] IFileService fileService,
@@ -43,10 +44,15 @@ public static class FileStorageEndpoints
             // 2. Получаем файл
             try
             {
-                Stream fileStream = fileService.GetFile(filePath);
+                var downloadResult = await fileService.DownloadFileAsync(filePath);
+
+                if (!downloadResult.IsSuccess)
+                {
+                    return Results.BadRequest(downloadResult.Message);
+                }
 
                 // ASP.NET Core автоматически закроет поток после отправки клиенту
-                return Results.File(fileStream, contentType: "application/octet-stream", fileDownloadName: fileName);
+                return Results.File(downloadResult.Stream, contentType: "application/octet-stream", fileDownloadName: fileName);
             }
             catch (FileNotFoundException fnf)
             {
@@ -60,6 +66,11 @@ public static class FileStorageEndpoints
             }
         })
         .RequireAuthorization()
+        .Produces(StatusCodes.Status200OK)
+        .Produces(StatusCodes.Status400BadRequest)
+        .Produces(StatusCodes.Status401Unauthorized)
+        .Produces(StatusCodes.Status404NotFound)
+        .Produces(StatusCodes.Status500InternalServerError)
         .WithMetadata(new
         {
             // Для Swagger/документации
@@ -85,6 +96,8 @@ public static class FileStorageEndpoints
             // 2. Формируем полный путь к файлу
             if (!FileHelper.IsPathSafe(attachment.FilePath, attachment.FileName))
             {
+                logger.LogWarning("Path traversal attempt detected. Base: {BasePath}, User: {UserPath}",
+                                attachment.FilePath, attachment.FileName);
                 throw new ArgumentException(nameof(attachment.FilePath));
             }
 
@@ -93,14 +106,11 @@ public static class FileStorageEndpoints
             // 3. Сохраняем файл
             try
             {
-                await Task.Run(() =>
-                {
-                    fileService.WriteFile(filePath, file.CopyTo);
-                });
+                var result = await fileService.UploadFileAsync(file);
 
-                return Results.Ok(new FileStorageResult(
-                    Message: "The file was saved successfully.",
-                    FilePath: filePath));
+                return result.IsSuccess
+                    ? Results.Ok(result)
+                    : Results.BadRequest(result);
             }
             catch (Exception ex)
             {
@@ -111,6 +121,10 @@ public static class FileStorageEndpoints
         })
         .DisableAntiforgery()
         .RequireAuthorization()
+        .Produces<FileUploadResult>(StatusCodes.Status200OK)
+        .Produces<FileUploadResult>(StatusCodes.Status400BadRequest)
+        .Produces(StatusCodes.Status401Unauthorized)
+        .Produces(StatusCodes.Status500InternalServerError)
         .WithMetadata(new
         {
             // Для Swagger/документации
