@@ -28,7 +28,7 @@ public class Program
         // Ocelot Basic setup
         builder.Configuration
             .SetBasePath(builder.Environment.ContentRootPath)
-            .AddOcelot(); // single ocelot.json file in read-only mode
+            .AddOcelot();
 
         // Проверка наличия ocelot.json
         if (!File.Exists(Path.Combine(builder.Environment.ContentRootPath, "ocelot.json")))
@@ -71,11 +71,7 @@ public class Program
         // Middleware: порядок критичен!
         app.UseHttpsRedirection();
         app.UseRouting();
-        app.UseAuthentication();
-        app.UseAuthorization();
-
-        #region Swagger + Ocelot
-
+        
         // Swagger и UI
         app.UseSwagger();
         app.UseSwaggerForOcelotUI(opt =>
@@ -83,10 +79,11 @@ public class Program
             opt.PathToSwaggerGenerator = "/swagger/docs";
         });
 
+        app.UseAuthentication();
+        app.UseAuthorization();
+
         // Ocelot — после Swagger
         await app.UseOcelot();
-
-        #endregion Swagger + Ocelot
 
         await app.RunAsync();
     }
