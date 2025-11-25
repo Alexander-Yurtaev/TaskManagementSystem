@@ -4,7 +4,7 @@ namespace TMS.Common.Helpers;
 
 public static class FileHelper
 {
-    public static void ThowIfPathNotSafe(string basePath, string userPath, ILogger logger)
+    public static void ThrowIfPathNotSafe(string basePath, string userPath, ILogger logger)
     {
         if (!IsPathSafe(basePath, userPath))
         {
