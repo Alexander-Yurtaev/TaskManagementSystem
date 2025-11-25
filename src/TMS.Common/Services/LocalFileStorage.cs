@@ -16,6 +16,8 @@ public class LocalFileStorage : IFileStorage
 
     public LocalFileStorage(IConfiguration configuration, ILogger<LocalFileStorage> logger)
     {
+        ArgumentNullException.ThrowIfNull(configuration);
+
         _uploadsFolder = configuration["FileStorage:UploadsFolder"] ?? "wwwroot/uploads";
         _allowedExtensions = configuration.GetSection("FileStorage:AllowedExtensions").Get<string[]>()
                            ?? new[] { ".jpg", ".jpeg", ".png", ".pdf", ".txt" };
