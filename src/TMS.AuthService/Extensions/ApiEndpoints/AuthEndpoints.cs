@@ -203,13 +203,19 @@ public static class AuthEndpoints
                     // 1. Поиск пользователя
                     var userExists = await userRepository.UserExistsAsync(model.Username);
                     if (!userExists)
+                    {
+                        await Task.Delay(2000); // Brute-force
                         return Results.NotFound();
+                    }    
 
                     var user = (await userRepository.GetByUsernameAsync(model.Username))!;
 
                     // 2. Проверка пароля
                     if (!hashService.VerifyPassword(user.PasswordHash, model.Password))
-                        return Results.NotFound();
+                    {
+                        await Task.Delay(2000); // Brute-force
+                        return Results.NotFound(); 
+                    }
 
                     // 3. Генерация токенов
                     var (accessToken, refreshToken) = await tokenService.GenerateTokensAsync(user);
