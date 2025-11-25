@@ -47,13 +47,7 @@ public class LocalFileStorage : IFileStorage
         var userPath = Path.Combine(path, fileName);
         var filePath = Path.Combine(_uploadsFolder, userPath);
 
-        if (!FileHelper.IsPathSafe(_uploadsFolder, userPath))
-        {
-            _logger.LogWarning("Path traversal attempt detected. Base: {BasePath}, User: {UserPath}",
-                                _uploadsFolder, userPath);
-
-            throw new InvalidOperationException("Invalid file path: path traversal is not allowed.");
-        }
+        FileHelper.ThowIfPathNotSafe(_uploadsFolder, userPath, _logger);
 
         using (var fileFileStream = new FileStream(filePath, FileMode.Create))
         {
@@ -67,9 +61,10 @@ public class LocalFileStorage : IFileStorage
         return fileName;
     }
 
-    // GetFileAsync и DeleteFileAsync остаются без изменений
     public Task<Stream> GetFileAsync(string fileName)
     {
+        FileHelper.ThowIfPathNotSafe(_uploadsFolder, fileName, _logger);
+
         var filePath = Path.Combine(_uploadsFolder, fileName);
         if (!File.Exists(filePath))
             throw new FileNotFoundException("Файл не найден");

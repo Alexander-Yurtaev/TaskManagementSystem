@@ -94,12 +94,7 @@ public static class FileStorageEndpoints
                 return Results.BadRequest("The path to save is not specified.");
 
             // 2. Формируем полный путь к файлу
-            if (!FileHelper.IsPathSafe(attachment.FilePath, attachment.FileName))
-            {
-                logger.LogWarning("Path traversal attempt detected. Base: {BasePath}, User: {UserPath}",
-                                attachment.FilePath, attachment.FileName);
-                throw new ArgumentException(nameof(attachment.FilePath));
-            }
+            FileHelper.ThowIfPathNotSafe(attachment.FilePath, attachment.FileName, logger);
 
             string filePath = Path.Combine(attachment.FilePath, attachment.FileName);
 

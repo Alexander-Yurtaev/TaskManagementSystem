@@ -1,7 +1,20 @@
-﻿namespace TMS.Common.Helpers;
+﻿using Microsoft.Extensions.Logging;
+
+namespace TMS.Common.Helpers;
 
 public static class FileHelper
 {
+    public static void ThowIfPathNotSafe(string basePath, string userPath, ILogger logger)
+    {
+        if (!IsPathSafe(basePath, userPath))
+        {
+            logger.LogError("Path traversal attempt detected. Base: {BasePath}, User: {UserPath}",
+                                            basePath, userPath);
+
+            throw new InvalidOperationException("Invalid file path: path traversal is not allowed.");
+        }
+    }
+
     public static bool IsPathSafe(string basePath, string userPath)
     {
         ArgumentNullException.ThrowIfNull(basePath);
