@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TMS.Common.RabbitMq;
 
-public class RabbitMqService(ILogger<RabbitMqService> logger) : BaseRabbitMqService(logger), IRabbitMqService
+public class RabbitMqService(ILogger<RabbitMqService> logger) : BaseRabbitMqService(logger), IRabbitMqService, IRabbitMqServiceInitializable
 {
     public async Task SendMessageAsync(TaskMessage message)
     {

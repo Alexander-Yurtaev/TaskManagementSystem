@@ -19,7 +19,11 @@ public class LocalFileStorage : IFileStorage
         _uploadsFolder = configuration["FileStorage:UploadsFolder"] ?? "wwwroot/uploads";
         _allowedExtensions = configuration.GetSection("FileStorage:AllowedExtensions").Get<string[]>()
                            ?? new[] { ".jpg", ".jpeg", ".png", ".pdf", ".txt" };
-        _maxFileSize = long.Parse(configuration["FileStorage:MaxFileSize"] ?? "10485760");
+
+        if (!long.TryParse(configuration["FileStorage:MaxFileSize"], out _maxFileSize))
+        {
+            _maxFileSize = 10485760; // значение по умолчанию
+        }
 
         if (!Directory.Exists(_uploadsFolder))
             Directory.CreateDirectory(_uploadsFolder);

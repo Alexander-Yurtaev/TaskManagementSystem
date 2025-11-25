@@ -2,10 +2,10 @@
 
 namespace TMS.Common.RabbitMq;
 
-public class RabbitMqServiceInitializer(IRabbitMqService rabbitMqService) : BackgroundService
+public class RabbitMqServiceInitializer(IRabbitMqServiceInitializable rabbitMqService) : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        await ((RabbitMqService)rabbitMqService).InitializeAsync();
+        await rabbitMqService.InitializeAsync();
     }
 }

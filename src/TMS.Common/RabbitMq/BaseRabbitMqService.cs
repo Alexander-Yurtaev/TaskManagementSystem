@@ -107,7 +107,5 @@ public abstract class BaseRabbitMqService(ILogger<BaseRabbitMqService> logger) :
     {
         if (Connection != null) await Connection.DisposeAsync();
         if (Channel != null) await Channel.DisposeAsync();
-        Channel?.Dispose();
-        Connection?.Dispose();
     }
 }
