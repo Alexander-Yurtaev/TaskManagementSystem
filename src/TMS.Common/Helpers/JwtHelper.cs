@@ -8,9 +8,11 @@ namespace TMS.Common.Helpers;
 
 public static class JwtHelper
 {
-    public static void ConfigJwt(JwtBearerOptions options,
-        IConfiguration configuration)
+    public static void ConfigJwt(JwtBearerOptions options, IConfiguration configuration)
     {
+        ArgumentNullException.ThrowIfNull(options);
+        ArgumentNullException.ThrowIfNull(configuration);
+
         var validationResult = JwtValidator.JwtConfigurationValidate(configuration);
         if (!validationResult.IsValid)
         {
