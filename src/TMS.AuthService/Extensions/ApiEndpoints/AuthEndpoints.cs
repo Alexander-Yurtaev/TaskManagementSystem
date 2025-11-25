@@ -39,7 +39,7 @@ public static class AuthEndpoints
                 // Проверка существования пользователя
                 if (await userRepository.UserExistsAsync(model.UserName))
                 {
-                    return Results.BadRequest($"The user with name={model.UserName} already exists.");
+                    return Results.BadRequest("User already exists or invalid credentials");
                 }
 
                 // Хеширование пароля
