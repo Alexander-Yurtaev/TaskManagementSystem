@@ -46,6 +46,16 @@ public class Program
             .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => JwtHelper.ConfigJwt(options, builder.Configuration));
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", policy =>
+            {
+                policy.AllowAnyOrigin()
+                      .AllowAnyMethod()
+                      .AllowAnyHeader();
+            });
+        });
+
         #endregion Ocelot + JWT
 
         #region Ocelot + Swagger
@@ -71,7 +81,9 @@ public class Program
         // Middleware: порядок критичен!
         app.UseHttpsRedirection();
         app.UseRouting();
-        
+
+        app.UseCors("AllowAll");
+
         // Swagger и UI
         app.UseSwagger();
         app.UseSwaggerForOcelotUI(opt =>
