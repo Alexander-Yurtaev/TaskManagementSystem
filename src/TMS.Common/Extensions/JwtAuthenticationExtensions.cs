@@ -15,6 +15,8 @@ public static class JwtAuthenticationExtensions
     public static void AddJwtAuthentication(this IServiceCollection services,
         IConfiguration configuration)
     {
+        ArgumentNullException.ThrowIfNull(configuration);
+
         var validationResult = JwtValidator.JwtConfigurationValidate(configuration);
         if (!validationResult.IsValid)
         {
