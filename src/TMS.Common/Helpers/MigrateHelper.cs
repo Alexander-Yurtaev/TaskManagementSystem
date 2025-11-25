@@ -11,6 +11,9 @@ public partial class MigrateHelper
     {
         string databaseName;
 
+        ArgumentNullException.ThrowIfNull(db);
+        ArgumentNullException.ThrowIfNull(logger);
+
         try
         {
             databaseName = db.Database.GetDbConnection().Database;
