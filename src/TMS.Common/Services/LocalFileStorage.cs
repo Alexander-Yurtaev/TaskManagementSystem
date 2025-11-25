@@ -17,6 +17,7 @@ public class LocalFileStorage : IFileStorage
     public LocalFileStorage(IConfiguration configuration, ILogger<LocalFileStorage> logger)
     {
         ArgumentNullException.ThrowIfNull(configuration);
+        ArgumentNullException.ThrowIfNull(logger);
 
         _uploadsFolder = configuration["FileStorage:UploadsFolder"] ?? "wwwroot/uploads";
         _allowedExtensions = configuration.GetSection("FileStorage:AllowedExtensions").Get<string[]>()
@@ -49,7 +50,7 @@ public class LocalFileStorage : IFileStorage
         var userPath = Path.Combine(path, fileName);
         var filePath = Path.Combine(_uploadsFolder, userPath);
 
-        FileHelper.ThowIfPathNotSafe(_uploadsFolder, userPath, _logger);
+        FileHelper.ThrowIfPathNotSafe(_uploadsFolder, userPath, _logger);
 
         using (var fileFileStream = new FileStream(filePath, FileMode.Create))
         {
@@ -65,7 +66,7 @@ public class LocalFileStorage : IFileStorage
 
     public Task<Stream> GetFileAsync(string fileName)
     {
-        FileHelper.ThowIfPathNotSafe(_uploadsFolder, fileName, _logger);
+        FileHelper.ThrowIfPathNotSafe(_uploadsFolder, fileName, _logger);
 
         var filePath = Path.Combine(_uploadsFolder, fileName);
         if (!File.Exists(filePath))
