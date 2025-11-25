@@ -6,7 +6,7 @@ public class StringHelper
     {
         string loggedValue = value?.Length <= 20
             ? value
-            : value?.Substring(0, 20) + "...";
+            : value?.Substring(0, 20) + "..." ?? "";
 
         return loggedValue;
     }
