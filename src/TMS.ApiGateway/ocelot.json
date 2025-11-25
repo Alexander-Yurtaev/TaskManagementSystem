@@ -260,20 +260,20 @@
     //  "DangerousAcceptAnyServerCertificateValidator": true,
     //  "SwaggerKey": "tasks"
     //},
-    {
-      "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/api/files/greeting",
-      "DownstreamPathTemplate": "/greeting",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-file-storage-service",
-          "Port": 8081
-        }
-      ],
-      "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "tms-file-storage-service"
-    },
+    //{
+    //  "UpstreamHttpMethod": [ "GET" ],
+    //  "UpstreamPathTemplate": "/api/files/greeting",
+    //  "DownstreamPathTemplate": "/greeting",
+    //  "DownstreamScheme": "https",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "tms-file-storage-service",
+    //      "Port": 8081
+    //    }
+    //  ],
+    //  "DangerousAcceptAnyServerCertificateValidator": true,
+    //  "SwaggerKey": "tms-file-storage-service"
+    //},
     {
       "UpstreamHttpMethod": [ "GET" ],
       "UpstreamPathTemplate": "/api/notify/greeting",
@@ -286,7 +286,7 @@
         }
       ],
       "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "tms-notification-service"
+      "SwaggerKey": "notify"
     }
     // HTML
     //{
