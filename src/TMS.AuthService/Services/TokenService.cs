@@ -56,17 +56,6 @@ public class TokenService : ITokenService
     /// <summary>
     ///
     /// </summary>
-    /// <param name="storedHash"></param>
-    /// <param name="providedToken"></param>
-    /// <returns></returns>
-    public bool ValidateRefreshToken(string storedHash, string providedToken)
-    {
-        return BCrypt.Net.BCrypt.Verify(providedToken, storedHash);
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
     /// <param name="refreshToken"></param>
     /// <returns></returns>
     /// <exception cref="UnauthorizedAccessException"></exception>
