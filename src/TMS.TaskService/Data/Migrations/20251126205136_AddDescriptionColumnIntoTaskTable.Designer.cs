@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TMS.TaskService.Data;
@@ -11,9 +12,11 @@ using TMS.TaskService.Data;
 namespace TMS.TaskService.Data.Migrations
 {
     [DbContext(typeof(TaskDataContext))]
-    partial class TaskDataContextModelSnapshot : ModelSnapshot
+    [Migration("20251126205136_AddDescriptionColumnIntoTaskTable")]
+    partial class AddDescriptionColumnIntoTaskTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
