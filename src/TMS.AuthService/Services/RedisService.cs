@@ -45,21 +45,26 @@ public class RedisService<T> : IRedisService<T> where T : class
     /// <returns></returns>
     public async Task<T?> GetAsync(string key)
     {
-        var keys = _database.Multiplexer.GetEndPoints()
-            .Select(endPoint => _database.Multiplexer.GetServer(endPoint))
-            .SelectMany(server => server.Keys())
-            .ToList();
-
-        _logger.LogInformation("RedisService: GetAsync");
-        foreach (RedisKey k in keys)
+        try
         {
-            _logger.LogInformation($"key: {k}");
-        }
+            var value = await _database.StringGetAsync(key);
 
-        var value = await _database.StringGetAsync(key);
-        return value.HasValue
-            ? JsonSerializer.Deserialize<T>(value!)
-            : null;
+            if (value.HasValue)
+            {
+                _logger.LogDebug("RedisService: Key '{Key}' found", key);
+                return JsonSerializer.Deserialize<T>(value!);
+            }
+            else
+            {
+                _logger.LogDebug("RedisService: Key '{Key}' not found", key);
+                return null;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "RedisService: Error getting key '{Key}'", key);
+            throw;
+        }
     }
 
     /// <summary>
