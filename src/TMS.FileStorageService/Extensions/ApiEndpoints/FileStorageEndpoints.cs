@@ -24,7 +24,7 @@ public static class FileStorageEndpoints
         endpoints.MapGet("/files", async (
             [FromQuery] string name,
             [FromQuery] string path,
-            [FromKeyedServices("AttachmentFiles")] IFileService fileService,
+            IFileService fileService,
             [FromServices] ILogger<Program> logger) =>
         {
             var fileName = name;
@@ -80,7 +80,7 @@ public static class FileStorageEndpoints
         return endpoints.MapPost("/files", async (
             [FromForm] AttachmentModel attachment,
             IFormFile file,
-            [FromKeyedServices("AttachmentFiles")] IFileService fileService,
+            IFileService fileService,
             [FromServices] ILogger logger) =>
         {
             // 1. Проверка входных данных
