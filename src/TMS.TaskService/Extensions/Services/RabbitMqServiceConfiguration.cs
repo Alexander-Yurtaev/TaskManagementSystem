@@ -13,8 +13,9 @@ public static class RabbitMqServiceConfiguration
     /// <param name="services"></param>
     public static void AddRabbitMqServiceConfiguration(this IServiceCollection services)
     {
-        services.AddSingleton<IRabbitMqService, RabbitMqService>();
-        services.AddSingleton<IRabbitMqServiceInitializable, RabbitMqService>();
+        services.AddSingleton<RabbitMqService>();
+        services.AddSingleton<IRabbitMqService>(sp => sp.GetRequiredService<RabbitMqService>());
+        services.AddSingleton<IRabbitMqServiceInitializable>(sp => sp.GetRequiredService<RabbitMqService>());
 
         services.AddHostedService<RabbitMqServiceInitializer>();
     }

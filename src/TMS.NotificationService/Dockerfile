@@ -33,4 +33,5 @@ COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "TMS.NotificationService.dll"]
 
 # Создаём папку для хранения "почтовых" сообщений
-RUN mkdir -p /tmp/emails/events
+RUN mkdir -p /app/emails/events && chmod 755 /app/emails/events
+VOLUME /app/emails/events

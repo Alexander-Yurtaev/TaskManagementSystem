@@ -32,4 +32,5 @@ COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "TMS.FileStorageService.dll"]
 
 # Создаём папку для хранения файлов-приложений (AttachmentEntity)
-RUN mkdir -p /tmp/files
+RUN mkdir -p /app/files && chmod 755 /app/files
+VOLUME /app/files

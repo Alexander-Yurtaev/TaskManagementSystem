@@ -8,6 +8,12 @@ public class RabbitMqService(ILogger<RabbitMqService> logger) : BaseRabbitMqServ
 {
     public async Task SendMessageAsync(TaskMessage message)
     {
+        if (Channel == null)
+        {
+            logger.LogError("RabbitMQ Channel is not initialized");
+            throw new InvalidOperationException("RabbitMQ Channel is not initialized. Call InitializeAsync first.");
+        }
+
         var props = new BasicProperties();
         var body = Encoding.UTF8.GetBytes(message.Message);
         string routingKey;

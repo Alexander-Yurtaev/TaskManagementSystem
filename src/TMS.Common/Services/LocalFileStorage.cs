@@ -41,18 +41,22 @@ public class LocalFileStorage : IFileStorage
         if (fileStream.Length > _maxFileSize)
             throw new InvalidOperationException($"Файл слишком большой. Максимальный размер: {_maxFileSize / 1024 / 1024}MB");
 
-        path ??= string.Empty;
-
         var normalizedExtension = fileExtension.ToLowerInvariant();
         if (!_allowedExtensions.Contains(normalizedExtension))
             throw new InvalidOperationException($"Недопустимый тип файла. Разрешены: {string.Join(", ", _allowedExtensions)}");
 
         var fileName = $"{Guid.NewGuid()}{normalizedExtension}";
-        path ??= "";
+        path ??= string.Empty;
         var userPath = Path.Combine(path, fileName);
-        var filePath = Path.Combine(_uploadsFolder, userPath);
-
+        
         FileHelper.ThrowIfPathNotSafe(_uploadsFolder, userPath, _logger);
+
+        var filePath = Path.Combine(_uploadsFolder, userPath);
+        var dir = Path.GetDirectoryName(filePath) ?? throw new ArgumentException(nameof(filePath));
+        if (!Directory.Exists(dir))
+        {
+            Directory.CreateDirectory(dir);
+        }
 
         using (var fileFileStream = new FileStream(filePath, FileMode.Create))
         {
