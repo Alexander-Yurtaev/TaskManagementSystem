@@ -9,7 +9,6 @@ namespace TMS.AuthService.Services;
 public class HashService : IHashService
 {
     private const int Workfactor = 12; // Рекомендуемое значение для BCrypt
-    private readonly SHA256 _sha256 = SHA256.Create();
 
     /// <summary>
     /// 
@@ -41,8 +40,9 @@ public class HashService : IHashService
     /// <returns></returns>
     public string HashToken(string token)
     {
+        using SHA256 sha256 = SHA256.Create();
         byte[] bytes = Encoding.UTF8.GetBytes(token);
-        byte[] hashBytes = _sha256.ComputeHash(bytes);
+        byte[] hashBytes = sha256.ComputeHash(bytes);
         return Convert.ToBase64String(hashBytes);
     }
 }
