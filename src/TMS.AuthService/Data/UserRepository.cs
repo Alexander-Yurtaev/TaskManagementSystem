@@ -52,7 +52,7 @@ public class UserRepository(AuthDataContext db) : IUserRepository
     /// <param name="user"></param>
     public async Task AddUserAsync(UserEntity user)
     {
-        ArgumentNullException.ThrowIfNull(user);
+        ArgumentNullException.ThrowIfNull(user, nameof(user));
 
         await _db.Users.AddAsync(user);
         await _db.SaveChangesAsync();

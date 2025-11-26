@@ -35,7 +35,7 @@ namespace TMS.TaskService
             builder.Configuration.AddEnvironmentVariables();
 
             // Проверка обязательных настроек перед регистрацией сервисов
-            JwtValidator.JwtConfigurationValidate(builder.Configuration);
+            JwtValidator.ThrowIfNotValidate(builder.Configuration);
 
             builder.Services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

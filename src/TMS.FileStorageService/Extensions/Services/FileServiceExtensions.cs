@@ -15,7 +15,7 @@ public static class FileServiceExtensions
     /// <returns></returns>
     public static IServiceCollection AddFileService(this IServiceCollection services)
     {
-        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(services, nameof(services));
 
         services.AddScoped<IFileStorage, LocalFileStorage>();
         services.AddScoped<IFileService, FileService>();

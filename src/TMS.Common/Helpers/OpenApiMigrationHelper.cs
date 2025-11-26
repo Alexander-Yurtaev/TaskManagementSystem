@@ -8,7 +8,7 @@ public static class OpenApiMigrationHelper
 {
     public static OpenApiOperation InitOperationForSetup(OpenApiOperation operation, string dbName, string tag)
     {
-        ArgumentNullException.ThrowIfNull(operation);
+        ArgumentNullException.ThrowIfNull(operation, nameof(operation));
 
         operation = BaseInitOperationForMigration(operation, dbName);
 
@@ -33,7 +33,7 @@ public static class OpenApiMigrationHelper
 
     public static OpenApiOperation InitOperationForMigration(OpenApiOperation operation, string dbName, string tag)
     {
-        ArgumentNullException.ThrowIfNull(operation);
+        ArgumentNullException.ThrowIfNull(operation, nameof(operation));
 
         operation = BaseInitOperationForMigration(operation, dbName);
 
@@ -58,7 +58,7 @@ public static class OpenApiMigrationHelper
 
     public static void EnsureResponseWithExamples(OpenApiOperation operation, string statusCode, Dictionary<string, OpenApiExample> examples)
     {
-        ArgumentNullException.ThrowIfNull(operation);
+        ArgumentNullException.ThrowIfNull(operation, nameof(operation));
 
         if (!operation.Responses.TryGetValue(statusCode, out var response))
         {

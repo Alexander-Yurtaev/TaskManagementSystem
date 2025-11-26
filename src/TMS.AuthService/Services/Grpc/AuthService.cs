@@ -4,6 +4,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security;
 using System.Text;
 using TMS.Common.Grpc.Token;
+using TMS.Common.Helpers;
+using TMS.Common.Validators;
 
 namespace TMS.AuthService.Services.Grpc
 {
@@ -22,6 +24,8 @@ namespace TMS.AuthService.Services.Grpc
         /// <param name="logger"></param>
         public AuthService(IConfiguration configuration, ILogger<AuthService> logger)
         {
+            ArgumentNullException.ThrowIfNull(configuration, nameof(configuration));
+
             _configuration = configuration;
             _logger = logger;
         }
@@ -34,17 +38,24 @@ namespace TMS.AuthService.Services.Grpc
         /// <returns></returns>
         public override Task<ValidateTokenReply> ValidateToken(ValidateTokenRequest request, ServerCallContext context)
         {
+            JwtValidator.ThrowIfNotValidate(_configuration);
+
             var token = request.Token;
             var tokenHandler = new JwtSecurityTokenHandler();
-            var jwtKey = _configuration["JWT_KEY"] ?? throw new SecurityException("JWT key is not defined!");
+            var jwtKey = _configuration["JWT_KEY"]!;
+            var issuer = _configuration["JWT_ISSUER"];
+            var audience = _configuration["JWT_AUDIENCE"];
             var key = Encoding.ASCII.GetBytes(jwtKey);
+
             var validationParameters = new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                ValidateLifetime = true
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidIssuer = issuer,
+                ValidAudience = audience
             };
 
             var result = new ValidateTokenReply();

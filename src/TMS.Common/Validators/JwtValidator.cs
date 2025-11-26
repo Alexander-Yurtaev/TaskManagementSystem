@@ -21,4 +21,13 @@ public static class JwtValidator
 
         return ValidationResult.Success();
     }
+
+    public static void ThrowIfNotValidate(IConfiguration configuration)
+    {
+        var validationResult = JwtConfigurationValidate(configuration);
+        if (!validationResult.IsValid)
+        {
+            throw new Exception(validationResult.ErrorMessage);
+        }
+    }
 }

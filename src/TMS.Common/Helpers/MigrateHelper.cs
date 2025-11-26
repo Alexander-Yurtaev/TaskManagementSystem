@@ -11,8 +11,8 @@ public partial class MigrateHelper
     {
         string databaseName;
 
-        ArgumentNullException.ThrowIfNull(db);
-        ArgumentNullException.ThrowIfNull(logger);
+        ArgumentNullException.ThrowIfNull(db, nameof(db));
+        ArgumentNullException.ThrowIfNull(logger, nameof(logger));
 
         try
         {

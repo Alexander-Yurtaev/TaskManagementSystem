@@ -15,7 +15,7 @@ public static class EmailServiceExtensions
     /// <returns></returns>
     public static IServiceCollection AddEmailService(this IServiceCollection services)
     {
-        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(services, nameof(services));
 
         services.AddScoped<IFileStorage, LocalFileStorage>();
         services.AddScoped<IEmailService, EmailFileService>();

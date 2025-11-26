@@ -10,14 +10,9 @@ public static class JwtHelper
 {
     public static void ConfigJwt(JwtBearerOptions options, IConfiguration configuration)
     {
-        ArgumentNullException.ThrowIfNull(options);
-        ArgumentNullException.ThrowIfNull(configuration);
-
-        var validationResult = JwtValidator.JwtConfigurationValidate(configuration);
-        if (!validationResult.IsValid)
-        {
-            throw new Exception(validationResult.ErrorMessage);
-        }
+        ArgumentNullException.ThrowIfNull(options, nameof(options));
+        ArgumentNullException.ThrowIfNull(configuration, nameof(configuration));
+        JwtValidator.ThrowIfNotValidate(configuration);
 
         var jwtKey = configuration["JWT_KEY"]!;
         var jwtIssuer = configuration["JWT_ISSUER"];

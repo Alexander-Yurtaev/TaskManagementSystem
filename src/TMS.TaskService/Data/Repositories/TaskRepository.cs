@@ -18,7 +18,7 @@ public class TaskRepository(TaskDataContext db) : ITaskRepository
     /// <param name="task"></param>
     public async Task AddAsync(TaskEntity task)
     {
-        ArgumentNullException.ThrowIfNull(task);
+        ArgumentNullException.ThrowIfNull(task, nameof(task));
 
         await _db.Tasks.AddAsync(task);
         await _db.SaveChangesAsync();
@@ -101,7 +101,7 @@ public class TaskRepository(TaskDataContext db) : ITaskRepository
     /// <param name="task"></param>
     public async Task<TaskEntity> UpdateAsync(TaskEntity task)
     {
-        ArgumentNullException.ThrowIfNull(task);
+        ArgumentNullException.ThrowIfNull(task, nameof(task));
 
         _db.Tasks.Update(task);
         await _db.SaveChangesAsync();

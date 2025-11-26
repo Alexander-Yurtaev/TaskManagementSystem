@@ -17,7 +17,7 @@ public class CommentRepository(TaskDataContext db) : ICommentRepository
     /// <param name="comment"></param>
     public async Task AddAsync(CommentEntity comment)
     {
-        ArgumentNullException.ThrowIfNull(comment);
+        ArgumentNullException.ThrowIfNull(comment, nameof(comment));
 
         await _db.Comments.AddAsync(comment);
         await _db.SaveChangesAsync();
@@ -66,7 +66,7 @@ public class CommentRepository(TaskDataContext db) : ICommentRepository
     /// <param name="comment"></param>
     public async Task<CommentEntity> UpdateAsync(CommentEntity comment)
     {
-        ArgumentNullException.ThrowIfNull(comment);
+        ArgumentNullException.ThrowIfNull(comment, nameof(comment));
 
         _db.Comments.Update(comment);
         await _db.SaveChangesAsync();

@@ -18,7 +18,7 @@ public class ProjectRepository(TaskDataContext db) : IProjectRepository
     /// <param name="project"></param>
     public async Task AddAsync(ProjectEntity project)
     {
-        ArgumentNullException.ThrowIfNull(project);
+        ArgumentNullException.ThrowIfNull(project, nameof(project));
 
         await _db.Projects.AddAsync(project);
         await _db.SaveChangesAsync();
@@ -100,7 +100,7 @@ public class ProjectRepository(TaskDataContext db) : IProjectRepository
     /// <exception cref="NotImplementedException"></exception>
     public async Task<ProjectEntity> UpdateAsync(ProjectEntity project)
     {
-        ArgumentNullException.ThrowIfNull(project);
+        ArgumentNullException.ThrowIfNull(project, nameof(project));
 
         _db.Projects.Update(project);
         await _db.SaveChangesAsync();

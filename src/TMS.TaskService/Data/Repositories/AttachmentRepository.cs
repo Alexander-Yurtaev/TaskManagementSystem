@@ -17,7 +17,7 @@ public class AttachmentRepository(TaskDataContext db) : IAttachmentRepository
     /// <param name="attachment"></param>
     public async Task AddAsync(AttachmentEntity attachment)
     {
-        ArgumentNullException.ThrowIfNull(attachment);
+        ArgumentNullException.ThrowIfNull(attachment, nameof(attachment));
 
         await _db.Attachments.AddAsync(attachment);
         await _db.SaveChangesAsync();
@@ -72,7 +72,7 @@ public class AttachmentRepository(TaskDataContext db) : IAttachmentRepository
     /// <param name="attachment"></param>
     public async Task<AttachmentEntity> UpdateAsync(AttachmentEntity attachment)
     {
-        ArgumentNullException.ThrowIfNull(attachment);
+        ArgumentNullException.ThrowIfNull(attachment, nameof(attachment));
 
         _db.Attachments.Update(attachment);
         await _db.SaveChangesAsync();
