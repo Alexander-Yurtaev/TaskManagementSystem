@@ -9,21 +9,22 @@ public interface IFileStorage
     /// 
     /// </summary>
     /// <param name="fileStream"></param>
+    /// <param name="path"></param>
     /// <param name="fileExtension"></param>
     /// <returns></returns>
-    Task<string> SaveFileAsync(Stream fileStream, string fileExtension, string? path = null);
+    Task<string> SaveFileAsync(Stream fileStream, string path, string fileExtension);
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="fileName"></param>
+    /// <param name="filePath"></param>
     /// <returns></returns>
-    Task<Stream> GetFileAsync(string fileName);
+    Task<Stream> GetFileAsync(string filePath);
 
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="fileName"></param>
+    /// <param name="filePath"></param>
     /// <returns></returns>
-    Task<bool> DeleteFileAsync(string fileName);
+    Task<bool> DeleteFileAsync(string filePath);
 }

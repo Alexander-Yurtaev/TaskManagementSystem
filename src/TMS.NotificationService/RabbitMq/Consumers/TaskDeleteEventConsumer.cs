@@ -6,5 +6,5 @@
 /// <param name="serviceScopeFactory"></param>
 /// <param name="logger"></param>
 public class TaskDeleteEventConsumer(IServiceScopeFactory serviceScopeFactory, ILogger<TaskDeleteEventConsumer> logger)
-    : BaseEventConsumer(serviceScopeFactory, logger, DeleteQueueName, $"tasks/delete/{Guid.NewGuid().ToString()}.txt"),
+    : BaseEventConsumer(serviceScopeFactory, logger, DeleteQueueName, $"tasks/delete"),
         IRabbitMqDeleteConsumer;

@@ -8,5 +8,5 @@ namespace TMS.Common.RabbitMq.Consumers;
 /// <param name="serviceScopeFactory"></param>
 /// <param name="logger"></param>
 public class TaskUpdateEventConsumer(IServiceScopeFactory serviceScopeFactory, ILogger<TaskUpdateEventConsumer> logger)
-    : BaseEventConsumer(serviceScopeFactory, logger, UpdateQueueName, $"tasks/update/{Guid.NewGuid().ToString()}.txt"),
+    : BaseEventConsumer(serviceScopeFactory, logger, UpdateQueueName, $"tasks/update"),
         IRabbitMqUpdateConsumer;

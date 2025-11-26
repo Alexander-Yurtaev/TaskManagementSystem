@@ -44,10 +44,10 @@ public class EmailFileService : IEmailService
             stream.Position = 0;
 
             // Сохраняем файл с расширением .txt
-            var fileName = await _fileStorage.SaveFileAsync(stream, ".txt", emailFile.Path);
+            var userPath = await _fileStorage.SaveFileAsync(stream, emailFile.Path, ".txt");
 
-            _logger.LogInformation("Email body saved to file: {FileName}", fileName);
-            return fileName;
+            _logger.LogInformation("Email body saved to file: {UserPath}", userPath);
+            return userPath;
         }
         catch (Exception ex)
         {

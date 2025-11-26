@@ -19,7 +19,7 @@ public class LocalFileStorage : IFileStorage
         ArgumentNullException.ThrowIfNull(configuration, nameof(configuration));
         ArgumentNullException.ThrowIfNull(logger, nameof(logger));
 
-        _uploadsFolder = configuration["FileStorage:UploadsFolder"] ?? "wwwroot/uploads";
+        _uploadsFolder = configuration["FileStorage:UploadsFolder"] ?? "/tmp/files";
         _allowedExtensions = configuration.GetSection("FileStorage:AllowedExtensions").Get<string[]>()
                            ?? new[] { ".jpg", ".jpeg", ".png", ".pdf", ".txt" };
 
@@ -33,13 +33,15 @@ public class LocalFileStorage : IFileStorage
         _logger = logger;
     }
 
-    public async Task<string> SaveFileAsync(Stream fileStream, string fileExtension, string? path = null)
+    public async Task<string> SaveFileAsync(Stream fileStream, string path, string fileExtension)
     {
         if (fileStream == null || fileStream.Length == 0)
             throw new ArgumentException("Файловый поток пуст");
 
         if (fileStream.Length > _maxFileSize)
             throw new InvalidOperationException($"Файл слишком большой. Максимальный размер: {_maxFileSize / 1024 / 1024}MB");
+
+        path ??= string.Empty;
 
         var normalizedExtension = fileExtension.ToLowerInvariant();
         if (!_allowedExtensions.Contains(normalizedExtension))
@@ -61,14 +63,14 @@ public class LocalFileStorage : IFileStorage
             await fileStream.CopyToAsync(fileFileStream);
         }
 
-        return fileName;
+        return userPath;
     }
 
-    public Task<Stream> GetFileAsync(string fileName)
+    public Task<Stream> GetFileAsync(string userPath)
     {
-        FileHelper.ThrowIfPathNotSafe(_uploadsFolder, fileName, _logger);
+        FileHelper.ThrowIfPathNotSafe(_uploadsFolder, userPath, _logger);
 
-        var filePath = Path.Combine(_uploadsFolder, fileName);
+        var filePath = Path.Combine(_uploadsFolder, userPath);
         if (!File.Exists(filePath))
             throw new FileNotFoundException("Файл не найден");
 
@@ -76,9 +78,9 @@ public class LocalFileStorage : IFileStorage
         return Task.FromResult<Stream>(stream);
     }
 
-    public Task<bool> DeleteFileAsync(string fileName)
+    public Task<bool> DeleteFileAsync(string userPath)
     {
-        var filePath = Path.Combine(_uploadsFolder, fileName);
+        var filePath = Path.Combine(_uploadsFolder, userPath);
         if (!File.Exists(filePath))
             return Task.FromResult(false);
 

@@ -42,12 +42,12 @@ public class FileService : IFileService
             // Используем using для гарантированного освобождения ресурсов
             using (var stream = file.OpenReadStream())
             {
-                var fileName = await _fileStorage.SaveFileAsync(stream, fileExtension);
+                var userPath = await _fileStorage.SaveFileAsync(stream, "", fileExtension);
 
                 _logger.LogInformation("Файл {FileName} успешно загружен. Оригинальное имя: {OriginalName}",
-                    fileName, file.FileName);
+                    userPath, file.FileName);
 
-                return FileUploadResult.Success(fileName, file.FileName, file.Length);
+                return FileUploadResult.Success(userPath, file.FileName, file.Length);
             }
         }
         catch (Exception ex)
@@ -60,50 +60,18 @@ public class FileService : IFileService
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="fileStream"></param>
-    /// <param name="originalFileName"></param>
-    /// <param name="fileSize"></param>
+    /// <param name="userPath"></param>
     /// <returns></returns>
-    public async Task<FileUploadResult> UploadFileAsync(Stream fileStream, string originalFileName, long fileSize)
+    public async Task<FileDownloadResult> DownloadFileAsync(string userPath)
     {
         try
         {
-            if (fileStream == null || fileStream.Length == 0)
-                return FileUploadResult.Failure("Файловый поток пуст");
-
-            var fileExtension = Path.GetExtension(originalFileName);
-            if (string.IsNullOrEmpty(fileExtension))
-                return FileUploadResult.Failure("Не удалось определить тип файла");
-
-            var fileName = await _fileStorage.SaveFileAsync(fileStream, fileExtension);
-
-            _logger.LogInformation("Файл {FileName} успешно загружен из потока. Оригинальное имя: {OriginalName}",
-                fileName, originalFileName);
-
-            return FileUploadResult.Success(fileName, originalFileName, fileSize);
+            var stream = await _fileStorage.GetFileAsync(userPath);
+            return FileDownloadResult.Success(stream, userPath);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Ошибка при загрузке файла из потока {FileName}", originalFileName);
-            return FileUploadResult.Failure($"Ошибка загрузки: {ex.Message}");
-        }
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="fileName"></param>
-    /// <returns></returns>
-    public async Task<FileDownloadResult> DownloadFileAsync(string fileName)
-    {
-        try
-        {
-            var stream = await _fileStorage.GetFileAsync(fileName);
-            return FileDownloadResult.Success(stream, fileName);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Ошибка при скачивании файла {FileName}", fileName);
+            _logger.LogError(ex, "Ошибка при скачивании файла {FileName}", userPath);
             return FileDownloadResult.Failure(ex.Message);
         }
     }
@@ -111,17 +79,17 @@ public class FileService : IFileService
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="fileName"></param>
+    /// <param name="userPath"></param>
     /// <returns></returns>
-    public async Task<bool> RemoveFileAsync(string fileName)
+    public async Task<bool> RemoveFileAsync(string userPath)
     {
         try
         {
-            return await _fileStorage.DeleteFileAsync(fileName);
+            return await _fileStorage.DeleteFileAsync(userPath);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Ошибка при удалении файла {FileName}", fileName);
+            _logger.LogError(ex, "Ошибка при удалении файла {FileName}", userPath);
             return false;
         }
     }
