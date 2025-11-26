@@ -72,8 +72,10 @@ public class TokenService : ITokenService
     /// <exception cref="UnauthorizedAccessException"></exception>
     public async Task<(string, string)> RefreshTokensAsync(string refreshToken)
     {
+        var hashedRefreshToken = HashToken(refreshToken);
+
         // Получаем пользователя по refresh token
-        var user = await GetUserByRefreshToken(refreshToken);
+        var user = await GetUserByRefreshToken(hashedRefreshToken);
         if (user is null)
             throw new UnauthorizedAccessException("Invalid refresh token");
 
@@ -83,15 +85,14 @@ public class TokenService : ITokenService
 
         // Обновляем время жизни refresh token в Redis
         var expiry = TimeSpan.FromDays(Convert.ToDouble(_configuration["RefreshTokenLifetime"]));
-        await _redisService.UpdateExpiryAsync(refreshToken, expiry);
+        await _redisService.UpdateExpiryAsync(hashedRefreshToken, expiry);
 
         return (newAccessToken, newRefreshToken);
     }
 
-    private async Task<UserEntity?> GetUserByRefreshToken(string refreshToken)
+    private async Task<UserEntity?> GetUserByRefreshToken(string hashedRefreshToken)
     {
         // Хеш токена используется как ключ
-        var hashedRefreshToken = HashToken(refreshToken);
         var userToken = await _redisService.GetAsync(hashedRefreshToken);
         if (userToken is null)
         {
@@ -159,7 +160,6 @@ public class TokenService : ITokenService
         // Хешируем токен для безопасного хранения
         var hashedRefreshToken = HashToken(refreshToken);
         _logger.LogInformation("TokenService: GenerateRefreshTokenAsync");
-        _logger.LogInformation($"refresh: {refreshToken}; hash: {hashedRefreshToken}");
 
         // Сохраняем токен в базе данных (если необходимо)
         await SaveRefreshTokenAsync(hashedRefreshToken, user.Id);
