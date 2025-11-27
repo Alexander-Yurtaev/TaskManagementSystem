@@ -12,7 +12,6 @@
           "Port": 8081
         }
       ],
-      "DangerousAcceptAnyServerCertificateValidator": true,
       "NoLoadBalancer": true,
       "RouteIsCaseSensitive": false,
       "RequestIdKey": "Oc-RequestId",
@@ -29,7 +28,6 @@
           "Port": 8081
         }
       ],
-      "DangerousAcceptAnyServerCertificateValidator": true,
       "NoLoadBalancer": true,
       "RouteIsCaseSensitive": false,
       "RequestIdKey": "Oc-RequestId",
@@ -46,7 +44,6 @@
           "Port": 8081
         }
       ],
-      "DangerousAcceptAnyServerCertificateValidator": true,
       "NoLoadBalancer": true,
       "RouteIsCaseSensitive": false,
       "RequestIdKey": "Oc-RequestId",
@@ -63,7 +60,6 @@
           "Port": 8081
         }
       ],
-      "DangerousAcceptAnyServerCertificateValidator": true,
       "NoLoadBalancer": true,
       "RouteIsCaseSensitive": false
     },
@@ -79,7 +75,6 @@
           "Port": 8081
         }
       ],
-      "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "auth"
     },
     {
@@ -99,7 +94,6 @@
       "RouteClaimsRequirement": {
         "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
       },
-      "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "auth"
     },
     {
@@ -119,7 +113,6 @@
       "RouteClaimsRequirement": {
         "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
       },
-      "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "notify"
     },
     {
@@ -139,7 +132,6 @@
       "RouteClaimsRequirement": {
         "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
       },
-      "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "tasks"
     },
     {
@@ -159,7 +151,6 @@
       "RouteClaimsRequirement": {
         "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
       },
-      "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "tasks"
     },
     {
@@ -179,7 +170,6 @@
       "RouteClaimsRequirement": {
         "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
       },
-      "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "tasks"
     },
     {
@@ -199,7 +189,6 @@
       "RouteClaimsRequirement": {
         "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
       },
-      "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "tasks"
     },
     // Auth
@@ -214,7 +203,6 @@
           "Port": 8081
         }
       ],
-      "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "auth"
     },
     {
@@ -228,7 +216,6 @@
           "Port": 8081
         }
       ],
-      "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "auth"
     },
     {
@@ -242,76 +229,8 @@
           "Port": 8081
         }
       ],
-      "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "auth"
     },
-    // Greetings
-    //{
-    //  "UpstreamHttpMethod": [ "GET" ],
-    //  "UpstreamPathTemplate": "/api/tasks/greeting",
-    //  "DownstreamPathTemplate": "/greeting",
-    //  "DownstreamScheme": "https",
-    //  "DownstreamHostAndPorts": [
-    //    {
-    //      "Host": "tms-task-service",
-    //      "Port": 8081
-    //    }
-    //  ],
-    //  "DangerousAcceptAnyServerCertificateValidator": true,
-    //  "SwaggerKey": "tasks"
-    //},
-    //{
-    //  "UpstreamHttpMethod": [ "GET" ],
-    //  "UpstreamPathTemplate": "/api/files/greeting",
-    //  "DownstreamPathTemplate": "/greeting",
-    //  "DownstreamScheme": "https",
-    //  "DownstreamHostAndPorts": [
-    //    {
-    //      "Host": "tms-file-storage-service",
-    //      "Port": 8081
-    //    }
-    //  ],
-    //  "DangerousAcceptAnyServerCertificateValidator": true,
-    //  "SwaggerKey": "tms-file-storage-service"
-    //},
-    //{
-    //  "UpstreamHttpMethod": [ "GET" ],
-    //  "UpstreamPathTemplate": "/api/notify/greeting",
-    //  "DownstreamPathTemplate": "/greeting",
-    //  "DownstreamScheme": "https",
-    //  "DownstreamHostAndPorts": [
-    //    {
-    //      "Host": "tms-notification-service",
-    //      "Port": 8081
-    //    }
-    //  ],
-    //  "DangerousAcceptAnyServerCertificateValidator": true,
-    //  "SwaggerKey": "notify"
-    //}
-    // HTML
-    //{
-    //  "UpstreamHttpMethod": [ "GET" ],
-    //  "UpstreamPathTemplate": "/{everything}",
-    //  "DownstreamPathTemplate": "/{everything}",
-    //  "DownstreamScheme": "https",
-    //  "DownstreamHostAndPorts": [
-    //    {
-    //      "Host": "localhost",
-    //      "Port": 8081
-    //    }
-    //  ],
-    //  "FileExtensionWhitelist": [
-    //    "html",
-    //    "css",
-    //    "js",
-    //    "jpg",
-    //    "jpeg",
-    //    "png",
-    //    "gif",
-    //    "ico"
-    //  ],
-    //  "DangerousAcceptAnyServerCertificateValidator": true
-    //}
   ],
   "SwaggerEndPoints": [
     {

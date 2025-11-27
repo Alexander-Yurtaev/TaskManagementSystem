@@ -49,6 +49,8 @@ services:
       - GRPC_SERVER_SCHEMA=https
       - GRPC_SERVER_HOST=tms-auth-service
       - GRPC_SERVER_PORT=8081
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/etc/ssl/certs/tms-task-service.crt
+      - ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/etc/ssl/certs/tms-task-service.key
     ports:
       - "8080"
       - "8081"
@@ -85,6 +87,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
       - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/etc/ssl/certs/tms-notification-service.crt
+      - ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/etc/ssl/certs/tms-notification-service.key
     ports:
       - "8080"
       - "8081"
@@ -93,3 +97,6 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - type: bind
+        source: C:\docker-certs\tms
+        target: /etc/ssl/certs  
