@@ -57,9 +57,6 @@ namespace TMS.NotificationService
 
             var app = builder.Build();
 
-            logger = app.Services.GetRequiredService<ILogger<Program>>();
-            logger.LogInformation("Приложение успешно построено. Начинается настройка.");
-
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -78,8 +75,6 @@ namespace TMS.NotificationService
             app.AddMigrateEndpoint();
 
             app.UseHttpsRedirection();
-
-            logger.LogInformation("Приложение успешно запущено.");
 
             app.Run();
         }

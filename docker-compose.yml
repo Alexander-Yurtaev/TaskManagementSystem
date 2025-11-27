@@ -67,8 +67,6 @@ services:
     container_name: tms-task-service
     env_file:
       - .env
-    volumes:
-      - file_storage:/app/files
     environment:
       - POSTGRES_USER=${TASK_POSTGRES_USER}
       - POSTGRES_PASSWORD=${TASK_POSTGRES_PASSWORD}
@@ -101,6 +99,8 @@ services:
     container_name: tms-file-storage-service
     env_file:
       - .env
+    volumes:
+      - file_storage:/app/files
     user: "root"
     environment:
       - POSTGRES_USER=${FILE_POSTGRES_USER}

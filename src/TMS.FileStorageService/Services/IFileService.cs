@@ -1,4 +1,4 @@
-﻿using TMS.FileStorageService.Models;
+﻿using TMS.Common.Models;
 
 namespace TMS.FileStorageService.Services;
 
@@ -10,9 +10,9 @@ public interface IFileService
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="file"></param>
+    /// <param name="attachment"></param>
     /// <returns></returns>
-    Task<FileUploadResult> UploadFileAsync(IFormFile file);
+    Task<FileUploadResult> UploadFileAsync(AttachmentModel attachment);
 
     /// <summary>
     /// 

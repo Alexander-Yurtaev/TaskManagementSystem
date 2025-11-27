@@ -1,4 +1,4 @@
-﻿namespace TMS.FileStorageService.Models;
+﻿namespace TMS.Common.Models;
 
 /// <summary>
 /// 
@@ -13,7 +13,7 @@ public class FileUploadResult
     /// <summary>
     /// 
     /// </summary>
-    public string FileName { get; set; } = string.Empty;
+    public string FilePath { get; set; } = string.Empty;
 
     /// <summary>
     /// 
@@ -33,16 +33,16 @@ public class FileUploadResult
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="fileName"></param>
+    /// <param name="filePath"></param>
     /// <param name="originalName"></param>
     /// <param name="size"></param>
     /// <returns></returns>
-    public static FileUploadResult Success(string fileName, string originalName, long size)
+    public static FileUploadResult Success(string filePath, string originalName, long size)
     {
         return new FileUploadResult
         {
             IsSuccess = true,
-            FileName = fileName,
+            FilePath = filePath,
             OriginalName = originalName,
             Size = size,
             Message = "Файл успешно загружен"

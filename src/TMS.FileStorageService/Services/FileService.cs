@@ -1,4 +1,4 @@
-﻿using TMS.FileStorageService.Models;
+﻿using TMS.Common.Models;
 using TMS.FileStorageService.Services;
 
 namespace TMS.Common.Services;
@@ -25,34 +25,34 @@ public class FileService : IFileService
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="file"></param>
+    /// <param name="attachment"></param>
     /// <returns></returns>
-    public async Task<FileUploadResult> UploadFileAsync(IFormFile file)
+    public async Task<FileUploadResult> UploadFileAsync(AttachmentModel attachment)
     {
         try
         {
-            if (file == null || file.Length == 0)
+            if (attachment.File == null || attachment.File.Length == 0)
                 return FileUploadResult.Failure("Файл не предоставлен");
 
             // Получаем расширение файла из оригинального имени
-            var fileExtension = Path.GetExtension(file.FileName);
+            var fileExtension = Path.GetExtension(attachment.File.FileName);
             if (string.IsNullOrEmpty(fileExtension))
                 return FileUploadResult.Failure("Не удалось определить тип файла");
 
             // Используем using для гарантированного освобождения ресурсов
-            using (var stream = file.OpenReadStream())
+            using (var stream = attachment.File.OpenReadStream())
             {
-                var userPath = await _fileStorage.SaveFileAsync(stream, "", fileExtension);
+                var userPath = await _fileStorage.SaveFileAsync(stream, attachment.FilePath, fileExtension);
 
                 _logger.LogInformation("Файл {FileName} успешно загружен. Оригинальное имя: {OriginalName}",
-                    userPath, file.FileName);
+                    userPath, attachment.File.FileName);
 
-                return FileUploadResult.Success(userPath, file.FileName, file.Length);
+                return FileUploadResult.Success(userPath, attachment.File.FileName, attachment.File.Length);
             }
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Ошибка при загрузке файла {FileName}", file?.FileName);
+            _logger.LogError(ex, "Ошибка при загрузке файла {FileName}", attachment.File?.FileName);
             return FileUploadResult.Failure($"Ошибка загрузки: {ex.Message}");
         }
     }

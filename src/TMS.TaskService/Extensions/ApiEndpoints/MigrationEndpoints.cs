@@ -39,7 +39,7 @@ public static class MigrationEndpoints
         .Produces(StatusCodes.Status500InternalServerError)
         .WithOpenApi(operation =>
         {
-            OpenApiMigrationHelper.InitOperationForMigration(operation, "tms-task-db", "Task");
+            OpenApiMigrationHelper.InitOperationForMigration(operation, "tms-task-db", "Task.Setup");
             operation = OpenApiSecurityHelper.AddSecurityRequirementHelper(operation);
             return operation;
         });

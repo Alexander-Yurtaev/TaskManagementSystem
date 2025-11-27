@@ -45,7 +45,7 @@ public static class MigrationEndpoints
             .Produces(StatusCodes.Status500InternalServerError)
             .WithOpenApi(operation =>
             {
-                operation = OpenApiMigrationHelper.InitOperationForSetup(operation, "tms-auth-db", "Auth");
+                operation = OpenApiMigrationHelper.InitOperationForSetup(operation, "tms-auth-db", "Auth.Setup");
                 return operation;
             });
 
@@ -66,7 +66,7 @@ public static class MigrationEndpoints
             .Produces(StatusCodes.Status500InternalServerError)
             .WithOpenApi(operation =>
             {
-                operation = OpenApiMigrationHelper.InitOperationForMigration(operation, "tms-auth-db", "Auth");
+                operation = OpenApiMigrationHelper.InitOperationForMigration(operation, "tms-auth-db", "Auth.Setup");
                 operation = OpenApiSecurityHelper.AddSecurityRequirementHelper(operation);
                 return operation;
             });

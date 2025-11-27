@@ -51,9 +51,6 @@ namespace TMS.AuthService
 
             var app = builder.Build();
 
-            var logger = app.Services.GetRequiredService<ILogger<Program>>();
-            logger.LogInformation("Приложение успешно построено. Начинается настройка.");
-
             // Настройка middleware
             // Включение Swagger и SwaggerUI только в разработке
             if (app.Environment.IsDevelopment())
@@ -77,8 +74,6 @@ namespace TMS.AuthService
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
-
-            logger.LogInformation("Приложение успешно запущено.");
 
             app.Run();
         }

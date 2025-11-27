@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using TMS.Common.Helpers;
 using TMS.Common.Models;
-using TMS.FileStorageService.Models;
 using TMS.FileStorageService.Services;
 
 namespace TMS.FileStorageService.Extensions.ApiEndpoints;
@@ -25,7 +23,7 @@ public static class FileStorageEndpoints
             [FromQuery] string name,
             [FromQuery] string path,
             IFileService fileService,
-            [FromServices] ILogger<Program> logger) =>
+            [FromServices] ILogger<IApplicationBuilder> logger) =>
         {
             var fileName = name;
             var filePath = path;
@@ -70,38 +68,24 @@ public static class FileStorageEndpoints
         .Produces(StatusCodes.Status400BadRequest)
         .Produces(StatusCodes.Status401Unauthorized)
         .Produces(StatusCodes.Status404NotFound)
-        .Produces(StatusCodes.Status500InternalServerError)
-        .WithMetadata(new
-        {
-            // Для Swagger/документации
-            Summary = "Получение файла (не объекта) вложения."
-        });
+        .Produces(StatusCodes.Status500InternalServerError);
 
         return endpoints.MapPost("/files", async (
             [FromForm] AttachmentModel attachment,
-            IFormFile file,
             IFileService fileService,
-            [FromServices] ILogger logger) =>
+            [FromServices] ILogger<IApplicationBuilder> logger) =>
         {
             // 1. Проверка входных данных
-            if (file.Length == 0)
+            if (attachment.File.Length == 0)
                 return Results.BadRequest("The file is not provided.");
-
-            if (string.IsNullOrEmpty(attachment.FileName))
-                return Results.BadRequest("The file name is not specified.");
 
             if (string.IsNullOrEmpty(attachment.FilePath))
                 return Results.BadRequest("The path to save is not specified.");
 
-            // 2. Формируем полный путь к файлу
-            FileHelper.ThrowIfPathNotSafe(attachment.FilePath, attachment.FileName, logger);
-
-            string filePath = Path.Combine(attachment.FilePath, attachment.FileName);
-
-            // 3. Сохраняем файл
+            // 2. Сохраняем файл
             try
             {
-                var result = await fileService.UploadFileAsync(file);
+                var result = await fileService.UploadFileAsync(attachment);
 
                 return result.IsSuccess
                     ? Results.Ok(result)
@@ -115,15 +99,9 @@ public static class FileStorageEndpoints
             }
         })
         .DisableAntiforgery()
-        .RequireAuthorization()
         .Produces<FileUploadResult>(StatusCodes.Status200OK)
         .Produces<FileUploadResult>(StatusCodes.Status400BadRequest)
         .Produces(StatusCodes.Status401Unauthorized)
-        .Produces(StatusCodes.Status500InternalServerError)
-        .WithMetadata(new
-        {
-            // Для Swagger/документации
-            Summary = "Сохранение файла (не объекта) в хранилище."
-        });
+        .Produces(StatusCodes.Status500InternalServerError);
     }
 }

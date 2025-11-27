@@ -11,13 +11,11 @@ public class FileToStorageService : IFileToStorageService
     /// 
     /// </summary>
     /// <param name="filePath"></param>
-    /// <param name="fileName"></param>
     /// <param name="file"></param>
     /// <param name="httpClientFactory"></param>
     /// <returns></returns>
     public async Task<HttpResponseMessage> SendFileToStorageService(
             string filePath,
-            string fileName,
             IFormFile file,
             IHttpClientFactory httpClientFactory)
     {
@@ -25,7 +23,6 @@ public class FileToStorageService : IFileToStorageService
         using var content = new MultipartFormDataContent();
 
         // 1. Добавляем метаданные
-        content.Add(new StringContent(fileName), "FileName");
         content.Add(new StringContent(filePath), "FilePath");
 
         // 2. Добавляем файл

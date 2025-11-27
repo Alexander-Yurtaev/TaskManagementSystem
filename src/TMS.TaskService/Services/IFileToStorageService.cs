@@ -9,9 +9,8 @@ public interface IFileToStorageService
     /// 
     /// </summary>
     /// <param name="filePath"></param>
-    /// <param name="fileName"></param>
     /// <param name="file"></param>
     /// <param name="httpClientFactory"></param>
     /// <returns></returns>
-    Task<HttpResponseMessage> SendFileToStorageService(string filePath, string fileName, IFormFile file, IHttpClientFactory httpClientFactory);
+    Task<HttpResponseMessage> SendFileToStorageService(string filePath, IFormFile file, IHttpClientFactory httpClientFactory);
 }

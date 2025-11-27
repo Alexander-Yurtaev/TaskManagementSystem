@@ -31,35 +31,36 @@ public static class CreateAttachmentOperations
     {
         return endpoints.MapPost("/tasks/{id}/attachments", async (
             [FromRoute] int id,
-            [FromForm] AttachmentUploadRequest request,
+            [FromForm] IFormFile file,
             IConfiguration configuration,
             IFileToStorageService fileToStorageService,
-            ILogger <IApplicationBuilder> logger,
+            ILogger<IApplicationBuilder> logger,
             IMapper mapper,
             ITaskRepository taskRepository,
             IAttachmentRepository attachmentRepository,
             IHttpClientFactory httpClientFactory) =>
         {
-            logger.LogInformation("For task with id={TaskId} start creating attachment with FileName: {FileName}.", id, request.FileName);
+            logger.LogInformation("For task with id={TaskId} start creating attachment with FileName: {FileName}.", id, file.FileName);
 
-            var result = await ValidateData(id, request.FileName, request.File, configuration, taskRepository, logger);
+            var result = await ValidateData(id, file, configuration, taskRepository, logger);
 
             if (!result.IsValid)
             {
                 return ResultHelper.CreateValidationErrorResult(
                     entityName: "Attachment",
-                    entityIdentifier: request.FileName,
+                    entityIdentifier: file.FileName,
                     errorMessage: result.ErrorMessage,
                     logger);
             }
 
             try
             {
-                // Сохранить файл
                 string filePath = GetFilePath(id);
 
                 logger.LogInformation("Sending file to FileStorage.");
-                var response = await fileToStorageService.SendFileToStorageService(filePath, Guid.NewGuid().ToString(), request.File, httpClientFactory);
+                var fileExtension = Path.GetExtension(file.FileName);
+                var fileName = $"{Guid.NewGuid().ToString()}.{fileExtension}";
+                var response = await fileToStorageService.SendFileToStorageService(filePath, file, httpClientFactory);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -74,7 +75,7 @@ public static class CreateAttachmentOperations
                 }
 
                 var json = await response.Content.ReadAsStringAsync();
-                var fileStorageResult = JsonSerializer.Deserialize<FileStorageResult>(json,
+                var fileStorageResult = JsonSerializer.Deserialize<FileUploadResult>(json,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
                 if (fileStorageResult is null)
@@ -89,13 +90,13 @@ public static class CreateAttachmentOperations
                 var entity = new AttachmentEntity
                 {
                     TaskId = id,
-                    FileName = request.FileName,
+                    FileName = file.FileName,
                     FilePath = fileStorageResult.FilePath
                 };
                 await attachmentRepository.AddAsync(entity);
 
                 //
-                logger.LogInformation("{@FileStorageResult}", fileStorageResult);
+                logger.LogDebug("{@FileStorageResult}", fileStorageResult);
                 return Results.Created($"api/attachments/{entity.Id}", entity);
             }
             catch (Exception ex)
@@ -122,16 +123,16 @@ public static class CreateAttachmentOperations
             OpenApiMigrationHelper.AddTag(operation, "Attachment");
 
             operation.Parameters = new List<OpenApiParameter>
-            {
-                new()
-                {
-                    Name = "id",
-                    In = ParameterLocation.Path,
-                    Required = true,
-                    Description = "Идентификатор задачи",
-                    Schema = new OpenApiSchema { Type = "integer", Format = "int32" }
-                }
-            };
+    {
+        new()
+        {
+            Name = "id",
+            In = ParameterLocation.Path,
+            Required = true,
+            Description = "Идентификатор задачи",
+            Schema = new OpenApiSchema { Type = "integer", Format = "int32" }
+        }
+    };
 
             operation.RequestBody = new OpenApiRequestBody
             {
@@ -145,26 +146,26 @@ public static class CreateAttachmentOperations
                             Type = "object",
                             Properties = new Dictionary<string, OpenApiSchema>
                             {
-                                ["fileName"] = new()
+                                ["FileName"] = new()
                                 {
                                     Type = "string",
-                                    Description = "Имя файла для сохранения",
+                                    Description = "Имя файла",
                                     MinLength = 1,
                                     MaxLength = 255
                                 },
-                                ["file"] = new()
+                                ["File"] = new()
                                 {
                                     Type = "string",
                                     Format = "binary",
                                     Description = "Файл для загрузки"
                                 }
                             },
-                            Required = new HashSet<string> { "fileName", "file" }
+                            Required = new HashSet<string> { "FileName", "File" }
                         },
                         Encoding = new Dictionary<string, OpenApiEncoding>
                         {
-                            ["fileName"] = new() { ContentType = "text/plain" },
-                            ["file"] = new() { ContentType = "application/octet-stream" }
+                            ["FileName"] = new() { ContentType = "text/plain" },
+                            ["File"] = new() { ContentType = "application/octet-stream" }
                         },
                         Examples = new Dictionary<string, OpenApiExample>
                         {
@@ -174,8 +175,8 @@ public static class CreateAttachmentOperations
                                 Description = "Пример загрузки PDF документа",
                                 Value = new OpenApiObject
                                 {
-                                    ["fileName"] = new OpenApiString("project-specification.pdf"),
-                                    ["file"] = new OpenApiString("[binary file data]")
+                                    ["FileName"] = new OpenApiString("document.pdf"),
+                                    ["File"] = new OpenApiString("[binary file data]")
                                 }
                             },
                             ["ImageUpload"] = new()
@@ -184,8 +185,8 @@ public static class CreateAttachmentOperations
                                 Description = "Пример загрузки JPEG изображения",
                                 Value = new OpenApiObject
                                 {
-                                    ["fileName"] = new OpenApiString("screenshot.jpg"),
-                                    ["file"] = new OpenApiString("[binary file data]")
+                                    ["FileName"] = new OpenApiString("image.jpg"),
+                                    ["File"] = new OpenApiString("[binary file data]")
                                 }
                             }
                         }
@@ -193,7 +194,7 @@ public static class CreateAttachmentOperations
                 }
             };
 
-            // Настраиваем ответы
+            // Обновляем ответ 201 - теперь возвращается AttachmentEntity, а не AttachmentModel
             operation.Responses["201"] = new OpenApiResponse
             {
                 Description = "Вложение успешно создано",
@@ -229,11 +230,6 @@ public static class CreateAttachmentOperations
                                     Type = "integer",
                                     Format = "int32",
                                     Description = "Идентификатор задачи"
-                                },
-                                ["task"] = new()
-                                {
-                                    Nullable = true,
-                                    Description = "Связанная задача (может быть null)"
                                 }
                             },
                             Required = new HashSet<string> { "id", "fileName", "filePath", "taskId" }
@@ -248,8 +244,7 @@ public static class CreateAttachmentOperations
                                     ["id"] = new OpenApiInteger(1),
                                     ["fileName"] = new OpenApiString("document.pdf"),
                                     ["filePath"] = new OpenApiString("tasks/123/attachments/guid-string"),
-                                    ["taskId"] = new OpenApiInteger(123),
-                                    ["task"] = new OpenApiNull()
+                                    ["taskId"] = new OpenApiInteger(123)
                                 }
                             }
                         }
@@ -386,7 +381,6 @@ public static class CreateAttachmentOperations
 
     private static async Task<ValidationResult> ValidateData(
             int taskId,
-            string fileName,
             IFormFile file,
             IConfiguration configuration,
             ITaskRepository taskRepository,
@@ -407,10 +401,10 @@ public static class CreateAttachmentOperations
         }
 
         // Валидация имени файла
-        var fileNameValidation = FileNameValidator.ValidateFileName(fileName, configuration);
+        var fileNameValidation = FileNameValidator.ValidateFileName(file.FileName, configuration);
         if (!fileNameValidation.IsValid)
         {
-            logger.LogWarning("File name validation failed: {FileName}, Error: {Error}", fileName, fileNameValidation.ErrorMessage);
+            logger.LogWarning("File name validation failed: {FileName}, Error: {Error}", file.FileName, fileNameValidation.ErrorMessage);
             return fileNameValidation;
         }
 
@@ -432,7 +426,7 @@ public static class CreateAttachmentOperations
             return sizeValidation;
         }
 
-        logger.LogInformation("All validations passed for task {TaskId} and file {FileName}", taskId, fileName);
+        logger.LogInformation("All validations passed for task {TaskId} and file {FileName}", taskId, file.FileName);
         return ValidationResult.Success();
     }
 

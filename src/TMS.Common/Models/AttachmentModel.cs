@@ -1,4 +1,6 @@
-﻿namespace TMS.Common.Models;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace TMS.Common.Models;
 
 public record AttachmentModel
 {
@@ -10,5 +12,5 @@ public record AttachmentModel
     /// <summary>
     /// 
     /// </summary>
-    public string FileName { get; set; } = string.Empty;
+    public IFormFile File { get; set; } = null!;
 }
