@@ -54,7 +54,7 @@ public class AuthDataContext : DbContext
                 Id = 1,
                 UserName = "superadmin",
                 Email = "superadmin@tms.ru",
-                PasswordHash = "superadmin",
+                PasswordHash = "$2b$12$b6doeIcInzPKmTANJeO7Euc3UE.VRkVLSY2E3gKLHbUvRLM4Y7NrS",
                 Role = UserRole.SuperAdmin
             });
     }

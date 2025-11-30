@@ -280,6 +280,16 @@ public static class AuthEndpoints
                             },
                             Examples = new Dictionary<string, OpenApiExample>
                             {
+                                ["SuperAdminUser"] = new OpenApiExample
+                                {
+                                    Summary = "Аутентификация суперадминистратора",
+                                    Description = "Пример запроса для пользователя с правами суперадминистратора",
+                                    Value = new OpenApiObject
+                                    {
+                                        ["username"] = new OpenApiString("superadmin"),
+                                        ["password"] = new OpenApiString("superadmin")
+                                    }
+                                },
                                 ["AdminUser"] = new OpenApiExample
                                 {
                                     Summary = "Аутентификация администратора",
