@@ -54,11 +54,11 @@ RUN apt-get update && \
 COPY --from=publish /app/publish .
 
 # Копируем entrypoint скрипт (исправленный путь)
-COPY ../../scripts/entrypoint.sh .
-RUN chmod +x entrypoint.sh
+COPY ../../scripts/setup-entrypoint.sh .
+RUN chmod +x setup-entrypoint.sh
 
 # Создаём папку для хранения "почтовых" сообщений
 RUN mkdir -p /app/emails/events && chmod 755 /app/emails/events
 VOLUME /app/emails/events
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["./setup-entrypoint.sh"]

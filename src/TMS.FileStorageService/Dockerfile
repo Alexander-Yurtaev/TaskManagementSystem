@@ -54,11 +54,11 @@ RUN apt-get update && \
 COPY --from=publish /app/publish .
 
 # Копируем entrypoint скрипт (исправленный путь)
-COPY ../../scripts/entrypoint.sh .
-RUN chmod +x entrypoint.sh
+COPY ../../scripts/setup-entrypoint.sh .
+RUN chmod +x setup-entrypoint.sh
 
 # Создаём папку для хранения файлов-приложений (AttachmentEntity)
 RUN mkdir -p /app/files && chmod 755 /app/files
 VOLUME /app/files
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["./setup-entrypoint.sh"]

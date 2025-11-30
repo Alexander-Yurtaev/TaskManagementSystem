@@ -39,10 +39,10 @@ wait_for_database() {
     fi
 }
 
-# Migration logic using --migrate flag
+# Migration logic using --setup flag
 run_migrations() {
     if [ "$APPLY_MIGRATIONS" = "true" ]; then
-        echo "Applying database migrations using --migrate flag..."
+        echo "Applying database migrations using --setup flag..."
         
         # Проверяем, существует ли DLL файл
         if [ ! -f "$DLL_NAME" ]; then
@@ -50,9 +50,9 @@ run_migrations() {
             exit 1
         fi
         
-        # Запускаем миграции с флагом --migrate
-        echo "Executing: dotnet $DLL_NAME --migrate"
-        if dotnet "$DLL_NAME" --migrate; then
+        # Запускаем миграции с флагом --setup
+        echo "Executing: dotnet $DLL_NAME --setup"
+        if dotnet "$DLL_NAME" --setup; then
             echo "✓ Migrations completed successfully"
         else
             echo "✗ Migrations failed with exit code $?"
@@ -93,7 +93,7 @@ main() {
         exit 1
     fi
 
-    # Запускаем приложение БЕЗ флага migrate
+    # Запускаем приложение БЕЗ флага setup
     echo "Launching: dotnet $DLL_NAME"
     exec dotnet "$DLL_NAME"
 }
