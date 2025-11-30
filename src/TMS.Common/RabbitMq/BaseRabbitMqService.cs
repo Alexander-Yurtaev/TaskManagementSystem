@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
+using System.Threading.Tasks;
+using TMS.Common.Helpers;
+using TMS.Common.Validators;
 
 namespace TMS.Common.RabbitMq;
 
@@ -22,17 +25,14 @@ public abstract class BaseRabbitMqService(ILogger<BaseRabbitMqService> logger) :
     // Асинхронная инициализация (вызов при старте приложения)
     public virtual async Task InitializeAsync()
     {
-        var rabbitmqHost = Environment.GetEnvironmentVariable("RABBITMQ_HOST");
-        if (rabbitmqHost is null)
+        var result = RabbitMQHelper.CreateConnectionFactory(logger);
+
+        if (!result.Item1.IsValid)
         {
-            var message = "RABBITMQ_HOST does not defined.";
-            logger.LogError(message);
-            throw new Exception(message);
+            await Task.FromException(new Exception(result.Item1.ErrorMessage));
         }
 
-        var factory = new ConnectionFactory { HostName = rabbitmqHost };
-
-        Connection = await factory.CreateConnectionAsync();
+        Connection = await result.Item2!.CreateConnectionAsync();
         Channel = await Connection.CreateChannelAsync();
 
         await Channel.ExchangeDeclareAsync(
@@ -42,7 +42,7 @@ public abstract class BaseRabbitMqService(ILogger<BaseRabbitMqService> logger) :
             autoDelete: false,
             arguments: null
         );
-
+        
         // Создаем и связываем очереди с exchange по routingKey
 
         #region Create

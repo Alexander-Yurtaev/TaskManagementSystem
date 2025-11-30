@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Npgsql;
+using TMS.Common.Helpers;
 
 namespace TMS.TaskService.Data.Extensions;
 
@@ -19,17 +19,7 @@ public static class DataContextExtensions
     {
         if (connectionString is null)
         {
-            NpgsqlConnectionStringBuilder builder = new()
-            {
-                Host = Environment.GetEnvironmentVariable("POSTGRES_HOST"),
-                Port = 5432, // порт по умолчанию для PostgreSQL
-                Database = Environment.GetEnvironmentVariable("POSTGRES_DB"),
-                Username = Environment.GetEnvironmentVariable("POSTGRES_USER"),
-                Password = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD"),
-                CommandTimeout = 30 // таймаут выполнения команд
-            };
-
-            connectionString = builder.ConnectionString;
+            connectionString = PostgresHelper.GetConnectionString();
         }
 
         services.AddDbContext<TaskDataContext>(options =>

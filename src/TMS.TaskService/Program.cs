@@ -1,8 +1,11 @@
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Prometheus;
 using System.Reflection;
+using TMS.Common.Extensions;
 using TMS.Common.Helpers;
 using TMS.Common.Validators;
+using TMS.TaskService.Data;
 using TMS.TaskService.Data.Extensions;
 using TMS.TaskService.Extensions.ApiEndpoints;
 using TMS.TaskService.Extensions.ApiEndpoints.Attachments;
@@ -23,7 +26,7 @@ namespace TMS.TaskService
         ///
         /// </summary>
         /// <param name="args"></param>
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +36,15 @@ namespace TMS.TaskService
             // автоматически ищет .env в текущей директории
             Env.Load();
             builder.Configuration.AddEnvironmentVariables();
+
+            // Проверяем аргументы командной строки
+            if (args.Contains("--migrate") || args.Contains("migrate"))
+            {
+                await MigrationExtensions.RunMigrations<TaskDataContext>(builder.Configuration,
+                    PostgresHelper.GetConnectionString(),
+                    "InitialMigrations");
+                return;
+            }
 
             // Проверка обязательных настроек перед регистрацией сервисов
             JwtValidator.ThrowIfNotValidate(builder.Configuration);
@@ -86,6 +98,13 @@ namespace TMS.TaskService
 
             builder.Services.AddAuthorization();
 
+            var csDb = PostgresHelper.GetConnectionString();
+
+            builder.Services
+                .AddHealthChecks()
+                .AddNpgSql(csDb, name: "postgresql", tags: ["db", "sql", "postgres"])
+                .ForwardToPrometheus();
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -97,6 +116,10 @@ namespace TMS.TaskService
                     options.RoutePrefix = "swagger"; // URL: /swagger
                 });
             }
+
+            app.MapHealthChecks("/health");
+            app.MapHealthChecks("/ready");
+            app.MapHealthChecks("/live");
 
             app.AddGreetingEndpoint();
             app.AddMigrateEndpoint();
@@ -110,9 +133,7 @@ namespace TMS.TaskService
             app.UseAuthentication();
             app.UseAuthorization();
 
-            logger.LogInformation("Приложение успешно запущено.");
-
-            app.Run();
+            await app.RunAsync();
         }
     }
 }

@@ -15,6 +15,10 @@
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup Label="HealthChecks">
+	<PackageReference Include="AspNetCore.HealthChecks.NpgSql" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="MimeTypes">
       <PrivateAssets>all</PrivateAssets>

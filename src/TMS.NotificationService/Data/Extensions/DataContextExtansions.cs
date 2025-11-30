@@ -19,17 +19,7 @@ public static class DataContextExtensions
     {
         if (connectionString is null)
         {
-            NpgsqlConnectionStringBuilder builder = new()
-            {
-                Host = Environment.GetEnvironmentVariable("POSTGRES_HOST"),
-                Port = 5432, // порт по умолчанию для PostgreSQL
-                Database = Environment.GetEnvironmentVariable("POSTGRES_DB"),
-                Username = Environment.GetEnvironmentVariable("POSTGRES_USER"),
-                Password = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD"),
-                CommandTimeout = 30 // таймаут выполнения команд
-            };
-
-            connectionString = builder.ConnectionString;
+            connectionString = GetConnectionString();
         }
 
         services.AddDbContext<NotificationDataContext>(options =>
@@ -40,5 +30,24 @@ public static class DataContextExtensions
             optionsLifetime: ServiceLifetime.Transient);
 
         return services;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public static string? GetConnectionString()
+    {
+        NpgsqlConnectionStringBuilder builder = new()
+        {
+            Host = Environment.GetEnvironmentVariable("POSTGRES_HOST"),
+            Port = 5432, // порт по умолчанию для PostgreSQL
+            Database = Environment.GetEnvironmentVariable("POSTGRES_DB"),
+            Username = Environment.GetEnvironmentVariable("POSTGRES_USER"),
+            Password = Environment.GetEnvironmentVariable("POSTGRES_PASSWORD"),
+            CommandTimeout = 30 // таймаут выполнения команд
+        };
+
+        return builder.ConnectionString;
     }
 }

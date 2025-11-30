@@ -51,6 +51,20 @@
     },
     {
       "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/",
+      "DownstreamPathTemplate": "/swagger",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-gateway",
+          "Port": 8081
+        }
+      ],
+      "NoLoadBalancer": true,
+      "RouteIsCaseSensitive": false
+    },
+    {
+      "UpstreamHttpMethod": [ "GET" ],
       "UpstreamPathTemplate": "/swagger/{everything}",
       "DownstreamPathTemplate": "/swagger/{everything}",
       "DownstreamScheme": "https",
@@ -231,6 +245,31 @@
       ],
       "SwaggerKey": "auth"
     },
+    // grafana
+    {
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "UpstreamPathTemplate": "/grafana",
+      "DownstreamPathTemplate": "/",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-grafana",
+          "Port": 3000
+        }
+      ]
+    },
+    {
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "UpstreamPathTemplate": "/prometeus",
+      "DownstreamPathTemplate": "/",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-prometeus",
+          "Port": 9090
+        }
+      ]
+    }
   ],
   "SwaggerEndPoints": [
     {

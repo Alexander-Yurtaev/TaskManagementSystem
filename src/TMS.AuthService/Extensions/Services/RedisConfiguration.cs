@@ -12,25 +12,34 @@ public static class RedisConfiguration
     /// <summary>
     /// 
     /// </summary>
-    public static void AddRedisConfiguration(this IServiceCollection services, ConfigurationManager configuration)
+    public static ConnectionMultiplexer AddRedisConfiguration(this IServiceCollection services, ConfigurationManager configuration)
     {
-        services.AddSingleton<ConnectionMultiplexer>(_ =>
-        {
-            var host = configuration["REDIS_HOST"];
-            var port = configuration["REDIS_PORT"];
-            var password = configuration["REDIS_PASSWORD"];
-
-            // Создаем конфигурацию с паролем
-            var redisConfig = new ConfigurationOptions
-            {
-                EndPoints = { $"{host}:{port}" },
-                Password = password,
-                ConnectTimeout = 5000,
-                SyncTimeout = 5000
-            };
-
-            return ConnectionMultiplexer.Connect(redisConfig);
-        });
+        var connectionMultiplexer = GetConnectionMultiplexer(configuration);
+        services.AddSingleton(_ => connectionMultiplexer);
         services.AddTransient<IRedisService<UserToken>, RedisService<UserToken>>();
+
+        return connectionMultiplexer;
     }
+
+    #region Static Methods
+
+    private static ConnectionMultiplexer GetConnectionMultiplexer(ConfigurationManager configuration)
+    {
+        var host = configuration["REDIS_HOST"];
+        var port = configuration["REDIS_PORT"];
+        var password = configuration["REDIS_PASSWORD"];
+
+        // Создаем конфигурацию с паролем
+        var redisConfig = new ConfigurationOptions
+        {
+            EndPoints = { $"{host}:{port}" },
+            Password = password,
+            ConnectTimeout = 5000,
+            SyncTimeout = 5000
+        };
+
+        return ConnectionMultiplexer.Connect(redisConfig);
+    }
+
+    #endregion Static Methods
 }

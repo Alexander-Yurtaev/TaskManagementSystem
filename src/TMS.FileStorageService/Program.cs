@@ -30,6 +30,8 @@ namespace TMS.FileStorageService
                 builder.Logging.AddConsole();
             }
 
+            builder.Services.AddHealthChecks();
+
             // Add services to the container.
             builder.Services.AddFileService();
 
@@ -38,6 +40,10 @@ namespace TMS.FileStorageService
             // Configure the HTTP request pipeline.
 
             app.UseHttpsRedirection();
+
+            app.MapHealthChecks("/health");
+            app.MapHealthChecks("/ready");
+            app.MapHealthChecks("/live");
 
             app.AddGreetingEndpoint();
             app.AddFileStoragesEndpoint();

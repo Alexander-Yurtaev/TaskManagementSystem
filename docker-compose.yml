@@ -12,10 +12,21 @@ services:
       - "8080"
       - "8081"
     depends_on:
-      - tms.authservice
-      - tms.taskservice
-      - tms.filestorageservice
-      - tms.notificationservice
+      tms.authservice:
+        condition: service_healthy
+      tms.taskservice:
+        condition: service_healthy
+      tms.filestorageservice:
+        condition: service_healthy
+      tms.notificationservice:
+        condition: service_healthy
+    healthcheck:
+        test: ["CMD", "curl", "http://localhost:8080/health"]
+        interval: 10s
+        timeout: 30s
+        retries: 10
+        start_period: 40s
+
 
   # AuthService
   tms.authservice:
@@ -33,21 +44,38 @@ services:
       - POSTGRES_HOST=tms-auth-db
       - REDIS_HOST=tms-auth-redis
       - REDIS_PORT=6379
-      - REDIS_PASSWORD=${AUTH_REDIS_PASSWORD}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - SERVICE_NAME=AuthService
+      - DLL_NAME=TMS.AuthService.dll
+      - APPLY_MIGRATIONS=true
     depends_on:
-      - tms.auth-db
-      - tms.auth-redis 
+      tms.auth-db:
+        condition: service_healthy
+      tms.auth-redis:
+        condition: service_healthy
+    healthcheck:
+        test: ["CMD", "curl", "http://localhost:8080/ready"]
+        interval: 10s
+        timeout: 30s
+        retries: 10
+        start_period: 40s
 
 
   tms.auth-db:
     image: postgres:13
     container_name: tms-auth-db
     environment:
+      - POSTGRES_DB=tms-auth-db
       - POSTGRES_USER=${AUTH_POSTGRES_USER}
       - POSTGRES_PASSWORD=${AUTH_POSTGRES_PASSWORD}
-      - POSTGRES_DB=tms-auth-db
     volumes:
       - auth-db-data:/var/lib/postgresql/data
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U ${AUTH_POSTGRES_USER}"]
+        interval: 10s
+        timeout: 30s
+        retries: 10
+        start_period: 40s
     
 
   tms.auth-redis:
@@ -55,7 +83,13 @@ services:
     container_name: tms-auth-redis
     volumes:
         - auth-redis-data:/data
-    command: ["redis-server", "--appendonly", "yes", "--requirepass", "${AUTH_REDIS_PASSWORD}"]
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", "${REDIS_PASSWORD}"]
+    healthcheck:
+        test: ["CMD", "redis-cli", "ping"]
+        interval: 10s
+        timeout: 30s
+        retries: 10
+        start_period: 40s
 
 
   # TaskService
@@ -68,27 +102,46 @@ services:
     env_file:
       - .env
     environment:
+      - POSTGRES_DB=task_db
       - POSTGRES_USER=${TASK_POSTGRES_USER}
       - POSTGRES_PASSWORD=${TASK_POSTGRES_PASSWORD}
-      - POSTGRES_DB=task_db
       - POSTGRES_HOST=tms-task-db
       - RABBITMQ_HOST=tms-rabbitmq
       - FILES_HOST=tms-file-storage-service
+      - SERVICE_NAME=TaskService
+      - DLL_NAME=TMS.TaskService.dll
+      - APPLY_MIGRATIONS=true
     depends_on:
-      - tms.task-db
-      - tms.authservice
-      - tms.notificationservice
+      tms.task-db:
+        condition: service_healthy
+      tms.authservice:
+        condition: service_healthy
+      tms.notificationservice:
+        condition: service_healthy
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:8080/ready"]
+        interval: 10s
+        timeout: 30s
+        retries: 10
+        start_period: 40s
 
 
   tms.task-db:
     image: postgres:13
     container_name: tms-task-db
     environment:
+      - POSTGRES_DB=tms-task-db
       - POSTGRES_USER=${TASK_POSTGRES_USER}
       - POSTGRES_PASSWORD=${TASK_POSTGRES_PASSWORD}
-      - POSTGRES_DB=tms-task-db
     volumes:
       - task-db-data:/var/lib/postgresql/data
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U ${TASK_POSTGRES_USER}"]
+        interval: 10s
+        timeout: 30s
+        retries: 10
+        start_period: 40s
+
 
   # FileStorageService
   tms.filestorageservice:
@@ -99,27 +152,23 @@ services:
     container_name: tms-file-storage-service
     env_file:
       - .env
+    environment:
+      - POSTGRES_DB=tms-file-storage-db
+      - POSTGRES_USER=${FILE_POSTGRES_USER}
+      - POSTGRES_PASSWORD=${FILE_POSTGRES_PASSWORD}
+      - SERVICE_NAME=FileStorageService
+      - DLL_NAME=TMS.FileStorageService.dll
+      - APPLY_MIGRATIONS=true
     volumes:
       - file_storage:/app/files
     user: "root"
-    environment:
-      - POSTGRES_USER=${FILE_POSTGRES_USER}
-      - POSTGRES_PASSWORD=${FILE_POSTGRES_PASSWORD}
-      - POSTGRES_DB=tms-files-db
-      - POSTGRES_HOST=tms-files-db
-    depends_on:
-      - tms.files-db
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:8080/ready"]
+        interval: 10s
+        timeout: 30s
+        retries: 10
+        start_period: 40s
 
-
-  tms.files-db:
-    image: postgres:13
-    container_name: tms-files-db
-    environment:
-      - POSTGRES_USER=${FILE_POSTGRES_USER}
-      - POSTGRES_PASSWORD=${FILE_POSTGRES_PASSWORD}
-      - POSTGRES_DB=tms-files-db
-    volumes:
-      - files-db-data:/var/lib/postgresql/data
 
   # NotificationService
   tms.notificationservice:
@@ -134,25 +183,45 @@ services:
     volumes:
       - email_storage:/app/emails/events
     environment:
+      - POSTGRES_DB=tms-notify-db
       - POSTGRES_USER=${NOTIFY_POSTGRES_USER}
       - POSTGRES_PASSWORD=${NOTIFY_POSTGRES_PASSWORD}
-      - POSTGRES_DB=tms-notify-db
       - POSTGRES_HOST=tms-notify-db
       - RABBITMQ_HOST=tms-rabbitmq
+      - SERVICE_NAME=NotificationService
+      - DLL_NAME=TMS.NotificationService.dll
+      - APPLY_MIGRATIONS=true
     depends_on:
-      - tms.authservice
-      - tms.notify-db
-      - tms.rabbitmq
+      tms.authservice:
+        condition: service_healthy
+      tms.notify-db:
+        condition: service_healthy
+      tms.rabbitmq:
+        condition: service_healthy
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:8080/ready"]
+        interval: 10s
+        timeout: 30s
+        retries: 10
+        start_period: 40s
+
 
   tms.notify-db:
     image: postgres:13
     container_name: tms-notify-db
     environment:
+      - POSTGRES_DB=tms-notify-db
       - POSTGRES_USER=${NOTIFY_POSTGRES_USER}
       - POSTGRES_PASSWORD=${NOTIFY_POSTGRES_PASSWORD}
-      - POSTGRES_DB=tms-notify-db
     volumes:
       - notify-db-data:/var/lib/postgresql/data
+    healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U ${NOTIFY_POSTGRES_USER}"]
+        interval: 10s
+        timeout: 30s
+        retries: 10
+        start_period: 40s
+
  
   tms.rabbitmq:
     image: rabbitmq:3-management
@@ -165,15 +234,57 @@ services:
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
- 
+    healthcheck:
+        test: ["CMD", "rabbitmq-diagnostics", "check_port_connectivity"]
+        interval: 10s
+        timeout: 30s
+        retries: 10
+        start_period: 40s
+
+
+  # Prometheus
+  tms.prometheus:
+    image: prom/prometheus:latest
+    container_name: tms-prometeus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    depends_on:
+      - tms.authservice
+      - tms.taskservice
+
+
+  # Grafana
+  tms.grafana:
+    image: grafana/grafana:latest
+    container_name: tms-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_ADMIN_PASSWORD}
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - tms.prometheus
+
 
 volumes:
   auth-db-data:
   auth-redis-data:
   task-db-data:
-  files-db-data:
   notify-db-data:
   rabbitmq_data:
   file_storage:
   email_storage:
+  prometheus_data:
+  grafana_data:
 

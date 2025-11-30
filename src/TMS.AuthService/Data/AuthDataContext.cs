@@ -47,5 +47,15 @@ public class AuthDataContext : DbContext
         modelBuilder.Entity<UserEntity>()
             .Property(e => e.DeletedAt)
             .HasColumnType("timestamp with time zone"); // Явно задаём тип TIMESTAMPTZ
+
+        modelBuilder.Entity<UserEntity>().HasData(
+            new UserEntity
+            {
+                Id = 1,
+                UserName = "superadmin",
+                Email = "superadmin@tms.ru",
+                PasswordHash = "superadmin",
+                Role = UserRole.SuperAdmin
+            });
     }
 }

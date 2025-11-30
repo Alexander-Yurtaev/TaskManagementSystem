@@ -20,6 +20,16 @@
 	<PackageReference Include="AutoMapper" />
   </ItemGroup>
 
+  <ItemGroup Label="HealthChecks">
+	<PackageReference Include="AspNetCore.HealthChecks.NpgSql" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore" />
+  </ItemGroup>
+
+  <ItemGroup Label="Monitoring">
+	<PackageReference Include="prometheus-net.AspNetCore" />
+	<PackageReference Include="prometheus-net.AspNetCore.HealthChecks" />
+  </ItemGroup>
+
   <ItemGroup Label="Swagger">
 	<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
 	<PackageReference Include="Microsoft.EntityFrameworkCore.Design">
@@ -40,6 +50,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TMS.Common\TMS.Common.csproj" />
+    <ProjectReference Include="..\TMS.Contracts\TMS.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

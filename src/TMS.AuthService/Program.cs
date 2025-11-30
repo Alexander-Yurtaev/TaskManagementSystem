@@ -1,9 +1,14 @@
 using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Prometheus;
+using System;
 using System.Reflection;
+using TMS.AuthService.Data;
 using TMS.AuthService.Data.Extensions;
 using TMS.AuthService.Extensions.ApiEndpoints;
 using TMS.AuthService.Extensions.Services;
+using TMS.Common.Extensions;
 using TMS.Common.Helpers;
 using TMS.Common.Validators;
 
@@ -18,13 +23,22 @@ namespace TMS.AuthService
         /// 
         /// </summary>
         /// <param name="args"></param>
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
             // автоматически ищет .env в текущей директории
             Env.Load();
             builder.Configuration.AddEnvironmentVariables();
+
+            // Проверяем аргументы командной строки
+            if (args.Contains("--migrate") || args.Contains("migrate"))
+            {
+                await MigrationExtensions.RunMigrations<AuthDataContext>(builder.Configuration,
+                    PostgresHelper.GetConnectionString(),
+                    "SeedSuperadminUser");
+                return;
+            }
 
             // Проверка обязательных настроек перед регистрацией сервисов
             JwtValidator.ThrowIfNotValidate(builder.Configuration);
@@ -47,7 +61,15 @@ namespace TMS.AuthService
             builder.Services.AddAuthorization();
             builder.Services.AddAuthDataContext();
             builder.Services.AddAuthServices();
-            builder.Services.AddRedisConfiguration(builder.Configuration);
+
+            var connectionString = PostgresHelper.GetConnectionString();
+            var connectionMultiplexer = builder.Services.AddRedisConfiguration(builder.Configuration);
+            
+            builder.Services
+                .AddHealthChecks()
+                .AddNpgSql(connectionString, name: "postgresql", tags: ["db", "sql", "postgres"])
+                .AddRedis(connectionMultiplexer, "redis")
+                .ForwardToPrometheus();
 
             var app = builder.Build();
 
@@ -65,6 +87,10 @@ namespace TMS.AuthService
 
             app.MapGrpcService<Services.Grpc.AuthService>();
 
+            app.MapHealthChecks("/health");
+            app.MapHealthChecks("/ready");
+            app.MapHealthChecks("/live");
+
             // Регистрация API-эндпоинтов
             app.AddGreetingEndpoint();
             app.AddMigrateEndpoint();
@@ -75,7 +101,7 @@ namespace TMS.AuthService
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.Run();
+            await app.RunAsync();
         }
     }
 }

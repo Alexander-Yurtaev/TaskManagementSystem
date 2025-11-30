@@ -1,0 +1,31 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'tms-services'
+    static_configs:
+      - targets: 
+        - 'tms-auth-service:8080'
+        - 'tms-task-service:8080'
+        - 'tms-file-storage-service:8080'
+        - 'tms-notification-service:8080'
+        - 'tms-gateway:5000'
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  - job_name: 'postgresql'
+    static_configs:
+      - targets: 
+        - 'tms-auth-db:5432'
+        - 'tms-task-db:5432'
+        - 'tms-file-db:5432'
+        - 'tms-notify-db:5432'
+
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['tms-auth-redis:6379']
+
+  - job_name: 'rabbitmq'
+    static_configs:
+      - targets: ['tms-rabbitmq:15672']

@@ -17,7 +17,18 @@
 
   <ItemGroup Label="Swagger">
 	<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore" />
 	<PackageReference Include="Swashbuckle.AspNetCore" />
+  </ItemGroup>
+
+  <ItemGroup Label="HealthChecks">
+	<PackageReference Include="AspNetCore.HealthChecks.NpgSql" />
+	<PackageReference Include="AspNetCore.HealthChecks.RabbitMQ" />
+  </ItemGroup>
+
+  <ItemGroup Label="Monitoring">
+	<PackageReference Include="prometheus-net.AspNetCore" />
+	<PackageReference Include="prometheus-net.AspNetCore.HealthChecks" />
   </ItemGroup>
 
   <ItemGroup>
