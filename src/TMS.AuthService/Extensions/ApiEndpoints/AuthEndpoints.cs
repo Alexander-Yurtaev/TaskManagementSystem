@@ -5,6 +5,7 @@ using System.ComponentModel;
 using TMS.AuthService.Data;
 using TMS.AuthService.Entities;
 using TMS.AuthService.Entities.Enum;
+using TMS.AuthService.Helpers;
 using TMS.AuthService.Models;
 using TMS.AuthService.Services;
 using TMS.Common.Helpers;
@@ -30,12 +31,18 @@ public static class AuthEndpoints
     {
         endpoints.MapPost("/register", async (
                 [FromBody] RegisterModel model,
+                HttpContext httpContext,
                 ILogger<IApplicationBuilder> logger,
                 IUserRepository userRepository,
                 IHashService hashService) =>
         {
             try
             {
+                if (!AllowHelper.CanRegister(httpContext.User, model.Role))
+                {
+                    return Results.Forbid();
+                }
+
                 // Проверка существования пользователя
                 if (await userRepository.UserExistsAsync(model.UserName))
                 {
