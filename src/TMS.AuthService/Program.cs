@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Prometheus;
 using System.Reflection;
+using System.Security.Claims;
 using TMS.AuthService.Data;
 using TMS.AuthService.Data.Extensions;
 using TMS.AuthService.Extensions.ApiEndpoints;
@@ -59,7 +60,22 @@ public class Program
             options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
         }));
 
-        builder.Services.AddAuthorization();
+        builder.Services.AddAuthorization(options =>
+        {
+            // Политика для регистрации пользователей
+            options.AddPolicy("CanRegisterUsers", policy => policy.RequireRole("Admin"));
+
+            // Политика для регистрации администраторов
+            options.AddPolicy("CanRegisterAdmins", policy => policy.RequireRole("SuperAdmin"));
+
+            // Более сложная политика
+            options.AddPolicy("AllowRegistion", policy =>
+            {
+                policy.RequireAssertion(context => 
+                    context.User.HasClaim(c => c.Type == ClaimTypes.Role && 
+                                    (c.Value == "Admin" || c.Value == "SuperAdmin")));
+            });
+        });
         builder.Services.AddAuthDataContext();
         builder.Services.AddAuthServices();
 

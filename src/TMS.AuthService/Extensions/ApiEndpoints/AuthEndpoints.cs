@@ -30,16 +30,16 @@ public static class AuthEndpoints
     {
         endpoints.MapPost("/register", async (
                 [FromBody] RegisterModel model,
-                [FromServices] ILogger<IApplicationBuilder> logger,
-                [FromServices] IUserRepository userRepository,
-                [FromServices] IHashService hashService) =>
+                ILogger<IApplicationBuilder> logger,
+                IUserRepository userRepository,
+                IHashService hashService) =>
         {
             try
             {
                 // Проверка существования пользователя
                 if (await userRepository.UserExistsAsync(model.UserName))
                 {
-                    return Results.BadRequest("User already exists or invalid credentials");
+                    return Results.BadRequest("User already exists");
                 }
 
                 // Хеширование пароля
@@ -67,7 +67,7 @@ public static class AuthEndpoints
             }
         })
             .WithName("register")
-            .AllowAnonymous()
+            .RequireAuthorization("AllowRegistion")
             .Produces<object>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status500InternalServerError)
@@ -98,10 +98,10 @@ public static class AuthEndpoints
                             Schema = new OpenApiSchema
                             {
                                 Type = "object",
-                                Required = new HashSet<string> { "username", "password" },
+                                Required = new HashSet<string> { "username", "password", "role" },
                                 Properties = new Dictionary<string, OpenApiSchema>
                                 {
-                                    ["userName"] = new OpenApiSchema // вместо "username"
+                                    ["username"] = new OpenApiSchema
                                     {
                                         Type = "string",
                                         Description = "Имя пользователя",
@@ -117,13 +117,17 @@ public static class AuthEndpoints
                                     ["email"] = new OpenApiSchema
                                     {
                                         Type = "string",
+                                        Format = "email",
                                         Description = "Email",
                                         Example = new OpenApiString("admin@mail.box")
                                     },
                                     ["role"] = new OpenApiSchema
                                     {
                                         Type = "integer",
-                                        Description = "Роль",
+                                        Description = "Роль пользователя. Возможные значения:\n" +
+                                          "- 0: User - Обычный пользователь\n" +
+                                          "- 1: Admin - Администратор\n" +
+                                          "- 2: SuperAdmin - Суперадминистратор",
                                         Example = new OpenApiInteger((int)UserRole.User)
                                     }
                                 }
@@ -136,9 +140,9 @@ public static class AuthEndpoints
                                     Description = "Пример регистрации обычного пользователя",
                                     Value = new OpenApiObject
                                     {
-                                        ["userName"] = new OpenApiString("user1"),
+                                        ["username"] = new OpenApiString("user1"),
                                         ["password"] = new OpenApiString("user123"),
-                                        ["email"] = new OpenApiString("user1@mail.box"),
+                                        ["email"] = new OpenApiString("user1@tms.ru"),
                                         ["role"] = new OpenApiInteger((int)UserRole.User)
                                     }
                                 },
@@ -148,10 +152,22 @@ public static class AuthEndpoints
                                     Description = "Пример регистрации пользователя с правами администратора",
                                     Value = new OpenApiObject
                                     {
-                                        ["userName"] = new OpenApiString("admin"),
+                                        ["username"] = new OpenApiString("admin"),
                                         ["password"] = new OpenApiString("admin123"),
-                                        ["email"] = new OpenApiString("admin123@mail.box"),
+                                        ["email"] = new OpenApiString("admin123@tms.ru"),
                                         ["role"] = new OpenApiInteger((int)UserRole.Admin)
+                                    }
+                                },
+                                ["SuperAdminUser"] = new OpenApiExample
+                                {
+                                    Summary = "Регистрация суперадминистратора",
+                                    Description = "Пример регистрации пользователя с правами суперадминистратора",
+                                    Value = new OpenApiObject
+                                    {
+                                        ["username"] = new OpenApiString("superadmin"),
+                                        ["password"] = new OpenApiString("superadmin"),
+                                        ["email"] = new OpenApiString("superadmin@tms.ru"),
+                                        ["role"] = new OpenApiInteger((int)UserRole.SuperAdmin)
                                     }
                                 }
                             }
@@ -169,7 +185,7 @@ public static class AuthEndpoints
                         Summary = "Регистрация",
                         Value = new OpenApiObject
                         {
-                            ["message"] = new OpenApiString("The user with name=admin is created.")
+                            ["message"] = new OpenApiString("The user with name=user1 is created.")
                         }
                     }
                 };
@@ -324,11 +340,11 @@ public static class AuthEndpoints
                 {
                     ["AuthSuccess"] = new OpenApiExample
                     {
-                        Summary = "Регистрация",
+                        Summary = "Аутентификация",
                         Value = new OpenApiObject
                         {
                             ["access_token"] = new OpenApiString("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bW..."),
-                            ["refresh_token"] = new OpenApiString("mO8zxxdYgC8lJXpRqiN07r0jBYhP/buKOJjaNIKmyfuN+EQPW/BbaOLyAeMmU0...")
+                            ["refresh_token"] = new OpenApiString("mO8zxxdYgC8lJXpRqiN07r0jBYhP_buKOJjaNIKmyfuN-EQPW_BbaOLyAeMmU0...")
                         }
                     }
                 };
@@ -390,10 +406,10 @@ public static class AuthEndpoints
                         Schema = new OpenApiSchema
                         {
                             Type = "object",
-                            Required = new HashSet<string> { "refreshToken" },
+                            Required = new HashSet<string> { "refresh-token" },
                             Properties = new Dictionary<string, OpenApiSchema>
                             {
-                                ["refreshToken"] = new OpenApiSchema
+                                ["refresh-token"] = new OpenApiSchema
                                 {
                                     Type = "string",
                                     Description = "Refresh токен",
@@ -409,7 +425,7 @@ public static class AuthEndpoints
                                 Description = "Типичный запрос для обновления access токена",
                                 Value = new OpenApiObject
                                 {
-                                    ["refreshToken"] = new OpenApiString("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
+                                    ["refresh-token"] = new OpenApiString("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
                                 }
                             }
                         }
@@ -426,21 +442,21 @@ public static class AuthEndpoints
             {
                 ["TokenRefreshed"] = new OpenApiExample
                 {
-                    Summary = "Обновление",
+                    Summary = "Обновление токенов",
                     Value = new OpenApiObject
                     {
                         ["access_token"] = new OpenApiString("y8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiYWRtaW4iLCJodHRwOi8v..."),
-                        ["refresh_token"] = new OpenApiString("mO8zxxdYgC8lJXpRqiN07r0jBYhP/buKOJjaNIKmyfuN+EQPW/BbaOLyAeMmU0...")
+                        ["refresh_token"] = new OpenApiString("mO8zxxdYgC8lJXpRqiN07r0jBYhP_buKOJjaNIKmyfuN-EQPW_BbaOLyAeMmU0...")
                     }
                 }
             };
             OpenApiMigrationHelper.EnsureResponseWithExamples(operation, StatusCodes.Status200OK.ToString(), examples);
 
             // Добавляем другие возможные ответы
-            //operation.Responses["401"] = new OpenApiResponse
-            //{
-            //    Description = "Неверный или просроченный refresh токен"
-            //};
+            operation.Responses["401"] = new OpenApiResponse
+            {
+                Description = "Неверный или просроченный refresh токен"
+            };
 
             operation.Responses["500"] = new OpenApiResponse
             {
