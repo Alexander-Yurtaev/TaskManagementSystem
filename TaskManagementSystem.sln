@@ -34,6 +34,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{5551609D-7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{807D6757-EA51-4E38-8024-5F6DED2D9A54}"
 	ProjectSection(SolutionItems) = preProject
+		scripts\build.bat = scripts\build.bat
+		scripts\build&run.bat = scripts\build&run.bat
 		scripts\setup-entrypoint.sh = scripts\setup-entrypoint.sh
 	EndProjectSection
 EndProject
