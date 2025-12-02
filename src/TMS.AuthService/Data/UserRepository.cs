@@ -18,7 +18,9 @@ public class UserRepository(AuthDataContext db) : IUserRepository
     /// <returns></returns>
     public async Task<UserEntity?> GetByIdAsync(int id)
     {
-        var user = await _db.Users.Where(u => u.IsDeleted == false).FindAsync(id);
+        var user = await _db.Users
+            .Where(u => u.Id == id && u.IsDeleted == false)
+            .FirstOrDefaultAsync();
         return user;
     }
 
