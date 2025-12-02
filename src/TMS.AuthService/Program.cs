@@ -68,11 +68,19 @@ public class Program
             // Политика для регистрации администраторов
             options.AddPolicy("CanRegisterAdmins", policy => policy.RequireRole("SuperAdmin"));
 
-            // Более сложная политика
+            //
             options.AddPolicy("AllowRegistion", policy =>
             {
                 policy.RequireAssertion(context => 
                     context.User.HasClaim(c => c.Type == ClaimTypes.Role && 
+                                    (c.Value == "Admin" || c.Value == "SuperAdmin")));
+            });
+
+            //
+            options.AddPolicy("AllowDeletion", policy =>
+            {
+                policy.RequireAssertion(context =>
+                    context.User.HasClaim(c => c.Type == ClaimTypes.Role &&
                                     (c.Value == "Admin" || c.Value == "SuperAdmin")));
             });
         });

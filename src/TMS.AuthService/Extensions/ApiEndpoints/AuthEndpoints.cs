@@ -36,6 +36,8 @@ public static class AuthEndpoints
                 IUserRepository userRepository,
                 IHashService hashService) =>
         {
+            logger.LogInformation("Start registering of UserName: {UserName}.", model.UserName);
+
             try
             {
                 if (!AllowHelper.CanRegister(httpContext.User, model.Role))
@@ -44,7 +46,7 @@ public static class AuthEndpoints
                 }
 
                 // Проверка существования пользователя
-                if (await userRepository.UserExistsAsync(model.UserName))
+                if (await userRepository.UserExistsByNameAsync(model.UserName))
                 {
                     return Results.BadRequest("User already exists");
                 }
@@ -66,19 +68,15 @@ public static class AuthEndpoints
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "/register");
-                return Results.Problem(
-                    detail: ex.Message,
-                    statusCode: StatusCodes.Status500InternalServerError
-                );
+                return ResultHelper.CreateInternalServerErrorProblemResult(ex.Message, logger, ex);
             }
         })
-            .WithName("register")
-            .RequireAuthorization("AllowRegistion")
-            .Produces<object>(StatusCodes.Status201Created)
-            .Produces(StatusCodes.Status400BadRequest)
-            .Produces(StatusCodes.Status500InternalServerError)
-            .WithOpenApi(operation =>
+        .WithName("register")
+        .RequireAuthorization("AllowRegistion")
+        .Produces<object>(StatusCodes.Status201Created)
+        .Produces(StatusCodes.Status400BadRequest)
+        .Produces(StatusCodes.Status500InternalServerError)
+        .WithOpenApi(operation =>
             {
                 operation.Summary = "Регистрация пользователя и получение JWT‑токена для входа и обновления.";
                 operation.Description = $$"""
@@ -219,25 +217,25 @@ public static class AuthEndpoints
                 [FromServices] ITokenService tokenService,
                 [FromServices] IHashService hashService) =>
             {
-                logger.LogInformation("Start logging with Username: {Username}.", model.Username);
+                logger.LogInformation("Start logging with UserName: {UserName}.", model.UserName);
 
                 try
                 {
                     // 1. Поиск пользователя
-                    var userExists = await userRepository.UserExistsAsync(model.Username);
+                    var userExists = await userRepository.UserExistsByNameAsync(model.UserName);
                     if (!userExists)
                     {
                         await Task.Delay(2000); // Brute-force
                         return Results.NotFound();
-                    }    
+                    }
 
-                    var user = (await userRepository.GetByUsernameAsync(model.Username))!;
+                    var user = (await userRepository.GetByUsernameAsync(model.UserName))!;
 
                     // 2. Проверка пароля
                     if (!hashService.VerifyPassword(user.PasswordHash, model.Password))
                     {
                         await Task.Delay(2000); // Brute-force
-                        return Results.NotFound(); 
+                        return Results.NotFound();
                     }
 
                     // 3. Генерация токенов
@@ -250,8 +248,8 @@ public static class AuthEndpoints
                 {
                     logger.LogError(
                         ex,
-                        "Error while logging with Username: {Username}. Operation: {Operation}",
-                        model.Username,
+                        "Error while logging with UserName: {UserName}. Operation: {Operation}",
+                        model.UserName,
                         "POST /login"
                     );
 
@@ -371,11 +369,13 @@ public static class AuthEndpoints
                 return operation;
             });
 
-        return endpoints.MapPost("/refresh", async (
+        endpoints.MapPost("/refresh", async (
             [FromBody] TokenRefreshModel model,
             [FromServices] ILogger<IApplicationBuilder> logger,
             [FromServices] ITokenService tokenService) =>
                 {
+                    logger.LogInformation("Start refreshing of Token.");
+
                     try
                     {
                         var (accessToken, refreshToken) = await tokenService.RefreshTokensAsync(model.RefreshToken);
@@ -468,6 +468,131 @@ public static class AuthEndpoints
             operation.Responses["500"] = new OpenApiResponse
             {
                 Description = "Внутренняя ошибка сервера"
+            };
+
+            return operation;
+        });
+
+        return endpoints.MapDelete("/user/{id}", async (
+            int id,
+            HttpContext httpContext,
+            ILogger<IApplicationBuilder> logger,
+            IUserRepository userRepository) =>
+        {
+            logger.LogInformation("Start deleting of user with Id: {Id}.", id);
+
+            try
+            {
+                if (id <= 0)
+                {
+                    return Results.BadRequest("Id must be positive.");
+                }
+
+                // Проверка существования пользователя
+                var user = await userRepository.GetByIdAsync(id);
+
+                if (user == null)
+                {
+                    return Results.BadRequest("User does not exists");
+                }
+
+                if (!AllowHelper.CanDelete(httpContext.User, user.Role))
+                {
+                    return Results.Forbid();
+                }
+
+                await userRepository.DeleteUserAsync(id);
+                return Results.NoContent();
+            }
+            catch (Exception ex)
+            {
+                return ResultHelper.CreateInternalServerErrorProblemResult(ex.Message, logger, ex);
+            }
+        })
+        .WithName("delete")
+        .RequireAuthorization("AllowDeletion")
+        .Produces(StatusCodes.Status204NoContent)
+        .Produces(StatusCodes.Status400BadRequest)
+        .Produces(StatusCodes.Status403Forbidden    )
+        .Produces(StatusCodes.Status500InternalServerError)
+        .WithOpenApi(operation =>
+        {
+            operation.Summary = "Удаление пользователя по идентификатору.";
+            operation.Description = """
+                Удаление пользователя из системы по его ID. Требует соответствующих прав доступа.
+        
+                **Примеры использования:**
+                - DELETE /user/1 → удаление пользователя с ID=1
+                - DELETE /user/42 → удаление пользователя с ID=42
+                """;
+
+            operation.Tags = new List<OpenApiTag>
+            {
+                new OpenApiTag { Name = "Auth" }
+            };
+
+            // Добавляем параметр пути
+            operation.Parameters = new List<OpenApiParameter>
+            {
+                new OpenApiParameter
+                {
+                    Name = "id",
+                    In = ParameterLocation.Path,
+                    Required = true,
+                    Description = "Идентификатор пользователя (положительное целое число)",
+                    Schema = new OpenApiSchema
+                    {
+                        Type = "integer",
+                        Minimum = 1,
+                        Example = new OpenApiInteger(1)
+                    },
+                    Examples = new Dictionary<string, OpenApiExample>
+                    {
+                        ["RegularUser"] = new OpenApiExample
+                        {
+                            Summary = "Удаление обычного пользователя",
+                            Value = new OpenApiInteger(1)
+                        },
+                        ["AdminUser"] = new OpenApiExample
+                        {
+                            Summary = "Удаление администратора",
+                            Value = new OpenApiInteger(2)
+                        },
+                        ["SuperAdminUser"] = new OpenApiExample
+                        {
+                            Summary = "Удаление суперадминистратора",
+                            Value = new OpenApiInteger(3)
+                        }
+                    }
+                }
+            };
+
+            // Удаляем автоматически добавленный 200 Response
+            operation.Responses.Remove("200");
+
+            // Добавляем специфичные ответы
+            operation.Responses["204"] = new OpenApiResponse
+            {
+                Description = "Пользователь успешно удален. Возвращается пустое тело ответа."
+            };
+
+            operation.Responses["400"] = new OpenApiResponse
+            {
+                Description = """
+            Некорректный запрос:
+            - ID пользователя должен быть положительным числом
+            - Пользователь с указанным ID не существует
+            """
+            };
+
+            operation.Responses["403"] = new OpenApiResponse
+            {
+                Description = "Недостаточно прав для удаления пользователя. Удалять пользователей могут только пользователи с более высокими правами."
+            };
+
+            operation.Responses["500"] = new OpenApiResponse
+            {
+                Description = "Внутренняя ошибка сервера при выполнении операции удаления"
             };
 
             return operation;

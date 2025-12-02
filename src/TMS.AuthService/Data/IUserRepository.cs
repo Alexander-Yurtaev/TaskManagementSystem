@@ -26,7 +26,14 @@ public interface IUserRepository
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
-    Task<bool> UserExistsAsync(string userName);
+    Task<bool> UserExistsByNameAsync(string userName);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    Task<bool> UserExistsByIdAsync(int id);
 
     /// <summary>
     /// 
@@ -40,4 +47,10 @@ public interface IUserRepository
     /// </summary>
     /// <returns></returns>
     Task<IEnumerable<UserEntity>> GetUsersAsync();
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    Task DeleteUserAsync(int id);
 }

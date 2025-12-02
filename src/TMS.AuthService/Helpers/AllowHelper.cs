@@ -27,4 +27,25 @@ public static class AllowHelper
 
         return true;
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="user"></param>
+    /// <param name="targetRole"></param>
+    /// <returns></returns>
+    public static bool CanDelete(System.Security.Claims.ClaimsPrincipal user, UserRole targetRole)
+    {
+        if (!user.IsInRole(nameof(UserRole.Admin)) && targetRole == UserRole.User)
+        {
+            return false;
+        }
+
+        if (!user.IsInRole(nameof(UserRole.SuperAdmin)) && targetRole == UserRole.Admin)
+        {
+            return false;
+        }
+
+        return true;
+    }
 }

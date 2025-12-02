@@ -57,6 +57,7 @@ COPY --from=publish /app/publish .
 
 # Копируем entrypoint скрипт (исправленный путь)
 COPY ../../scripts/setup-entrypoint.sh .
+
 RUN chmod +x setup-entrypoint.sh
 
 ENTRYPOINT ["./setup-entrypoint.sh"]

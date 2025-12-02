@@ -18,7 +18,7 @@ public class UserRepository(AuthDataContext db) : IUserRepository
     /// <returns></returns>
     public async Task<UserEntity?> GetByIdAsync(int id)
     {
-        var user = await _db.Users.FindAsync(id);
+        var user = await _db.Users.Where(u => u.IsDeleted == false).FindAsync(id);
         return user;
     }
 
@@ -29,7 +29,8 @@ public class UserRepository(AuthDataContext db) : IUserRepository
     /// <returns></returns>
     public async Task<UserEntity?> GetByUsernameAsync(string userName)
     {
-        var user = await _db.Users.FirstOrDefaultAsync(u => u.UserName.ToLower() == userName.ToLower());
+        var user = await _db.Users
+            .FirstOrDefaultAsync(u => u.UserName.ToLower() == userName.ToLower() && u.IsDeleted == false);
         return user;
     }
 
@@ -38,12 +39,23 @@ public class UserRepository(AuthDataContext db) : IUserRepository
     /// </summary>
     /// <param name="userName"></param>
     /// <returns></returns>
-    public async Task<bool> UserExistsAsync(string userName)
+    public async Task<bool> UserExistsByNameAsync(string userName)
     {
         ArgumentException.ThrowIfNullOrEmpty(userName);
         ArgumentException.ThrowIfNullOrWhiteSpace(userName);
 
-        return await _db.Users.AnyAsync(u => u.UserName.ToLower() == userName.ToLower());
+        return await _db.Users
+            .AnyAsync(u => u.UserName.ToLower() == userName.ToLower() && u.IsDeleted == false);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    public async Task<bool> UserExistsByIdAsync(int id)
+    {
+        return await _db.Users.AnyAsync(u => u.Id == id && u.IsDeleted == false);
     }
 
     /// <summary>
@@ -64,7 +76,25 @@ public class UserRepository(AuthDataContext db) : IUserRepository
     /// <returns></returns>
     public async Task<IEnumerable<UserEntity>> GetUsersAsync()
     {
-        var users = await _db.Users.ToArrayAsync();
+        var users = await _db.Users.Where(u => u.IsDeleted == false).ToArrayAsync();
         return users;
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="NullReferenceException"></exception>
+    public async Task DeleteUserAsync(int id)
+    {
+        var user = await _db.Users.FirstOrDefaultAsync(u => u.Id == id && u.IsDeleted == false);
+        if (user == null)
+        {
+            throw new NullReferenceException();
+        }
+
+        user.IsDeleted = true;
+        await _db.SaveChangesAsync();
     }
 }
