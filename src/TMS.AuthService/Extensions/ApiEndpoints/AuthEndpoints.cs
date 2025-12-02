@@ -496,6 +496,11 @@ public static class AuthEndpoints
                     return Results.BadRequest("User does not exists");
                 }
 
+                if (user.Role == UserRole.SuperAdmin)
+                {
+                    return Results.BadRequest("Does not allow to delete SuperAdmin.");
+                }
+
                 if (!AllowHelper.CanDelete(httpContext.User, user.Role))
                 {
                     return Results.Forbid();
@@ -560,8 +565,7 @@ public static class AuthEndpoints
                         },
                         ["SuperAdminUser"] = new OpenApiExample
                         {
-                            Summary = "Удаление суперадминистратора",
-                            Value = new OpenApiInteger(3)
+                            Summary = "Суперадминистратора удалить нельзя"
                         }
                     }
                 }
