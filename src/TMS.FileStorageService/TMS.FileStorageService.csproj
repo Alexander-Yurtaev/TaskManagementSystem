@@ -17,6 +17,7 @@
 
   <ItemGroup Label="HealthChecks">
 	<PackageReference Include="AspNetCore.HealthChecks.NpgSql" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
   </ItemGroup>
 
   <ItemGroup>

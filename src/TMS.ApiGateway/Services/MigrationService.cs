@@ -51,10 +51,9 @@ public class MigrationService : IMigrationService
                 };
             }
 
-            var client = _httpClientFactory.CreateClient();
-            client.Timeout = TimeSpan.FromMinutes(5);
+            var client = _httpClientFactory.CreateClient("AuthenticatedClient");
 
-            var response = await client.PostAsync($"{service.BaseUrl}/migrate", null);
+            var response = await client.PostAsync($"{service.BaseUrl}/Admin/migrate", null);
 
             if (response.IsSuccessStatusCode)
             {

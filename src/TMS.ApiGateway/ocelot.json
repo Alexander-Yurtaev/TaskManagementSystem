@@ -12,26 +12,11 @@
           "Port": 8081
         }
       ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
       "NoLoadBalancer": true,
       "RouteIsCaseSensitive": false,
       "RequestIdKey": "Oc-RequestId",
       "SwaggerKey": "auth"
-    },
-    {
-      "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/swagger/notify/v1/swagger.json",
-      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-notification-service",
-          "Port": 8081
-        }
-      ],
-      "NoLoadBalancer": true,
-      "RouteIsCaseSensitive": false,
-      "RequestIdKey": "Oc-RequestId",
-      "SwaggerKey": "notify"
     },
     {
       "UpstreamHttpMethod": [ "GET" ],
@@ -44,24 +29,11 @@
           "Port": 8081
         }
       ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
       "NoLoadBalancer": true,
       "RouteIsCaseSensitive": false,
       "RequestIdKey": "Oc-RequestId",
       "SwaggerKey": "tasks"
-    },
-    {
-      "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/",
-      "DownstreamPathTemplate": "/swagger",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-gateway",
-          "Port": 8081
-        }
-      ],
-      "NoLoadBalancer": true,
-      "RouteIsCaseSensitive": false
     },
     {
       "UpstreamHttpMethod": [ "GET" ],
@@ -74,6 +46,7 @@
           "Port": 8081
         }
       ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
       "NoLoadBalancer": true,
       "RouteIsCaseSensitive": false
     },
@@ -94,7 +67,9 @@
       },
       "RouteClaimsRequirement": {
         "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
-      }
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "auth"
     },
     {
       "UpstreamHttpMethod": [ "GET" ],
@@ -112,29 +87,12 @@
       },
       "RouteClaimsRequirement": {
         "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
-      }
-    },
-    {
-      "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/api/tasks/migrate",
-      "DownstreamPathTemplate": "/migrate",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-task-service",
-          "Port": 8081
-        }
-      ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "Bearer"
       },
-      "RouteClaimsRequirement": {
-        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
-      }
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "notify"
     },
-    // 
     {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "UpstreamHttpMethod": [ "GET", "POST" ],
       "UpstreamPathTemplate": "/api/tasks/{everything}",
       "DownstreamPathTemplate": "/tasks/{everything}",
       "DownstreamScheme": "https",
@@ -150,10 +108,11 @@
       "RouteClaimsRequirement": {
         "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
       },
+      "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "tasks"
     },
     {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "UpstreamHttpMethod": [ "GET", "POST" ],
       "UpstreamPathTemplate": "/api/attachments/{everything}",
       "DownstreamPathTemplate": "/attachments/{everything}",
       "DownstreamScheme": "https",
@@ -169,10 +128,11 @@
       "RouteClaimsRequirement": {
         "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
       },
+      "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "tasks"
     },
     {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "UpstreamHttpMethod": [ "GET", "POST" ],
       "UpstreamPathTemplate": "/api/comments/{everything}",
       "DownstreamPathTemplate": "/comments/{everything}",
       "DownstreamScheme": "https",
@@ -188,10 +148,11 @@
       "RouteClaimsRequirement": {
         "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
       },
+      "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "tasks"
     },
     {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
+      "UpstreamHttpMethod": [ "GET", "POST" ],
       "UpstreamPathTemplate": "/api/projects/{everything}",
       "DownstreamPathTemplate": "/projects/{everything}",
       "DownstreamScheme": "https",
@@ -207,6 +168,7 @@
       "RouteClaimsRequirement": {
         "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
       },
+      "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "tasks"
     },
     // Auth
@@ -221,6 +183,7 @@
           "Port": 8081
         }
       ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "auth"
     },
     {
@@ -234,6 +197,7 @@
           "Port": 8081
         }
       ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "auth"
     },
     {
@@ -247,32 +211,51 @@
           "Port": 8081
         }
       ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "auth"
     },
-    // grafana
+    // Greetings
     {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
-      "UpstreamPathTemplate": "/grafana",
-      "DownstreamPathTemplate": "/",
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/api/tasks/greeting",
+      "DownstreamPathTemplate": "/greeting",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "tms-grafana",
-          "Port": 3000
+          "Host": "tms-task-service",
+          "Port": 8081
         }
-      ]
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "tasks"
     },
     {
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ],
-      "UpstreamPathTemplate": "/prometeus",
-      "DownstreamPathTemplate": "/",
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/api/files/greeting",
+      "DownstreamPathTemplate": "/greeting",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "tms-prometeus",
-          "Port": 9090
+          "Host": "tms-file-storage-service",
+          "Port": 8081
         }
-      ]
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "tms-file-storage-service"
+    },
+    {
+      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/api/notify/greeting",
+      "DownstreamPathTemplate": "/greeting",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-notification-service",
+          "Port": 8081
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "tms-notification-service"
     }
   ],
   "SwaggerEndPoints": [
@@ -285,18 +268,6 @@
           "Name": "Auth API",
           "Version": "v1",
           "Url": "https://tms-gateway:8081/swagger/auth/v1/swagger.json"
-        }
-      ]
-    },
-    {
-      "Key": "notify",
-      "TransformByOcelotConfig": true,
-      "TakeServersFromDownstreamService": false,
-      "Config": [
-        {
-          "Name": "Notification API",
-          "Version": "v1",
-          "Url": "https://tms-gateway:8081/swagger/notify/v1/swagger.json"
         }
       ]
     },

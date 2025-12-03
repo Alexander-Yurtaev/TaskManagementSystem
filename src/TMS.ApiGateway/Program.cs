@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using OpenTelemetry.Metrics;
-using TMS.ApiGateway.Extensions.Services;
-using TMS.Common.Helpers;
 using System.Text;
+using TMS.ApiGateway.Extensions.Services;
 using TMS.ApiGateway.Services;
+using TMS.Common.Helpers;
 
 namespace TMS.ApiGateway;
 
@@ -159,11 +159,8 @@ public class Program
             await context.Response.WriteAsync(sb.ToString());
         });
 
-        app.MapPost("/migrate/{serviceName}", async (string serviceName, IMigrationService service) =>
-        {
-            var result = await service.MigrateServiceAsync(serviceName);
-            return Results.Json(result);
-        });
+        // Ocelot — ПОСЛЕ всех явных эндпоинтов
+        await app.UseOcelot();
 
         await app.RunAsync();
     }

@@ -33,6 +33,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{5551609D-7793-4CA6-9C38-06340AA23746}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{807D6757-EA51-4E38-8024-5F6DED2D9A54}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\build&run.bat = scripts\build&run.bat
+		scripts\setup-entrypoint.sh = scripts\setup-entrypoint.sh
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMS.ApiGateway.Tests", "tests\TMS.ApiGateway.Tests\TMS.ApiGateway.Tests.csproj", "{04CD3C4B-E6B4-48C8-9EA2-16BD6A8AFEBE}"
 EndProject

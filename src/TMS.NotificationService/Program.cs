@@ -1,6 +1,5 @@
 using DotNetEnv;
 using RabbitMQ.Client;
-using System.Reflection;
 using Prometheus;
 using TMS.Common.Extensions;
 using TMS.Common.Helpers;
@@ -45,12 +44,6 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen(options => OpenApiSecurityHelper.AddSwaggerGenHelper(options, "Notify API", "v1", () =>
-        {
-            // Путь к XML-файлу (имя сборки)
-            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
-        }));
 
         // Data Context configurations
         try
@@ -93,16 +86,6 @@ public class Program
             .ForwardToPrometheus();
 
         var app = builder.Build();
-
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI(options =>
-            {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "Notify API v1");
-                options.RoutePrefix = "swagger"; // URL: /swagger
-            });
-        }
 
         app.UseAuthentication();
         app.UseAuthorization();

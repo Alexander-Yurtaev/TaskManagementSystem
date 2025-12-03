@@ -11,6 +11,13 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Content Remove="Data\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <None Remove="Data\**" />
+  </ItemGroup>
+
   <ItemGroup Label="Ocelot">
 	<PackageReference Include="AspNetCore.HealthChecks.NpgSql" />
 	<PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" />
@@ -18,6 +25,7 @@
 	<PackageReference Include="AspNetCore.HealthChecks.UI" />
 	<PackageReference Include="AspNetCore.HealthChecks.UI.Client" />
 	<PackageReference Include="AspNetCore.HealthChecks.Uris" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
 	<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
 	<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" />	  
 	<PackageReference Include="Ocelot">
@@ -57,9 +65,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
     <Folder Include="Models\" />
-    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>
