@@ -15,7 +15,7 @@ public static class MigrationEndpoints
     /// <param name="endpoints"></param>
     public static RouteHandlerBuilder AddMigrateEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapGet("/migrate", async (
+        return endpoints.MapPost("/migrate", async (
                 [FromServices] NotificationDataContext db,
                 [FromServices] ILogger<IApplicationBuilder> logger) =>
             {
@@ -28,7 +28,8 @@ public static class MigrationEndpoints
                 return Results.Problem(detail: details.Detail, statusCode: details.StatusCode);
             })
             .WithName("MigrateDatabase")
-            .RequireAuthorization()
+            //.RequireAuthorization()
+            .AllowAnonymous()
             .WithMetadata(new
             {
                 // Для Swagger/документации

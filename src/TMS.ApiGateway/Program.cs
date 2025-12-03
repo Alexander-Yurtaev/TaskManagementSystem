@@ -8,6 +8,7 @@ using OpenTelemetry.Metrics;
 using TMS.ApiGateway.Extensions.Services;
 using TMS.Common.Helpers;
 using System.Text;
+using TMS.ApiGateway.Services;
 
 namespace TMS.ApiGateway;
 
@@ -20,6 +21,12 @@ public class Program
         // автоматически ищет .env в текущей директории
         Env.Load();
         builder.Configuration.AddEnvironmentVariables();
+
+        builder.Services.AddSingleton<IMigrationService, MigrationService>();
+
+        builder.Services.AddHttpClient();
+
+        builder.Services.AddRazorPages();
 
         // HealthChecks
         builder.Services.AddHealthChecks()
@@ -114,7 +121,8 @@ public class Program
         app.UseAuthentication();
         app.UseAuthorization();
 
-        // РЕГИСТРАЦИЯ МАРШРУТОВ ВЕРХНЕГО УРОВНЯ
+        app.MapControllers();
+        app.MapRazorPages();
 
         // HealthChecks endpoint
         app.MapHealthChecks("/health", new HealthCheckOptions
@@ -151,8 +159,11 @@ public class Program
             await context.Response.WriteAsync(sb.ToString());
         });
 
-        // Ocelot — ПОСЛЕ всех явных эндпоинтов
-        await app.UseOcelot();
+        app.MapPost("/migrate/{serviceName}", async (string serviceName, IMigrationService service) =>
+        {
+            var result = await service.MigrateServiceAsync(serviceName);
+            return Results.Json(result);
+        });
 
         await app.RunAsync();
     }

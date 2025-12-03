@@ -22,7 +22,7 @@ public static class MigrationEndpoints
     /// <response code="500">Ошибка при миграции.</response>
     public static RouteHandlerBuilder AddMigrateEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapGet("/migrate", async (
+        return endpoints.MapPost("/migrate", async (
                 HttpContext context,
                 [FromServices] AuthDataContext db,
                 [FromServices] ILogger<IApplicationBuilder> logger) =>
@@ -36,7 +36,8 @@ public static class MigrationEndpoints
             return Results.Problem(detail: details.Detail, statusCode: details.StatusCode);
         })
             .WithName("MigrateDatabase")
-            .RequireAuthorization()
+            //.RequireAuthorization()
+            .AllowAnonymous()
             .WithMetadata(new OpenApiOperation
             {
                 Summary = "Запуск миграции БД для Сервиса аутентификации."
