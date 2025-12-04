@@ -9,9 +9,6 @@ services:
       - GRPC_SERVER_PORT=8081
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/etc/ssl/certs/tms-gateway.crt
       - ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/etc/ssl/certs/tms-gateway.key
-    ports:
-      - "8080"
-      - "8081"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
@@ -92,6 +89,22 @@ services:
     ports:
       - "8080"
       - "8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - type: bind
+        source: C:\docker-certs\tms
+        target: /etc/ssl/certs  
+
+  tms.webapp:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=80
+      - ASPNETCORE_HTTPS_PORTS=443
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/etc/ssl/certs/tms-webapp.crt
+      - ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/etc/ssl/certs/tms-webapp.key
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro

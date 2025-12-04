@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "tms.apigateway": "StartDebugging",
+        "tms.authservice": "StartDebugging",
+        "tms.filestorageservice": "StartDebugging",
+        "tms.notificationservice": "StartDebugging",
+        "tms.taskservice": "StartDebugging",
+        "tms.webapp": "StartDebugging"
+      }
+    }
+  }
+}
