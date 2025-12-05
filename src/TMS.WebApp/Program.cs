@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
 using TMS.Common.Helpers;
 using TMS.Common.Validators;
+using TMS.WebApp.Handlers;
 using TMS.WebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
