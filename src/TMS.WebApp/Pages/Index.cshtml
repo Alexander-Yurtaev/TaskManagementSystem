@@ -5,6 +5,19 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if (Model.IsAuthenticatedViaToken)
+    {
+        <h1 class="display-4">IsAuthenticatedViaToken</h1>
+    } else {
+    <h1 class="display-4">Not IsAuthenticatedViaToken</h1>
+    }
+
+    @if (Model.IsAuthenticated)
+    {
+        <h1 class="display-4">Welcome, @Model.Username</h1>
+    } else
+    {
+        <h1 class="display-4">Welcome, Гость</h1>
+    }
+    @* <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p> *@
 </div>

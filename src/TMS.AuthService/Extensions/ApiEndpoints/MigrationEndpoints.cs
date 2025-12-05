@@ -36,8 +36,7 @@ public static class MigrationEndpoints
             return Results.Problem(detail: details.Detail, statusCode: details.StatusCode);
         })
             .WithName("MigrateDatabase")
-            //.RequireAuthorization()
-            .AllowAnonymous()
+            .RequireAuthorization("Admin")
             .WithMetadata(new OpenApiOperation
             {
                 Summary = "Запуск миграции БД для Сервиса аутентификации."

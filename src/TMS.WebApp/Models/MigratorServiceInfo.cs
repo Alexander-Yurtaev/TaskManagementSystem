@@ -1,3 +1,3 @@
-﻿namespace TMS.ApiGateway.Models;
+﻿namespace TMS.WebApp.Models;
 
 public record MigratorServiceInfo(string ServiceName, string BaseUrl);

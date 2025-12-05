@@ -7,7 +7,6 @@ using Ocelot.Middleware;
 using OpenTelemetry.Metrics;
 using System.Text;
 using TMS.ApiGateway.Extensions.Services;
-using TMS.ApiGateway.Services;
 using TMS.Common.Helpers;
 
 namespace TMS.ApiGateway;
@@ -21,8 +20,6 @@ public class Program
         // автоматически ищет .env в текущей директории
         Env.Load();
         builder.Configuration.AddEnvironmentVariables();
-
-        builder.Services.AddSingleton<IMigrationService, MigrationService>();
 
         builder.Services.AddHttpClient();
 

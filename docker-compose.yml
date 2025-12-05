@@ -285,9 +285,15 @@ services:
       context: .
       dockerfile: src/TMS.WebApp/Dockerfile
     container_name: tms-webapp
+    env_file:
+      - .env
     ports:
       - "5000:80"    # Хост:5000 → Контейнер:80 (HTTP)
       - "5001:443"    # Хост:5001 → Контейнер:443 (HTTPS)
+    user: "root"
+    volumes:
+      # Монтируем папку для ключей шифрования
+      - tms-dataprotection-keys:/app/DataProtectionKeys
     depends_on:
       tms.apigateway:
         condition: service_healthy
@@ -308,3 +314,4 @@ volumes:
   email_storage:
   prometheus_data:
   grafana_data:
+  tms-dataprotection-keys:  

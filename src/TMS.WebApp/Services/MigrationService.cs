@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
-using TMS.ApiGateway.Models;
+using TMS.WebApp.Models;
 
-namespace TMS.ApiGateway.Services;
+namespace TMS.WebApp.Services;
 
 public class MigrationService : IMigrationService
 {

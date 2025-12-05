@@ -1,6 +1,6 @@
-﻿using TMS.ApiGateway.Models;
+﻿using TMS.WebApp.Models;
 
-namespace TMS.ApiGateway.Services;
+namespace TMS.WebApp.Services;
 
 public interface IMigrationService
 {

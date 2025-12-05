@@ -9,6 +9,7 @@ using TMS.AuthService.Helpers;
 using TMS.AuthService.Models;
 using TMS.AuthService.Services;
 using TMS.Common.Helpers;
+using TMS.Common.Models;
 
 namespace TMS.AuthService.Extensions.ApiEndpoints;
 
