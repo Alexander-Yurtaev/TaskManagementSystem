@@ -119,16 +119,12 @@ public class AuthService : IAuthService
                 return false;
             }
 
-            // НЕ очищаем сессию при ошибке refresh
-            // Logout(); // ← ЗАКОММЕНТИРОВАТЬ эту строку
-
             _logger.LogWarning($"Token refresh failed with status: {response.StatusCode}");
             return false;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Token refresh failed");
-            // Logout(); // ← И здесь тоже
             return false;
         }
     }
