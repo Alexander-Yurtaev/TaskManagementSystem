@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using TMS.Common.Enums;
 using TMS.Common.Models;
 
 namespace TMS.WebApp.Services;
@@ -29,11 +30,7 @@ public class AuthService : IAuthService
             var client = _httpClientFactory.CreateClient();
             var apiBaseUrl = _configuration["ApiBaseUrl"] ?? "https://tms-gateway:8081/api/auth";
 
-            var request = new
-            {
-                Username = username,
-                Password = password
-            };
+            var request = new LoginModel(username, password);
 
             _logger.LogInformation($"Attempting login for user: {username}");
             var response = await client.PostAsJsonAsync($"{apiBaseUrl}/login", request);
@@ -122,13 +119,16 @@ public class AuthService : IAuthService
                 return false;
             }
 
-            Logout();
+            // НЕ очищаем сессию при ошибке refresh
+            // Logout(); // ← ЗАКОММЕНТИРОВАТЬ эту строку
+
+            _logger.LogWarning($"Token refresh failed with status: {response.StatusCode}");
             return false;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Token refresh failed");
-            Logout();
+            // Logout(); // ← И здесь тоже
             return false;
         }
     }
@@ -167,6 +167,68 @@ public class AuthService : IAuthService
         {
             httpContext.Session.Remove("access_token");
             httpContext.Session.Remove("refresh_token");
+        }
+    }
+
+    public UserRole? GetCurrentUserRole()
+    {
+        try
+        {
+            var token = GetAccessToken();
+            if (string.IsNullOrEmpty(token))
+                return null;
+
+            var handler = new JwtSecurityTokenHandler();
+            if (!handler.CanReadToken(token))
+            {
+                return null; 
+            }
+
+            var jwtToken = handler.ReadJwtToken(token);
+
+            // Получаем роль из claims (пример, зависит от того, как настроен ваш backend)
+            var json = System.Text.Json.JsonSerializer.Serialize(jwtToken.Claims);
+            
+            var roleClaim = jwtToken.Claims.FirstOrDefault(c => c.Type.ToLower() == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+            if (roleClaim != null && Enum.TryParse<UserRole>(roleClaim.Value, out var role))
+            {
+                return role;
+            }
+
+            return null;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to get user role from token");
+            return null;
+        }
+    }
+
+    public async Task<bool> RegistrationAsync(string username, string email, string password, UserRole role)
+    {
+        try
+        {
+            var client = _httpClientFactory.CreateClient("AuthenticatedClient");
+            var apiBaseUrl = _configuration["ApiBaseUrl"] ?? "https://tms-gateway:8081/api/register";
+
+            var request = new RegisterModel(username, email, password, role);
+
+            _logger.LogInformation($"Attempting register for user: {username}");
+            var response = await client.PostAsJsonAsync($"{apiBaseUrl}/register", request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+
+            _logger.LogWarning($"Login failed for user: {username}. Status: {response.StatusCode}");
+
+            return false;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Login failed");
+            return false;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using TMS.AuthService.Entities.Enum;
+using TMS.Common.Enums;
 
-namespace TMS.AuthService.Models;
+namespace TMS.Common.Models;
 
 /// <summary>
 /// 

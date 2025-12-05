@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace TMS.AuthService.Models;
+namespace TMS.Common.Models;
 
 /// <summary>
 /// 

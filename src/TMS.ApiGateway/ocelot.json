@@ -52,7 +52,7 @@
     },
     // Migrate
     {
-      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamHttpMethod": [ "POST" ],
       "UpstreamPathTemplate": "/api/auth/migrate",
       "DownstreamPathTemplate": "/migrate",
       "DownstreamScheme": "https",
@@ -72,7 +72,7 @@
       "SwaggerKey": "auth"
     },
     {
-      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamHttpMethod": [ "POST" ],
       "UpstreamPathTemplate": "/api/notify/migrate",
       "DownstreamPathTemplate": "/migrate",
       "DownstreamScheme": "https",
@@ -91,6 +91,27 @@
       "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "notify"
     },
+    {
+      "UpstreamHttpMethod": [ "POST" ],
+      "UpstreamPathTemplate": "/api/tasks/migrate",
+      "DownstreamPathTemplate": "/migrate",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tms-task-service",
+          "Port": 8081
+        }
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer"
+      },
+      "RouteClaimsRequirement": {
+        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": "Admin"
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "tasks"
+    },
+    //
     {
       "UpstreamHttpMethod": [ "GET", "POST" ],
       "UpstreamPathTemplate": "/api/tasks/{everything}",

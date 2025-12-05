@@ -4,9 +4,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using TMS.WebApp.Models;
 using TMS.WebApp.Services;
 
-namespace TMS.WebApp.Pages;
+namespace TMS.WebApp.Pages.Admin;
 
-[Authorize]
+[Authorize(Roles = "Admin")]
 public class MigrateModel : PageModel
 {
     private readonly IMigrationService _migrationService;
@@ -21,11 +21,11 @@ public class MigrateModel : PageModel
     [BindProperty]
     public List<MigrationResult> MigrationResults { get; set; } = [];
 
-    public async Task<IActionResult> OnGet()
+    public IActionResult OnGet()
     {
         if (!_authService.IsAuthenticated())
         {
-            return RedirectToPage("/Login", new { returnUrl = "/Migrate" });
+            return RedirectToPage("/Admin/Login", new { returnUrl = "/Admin/Migrate" });
         }
 
         MigrationResults = [];
@@ -36,7 +36,7 @@ public class MigrateModel : PageModel
     {
         if (!_authService.IsAuthenticated())
         {
-            return RedirectToPage("/Login", new { returnUrl = "/Migrate" });
+            return RedirectToPage("/Admin/login", new { returnUrl = "/Admin/Migrate" });
         }
 
         MigrationResults = await _migrationService.MigrateAllAsync();

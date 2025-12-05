@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using TMS.Common.Enums;
+using TMS.Common.Helpers;
 using TMS.WebApp.Services;
 
 namespace TMS.WebApp.Pages
@@ -22,6 +24,7 @@ namespace TMS.WebApp.Pages
         public bool IsAuthenticated => User.Identity?.IsAuthenticated ?? false;
 
         public string? Username => User.Identity?.Name;
+        public UserRole? UserRole => ClaimsHelper.GetCurrentUserRole(User);
 
         public bool IsAuthenticatedViaToken => _authService.IsAuthenticated();
     }

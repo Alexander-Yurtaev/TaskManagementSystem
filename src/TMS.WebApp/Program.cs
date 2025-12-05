@@ -40,6 +40,8 @@ builder.Services.AddSession(options =>
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddTransient<AuthHeaderHandler>();
+
 // Проверка обязательных настроек перед регистрацией сервисов
 JwtValidator.ThrowIfNotValidate(builder.Configuration);
 
@@ -96,9 +98,15 @@ builder.Services.AddHttpClient("AuthenticatedClient", client =>
 })
 .AddHttpMessageHandler<AuthHeaderHandler>();
 
-builder.Services.AddHttpClient<IMigrationService, MigrationService>()
-    .ConfigurePrimaryHttpMessageHandler(() =>
-        new SocketsHttpHandler { PooledConnectionLifetime = TimeSpan.FromMinutes(5) });
+builder.Services.AddHttpClient("MigrationClient", client =>
+{
+    client.Timeout = TimeSpan.FromMinutes(5);
+})
+.ConfigurePrimaryHttpMessageHandler(() =>
+    new SocketsHttpHandler { PooledConnectionLifetime = TimeSpan.FromMinutes(5) });
+
+// И зарегистрируйте MigrationService явно:
+builder.Services.AddScoped<IMigrationService, MigrationService>();
 
 var app = builder.Build();
 

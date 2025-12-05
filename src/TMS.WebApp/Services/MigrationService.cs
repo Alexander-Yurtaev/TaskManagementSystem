@@ -53,7 +53,7 @@ public class MigrationService : IMigrationService
 
             var client = _httpClientFactory.CreateClient("AuthenticatedClient");
 
-            var response = await client.PostAsync($"{service.BaseUrl}/Admin/migrate", null);
+            var response = await client.PostAsync($"{service.BaseUrl}/migrate", null);
 
             if (response.IsSuccessStatusCode)
             {

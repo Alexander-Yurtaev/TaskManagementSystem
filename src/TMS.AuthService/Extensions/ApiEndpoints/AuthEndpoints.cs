@@ -4,10 +4,10 @@ using Microsoft.OpenApi.Models;
 using System.ComponentModel;
 using TMS.AuthService.Data;
 using TMS.AuthService.Entities;
-using TMS.AuthService.Entities.Enum;
 using TMS.AuthService.Helpers;
 using TMS.AuthService.Models;
 using TMS.AuthService.Services;
+using TMS.Common.Enums;
 using TMS.Common.Helpers;
 using TMS.Common.Models;
 

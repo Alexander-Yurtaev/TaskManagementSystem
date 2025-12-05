@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using TMS.AuthService.Entities.Enum;
+using TMS.Common.Enums;
 
 namespace TMS.AuthService.Entities;
 

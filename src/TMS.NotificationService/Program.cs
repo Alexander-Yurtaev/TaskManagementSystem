@@ -59,7 +59,10 @@ public class Program
         builder.Services.AddEmailService();
 
         builder.Services.AddJwtAuthentication(builder.Configuration);
-        builder.Services.AddAuthorization();
+        builder.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy("CanMigrate", policy => policy.RequireRole("Admin"));
+        });
         builder.Services.AddRabbitMqConsumerConfiguration();
 
         var rabbitMqFactoryResult = RabbitMQHelper.CreateConnectionFactory(logger);

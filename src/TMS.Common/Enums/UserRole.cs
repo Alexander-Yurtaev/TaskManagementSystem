@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace TMS.AuthService.Entities.Enum;
+namespace TMS.Common.Enums;
 
 /// <summary>
 /// 

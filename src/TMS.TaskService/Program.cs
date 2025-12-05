@@ -98,7 +98,10 @@ public class Program
             throw;
         }
 
-        builder.Services.AddAuthorization();
+        builder.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy("CanMigrate", policy => policy.RequireRole("Admin"));
+        });
 
         var csDb = PostgresHelper.GetConnectionString();
 

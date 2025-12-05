@@ -1,4 +1,4 @@
-﻿using TMS.AuthService.Entities.Enum;
+﻿using TMS.Common.Enums;
 
 namespace TMS.AuthService.Helpers;
 

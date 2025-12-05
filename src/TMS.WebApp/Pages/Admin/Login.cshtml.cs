@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using TMS.WebApp.Services;
 
-namespace TMS.WebApp.Pages;
+namespace TMS.WebApp.Pages.Admin;
 
 public class LoginModel : PageModel
 {

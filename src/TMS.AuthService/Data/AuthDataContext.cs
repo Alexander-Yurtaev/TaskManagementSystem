@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TMS.AuthService.Entities;
-using TMS.AuthService.Entities.Enum;
+using TMS.Common.Enums;
 
 namespace TMS.AuthService.Data;
 

@@ -64,7 +64,7 @@ public class Program
         {
             // Политика для регистрации пользователей
             options.AddPolicy("CanRegisterUsers", policy => policy.RequireRole("Admin"));
-
+            
             // Политика для регистрации администраторов
             options.AddPolicy("CanRegisterAdmins", policy => policy.RequireRole("SuperAdmin"));
 
@@ -83,6 +83,8 @@ public class Program
                     context.User.HasClaim(c => c.Type == ClaimTypes.Role &&
                                     (c.Value == "Admin" || c.Value == "SuperAdmin")));
             });
+
+            options.AddPolicy("CanMigrate", policy => policy.RequireRole("Admin"));
         });
         builder.Services.AddAuthDataContext();
         builder.Services.AddAuthServices();
