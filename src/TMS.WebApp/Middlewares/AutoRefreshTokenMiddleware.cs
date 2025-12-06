@@ -21,15 +21,13 @@ public class AutoRefreshTokenMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
-        _logger.LogDebug("context.Request.Path: {Path}", context.Request.Path);
-
         // Пропускаем запросы, если не /Migrate
         if (!context.Request.Path.StartsWithSegments("/Admin/Migrate"))
         {
             await _next(context);
             return;
         }
-        _logger.LogTrace("Continue!!!");
+
         try
         {
             // Загружаем сессию если она доступна
@@ -48,7 +46,7 @@ public class AutoRefreshTokenMiddleware
             {
                 token = context.Request.Cookies["access_token"];
             }
-            _logger.LogTrace("token: {Token}", token);
+
             if (!string.IsNullOrEmpty(token))
             {
                 // Проверяем, истек ли токен
@@ -100,7 +98,6 @@ public class AutoRefreshTokenMiddleware
             }
             else
             {
-                _logger.LogTrace("Redirect!!!");
                 // Если токенов нигде нет, то преходим на страницу авторизации
                 context.Response.Redirect("/Admin/Login");
                 return;
