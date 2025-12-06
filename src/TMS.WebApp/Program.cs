@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.DataProtection;
 using TMS.Common.Helpers;
 using TMS.Common.Validators;
 using TMS.WebApp.Handlers;
+using TMS.WebApp.Middleware;
 using TMS.WebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -135,11 +136,7 @@ app.UseRouting();
 // ВАЖНО: Сессии должны идти ПОСЛЕ UseRouting и ДО UseAuthentication/UseAuthorization
 app.UseSession();
 
-app.Use(async (context, next) =>
-{
-    // Этот middleware гарантирует, что сессия будет загружена до JWT аутентификации
-    await next();
-});
+app.UseMiddleware<AutoRefreshTokenMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
