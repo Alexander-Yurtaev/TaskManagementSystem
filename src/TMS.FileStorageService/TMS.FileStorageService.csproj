@@ -15,14 +15,6 @@
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup Label="Common">
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />	
-  </ItemGroup>
-
-  <ItemGroup Label="HealthChecks">
-	<PackageReference Include="AspNetCore.HealthChecks.NpgSql" />
-  </ItemGroup>
-
   <ItemGroup Label="Monitoring">
 	<PackageReference Include="prometheus-net.AspNetCore" />
   </ItemGroup>
@@ -32,10 +24,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Label="Common">
-	<PackageReference Include="Swashbuckle.AspNetCore" />
   </ItemGroup>
 
   <ItemGroup>
