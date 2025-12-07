@@ -18,31 +18,17 @@
 	
   <ItemGroup Label="Swagger">
 	<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Design">
-	  <PrivateAssets>all</PrivateAssets>
-	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	</PackageReference>
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
 	<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" />
 	<PackageReference Include="MMLib.SwaggerForOcelot" />
   </ItemGroup>
 
   <ItemGroup Label="HealthChecks">
-	<PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" />
-	<PackageReference Include="AspNetCore.HealthChecks.UI" />
-	<PackageReference Include="AspNetCore.HealthChecks.UI.Client" />
 	<PackageReference Include="AspNetCore.HealthChecks.NpgSql" />
     <PackageReference Include="AspNetCore.HealthChecks.Redis" />
   </ItemGroup>
 
   <ItemGroup Label="Monitoring">
 	<PackageReference Include="prometheus-net.AspNetCore" />
-	<PackageReference Include="prometheus-net.AspNetCore.HealthChecks" />
-  </ItemGroup>
-
-	<ItemGroup Label="Redis">
-	<PackageReference Include="StackExchange.Redis" />
   </ItemGroup>
 
   <ItemGroup Label="gRPC">
@@ -55,7 +41,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TMS.Common\TMS.Common.csproj" />
-    <ProjectReference Include="..\TMS.Contracts\TMS.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>

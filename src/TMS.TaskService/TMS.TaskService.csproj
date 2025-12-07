@@ -22,21 +22,14 @@
 
   <ItemGroup Label="HealthChecks">
 	<PackageReference Include="AspNetCore.HealthChecks.NpgSql" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
   </ItemGroup>
 
   <ItemGroup Label="Monitoring">
 	<PackageReference Include="prometheus-net.AspNetCore" />
-	<PackageReference Include="prometheus-net.AspNetCore.HealthChecks" />
   </ItemGroup>
 
   <ItemGroup Label="Swagger">
 	<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Design">
-	  <PrivateAssets>all</PrivateAssets>
-	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	</PackageReference>
 	<PackageReference Include="Swashbuckle.AspNetCore" />
   </ItemGroup>
 
@@ -51,7 +44,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TMS.Common\TMS.Common.csproj" />
-    <ProjectReference Include="..\TMS.Contracts\TMS.Contracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
