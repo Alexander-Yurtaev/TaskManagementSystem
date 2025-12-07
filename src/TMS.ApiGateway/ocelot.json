@@ -235,48 +235,19 @@
       "DangerousAcceptAnyServerCertificateValidator": true,
       "SwaggerKey": "auth"
     },
-    // Greetings
+    // Prometeus
     {
       "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/api/tasks/greeting",
-      "DownstreamPathTemplate": "/greeting",
-      "DownstreamScheme": "https",
+      "UpstreamPathTemplate": "/prometeus/{everything}",
+      "DownstreamPathTemplate": "/{everything}",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "tms-task-service",
-          "Port": 8081
+          "Host": "tms-prometeus",
+          "Port": 9090
         }
       ],
-      "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "tasks"
-    },
-    {
-      "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/api/files/greeting",
-      "DownstreamPathTemplate": "/greeting",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-file-storage-service",
-          "Port": 8081
-        }
-      ],
-      "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "tms-file-storage-service"
-    },
-    {
-      "UpstreamHttpMethod": [ "GET" ],
-      "UpstreamPathTemplate": "/api/notify/greeting",
-      "DownstreamPathTemplate": "/greeting",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "tms-notification-service",
-          "Port": 8081
-        }
-      ],
-      "DangerousAcceptAnyServerCertificateValidator": true,
-      "SwaggerKey": "tms-notification-service"
+      "DangerousAcceptAnyServerCertificateValidator": true
     }
   ],
   "SwaggerEndPoints": [

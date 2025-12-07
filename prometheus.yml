@@ -6,26 +6,33 @@ scrape_configs:
   - job_name: 'tms-services'
     static_configs:
       - targets: 
-        - 'tms-auth-service:8080'
-        - 'tms-task-service:8080'
-        - 'tms-file-storage-service:8080'
-        - 'tms-notification-service:8080'
-        - 'tms-gateway:5000'
+        - 'tms-auth-service:8081'  # HTTPS порт
+        - 'tms-task-service:8081'   # HTTPS порт
+        - 'tms-file-storage-service:8081'  # HTTPS порт
+        - 'tms-notification-service:8081'  # HTTPS порт
+        - 'tms-gateway:8081'  # HTTPS порт
     metrics_path: '/metrics'
     scrape_interval: 10s
+    scheme: https
+    tls_config:
+      insecure_skip_verify: true  # Пропустить проверку SSL
 
   - job_name: 'postgresql'
     static_configs:
       - targets: 
         - 'tms-auth-db:5432'
         - 'tms-task-db:5432'
-        - 'tms-file-db:5432'
         - 'tms-notify-db:5432'
+    # Для PostgreSQL нужен exporter, поэтому пока закомментируем
+    # или используйте prometheus-postgres-exporter
 
   - job_name: 'redis'
     static_configs:
       - targets: ['tms-auth-redis:6379']
+    # Для Redis нужен redis_exporter
 
   - job_name: 'rabbitmq'
     static_configs:
       - targets: ['tms-rabbitmq:15672']
+    metrics_path: '/api/metrics'
+    scrape_interval: 10s

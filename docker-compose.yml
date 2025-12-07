@@ -229,9 +229,11 @@ services:
     ports:
       - "5672:5672"   # Порт для приложений
       - "15672:15672" # Порт веб‑интерфейса (UI)
+      - "15692:15692" # Порт для Prometheus метрик 
     environment:
       - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASS}
+      - RABBITMQ_ENABLE_PROMETHEUS=true
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     healthcheck:
@@ -250,6 +252,7 @@ services:
       - "9090:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      # - ./prometheus-web.yml:/etc/prometheus/web.yml
       - prometheus_data:/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -258,6 +261,8 @@ services:
       - '--web.console.templates=/etc/prometheus/consoles'
       - '--storage.tsdb.retention.time=200h'
       - '--web.enable-lifecycle'
+      - '--web.external-url=https://localhost:5011/prometeus/'
+      - '--web.route-prefix=/'
     depends_on:
       tms.authservice:
         condition: service_healthy
