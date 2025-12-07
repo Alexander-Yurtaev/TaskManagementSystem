@@ -107,10 +107,15 @@ public class Program
 
         builder.Services
             .AddHealthChecks()
-            .AddNpgSql(csDb, name: "postgresql", tags: ["db", "sql", "postgres"])
-            .ForwardToPrometheus();
+            .AddNpgSql(csDb, name: "postgresql", tags: ["db", "sql", "postgres"]);
 
         var app = builder.Build();
+
+        // Включите сбор метрик HTTP запросов
+        app.UseHttpMetrics(options =>
+        {
+            options.AddCustomLabel("host", context => context.Request.Host.Host);
+        });
 
         if (app.Environment.IsDevelopment())
         {
@@ -137,6 +142,8 @@ public class Program
         app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.MapMetrics();
 
         await app.RunAsync();
     }
