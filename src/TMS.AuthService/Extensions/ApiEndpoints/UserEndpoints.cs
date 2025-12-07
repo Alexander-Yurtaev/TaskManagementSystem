@@ -35,8 +35,7 @@ public static class UserEndpoints
                 {
                     logger.LogError(
                         ex,
-                        "Error while getting users. Operation: {Operation}",
-                        "POST /login"
+                        "Error while getting users."
                     );
 
                     return Results.Problem(

@@ -249,9 +249,8 @@ public static class AuthEndpoints
                 {
                     logger.LogError(
                         ex,
-                        "Error while logging with UserName: {UserName}. Operation: {Operation}",
-                        model.UserName,
-                        "POST /login"
+                        "Error while logging with UserName: {UserName}.",
+                        model.UserName
                     );
 
                     return Results.Problem(
