@@ -3,6 +3,7 @@ global:
   evaluation_interval: 15s
 
 scrape_configs:
+  # .NET службы - они на порту 8081 (HTTPS)
   - job_name: 'tms-services'
     static_configs:
       - targets: 
@@ -15,24 +16,26 @@ scrape_configs:
     scrape_interval: 10s
     scheme: https
     tls_config:
-      insecure_skip_verify: true  # Пропустить проверку SSL
+      insecure_skip_verify: true  # Игнорировать ошибки SSL
 
-  - job_name: 'postgresql'
-    static_configs:
-      - targets: 
-        - 'tms-auth-db:5432'
-        - 'tms-task-db:5432'
-        - 'tms-notify-db:5432'
-    # Для PostgreSQL нужен exporter, поэтому пока закомментируем
-    # или используйте prometheus-postgres-exporter
+  # PostgreSQL - НУЖЕН EXPORTER (закомментируем пока)
+  # - job_name: 'postgresql'
+  #   static_configs:
+  #     - targets: 
+  #       - 'tms-auth-db:5432'
+  #       - 'tms-task-db:5432'
+  #       - 'tms-notify-db:5432'
+  #   # Без экспортера не будет работать
 
-  - job_name: 'redis'
-    static_configs:
-      - targets: ['tms-auth-redis:6379']
-    # Для Redis нужен redis_exporter
+  # Redis - НУЖЕН EXPORTER (закомментируем пока)
+  # - job_name: 'redis'
+  #   static_configs:
+  #     - targets: ['tms-auth-redis:6379']
 
+  # RabbitMQ - имеет встроенные метрики Prometheus
   - job_name: 'rabbitmq'
     static_configs:
-      - targets: ['tms-rabbitmq:15672']
-    metrics_path: '/api/metrics'
+      - targets: ['tms-rabbitmq:15692']  # Порт для Prometheus метрик
+    metrics_path: '/metrics'
     scrape_interval: 10s
+    scheme: http

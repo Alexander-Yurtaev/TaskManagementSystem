@@ -64,15 +64,15 @@ public class Program
         {
             // Политика для регистрации пользователей
             options.AddPolicy("CanRegisterUsers", policy => policy.RequireRole("Admin"));
-            
+
             // Политика для регистрации администраторов
             options.AddPolicy("CanRegisterAdmins", policy => policy.RequireRole("SuperAdmin"));
 
             //
             options.AddPolicy("AllowRegistion", policy =>
             {
-                policy.RequireAssertion(context => 
-                    context.User.HasClaim(c => c.Type == ClaimTypes.Role && 
+                policy.RequireAssertion(context =>
+                    context.User.HasClaim(c => c.Type == ClaimTypes.Role &&
                                     (c.Value == "Admin" || c.Value == "SuperAdmin")));
             });
 
@@ -91,14 +91,18 @@ public class Program
 
         var connectionString = PostgresHelper.GetConnectionString();
         var connectionMultiplexer = builder.Services.AddRedisConfiguration(builder.Configuration);
-        
-        builder.Services
-            .AddHealthChecks()
+
+        builder.Services.AddHealthChecks()
             .AddNpgSql(connectionString, name: "postgresql", tags: ["db", "sql", "postgres"])
-            .AddRedis(connectionMultiplexer, "redis")
-            .ForwardToPrometheus();
+            .AddRedis(connectionMultiplexer, "redis");
 
         var app = builder.Build();
+
+        // Включите сбор метрик HTTP запросов
+        app.UseHttpMetrics(options =>
+        {
+            options.AddCustomLabel("host", context => context.Request.Host.Host);
+        });
 
         // Настройка middleware
         // Включение Swagger и SwaggerUI только в разработке
@@ -127,6 +131,8 @@ public class Program
         app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.MapMetrics();
 
         await app.RunAsync();
     }
