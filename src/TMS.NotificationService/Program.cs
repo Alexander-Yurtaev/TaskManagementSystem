@@ -85,13 +85,15 @@ public class Program
             })
             .AddHealthChecks()
             .AddNpgSql(connectionString, name: "postgresql", tags: ["db", "sql", "postgres"])
-            .AddRabbitMQ(name: "rabbit")
-            .ForwardToPrometheus();
+            .AddRabbitMQ(name: "rabbit");
 
         var app = builder.Build();
 
-        app.UseAuthentication();
-        app.UseAuthorization();
+        // Включите сбор метрик HTTP запросов
+        app.UseHttpMetrics(options =>
+        {
+            options.AddCustomLabel("host", context => context.Request.Host.Host);
+        });
 
         app.MapHealthChecks("/health");
         app.MapHealthChecks("/ready");
@@ -102,6 +104,10 @@ public class Program
         app.AddMigrateEndpoint();
 
         app.UseHttpsRedirection();
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapMetrics();
 
         await app.RunAsync();
     }
