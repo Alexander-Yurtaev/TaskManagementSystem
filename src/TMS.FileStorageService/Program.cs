@@ -1,4 +1,5 @@
 using DotNetEnv;
+using Prometheus;
 using TMS.FileStorageService.Extensions.ApiEndpoints;
 using TMS.FileStorageService.Extensions.Services;
 
@@ -30,16 +31,20 @@ namespace TMS.FileStorageService
                 builder.Logging.AddConsole();
             }
 
-            builder.Services.AddHealthChecks();
-
             // Add services to the container.
             builder.Services.AddFileService();
 
+            builder.Services.AddHealthChecks();
+
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
+            // Включите сбор метрик HTTP запросов
+            app.UseHttpMetrics(options =>
+            {
+                options.AddCustomLabel("host", context => context.Request.Host.Host);
+            });
 
-            app.UseHttpsRedirection();
+            // Configure the HTTP request pipeline.
 
             app.MapHealthChecks("/health");
             app.MapHealthChecks("/ready");
@@ -47,6 +52,10 @@ namespace TMS.FileStorageService
 
             app.AddGreetingEndpoint();
             app.AddFileStoragesEndpoint();
+
+            app.UseHttpsRedirection();
+
+            app.MapMetrics();
 
             app.Run();
         }

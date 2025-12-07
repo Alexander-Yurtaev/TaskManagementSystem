@@ -15,9 +15,16 @@
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup Label="Common">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />	
+  </ItemGroup>
+
   <ItemGroup Label="HealthChecks">
 	<PackageReference Include="AspNetCore.HealthChecks.NpgSql" />
-	<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+  </ItemGroup>
+
+  <ItemGroup Label="Monitoring">
+	<PackageReference Include="prometheus-net.AspNetCore" />
   </ItemGroup>
 
   <ItemGroup>
